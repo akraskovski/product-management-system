@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/data/jpa
        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
-    <!--@Transaction annotation support -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <mvc:annotation-driven/>
 
@@ -26,20 +20,16 @@
     <jpa:repositories base-package="by.intexsoft.repository" entity-manager-factory-ref="emf"
                       transaction-manager-ref="transactionManager"/>
 
-    <!-- EntityManagerFactory -->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:db.properties"/>
+
     <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <!--Поставщик данных - hibernate-->
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>
-        <!--Поиск сущностей в этом пакете-->
         <property name="packagesToScan" value="by.intexsoft"/>
     </bean>
 
-    <context:property-placeholder ignore-unresolvable="true" location="classpath:db.properties"/>
-
-    <!-- Datasource. Источник данных - база MySQL -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driver.classname}" />
         <property name="url" value="${jdbc.url}" />
@@ -47,7 +37,6 @@
         <property name="password" value="${db.password}" />
     </bean>
 
-    <!--Обеспечивает работу с транзакциями в Spring -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="emf"/>
     </bean>

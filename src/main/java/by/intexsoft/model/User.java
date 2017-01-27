@@ -9,10 +9,5 @@ import javax.persistence.*;
 public class User extends AbstractPersistable<Integer> {
 
     @Column
-    public String name;
-
-    @Override
-    public String toString() {
-        return "ID: [" + getId() + "], NAME: [" + name + "].";
-    }
+    private String name;
 }

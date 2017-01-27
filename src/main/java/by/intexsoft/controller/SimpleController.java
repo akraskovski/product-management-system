@@ -15,11 +15,23 @@ public class SimpleController {
     private UserService userService;
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    @ResponseBody
-    public List<User> hello() {
+    public String hello() {
+        return "Hello, my name is Artem";
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public List<User> getAllUsers() {
         try {
-            List<User> users = userService.getAllUsers();
-            return users;
+            return userService.getAllUsers();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/users/{name}", method = RequestMethod.GET)
+    public User getUserByName(@PathVariable String name) {
+        try {
+            return userService.findUserByName(name);
         } catch (NullPointerException e) {
             return null;
         }
