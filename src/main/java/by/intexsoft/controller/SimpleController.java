@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handles requests for the {@link User} service.
@@ -17,12 +19,15 @@ public class SimpleController {
     @Autowired
     private UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(SimpleController.class);
+
     /**
      * Simple method.
      * @return the test string.
      */
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello() {
+        logger.info("Start hello");
         return "Hello, my name is Artem";
     }
 
@@ -33,8 +38,10 @@ public class SimpleController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<User> getAllUsers() {
         try {
+            logger.info("Start getAllUsers");
             return userService.getAllUsers();
         } catch (NullPointerException e) {
+            logger.error("Exception in getAllUsers. " + e.getLocalizedMessage());
             return null;
         }
     }
@@ -47,8 +54,10 @@ public class SimpleController {
     @RequestMapping(value = "/users/{name}", method = RequestMethod.GET)
     public User getUserByName(@PathVariable String name) {
         try {
+            logger.info("Start getUserByName: " + name);
             return userService.findUserByName(name);
         } catch (NullPointerException e) {
+            logger.error("Exception in getUserByName. " + e.getLocalizedMessage());
             return null;
         }
     }
