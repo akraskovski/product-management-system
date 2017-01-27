@@ -1,1 +1,2 @@
-#Spring + Hibernate + Jpa simple web application.
+#Spring + Hibernate + Jpa 
+Simple web application.

@@ -19,8 +19,6 @@
     <!--@Transaction annotation support -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <!--Activates various annotations to be detected in bean classes: Spring's @Required and @Autowired and so on
-    <context:annotation-config/>-->
     <mvc:annotation-driven/>
 
     <context:component-scan base-package="by.intexsoft"/>
@@ -35,16 +33,18 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>
-        <!--поиск сущностей в этом пакете-->
+        <!--Поиск сущностей в этом пакете-->
         <property name="packagesToScan" value="by.intexsoft"/>
     </bean>
 
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:db.properties"/>
+
     <!-- Datasource. Источник данных - база MySQL -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url" value="jdbc:postgresql://localhost:5432/postgres" />
-        <property name="username" value="postgres" />
-        <property name="password" value="root" />
+        <property name="driverClassName" value="${jdbc.driver.classname}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${db.username}" />
+        <property name="password" value="${db.password}" />
     </bean>
 
     <!--Обеспечивает работу с транзакциями в Spring -->
