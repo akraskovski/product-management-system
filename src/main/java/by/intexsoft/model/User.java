@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Description entity by database table "users".
  */
 @Entity
-@Table(name = "users", schema = "test")
+@Table(name = "users")
 public class User extends AbstractPersistable<Integer> {
 
     /**

@@ -22,10 +22,10 @@ public class SimpleController {
     private static final Logger logger = LoggerFactory.getLogger(SimpleController.class);
 
     /**
-     * Simple method.
-     * @return the test string.
+     * Simple method to print string.
+     * @return test string.
      */
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello")
     public String hello() {
         logger.info("Start hello");
         return "Hello, my name is Artem";
@@ -35,7 +35,7 @@ public class SimpleController {
      * Return json-information about all users in database.
      * @return list of users.
      */
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/users")
     public List<User> getAllUsers() {
         try {
             logger.info("Start getAllUsers");
@@ -51,7 +51,7 @@ public class SimpleController {
      * @param name - to search.
      * @return entity of user.
      */
-    @RequestMapping(value = "/users/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{name}")
     public User getUserByName(@PathVariable String name) {
         try {
             logger.info("Start getUserByName: " + name);

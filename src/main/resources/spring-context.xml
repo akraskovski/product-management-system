@@ -15,7 +15,7 @@
 
     <mvc:annotation-driven/>
 
-    <context:component-scan base-package="by.intexsoft"/>
+    <context:component-scan base-package="by.intexsoft.service"/>
 
     <jpa:repositories base-package="by.intexsoft.repository" entity-manager-factory-ref="emf"
                       transaction-manager-ref="transactionManager"/>
@@ -35,6 +35,7 @@
         <property name="url" value="${jdbc.url}" />
         <property name="username" value="${db.username}" />
         <property name="password" value="${db.password}" />
+        <property name="schema" value="${db.schema}"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
