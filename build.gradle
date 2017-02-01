@@ -1,15 +1,13 @@
-
 apply plugin: 'java'
 apply plugin: 'war'
 
 repositories {
-    flatDir {
-        dirs 'libs'
-    }
+    mavenCentral()
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.1.9'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.9'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.8'
 }
-
-

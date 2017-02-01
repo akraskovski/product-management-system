@@ -1,2 +1,2 @@
 #Spring + Hibernate + Jpa
-Simple web application without any build manager.
+Simple web application based on gradle.
