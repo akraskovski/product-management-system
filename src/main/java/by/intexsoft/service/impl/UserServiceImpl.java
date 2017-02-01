@@ -8,15 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of {@link UserService} class.
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Override
     public List<User> getAllUsers() {

@@ -1,0 +1,15 @@
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+
