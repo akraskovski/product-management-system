@@ -15,5 +15,5 @@ public class User extends AbstractPersistable<Integer> {
      * User's name field.
      */
     @Column
-    private String name;
+    public String name;
 }
