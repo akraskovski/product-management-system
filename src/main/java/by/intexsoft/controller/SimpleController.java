@@ -19,7 +19,7 @@ public class SimpleController {
     @Autowired
     private UserService userService;
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleController.class);
 
     /**
      * Simple method to print string.
@@ -27,7 +27,7 @@ public class SimpleController {
      */
     @RequestMapping(value = "/hello")
     public String hello() {
-        logger.info("Start hello");
+        LOGGER.info("Start hello");
         return "Hello, my name is Artem";
     }
 
@@ -35,13 +35,13 @@ public class SimpleController {
      * Return json-information about all users in database.
      * @return list of users.
      */
-    @RequestMapping(value = "/users")
+    @RequestMapping("/users")
     public List<User> getAllUsers() {
         try {
-            logger.info("Start getAllUsers");
-            return userService.getAllUsers();
+            LOGGER.info("Start loadAllUsers");
+            return userService.loadAllUsers();
         } catch (NullPointerException e) {
-            logger.error("Exception in getAllUsers. " + e.getLocalizedMessage());
+            LOGGER.error("Exception in getAllUsers. " + e.getLocalizedMessage());
             return null;
         }
     }
@@ -51,13 +51,13 @@ public class SimpleController {
      * @param name - to search.
      * @return entity of user.
      */
-    @RequestMapping(value = "/users/{name}")
+    @RequestMapping("/users/{name}")
     public User getUserByName(@PathVariable String name) {
         try {
-            logger.info("Start getUserByName: " + name);
-            return userService.findUserByName(name);
+            LOGGER.info("Start loadUser: " + name);
+            return userService.loadUser(name);
         } catch (NullPointerException e) {
-            logger.error("Exception in getUserByName. " + e.getLocalizedMessage());
+            LOGGER.error("Exception in getUserByName. " + e.getLocalizedMessage());
             return null;
         }
     }

@@ -18,12 +18,12 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> loadAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public User findUserByName(String name) {
+    public User loadUser(String name) {
         return userRepository.findUserByName(name);
     }
 

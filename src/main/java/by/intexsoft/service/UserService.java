@@ -10,14 +10,14 @@ public interface UserService {
     /**
      * @return list of {@link User} from database.
      */
-    List<User> getAllUsers();
+    List<User> loadAllUsers();
 
     /**
      * Find one first user by name.
      * @param name
      * @return copy of {@link User}
      */
-    User findUserByName(String name);
+    User loadUser(String name);
 
     /**
      * Save {@link User} entity to database table.
