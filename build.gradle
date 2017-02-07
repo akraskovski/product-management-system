@@ -6,8 +6,15 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'org.springframework:spring-context:4.3.6.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.3.6.RELEASE'
+    compile 'org.springframework:spring-orm:4.3.6.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.3.6.RELEASE'
+    compile 'org.springframework.data:spring-data-jpa:1.11.0.RELEASE'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.6'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.6'
+    compile 'org.postgresql:postgresql:9.4.1212.jre7'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.6.Final'
     compile group: 'ch.qos.logback', name: 'logback-core', version: '1.1.9'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.9'
-    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.8'
 }
