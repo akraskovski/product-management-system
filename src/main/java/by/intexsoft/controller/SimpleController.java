@@ -10,10 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handles requests for the {@link User} service.
+ * Handles requests for the {@link UserService}
  */
 @RestController
-@RequestMapping(value = "/service")
+@RequestMapping("/service")
 public class SimpleController {
 
     @Autowired
@@ -25,20 +25,20 @@ public class SimpleController {
      * Simple method to print string.
      * @return test string.
      */
-    @RequestMapping(value = "/hello")
-    public String hello() {
+    @RequestMapping("/hello")
+    public String sayHello() {
         LOGGER.info("Start hello");
         return "Hello, my name is Artem";
     }
 
     /**
      * Return json-information about all users in database.
-     * @return list of users.
+     * @return list of {@link User}s.
      */
     @RequestMapping("/users")
-    public List<User> getAllUsers() {
+    public List<User> loadAllUsers() {
+        LOGGER.info("Start loadAllUsers");
         try {
-            LOGGER.info("Start loadAllUsers");
             return userService.loadAllUsers();
         } catch (NullPointerException e) {
             LOGGER.error("Exception in getAllUsers. " + e.getLocalizedMessage());
@@ -49,12 +49,12 @@ public class SimpleController {
     /**
      * Find user in database with setting name in browser.
      * @param name - to search.
-     * @return entity of user.
+     * @return entity of {@link User}.
      */
     @RequestMapping("/users/{name}")
-    public User getUserByName(@PathVariable String name) {
+    public User loadUser(@PathVariable String name) {
+        LOGGER.info("Start loadUser: " + name);
         try {
-            LOGGER.info("Start loadUser: " + name);
             return userService.loadUser(name);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in getUserByName. " + e.getLocalizedMessage());
