@@ -1,6 +1,5 @@
 const ul = document.createElement('ul');
-ul.className = 'my-ul';
-const url = 'http://localhost:8081/service/users';
+const url = 'service/users';
 const createNode = element => document.createElement(element);
 const append = (parent, element) => parent.appendChild(element);
 
