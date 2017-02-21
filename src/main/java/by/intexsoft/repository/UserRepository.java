@@ -4,15 +4,15 @@ import by.intexsoft.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 /**
- * Providing a level of communication with database.
+ * Providing a level of communication with database
+ * {@link org.springframework.data.repository.Repository} for {@link User}
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
-     * Custom method to find user from database by name
+     * find {@link User} from database by name
      * @param name of user
      * @return {@link User}
      */

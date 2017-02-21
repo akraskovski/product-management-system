@@ -1,27 +1,27 @@
 package by.intexsoft.service;
 
 import by.intexsoft.model.User;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
+/**
+ * Service for {@link User}
+ */
 public interface UserService {
 
     /**
-     * @return list of {@link User} from database.
+     * Find all {@link User}s in database
+     * @return list of {@link User} from database
      */
     List<User> findAllUsers();
 
     /**
-     * Find one first user by name.
-     * @param name
+     * Find one first user by name
      * @return copy of {@link User}
      */
     User findUser(String name);
 
     /**
-     * Save {@link User} entity to database table.
-     * @param user
+     * Save {@link User} entity to database table
      */
     void saveUser(User user);
 }

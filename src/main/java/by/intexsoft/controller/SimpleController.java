@@ -22,8 +22,8 @@ public class SimpleController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleController.class);
 
     /**
-     * Simple method to print string.
-     * @return test string.
+     * Simple method to print string
+     * @return test string
      */
     @RequestMapping("/hello")
     public String sayHello() {
@@ -32,8 +32,8 @@ public class SimpleController {
     }
 
     /**
-     * Return json-information about all users in database.
-     * @return list of {@link User}s.
+     * Return json-information about all users in database
+     * @return list of {@link User}s
      */
     @RequestMapping("/users")
     public List<User> loadAllUsers() {
@@ -47,9 +47,8 @@ public class SimpleController {
     }
 
     /**
-     * Find user in database with setting name in browser.
-     * @param name - to search.
-     * @return entity of {@link User}.
+     * Find user in database with setting name in browser
+     * @return entity of {@link User}
      */
     @RequestMapping("/users/{name}")
     public User loadUser(@PathVariable String name) {
