@@ -39,7 +39,7 @@ public class SimpleController {
     public List<User> loadAllUsers() {
         LOGGER.info("Start loadAllUsers");
         try {
-            return userService.loadAllUsers();
+            return userService.findAllUsers();
         } catch (NullPointerException e) {
             LOGGER.error("Exception in getAllUsers. " + e.getLocalizedMessage());
             return null;
@@ -55,7 +55,7 @@ public class SimpleController {
     public User loadUser(@PathVariable String name) {
         LOGGER.info("Start loadUser: " + name);
         try {
-            return userService.loadUser(name);
+            return userService.findUser(name);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in getUserByName. " + e.getLocalizedMessage());
             return null;

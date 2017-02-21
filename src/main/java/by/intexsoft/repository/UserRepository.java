@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Providing a level of communication with database.
  */
-@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
