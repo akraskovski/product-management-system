@@ -1,0 +1,7 @@
+/node_modules/
+/dist/
+.gradle/
+/gradle/
+/gradlew
+/gradlew.bat
+/settings.gradle
