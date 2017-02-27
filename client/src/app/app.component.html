@@ -1,5 +1,7 @@
 <h1>Hello from {{title}}!</h1>
 <ul>
-    <li *ngFor="let user of users">{{user.id}}.{{user.name}};</li>
+    <li *ngFor="let user of users">
+        <p>ID: {{user.id}}</p>
+        <p>NAME: {{user.name}}</p>
+    </li>
 </ul>
-<img src="/img/angular.png">
