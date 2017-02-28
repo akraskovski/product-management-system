@@ -1,7 +1,3 @@
 plugins {
     id "com.moowork.node" version "1.1.1"
 }
-
-task runClient {}
-build.dependsOn(npm_install)
-build.dependsOn(npm_run_start)
