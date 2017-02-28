@@ -4,14 +4,21 @@ import 'rxjs/add/operator/toPromise';
 import {User} from "./user";
 
 @Injectable()
-export class DataService {
+export class UserService {
 
-    private dataUrl: string = 'service/users';
+    private usersUrl: string = 'service/users';
 
     constructor(private http: Http) { }
 
     getUsers(): Promise<User[]> {
-        return this.http.get(this.dataUrl)
+        return this.http.get(this.usersUrl)
+            .toPromise()
+            .then(responce => responce.json())
+            .catch(this.handleError);
+    }
+
+    getUserByName(name: string): Promise<User> {
+        return this.http.get(this.usersUrl + '/' + name)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);

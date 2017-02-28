@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import '../style/app.css';
-import {DataService} from "./data.service";
+import {UserService} from "./user.service";
 import {User} from "./user";
 
 @Component({
@@ -9,17 +9,17 @@ import {User} from "./user";
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-
     title: string = 'Angular 2 Component';
     users: User[];
 
-    constructor(private dataService: DataService) { }
+    constructor(private dataService: UserService) { }
 
     ngOnInit(): void {
-        this.getData();
+        this.getAllUsers();
     }
 
-    getData(): void {
-        this.dataService.getUsers().then(usersFromService => this.users = usersFromService);
+    getAllUsers(): void {
+        this.dataService.getUsers()
+            .then(usersFromService => this.users = usersFromService);
     }
 }

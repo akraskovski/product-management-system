@@ -1,7 +1,9 @@
-<h1>Hello from {{title}}!</h1>
+<h1>{{title}}</h1>
+<h3>All users from database</h3>
 <ul>
     <li *ngFor="let user of users">
         <p>ID: {{user.id}}</p>
         <p>NAME: {{user.name}}</p>
     </li>
 </ul>
+<user-component></user-component>
