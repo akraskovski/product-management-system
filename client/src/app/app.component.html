@@ -1,9 +1,8 @@
-<h1>{{title}}</h1>
-<h3>All users from database</h3>
-<ul>
-    <li *ngFor="let user of users">
-        <p>ID: {{user.id}}</p>
-        <p>NAME: {{user.name}}</p>
-    </li>
-</ul>
-<user-component></user-component>
+<h1 align="center">{{title}}</h1>
+<div align="center">
+    <nav>
+        <a routerLink="/all-users" routerLinkActive="active">All Users</a>
+        <a routerLink="/search" routerLinkActive="active">Search</a>
+    </nav>
+<router-outlet></router-outlet>
+</div>

@@ -4,17 +4,21 @@ import {AppComponent} from './app.component';
 import {UserService} from "./user.service";
 import {HttpModule} from "@angular/http";
 import {FormsModule} from "@angular/forms";
-import {UserComponent} from "./user.component";
+import {UserSearchComponent} from "./user-search.component";
+import {UsersComponent} from "./users.component";
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
-        HttpModule
+        HttpModule,
+        AppRoutingModule
     ],
     declarations: [
         AppComponent,
-        UserComponent
+        UsersComponent,
+        UserSearchComponent
     ],
     providers: [UserService],
     bootstrap: [AppComponent]

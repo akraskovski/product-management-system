@@ -15,3 +15,7 @@ dependencies {
     compile 'org.hibernate:hibernate-core:5.2.6.Final'
     compile 'ch.qos.logback:logback-classic:1.1.9'
 }
+
+war {
+    from "client/dist"
+}

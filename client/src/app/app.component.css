@@ -1,26 +1,25 @@
-:host {
-  display: block;
-}
-
-header {
-  background-color: #fff;
-  padding: 16px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
-}
-
-main {
-  padding: 1em;
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
+h1 {
   margin-top: 50px;
-  display: block;
 }
 
-footer {
-  text-align: center;
-  font-size: 0.8em;
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+nav a:visited, a:link {
+  color: #34378b;
+}
+
+nav a:hover {
+  color: #000000;
+  background-color: #c4c5f1;
+}
+
+nav a.active {
+  color: #c6c0e5;
 }

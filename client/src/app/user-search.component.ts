@@ -4,9 +4,9 @@ import {UserService} from "./user.service";
 
 @Component({
     selector: 'user-component',
-    templateUrl: './user.component.html'
+    templateUrl: './user-search.component.html'
 })
-export class UserComponent {
+export class UserSearchComponent {
     findUser: User;
     userName: string;
 
