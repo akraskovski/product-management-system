@@ -16,7 +16,8 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.1.9'
 }
 
-war.dependsOn 'client:npm_run_build' 
+war.dependsOn 'client:npm_run_build'
+
 war {
     from "client/dist"
 }

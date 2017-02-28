@@ -30,19 +30,16 @@ module.exports = function makeWebpackConfig() {
 
     config.module = {
         rules: [
-            // Support for .ts files.
             {
                 test: /\.ts$/,
                 loaders: ['awesome-typescript-loader?', 'angular2-template-loader', '@angularclass/hmr-loader'],
             },
 
-            // copy those assets to output
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader?name=fonts/[name].[hash].[ext]?'
+                loader: 'file-loader?name=fonts/[name].[ext]?'
             },
 
-            // Support for *.json files.
             {test: /\.json$/, loader: 'json-loader'},
 
             {
@@ -60,7 +57,6 @@ module.exports = function makeWebpackConfig() {
                 loader: 'raw-loader!postcss-loader'
             },
 
-            // support for .html as raw text
             {
                 test: /\.html$/,
                 loader: 'raw-loader',
@@ -103,18 +99,15 @@ module.exports = function makeWebpackConfig() {
             chunksSortMode: 'dependency'
         }),
 
-        new ExtractTextPlugin({filename: 'css/[name].css', disable: false})
-    );
-
-    // Add build specific plugins
-    config.plugins.push(
         new webpack.NoEmitOnErrorsPlugin(),
 
         new webpack.optimize.UglifyJsPlugin({sourceMap: true, mangle: {keep_fnames: true}}),
 
         new CopyWebpackPlugin([{
             from: root('src/public')
-        }])
+        }]),
+
+        new ExtractTextPlugin({filename: 'css/[name].css', disable: false})
     );
 
     config.devServer = {
@@ -127,7 +120,6 @@ module.exports = function makeWebpackConfig() {
     return config;
 }();
 
-// Helper functions
 function root(args) {
     args = Array.prototype.slice.call(arguments, 0);
     return path.join.apply(path, [__dirname].concat(args));

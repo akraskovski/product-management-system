@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
-    <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring-context.xml</param-value>
     </context-param>
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!-- Processes application requests -->
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>
@@ -22,4 +22,5 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
 </web-app>
