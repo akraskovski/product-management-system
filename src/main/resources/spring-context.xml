@@ -23,6 +23,11 @@
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>
         <property name="packagesToScan" value="by.intexsoft.model"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.default_schema">${db.schema}</prop>
+            </props>
+        </property>
     </bean>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -35,5 +40,6 @@
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="emf"/>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 </beans>
