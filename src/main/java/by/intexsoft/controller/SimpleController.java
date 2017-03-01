@@ -50,11 +50,11 @@ public class SimpleController {
      * Find user in database with setting name in browser
      * @return entity of {@link User}
      */
-    @RequestMapping("/users/{name}")
-    public User loadUser(@PathVariable String name) {
-        LOGGER.info("Start loadUser: " + name);
+    @RequestMapping("/users/{username}")
+    public User loadUser(@PathVariable String username) {
+        LOGGER.info("Start loadUser: " + username);
         try {
-            return userService.findUser(name);
+            return userService.findUser(username);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in getUserByName. " + e.getLocalizedMessage());
             return null;

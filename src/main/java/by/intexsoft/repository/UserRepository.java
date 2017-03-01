@@ -13,9 +13,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * find {@link User} from database by name
-     * @param name of user
+     * @param username of user
      * @return {@link User}
      */
-    @Query("select u from User u where u.name = :username")
-    User findUserByName(@Param("username") String name);
+    @Query("select u from User u where u.username = :username")
+    User findUserByUsername(@Param("username") String username);
 }

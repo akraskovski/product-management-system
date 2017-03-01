@@ -17,8 +17,8 @@ export class UserService {
             .catch(this.handleError);
     }
 
-    getUserByName(name: string): Promise<User> {
-        return this.http.get(this.usersUrl + '/' + name)
+    getUserByUsername(inputText: string): Promise<User> {
+        return this.http.get(this.usersUrl + '/' + inputText)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);

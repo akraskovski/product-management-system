@@ -5,15 +5,21 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.*;
 
 /**
- * Description entity by database table "users"
+ * Description entity by database table "user"
  */
 @Entity
-@Table(name = "users")
+@Table(schema = "products")
 public class User extends AbstractPersistable<Integer> {
 
     /**
      * User's name field
      */
     @Column
-    public String name;
+    public String username;
+
+    /**
+     * User's password field
+     */
+    @Column
+    public String password;
 }

@@ -6,6 +6,4 @@
 /out/
 /gradlew
 /gradlew.bat
-settings.gradle
 npm-debug.log
-client/npm-debug.log

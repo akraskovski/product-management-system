@@ -15,10 +15,10 @@ public interface UserService {
     List<User> findAllUsers();
 
     /**
-     * Find one first user by name
+     * Find one first user by username
      * @return copy of {@link User}
      */
-    User findUser(String name);
+    User findUser(String username);
 
     /**
      * Save {@link User} entity to database table

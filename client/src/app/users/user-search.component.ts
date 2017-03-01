@@ -8,18 +8,19 @@ import {UserService} from "./user.service";
 })
 export class UserSearchComponent {
     findUser: User;
-    userName: string;
+    inputText: string;
 
     constructor(private userService: UserService) {
     }
 
-    getUserByName(): void {
-        this.userService.getUserByName(this.userName)
+    loadUserByUsername(): void {
+        this.userService.getUserByUsername(this.inputText)
             .then(user => {
                 this.findUser = user;
                 alert(`
                     ID: ${this.findUser.id}\n
-                    NAME: ${this.findUser.name}
+                    USERNAME: ${this.findUser.username}\n
+                    PASSWORD: ${this.findUser.password}
                 `);
             });
     }
