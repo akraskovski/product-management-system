@@ -17,6 +17,8 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-config', version: '4.2.1.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.2.1.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.2.1.RELEASE'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
 }
 
 war.dependsOn 'client:npm_run_build'

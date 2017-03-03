@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,7 @@ public class SimpleController {
 
     /**
      * Simple method to print string
+     *
      * @return test string
      */
     @RequestMapping("/hello")
@@ -33,13 +35,14 @@ public class SimpleController {
 
     /**
      * Return json-information about all users in database
+     *
      * @return list of {@link User}s
      */
     @RequestMapping("/users")
     public List<User> loadAllUsers() {
         LOGGER.info("Start loadAllUsers");
         try {
-            return userService.findAllUsers();
+            return userService.findAll();
         } catch (NullPointerException e) {
             LOGGER.error("Exception in getAllUsers. " + e.getLocalizedMessage());
             return null;
@@ -48,13 +51,14 @@ public class SimpleController {
 
     /**
      * Find user in database with setting name in browser
+     *
      * @return entity of {@link User}
      */
     @RequestMapping("/users/{username}")
     public User loadUser(@PathVariable String username) {
         LOGGER.info("Start loadUser: " + username);
         try {
-            return userService.findUser(username);
+            return userService.findByUsername(username);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in getUserByName. " + e.getLocalizedMessage());
             return null;

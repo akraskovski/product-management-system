@@ -9,19 +9,20 @@ import java.util.List;
 public interface UserService {
 
     /**
+     * Save {@link User} entity to database table
+     */
+    User create(User object);
+
+    /**
      * Find all {@link User}s in database
      * @return list of {@link User} from database
      */
-    List<User> findAllUsers();
+    List<User> findAll();
 
     /**
      * Find one first user by username
      * @return copy of {@link User}
      */
-    User findUser(String username);
+    User findByUsername(String username);
 
-    /**
-     * Save {@link User} entity to database table
-     */
-    void saveUser(User user);
 }

@@ -18,17 +18,18 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public List<User> findAllUsers() {
+    public User create(User user) {
+        //user.setCreatedAt(String.valueOf(LocalDateTime.now()));
+        return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public User findUser(String username) {
-        return userRepository.findUserByUsername(username);
-    }
-
-    @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

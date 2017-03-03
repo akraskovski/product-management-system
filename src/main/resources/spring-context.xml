@@ -11,11 +11,13 @@
        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <context:component-scan base-package="by.intexsoft.service"/>
+    <context:component-scan base-package="by.intexsoft.security.service"/>
+    <context:component-scan base-package="by.intexsoft.security.config"/>
 
     <jpa:repositories base-package="by.intexsoft.repository" entity-manager-factory-ref="emf"
                       transaction-manager-ref="transactionManager"/>
 
-    <context:property-placeholder ignore-unresolvable="true" location="classpath:db.properties"/>
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:application.properties"/>
 
     <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
