@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/service")
 public class AuthenticationController {
 
     @Autowired
     private TokenService tokenService;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value="/auth", method = RequestMethod.POST)
     public ResponseEntity<?> authenticate(@RequestBody LoginDTO dto) {
         String token = tokenService.getToken(dto.username, dto.password);
         if (token != null) {
