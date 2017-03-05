@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
-import {User} from "./model/user";
+import {User} from "../model/user";
 import {UserService} from "./user.service";
 
 @Component({
-    selector: 'user-component',
+    selector: 'user-search-component',
     templateUrl: './user-search.component.html'
 })
 export class UserSearchComponent {

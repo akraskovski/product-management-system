@@ -19,7 +19,7 @@ public class AuthenticationController {
     @Autowired
     private TokenService tokenService;
 
-    @RequestMapping(value="/auth", method = RequestMethod.POST)
+    @RequestMapping(value="/login", method = RequestMethod.POST)
     public ResponseEntity<?> authenticate(@RequestBody LoginDTO dto) {
         String token = tokenService.getToken(dto.username, dto.password);
         if (token != null) {

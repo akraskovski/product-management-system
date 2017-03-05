@@ -1,0 +1,20 @@
+<h3>Login page</h3>
+<form novalidate [formGroup]="user" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" formControlName="username" required/>
+        <div *ngIf="user.get('username').hasError('required') && user.get('username').touched">
+            Username is required
+        </div>
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" formControlName="password" required/>
+        <div *ngIf="user.get('password').hasError('required') && user.get('password').touched">
+            Password is required
+        </div>
+    </div>
+    <div>
+        <button type="submit" [disabled]="user.invalid">Login</button>
+    </div>
+</form>

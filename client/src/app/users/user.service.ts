@@ -1,24 +1,23 @@
 import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
-import {User} from "./model/user";
+import {User} from "../model/user";
+import {environment} from "../constants/environment";
 
 @Injectable()
 export class UserService {
 
-    private usersUrl: string = 'service/users';
-
     constructor(private http: Http) { }
 
     getUsers(): Promise<User[]> {
-        return this.http.get(this.usersUrl)
+        return this.http.get(environment.USERS_URL)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);
     }
 
     getUserByUsername(inputText: string): Promise<User> {
-        return this.http.get(this.usersUrl + '/' + inputText)
+        return this.http.get(environment.USERS_URL + '/' + inputText)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);

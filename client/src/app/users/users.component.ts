@@ -1,9 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {User} from "./model/user";
+import {User} from "../model/user";
 import {UserService} from "./user.service";
 
 @Component({
-    selector: 'user-search-component',
+    selector: 'users-component',
     templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnInit{
