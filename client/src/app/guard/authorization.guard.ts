@@ -14,6 +14,7 @@ export class AuthorizationGuard implements CanActivate {
         if (localStorage.getItem("currentUser")) {
             return true;
         }
+        alert('Please login first!');
         this.router.navigate(['/login']);
         return false;
     }

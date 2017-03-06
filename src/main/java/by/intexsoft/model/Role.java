@@ -11,6 +11,5 @@ public class Role extends AbstractPersistable<Integer> {
 
     @Column
     @Enumerated(EnumType.STRING)
-    public Authority role;
-
+    public Authority name;
 }

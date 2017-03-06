@@ -16,8 +16,7 @@ public class UserAuthentication implements Authentication {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //temp
-        return null;
+        return user.getAuthorities();
     }
 
     @Override

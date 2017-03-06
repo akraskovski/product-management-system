@@ -15,7 +15,7 @@ export class LoginService {
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
 
-        return this.http.post(environment.URL, body, options)
+        return this.http.post(environment.LOGIN_URL, body, options)
             .map((response: Response) => {
                 let token = response.json() && response.json().token;
                 if (token) {

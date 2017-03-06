@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * Handle requests for authentication operations
+ * Works with {@link TokenService}
+ */
 @RestController
 @RequestMapping("/service")
 public class AuthenticationController {
@@ -19,6 +22,14 @@ public class AuthenticationController {
     @Autowired
     private TokenService tokenService;
 
+    /**
+     * Login method
+     * Parse income {@link LoginDTO} object
+     * Find {@link by.intexsoft.model.User} in database by username
+     * Generate token from {@link TokenService}
+     * @param dto
+     * @return {@link TokenDTO} model
+     */
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public ResponseEntity<?> authenticate(@RequestBody LoginDTO dto) {
         String token = tokenService.getToken(dto.username, dto.password);

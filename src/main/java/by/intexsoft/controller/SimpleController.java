@@ -42,7 +42,8 @@ public class SimpleController {
     public List<User> loadAllUsers() {
         LOGGER.info("Start loadAllUsers");
         try {
-            return userService.findAll();
+            List<User> users = userService.findAll();
+            return users;
         } catch (NullPointerException e) {
             LOGGER.error("Exception in getAllUsers. " + e.getLocalizedMessage());
             return null;

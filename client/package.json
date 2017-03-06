@@ -6,8 +6,7 @@
     "clean": "rimraf node_modules dist && npm cache clean",
     "watch": "webpack --watch --progress --profile",
     "build": "rimraf dist && webpack --progress --profile --bail",
-    "server": "webpack-dev-server --inline --progress --port 3000",
-    "start": "npm run server"
+    "server": "webpack-dev-server --inline --progress --port 3000"
   },
   "dependencies": {
     "@angular/common": "2.4.7",
