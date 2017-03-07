@@ -23,6 +23,10 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
+        this.authenticate();
+    }
+
+    authenticate(): void {
         this.loginService.login(new User(this.user.value.username, this.user.value.password))
             .subscribe(result => {
                 if (result === true) {
@@ -31,6 +35,5 @@ export class LoginComponent implements OnInit {
                 }
             });
     }
-
 
 }

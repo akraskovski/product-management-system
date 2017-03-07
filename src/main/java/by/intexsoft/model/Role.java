@@ -1,13 +1,12 @@
 package by.intexsoft.model;
 
 import by.intexsoft.model.enums.Authority;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 
 @Entity
 @Table
-public class Role extends AbstractPersistable<Integer> {
+public class Role extends BaseEntity{
 
     @Column
     @Enumerated(EnumType.STRING)

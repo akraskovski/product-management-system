@@ -13,11 +13,7 @@ public interface UserService {
      */
     User create(User object);
 
-    /**
-     * Find all {@link User}s in database
-     * @return list of {@link User} from database
-     */
-    List<User> findAll();
+    User find(Integer id);
 
     /**
      * Find one first user by username
@@ -25,4 +21,13 @@ public interface UserService {
      */
     User findByUsername(String username);
 
+    /**
+     * Find all {@link User}s in database
+     * @return list of {@link User} from database
+     */
+    List<User> findAll();
+
+    User update(Integer id, User object);
+
+    void delete(Integer id);
 }

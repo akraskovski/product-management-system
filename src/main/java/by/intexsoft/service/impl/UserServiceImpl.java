@@ -18,9 +18,18 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User create(User user) {
-        //user.setCreatedAt(String.valueOf(LocalDateTime.now()));
-        return userRepository.save(user);
+    public User create(User object) {
+        return userRepository.save(object);
+    }
+
+    @Override
+    public User find(Integer id) {
+        return userRepository.findOne(id);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
@@ -29,7 +38,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User update(Integer id, User object) {
+        return userRepository.save(object);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        userRepository.delete(id);
     }
 }

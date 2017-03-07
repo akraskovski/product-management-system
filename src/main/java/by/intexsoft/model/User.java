@@ -1,9 +1,7 @@
 package by.intexsoft.model;
 
 import by.intexsoft.model.enums.Authority;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table
-public class User extends AbstractPersistable<Integer>{
+public class User extends BaseEntity {
 
     /**
      * User name field
@@ -29,16 +27,12 @@ public class User extends AbstractPersistable<Integer>{
     @Column
     public String password;
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER, cascade = {
-            CascadeType.MERGE,
-            CascadeType.REFRESH
-    })
-    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")},
-            foreignKey = @ForeignKey(name = "fk_user_role_user1"),
-            inverseJoinColumns = {@JoinColumn(name = "role_id")},
-            inverseForeignKey = @ForeignKey(name = "fk_user_role_role1"),
-            uniqueConstraints = @UniqueConstraint(name = "user_role_pkey",
-                    columnNames = {"user_id", "role_id"}))
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
     private List<Role> roles;
 
     /**

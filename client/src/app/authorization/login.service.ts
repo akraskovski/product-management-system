@@ -20,6 +20,7 @@ export class LoginService {
                 let token = response.json() && response.json().token;
                 if (token) {
                     this.token = token;
+                    alert('Welcome, ' + user.username);
                     localStorage.setItem('currentUser', JSON.stringify({username: user.username, token: token}));
                     return true;
                 } else {
