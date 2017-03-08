@@ -32,7 +32,7 @@ public class TokenServiceImpl implements TokenService {
         Map<String, Object> tokenData = new HashMap<>();
         if (password.equals(user.password)) {
             tokenData.put("clientType", "user");
-            tokenData.put("userID", user.getId());
+            tokenData.put("userID", user.id);
             tokenData.put("username", user.username);
             tokenData.put("token_create_date", LocalDateTime.now());
             Calendar calendar = Calendar.getInstance();

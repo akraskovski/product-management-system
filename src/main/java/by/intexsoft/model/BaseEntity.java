@@ -1,20 +1,18 @@
 package by.intexsoft.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
+/**
+ * Base abstract entity
+ * Contains field id with generated type
+ */
 @MappedSuperclass
 public abstract class BaseEntity {
 
+    /**
+     * Id field for every entity
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public Integer id;
 }

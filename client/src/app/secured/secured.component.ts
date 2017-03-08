@@ -7,16 +7,11 @@ import {SecuredService} from "./secured.service";
 })
 export class SecuredComponent {
 
-    private data;
-
     constructor(private securedService: SecuredService) {
     }
 
     onSubmit() {
         this.securedService.getMessage()
-            .subscribe(responce => {
-                this.data = responce;
-                alert(this.data);
-            });
+            .subscribe(responce => alert(responce));
     }
 }

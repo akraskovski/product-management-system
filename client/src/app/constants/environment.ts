@@ -1,5 +1,6 @@
 export const environment = {
-    LOGIN_URL: '/service/login',
+    LOGIN_URL: '/auth/login',
     SECURED_URL: '/service/hello',
-    USERS_URL: '/service/users'
+    USER_URL: '/user',
+    ALL_USERS_URL: '/all'
 };

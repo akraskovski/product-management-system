@@ -15,25 +15,23 @@ import java.util.List;
  * Handles requests for the {@link UserService}
  */
 @RestController
-@RequestMapping("/service")
+@RequestMapping("/user")
 public class UserController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleController.class);
 
     @Autowired
     private UserService userService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleController.class);
-
     /**
      * Return json-information about all users in database
-     *
      * @return list of {@link User}s
      */
-    @RequestMapping("/users")
+    @RequestMapping("/all")
     public List<User> loadAllUsers() {
         LOGGER.info("Start loadAllUsers");
         try {
-            List<User> users = userService.findAll();
-            return users;
+            return userService.findAll();
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllUsers. " + e.getLocalizedMessage());
             return null;
@@ -42,10 +40,9 @@ public class UserController {
     
     /**
      * Find user in database with setting name in browser
-     *
      * @return entity of {@link User}
      */
-    @RequestMapping("/users/{username}")
+    @RequestMapping("/{username}")
     public User loadUser(@PathVariable String username) {
         LOGGER.info("Start loadUser: " + username);
         try {

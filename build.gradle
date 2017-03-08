@@ -14,11 +14,11 @@ dependencies {
     compile 'org.postgresql:postgresql:9.4.1212.jre7'
     compile 'org.hibernate:hibernate-core:5.2.6.Final'
     compile 'ch.qos.logback:logback-classic:1.1.9'
-    compile group: 'org.springframework.security', name: 'spring-security-config', version: '4.2.1.RELEASE'
-    compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.2.1.RELEASE'
-    compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.2.1.RELEASE'
-    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+    compile 'org.springframework.security:spring-security-config:4.2.1.RELEASE'
+    compile 'org.springframework.security:spring-security-web:4.2.1.RELEASE'
+    compile 'org.springframework.security:spring-security-core:4.2.1.RELEASE'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'io.jsonwebtoken:jjwt:0.7.0'
 }
 
 war.dependsOn 'client:npm_run_build'

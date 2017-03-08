@@ -5,6 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+/**
+ * Model representation for security
+ */
 public class UserAuthentication implements Authentication {
 
     private final User user;

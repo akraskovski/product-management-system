@@ -10,14 +10,14 @@ export class UserService {
     constructor(private http: Http) { }
 
     getUsers(): Promise<User[]> {
-        return this.http.get(environment.USERS_URL)
+        return this.http.get(environment.USER_URL + environment.ALL_USERS_URL)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);
     }
 
     getUserByUsername(inputText: string): Promise<User> {
-        return this.http.get(environment.USERS_URL + '/' + inputText)
+        return this.http.get(environment.USER_URL + '/' + inputText)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);

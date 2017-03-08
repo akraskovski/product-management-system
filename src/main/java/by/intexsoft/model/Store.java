@@ -3,14 +3,23 @@ package by.intexsoft.model;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Description database table "store"
+ */
 @Entity
 @Table
 public class Store extends BaseEntity {
 
+    /**
+     * Store name
+     */
     @Column
     public String name;
 
-    @ManyToMany(targetEntity = Stock.class, fetch = FetchType.LAZY)
+    /**
+     * ManyToMany relation to {@link Stock} entities
+     */
+    @ManyToMany(targetEntity = Stock.class, fetch = FetchType.EAGER)
     @JoinTable(
             name = "stock_store",
             joinColumns = {@JoinColumn(name = "store_id")},

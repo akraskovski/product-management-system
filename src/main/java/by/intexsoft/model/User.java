@@ -16,17 +16,20 @@ import java.util.List;
 public class User extends BaseEntity {
 
     /**
-     * User name field
+     * User name
      */
     @Column
     public String username;
 
     /**
-     * User password field
+     * User password
      */
     @Column
     public String password;
 
+    /**
+     * ManyToMany relation to {@link Role} entities
+     */
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -36,7 +39,7 @@ public class User extends BaseEntity {
     private List<Role> roles;
 
     /**
-     * User collection of roles
+     * Getter method returns {@link User}'s collection of role names
      */
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<Authority> currentRoles = new ArrayList<>();
