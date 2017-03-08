@@ -24,9 +24,6 @@ import org.slf4j.LoggerFactory;
 public class SimpleController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private ProductService productService;
 
     @Autowired
@@ -46,23 +43,6 @@ public class SimpleController {
     public String sayHello() {
         LOGGER.info("Start hello");
         return "Hello, my name is Artem";
-    }
-
-    /**
-     * Return json-information about all users in database
-     *
-     * @return list of {@link User}s
-     */
-    @RequestMapping("/users")
-    public List<User> loadAllUsers() {
-        LOGGER.info("Start loadAllUsers");
-        try {
-            List<User> users = userService.findAll();
-            return users;
-        } catch (NullPointerException e) {
-            LOGGER.error("Exception in loadAllUsers. " + e.getLocalizedMessage());
-            return null;
-        }
     }
 
     @RequestMapping("/products")
@@ -97,22 +77,6 @@ public class SimpleController {
             return stockList;
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllStocks. " + e.getLocalizedMessage());
-            return null;
-        }
-    }
-
-    /**
-     * Find user in database with setting name in browser
-     *
-     * @return entity of {@link User}
-     */
-    @RequestMapping("/users/{username}")
-    public User loadUser(@PathVariable String username) {
-        LOGGER.info("Start loadUser: " + username);
-        try {
-            return userService.findByUsername(username);
-        } catch (NullPointerException e) {
-            LOGGER.error("Exception in getUserByName. " + e.getLocalizedMessage());
             return null;
         }
     }
