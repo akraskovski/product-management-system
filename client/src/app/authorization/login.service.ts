@@ -5,13 +5,15 @@ import {environment} from "../constants/environment";
 
 @Injectable()
 export class LoginService {
-    private token: String;
+    //private token: String;
+    private currentUser: User;
 
     constructor(private http: Http) {
     }
 
     login(user: User) {
-        let body = JSON.stringify(user);
+        this.currentUser = user;
+        let body = JSON.stringify({username: user.username, password: user.password});
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
 
@@ -19,9 +21,12 @@ export class LoginService {
             .map((response: Response) => {
                 let token = response.json() && response.json().token;
                 if (token) {
-                    this.token = token;
-                    alert('Welcome, ' + user.username);
-                    localStorage.setItem('currentUser', JSON.stringify({username: user.username, token: token}));
+                    this.currentUser.token = token;
+                    this.currentUser.roles = ['ROLE_ADMIN'];
+                    alert('Welcome, ' + this.currentUser.username);
+                    alert('ROLES:' + this.currentUser.roles);
+                    //localStorage.setItem('currentUser', JSON.stringify({username: user.username, token: token}));
+                    localStorage.setItem(environment.USER_KEY, JSON.stringify(this.currentUser));
                     return true;
                 } else {
                     return false;
@@ -30,7 +35,13 @@ export class LoginService {
     }
 
     logout(): void {
-        this.token = null;
-        localStorage.removeItem('currentUser');
+        //this.token = null;
+        this.currentUser = null;
+        localStorage.removeItem(environment.USER_KEY);
+    }
+
+    get userRoles() : Array<string> {
+        const user = JSON.parse(localStorage.getItem(environment.USER_KEY));
+        return user ? user.roles : [];
     }
 }

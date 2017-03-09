@@ -18,7 +18,6 @@ export class UserSearchComponent {
             .then(user => {
                 this.findUser = user;
                 alert(`
-                    ID: ${this.findUser.id}\n
                     USERNAME: ${this.findUser.username}\n
                     PASSWORD: ${this.findUser.password}
                 `);

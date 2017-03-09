@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {CanActivate, Router} from "@angular/router";
+import {environment} from "../constants/environment";
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
@@ -11,7 +12,7 @@ export class AuthorizationGuard implements CanActivate {
     }
 
     canActivate() {
-        if (localStorage.getItem("currentUser")) {
+        if (localStorage.getItem(environment.USER_KEY)) {
             return true;
         }
         alert('Please login first!');

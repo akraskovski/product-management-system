@@ -7,7 +7,7 @@ module.exports = {
     entry: {
         'polyfills': './src/polyfills.ts',
         'vendor': './src/vendor.ts',
-        'app': './src/main.ts' // our angular app
+        'app': './src/main.ts'
     },
 
     output: {
@@ -34,14 +34,14 @@ module.exports = {
     },
 
     plugins: [
+        //delete imports from app which defined in this files
         new CommonsChunkPlugin({
-            name: ['vendor', 'polyfills']
+            names: ['vendor', 'polyfills']
         }),
 
         // Inject script and link tags into html files
         new HtmlWebpackPlugin({
-            template: './src/index.html',
-            chunksSortMode: 'dependency'
+            template: './src/index.html'
         })
     ],
 
@@ -51,7 +51,9 @@ module.exports = {
         quiet: true,
         stats: 'minimal', // none (or false), errors-only, minimal, normal (or true) and verbose
         proxy: {
-            '/service/*': 'http://localhost:8081/SpringRestHibernateJpa'
+            '/user/*': 'http://localhost:8081/SpringRestHibernateJpa',
+            '/service/*': 'http://localhost:8081/SpringRestHibernateJpa',
+            '/auth/*': 'http://localhost:8081/SpringRestHibernateJpa'
         }
     }
 };

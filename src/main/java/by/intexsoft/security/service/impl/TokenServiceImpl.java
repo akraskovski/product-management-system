@@ -24,6 +24,8 @@ public class TokenServiceImpl implements TokenService {
     @Autowired
     private UserService userService;
 
+
+    //Generate fix
     @Override
     public String getToken(String username, String password) {
         if (username == null || password == null)

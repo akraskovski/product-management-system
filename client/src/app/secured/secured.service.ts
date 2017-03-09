@@ -9,9 +9,9 @@ export class SecuredService {
     }
 
     getMessage() {
-        let userToken = JSON.parse(localStorage.getItem("currentUser")).token;
-        let headers = new Headers({'x-auth-token': userToken});
-        let options = new RequestOptions({headers: headers});
+        const userToken = JSON.parse(localStorage.getItem(environment.USER_KEY)).token;
+        const headers = new Headers({'x-auth-token': userToken});
+        const options = new RequestOptions({headers: headers});
         return this.http.get(environment.SECURED_URL, options)
             .map(response => response.text())
             .catch(this.handleError);
