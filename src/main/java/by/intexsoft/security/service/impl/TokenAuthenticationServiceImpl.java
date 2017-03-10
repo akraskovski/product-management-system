@@ -46,12 +46,6 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
         return null;
     }
 
-    @Override
-    public void addAuthentication(HttpServletResponse response, UserDetails userDetails) {
-        final User user = (User) userDetails;
-        response.addHeader(AUTH_HEADER_NAME, tokenService.getToken(user.username, user.password));
-    }
-
     private User getUserFromToken(Jws<Claims> tokenData) {
         try {
             return userService.findByUsername(tokenData.getBody().get("username").toString());

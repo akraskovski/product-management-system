@@ -11,6 +11,7 @@ export class AuthorizationGuard implements CanActivate {
         this.router = router;
     }
 
+
     canActivate() {
         if (localStorage.getItem(environment.USER_KEY)) {
             return true;

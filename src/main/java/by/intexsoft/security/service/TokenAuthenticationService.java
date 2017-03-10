@@ -9,6 +9,4 @@ import javax.servlet.http.HttpServletResponse;
 public interface TokenAuthenticationService {
 
     Authentication authenticate(HttpServletRequest request);
-
-    void addAuthentication(HttpServletResponse response, UserDetails userDetails);
 }

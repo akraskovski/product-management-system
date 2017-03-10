@@ -10,6 +10,8 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
     user: FormGroup;
+    loading = false;
+    error = '';
 
     constructor(private loginService: LoginService, private router: Router) {
     }
@@ -27,11 +29,15 @@ export class LoginComponent implements OnInit {
     }
 
     authenticate(): void {
+        this.loading = true;
         this.loginService.login(new User(this.user.value.username, this.user.value.password))
             .subscribe(result => {
                 if (result === true) {
-                    console.log("You're logged in!");
+                    //console.log("You're logged in!");
                     this.router.navigate(['/secured']);
+                } else {
+                    this.error = 'Username or password is incorrect';
+                    this.loading = false;
                 }
             });
     }
