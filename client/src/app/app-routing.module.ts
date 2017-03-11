@@ -11,7 +11,7 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'all-users', component: UsersComponent},
     {path: 'search', component: UserSearchComponent},
-    {path: 'secured', component: SecuredComponent, canActivate: [AuthorizationGuard]}
+    {path: 'secured', component: SecuredComponent, canActivate: [AuthorizationGuard], data: { roles: ['ROLE_USER']} }
 ];
 
 @NgModule({

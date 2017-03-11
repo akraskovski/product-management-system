@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
-import {CanActivate, Router} from "@angular/router";
+import {CanActivate, Router, ActivatedRouteSnapshot} from "@angular/router";
 import {environment} from "../constants/environment";
+import {User} from "../model/user";
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
@@ -11,13 +12,17 @@ export class AuthorizationGuard implements CanActivate {
         this.router = router;
     }
 
+    canActivate(route: ActivatedRouteSnapshot) {
+        let roles = route.data["roles"] as Array<string>;
+        let user: User = JSON.parse(localStorage.getItem(environment.USER_KEY));
 
-    canActivate() {
-        if (localStorage.getItem(environment.USER_KEY)) {
-            return true;
+        for(let i = 0; i < roles.length; i++){
+            if(roles[i] == user.roles[0] ){
+                return true;
+            }
         }
-        alert('Please login first!');
-        this.router.navigate(['/login']);
+        alert('You dont have permissions!');
+        this.router.navigate(['/']);
         return false;
     }
 }
