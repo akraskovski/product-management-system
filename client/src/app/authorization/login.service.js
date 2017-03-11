@@ -23,9 +23,8 @@ var LoginService = (function () {
             var token = response.json() && response.json().token;
             if (token) {
                 _this.currentUser.token = token;
-                _this.currentUser.roles = ['ROLE_ADMIN'];
+                _this.currentUser.roles = ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER'];
                 alert('Welcome, ' + _this.currentUser.username);
-                alert('ROLES:' + _this.currentUser.roles);
                 //localStorage.setItem('currentUser', JSON.stringify({username: user.username, token: token}));
                 localStorage.setItem(environment_1.environment.USER_KEY, JSON.stringify(_this.currentUser));
                 return true;
