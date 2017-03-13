@@ -12,12 +12,10 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class TokenAuthenticationServiceImpl implements TokenAuthenticationService {
@@ -26,9 +24,6 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
     private String secretKey;
 
     private final static String AUTH_HEADER_NAME = "x-auth-token";
-
-    @Autowired
-    private TokenService tokenService;
 
     @Autowired
     private UserService userService;

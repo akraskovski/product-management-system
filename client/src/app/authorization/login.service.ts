@@ -5,7 +5,7 @@ import {environment} from "../constants/environment";
 
 @Injectable()
 export class LoginService {
-    //private token: String;
+
     private currentUser: User;
 
     constructor(private http: Http) {

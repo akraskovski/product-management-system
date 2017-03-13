@@ -2,5 +2,5 @@ package by.intexsoft.security.service;
 
 public interface TokenService {
 
-    String getToken(String username, String password);
+    String generateToken(String username, String password);
 }

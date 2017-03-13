@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
             .subscribe(result => {
                 if (result === true) {
                     //console.log("You're logged in!");
-                    this.router.navigate(['/secured']);
+                    this.router.navigate(['/']);
                 } else {
                     this.error = 'Username or password is incorrect';
                     this.loading = false;

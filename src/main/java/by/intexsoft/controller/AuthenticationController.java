@@ -36,7 +36,7 @@ public class AuthenticationController {
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public ResponseEntity<?> authenticate(@RequestBody LoginDTO dto) {
         LOGGER.info("Start authentication");
-        String token = tokenService.getToken(dto.username, dto.password);
+        String token = tokenService.generateToken(dto.username, dto.password);
         if (token != null) {
             TokenDTO response = new TokenDTO();
             response.token = token;
