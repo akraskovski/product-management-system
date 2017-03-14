@@ -13,23 +13,32 @@ export class AuthorizationGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot) {
-        let roles = route.data["roles"] as Array<string>;
-        let user: User;
-        if (localStorage.getItem(environment.USER_KEY) && roles) {
-            user = JSON.parse(localStorage.getItem(environment.USER_KEY));
+        const roles = route.data["roles"] as Array<string>;
+        const user: User = this.getUser();
+        if (roles.length > 0 && user) {
+            return this.checkRoles(roles, user.roles);
         } else {
+            alert('You dont have permissions!');
+            this.router.navigate(['/']);
             return false;
         }
+    }
 
-        for (let avialableRole = 0; avialableRole < roles.length; avialableRole++) {
-            for (let userRole = 0; userRole < user.roles.length; userRole++)
-                if (roles[avialableRole] == user.roles[userRole]) {
+    private getUser(): User {
+        if (localStorage.getItem(environment.USER_KEY)) {
+            return JSON.parse(localStorage.getItem(environment.USER_KEY));
+        } else {
+            return null;
+        }
+    }
+
+    private checkRoles(avialableRoleList: string[], currentRoleList: string[]): boolean {
+        for (let avialableRole = 0; avialableRole < avialableRoleList.length; avialableRole++) {
+            for (let userRole = 0; userRole < currentRoleList.length; userRole++)
+                if (avialableRoleList[avialableRole] == currentRoleList[userRole]) {
                     return true;
                 }
         }
-
-        alert('You dont have permissions!');
-        this.router.navigate(['/']);
         return false;
     }
 }
