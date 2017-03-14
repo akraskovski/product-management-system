@@ -14,6 +14,7 @@ import {RouterModule} from "@angular/router";
 import {AuthorizationGuard} from "./guard/authorization.guard";
 import {SecuredComponent} from "./secured/secured.component";
 import {SecuredService} from "./secured/secured.service";
+import {HomeComponent} from "./home/home.component";
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import {SecuredService} from "./secured/secured.service";
     ],
     declarations: [
         AppComponent,
+        HomeComponent,
         LoginComponent,
         UsersComponent,
         UserSearchComponent,

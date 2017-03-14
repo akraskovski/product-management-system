@@ -5,9 +5,11 @@ import {UserSearchComponent} from "./users/user-search.component";
 import {LoginComponent} from "./authorization/login.component";
 import {SecuredComponent} from "./secured/secured.component";
 import {AuthorizationGuard} from "./guard/authorization.guard";
+import {HomeComponent} from "./home/home.component";
 
 const routes: Routes = [
-    {path: '', redirectTo: '', pathMatch: 'full'},
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: 'home', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'all-users', component: UsersComponent},
     {path: 'search', component: UserSearchComponent},
