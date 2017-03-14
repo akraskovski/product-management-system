@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
         this.authenticate();
     }
 
-    authenticate(): void {
+    private authenticate(): void {
         this.loading = true;
         this.loginService.login(new User(this.user.value.username, this.user.value.password))
             .subscribe(result => {

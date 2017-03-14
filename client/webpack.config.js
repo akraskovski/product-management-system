@@ -52,6 +52,7 @@ module.exports = {
         stats: 'minimal', // none (or false), errors-only, minimal, normal (or true) and verbose
         proxy: {
             '/user/*': 'http://localhost:8081/SpringRestHibernateJpa',
+            '/product/*': 'http://localhost:8081/SpringRestHibernateJpa',
             '/service/*': 'http://localhost:8081/SpringRestHibernateJpa',
             '/auth/*': 'http://localhost:8081/SpringRestHibernateJpa'
         }

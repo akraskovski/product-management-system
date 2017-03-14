@@ -24,7 +24,6 @@ export class LoginService {
                     this.currentUser.token = token;
                     this.currentUser.roles = ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER'];
                     alert('Welcome, ' + this.currentUser.username);
-                    //localStorage.setItem('currentUser', JSON.stringify({username: user.username, token: token}));
                     localStorage.setItem(environment.USER_KEY, JSON.stringify(this.currentUser));
                     return true;
                 } else {

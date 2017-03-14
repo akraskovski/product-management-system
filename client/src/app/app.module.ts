@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
-import {UserService} from "./users/user.service";
+import {UserService} from "./user/user.service";
 import {HttpModule} from "@angular/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {UserSearchComponent} from "./users/user-search.component";
-import {UsersComponent} from "./users/users.component";
+import {UserSearchComponent} from "./user/user-search.component";
+import {UsersComponent} from "./user/users.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {LoginComponent} from "./authorization/login.component";
 import {LoginService} from "./authorization/login.service";
@@ -15,6 +15,9 @@ import {AuthorizationGuard} from "./guard/authorization.guard";
 import {SecuredComponent} from "./secured/secured.component";
 import {SecuredService} from "./secured/secured.service";
 import {HomeComponent} from "./home/home.component";
+import {ProductComponent} from "./product/product.component";
+import {ProductService} from "./product/product.service";
+import {AllProductsComponent} from "./product/all/all-products.component";
 
 @NgModule({
     imports: [
@@ -32,13 +35,16 @@ import {HomeComponent} from "./home/home.component";
         LoginComponent,
         UsersComponent,
         UserSearchComponent,
-        SecuredComponent
+        SecuredComponent,
+        ProductComponent,
+        AllProductsComponent
     ],
     providers: [
         AuthorizationGuard,
         UserService,
         LoginService,
-        SecuredService
+        SecuredService,
+        ProductService
     ],
     bootstrap: [AppComponent]
 })

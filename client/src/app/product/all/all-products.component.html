@@ -1,0 +1,13 @@
+<h2 align="center">All entites from database</h2>
+
+<div align="center">
+<ul>
+    <li *ngFor="let product of productList">
+        <span>
+            NAME: {{product.name}}.
+            COST: {{product.cost}}.
+            TYPE: {{product.type}}.
+        </span>
+    </li>
+</ul>
+</div>
