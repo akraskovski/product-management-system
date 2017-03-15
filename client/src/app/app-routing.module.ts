@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {Routes, RouterModule} from "@angular/router";
 import {UsersComponent} from "./user/users.component";
-import {UserSearchComponent} from "./user/user-search.component";
+import {UserSearchComponent} from "./user/search/user-search.component";
 import {LoginComponent} from "./authorization/login.component";
 import {SecuredComponent} from "./secured/secured.component";
 import {AuthorizationGuard} from "./guard/authorization.guard";
@@ -9,6 +9,7 @@ import {HomeComponent} from "./home/home.component";
 import {ProductComponent} from "./product/product.component";
 import {AllProductsComponent} from "./product/all/all-products.component";
 import {AddProductComponent} from "./product/add/add-product.component";
+import {ProductSearchComponent} from "./product/search/product-search.component";
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -17,6 +18,7 @@ const routes: Routes = [
     {path: 'product', component: ProductComponent},
     {path: 'all-products', component: AllProductsComponent},
     {path: 'add-product', component: AddProductComponent},
+    {path: 'product-search', component: ProductSearchComponent},
     {path: 'all-users', component: UsersComponent},
     {path: 'search', component: UserSearchComponent},
     {path: 'secured', component: SecuredComponent, canActivate: [AuthorizationGuard], data: { roles: ['ROLE_ADMIN']} }

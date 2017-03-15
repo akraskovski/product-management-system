@@ -6,14 +6,15 @@ import {Product} from "../../model/product";
     selector: 'all-products-component',
     templateUrl: './all-products.component.html'
 })
-export class AllProductsComponent implements OnInit{
+export class AllProductsComponent implements OnInit {
 
     productList: Product[];
 
-    constructor(private productService: ProductService){
+    constructor(private productService: ProductService) {
     }
 
     ngOnInit(): void {
-        this.productService.products.then(productList => this.productList = productList);
+        this.productService.loadAll()
+            .then(productList => this.productList = productList);
     }
 }

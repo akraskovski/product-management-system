@@ -4,7 +4,7 @@ import {AppComponent} from './app.component';
 import {UserService} from "./user/user.service";
 import {HttpModule} from "@angular/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {UserSearchComponent} from "./user/user-search.component";
+import {UserSearchComponent} from "./user/search/user-search.component";
 import {UsersComponent} from "./user/users.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {LoginComponent} from "./authorization/login.component";
@@ -19,6 +19,7 @@ import {ProductComponent} from "./product/product.component";
 import {ProductService} from "./product/product.service";
 import {AllProductsComponent} from "./product/all/all-products.component";
 import {AddProductComponent} from "./product/add/add-product.component";
+import {ProductSearchComponent} from "./product/search/product-search.component";
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import {AddProductComponent} from "./product/add/add-product.component";
         SecuredComponent,
         ProductComponent,
         AllProductsComponent,
-        AddProductComponent
+        AddProductComponent,
+        ProductSearchComponent
     ],
     providers: [
         AuthorizationGuard,

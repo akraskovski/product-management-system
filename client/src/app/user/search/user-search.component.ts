@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
-import {User} from "../model/user";
-import {UserService} from "./user.service";
+import {User} from "../../model/user";
+import {UserService} from "../user.service";
 
 @Component({
     selector: 'user-search-component',
-    templateUrl: './user-search.component.html'
+    templateUrl: 'user-search.component.html'
 })
 export class UserSearchComponent {
     findUser: User;

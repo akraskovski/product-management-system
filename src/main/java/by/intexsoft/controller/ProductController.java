@@ -5,10 +5,7 @@ import by.intexsoft.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +29,21 @@ public class ProductController {
         }
     }
 
+    /**
+     * Find product in database with setting name in browser
+     * @return entity of {@link Product}
+     */
+    @RequestMapping("/{name}")
+    public Product loadProduct(@PathVariable("name") String name) {
+        LOGGER.info("Start loadProduct: " + name);
+        try {
+            return productService.findByName(name);
+        } catch (NullPointerException e) {
+            LOGGER.error("Exception in loadProduct. " + e.getLocalizedMessage());
+            return null;
+        }
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public void createProduct(@RequestBody Product product) {
         LOGGER.info("Start createProduct");
@@ -42,8 +54,13 @@ public class ProductController {
         }
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void deleteProduct(@RequestBody Product product) {
-
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteProduct(@PathVariable("id") Integer id) {
+        LOGGER.info("Start deleteProduct");
+        try {
+            productService.delete(id);
+        } catch (Exception e) {
+            LOGGER.info("Error in deleteProduct. " + e.getLocalizedMessage());
+        }
     }
 }

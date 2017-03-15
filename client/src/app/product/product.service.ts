@@ -9,8 +9,15 @@ export class ProductService {
     constructor(private http: Http) {
     }
 
-    get products(): Promise<Product[]> {
+    loadAll(): Promise<Product[]> {
         return this.http.get(environment.PRODUCT_URL)
+            .toPromise()
+            .then(responce => responce.json())
+            .catch(this.handleError);
+    }
+
+    loadByName(name: string): Promise<Product> {
+        return this.http.get(environment.PRODUCT_URL + name)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);
@@ -24,7 +31,6 @@ export class ProductService {
             return true;
         });
     }
-
 
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
