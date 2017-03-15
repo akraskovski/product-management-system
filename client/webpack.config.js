@@ -25,7 +25,6 @@ module.exports = {
                 test: /\.ts$/,
                 loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
             },
-
             {
                 test: /\.(html|css)$/,
                 loader: 'raw-loader'
@@ -49,12 +48,8 @@ module.exports = {
         contentBase: './src',
         historyApiFallback: true,
         quiet: true,
-        stats: 'minimal', // none (or false), errors-only, minimal, normal (or true) and verbose
         proxy: {
-            '/user/*': 'http://localhost:8081/SpringRestHibernateJpa',
-            '/product/*': 'http://localhost:8081/SpringRestHibernateJpa',
-            '/service/*': 'http://localhost:8081/SpringRestHibernateJpa',
-            '/auth/*': 'http://localhost:8081/SpringRestHibernateJpa'
+            '/**': 'http://localhost:8081/SpringRestHibernateJpa'
         }
     }
 };

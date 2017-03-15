@@ -1,12 +1,12 @@
 import {Component, OnInit} from "@angular/core";
-import {User} from "../model/user";
-import {UserService} from "./user.service";
+import {User} from "../../model/user";
+import {UserService} from "../user.service";
 
 @Component({
-    selector: 'users-component',
-    templateUrl: './users.component.html'
+    selector: 'all-users-component',
+    templateUrl: './all-users.component.html'
 })
-export class UsersComponent implements OnInit{
+export class AllUsersComponent implements OnInit{
     users: User[];
 
     constructor(private userService: UserService) { }

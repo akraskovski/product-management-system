@@ -5,7 +5,6 @@ import {UserService} from "./user/user.service";
 import {HttpModule} from "@angular/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {UserSearchComponent} from "./user/search/user-search.component";
-import {UsersComponent} from "./user/users.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {LoginComponent} from "./authorization/login.component";
 import {LoginService} from "./authorization/login.service";
@@ -20,6 +19,8 @@ import {ProductService} from "./product/product.service";
 import {AllProductsComponent} from "./product/all/all-products.component";
 import {AddProductComponent} from "./product/add/add-product.component";
 import {ProductSearchComponent} from "./product/search/product-search.component";
+import {UserComponent} from "./user/user.component";
+import {AllUsersComponent} from "./user/all/all-users.component";
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import {ProductSearchComponent} from "./product/search/product-search.component"
         AppComponent,
         HomeComponent,
         LoginComponent,
-        UsersComponent,
+        UserComponent,
+        AllUsersComponent,
         UserSearchComponent,
         SecuredComponent,
         ProductComponent,

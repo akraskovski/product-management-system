@@ -4,7 +4,6 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf node_modules dist && npm cache clean",
-    "watch": "webpack --watch --progress --profile",
     "build": "rimraf dist && webpack --progress --profile --bail",
     "server": "webpack-dev-server --inline --progress --port 3000"
   },
