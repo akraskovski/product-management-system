@@ -33,7 +33,6 @@ export class LoginService {
     }
 
     logout(): void {
-        //this.token = null;
         this.currentUser = null;
         localStorage.removeItem(environment.USER_KEY);
     }

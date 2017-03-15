@@ -10,7 +10,7 @@ export class ProductService {
     }
 
     get products(): Promise<Product[]> {
-        return this.http.get(environment.PRODUCT_URL + environment.ALL_URL)
+        return this.http.get(environment.PRODUCT_URL)
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);
@@ -20,10 +20,11 @@ export class ProductService {
         let body = JSON.stringify({name: product.name, cost: product.cost, type: product.type});
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
-        return this.http.put(environment.PRODUCT_URL + environment.ADD_URL, body, options).map(() => {
+        return this.http.put(environment.PRODUCT_URL, body, options).map(() => {
             return true;
         });
     }
+
 
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);

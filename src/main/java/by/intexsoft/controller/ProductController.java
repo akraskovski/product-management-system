@@ -21,7 +21,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping("/all")
+    @RequestMapping("/")
     public List<Product> loadAllProducts() {
         LOGGER.info("Start loadAllProducts");
         try {
@@ -32,7 +32,7 @@ public class ProductController {
         }
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.PUT)
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
     public void createProduct(@RequestBody Product product) {
         LOGGER.info("Start createProduct");
         try {
@@ -40,5 +40,10 @@ public class ProductController {
         } catch (Exception e) {
             LOGGER.info("Error in createProduct. " + e.getLocalizedMessage());
         }
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    public void deleteProduct(@RequestBody Product product) {
+
     }
 }

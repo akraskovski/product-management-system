@@ -27,7 +27,7 @@ public class UserController {
      * Return json-information about all users in database
      * @return list of {@link User}s
      */
-    @RequestMapping("/all")
+    @RequestMapping("/")
     public List<User> loadAllUsers() {
         LOGGER.info("Start loadAllUsers");
         try {
