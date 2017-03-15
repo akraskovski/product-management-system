@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
+import {Http, Headers, RequestOptions} from "@angular/http";
 import {environment} from "../constants/environment";
 import {Product} from "../model/product";
 
@@ -14,6 +14,15 @@ export class ProductService {
             .toPromise()
             .then(responce => responce.json())
             .catch(this.handleError);
+    }
+
+    add(product: Product) {
+        let body = JSON.stringify({name: product.name, cost: product.cost, type: product.type});
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({headers: headers});
+        return this.http.put(environment.PRODUCT_URL + environment.ADD_URL, body, options).map(() => {
+            return true;
+        });
     }
 
     private handleError(error: any): Promise<any> {

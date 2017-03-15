@@ -4,5 +4,7 @@ export const environment = {
     USER_URL: '/user',
     PRODUCT_URL: '/product',
     ALL_URL: '/all',
+    ADD_URL: '/add',
+
     USER_KEY: "CURRENT_USER"
 };

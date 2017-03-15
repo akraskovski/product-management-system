@@ -18,6 +18,7 @@ import {HomeComponent} from "./home/home.component";
 import {ProductComponent} from "./product/product.component";
 import {ProductService} from "./product/product.service";
 import {AllProductsComponent} from "./product/all/all-products.component";
+import {AddProductComponent} from "./product/add/add-product.component";
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import {AllProductsComponent} from "./product/all/all-products.component";
         UserSearchComponent,
         SecuredComponent,
         ProductComponent,
-        AllProductsComponent
+        AllProductsComponent,
+        AddProductComponent
     ],
     providers: [
         AuthorizationGuard,

@@ -1,6 +1,5 @@
 package by.intexsoft.controller;
 
-import by.intexsoft.dto.ProductDTO;
 import by.intexsoft.model.Product;
 import by.intexsoft.service.ProductService;
 import org.slf4j.Logger;
