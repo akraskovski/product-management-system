@@ -34,7 +34,7 @@ public class ProductController {
      * @return entity of {@link Product}
      */
     @RequestMapping("/{name}")
-    public Product loadProduct(@PathVariable("name") String name) {
+    public List<Product> loadProducts(@PathVariable("name") String name) {
         LOGGER.info("Start loadProduct: " + name);
         try {
             return productService.findByName(name);

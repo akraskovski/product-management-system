@@ -8,7 +8,7 @@ import {ProductService} from "../product.service";
 })
 export class ProductSearchComponent {
 
-    findProduct: Product;
+    findProducts: Product[];
     inputText: string;
 
     constructor(private productService: ProductService) {
@@ -17,12 +17,8 @@ export class ProductSearchComponent {
     loadProductByName(): void {
         this.productService.loadByName(this.inputText)
             .then(responce => {
-                this.findProduct = responce;
-                alert(`
-                    NAME: ${this.findProduct.name}\n
-                    COST: ${this.findProduct.cost}\n
-                    TYPE: ${this.findProduct.type}
-                `);
+                this.findProducts = responce;
+                
             })
     }
 }

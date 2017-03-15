@@ -1,3 +1,11 @@
 <h2>Search product by name</h2>
 <input type="text" [(ngModel)]='inputText'/>
 <button (click)="loadProductByName()">Find</button>
+
+<div *ngIf="findProducts">
+    <ul>
+        <li *ngFor="let product of findProducts">
+            <span>{{product.name}}</span> {{product.cost}}
+        </li>
+    </ul>
+</div>

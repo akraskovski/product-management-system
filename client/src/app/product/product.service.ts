@@ -16,7 +16,7 @@ export class ProductService {
             .catch(this.handleError);
     }
 
-    loadByName(name: string): Promise<Product> {
+    loadByName(name: string): Promise<Product[]> {
         return this.http.get(environment.PRODUCT_URL + name)
             .toPromise()
             .then(responce => responce.json())
@@ -24,9 +24,10 @@ export class ProductService {
     }
 
     add(product: Product) {
-        let body = JSON.stringify({name: product.name, cost: product.cost, type: product.type});
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
+        const userToken = JSON.parse(localStorage.getItem(environment.USER_KEY)).token;
+        const body = JSON.stringify({name: product.name, cost: product.cost, type: product.type});
+        const headers = new Headers({'Content-Type': 'application/json', 'x-auth-token': userToken});
+        const options = new RequestOptions({headers: headers});
         return this.http.put(environment.PRODUCT_URL, body, options).map(() => {
             return true;
         });
