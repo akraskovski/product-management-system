@@ -1,5 +1,7 @@
 package by.intexsoft.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -32,5 +34,6 @@ public class Product extends BaseEntity{
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id")
+    @JsonIgnore
     public Stock stock;
 }

@@ -25,8 +25,9 @@ export class AuthorizationGuard implements CanActivate {
     }
 
     private getUser(): User {
-        if (localStorage.getItem(environment.USER_KEY)) {
-            return JSON.parse(localStorage.getItem(environment.USER_KEY));
+        const user = localStorage.getItem(environment.USER_KEY);
+        if (user) {
+            return JSON.parse(user);
         } else {
             return null;
         }

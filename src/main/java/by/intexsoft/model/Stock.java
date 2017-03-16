@@ -1,5 +1,7 @@
 package by.intexsoft.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class Stock extends BaseEntity{
      * OneToMany relation to {@link Product} entities
      */
     @OneToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
             mappedBy = "stock"
     )
@@ -35,5 +37,6 @@ public class Stock extends BaseEntity{
             joinColumns = {@JoinColumn(name = "stock_id")},
             inverseJoinColumns = {@JoinColumn(name = "store_id")}
     )
+    @JsonIgnore
     public List<Store> storeList;
 }

@@ -12,7 +12,6 @@ export class LoginService {
     }
 
     login(user: User) {
-        this.currentUser = user;
         let body = JSON.stringify({username: user.username, password: user.password});
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({headers: headers});
@@ -21,6 +20,7 @@ export class LoginService {
             .map((response: Response) => {
                 let token = response.json() && response.json().token;
                 if (token) {
+                    this.currentUser = user;
                     this.currentUser.token = token;
                     this.currentUser.roles = ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER'];
                     alert('Welcome, ' + this.currentUser.username);

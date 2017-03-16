@@ -30,7 +30,7 @@ public class ProductController {
     }
 
     /**
-     * Find product in database with setting name in browser
+     * Find products in database with setting name in browser
      * @return entity of {@link Product}
      */
     @RequestMapping("/{name}")
