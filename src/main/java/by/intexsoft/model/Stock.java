@@ -26,16 +26,4 @@ public class Stock extends BaseEntity{
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
     public List<Product> productList;
-
-    /**
-     * ManyToMany relation to {@link Store} entities
-     */
-    /*@ManyToMany(targetEntity = Store.class, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "stock_store",
-            joinColumns = {@JoinColumn(name = "stock_id")},
-            inverseJoinColumns = {@JoinColumn(name = "store_id")}
-    )
-    @JsonIgnore
-    public List<Store> storeList;*/
 }
