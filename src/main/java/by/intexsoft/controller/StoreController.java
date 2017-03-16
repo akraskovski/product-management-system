@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/store")
 public class StoreController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StoreController.class);
 
     @Autowired
     private StoreService storeService;

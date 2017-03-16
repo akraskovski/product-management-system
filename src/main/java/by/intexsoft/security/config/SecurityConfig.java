@@ -14,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Spring Security configuration class
+ */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -23,9 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/service/hello").hasAnyAuthority("ROLE_ADMIN", "ROLE_STOCK_MANAGER")
-                .antMatchers(HttpMethod.POST, "/product/").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST,"/product/").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT,"/product/").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/product/**").hasAuthority("ROLE_ADMIN")
                 .and()
                 .addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

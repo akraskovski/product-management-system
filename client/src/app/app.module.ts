@@ -11,8 +11,6 @@ import {LoginService} from "./authorization/login.service";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {AuthorizationGuard} from "./guard/authorization.guard";
-import {SecuredComponent} from "./secured/secured.component";
-import {SecuredService} from "./secured/secured.service";
 import {HomeComponent} from "./home/home.component";
 import {ProductComponent} from "./product/product.component";
 import {ProductService} from "./product/product.service";
@@ -39,7 +37,6 @@ import {AllUsersComponent} from "./user/all/all-users.component";
         UserComponent,
         AllUsersComponent,
         UserSearchComponent,
-        SecuredComponent,
         ProductComponent,
         AllProductsComponent,
         AddProductComponent,
@@ -49,7 +46,6 @@ import {AllUsersComponent} from "./user/all/all-users.component";
         AuthorizationGuard,
         UserService,
         LoginService,
-        SecuredService,
         ProductService
     ],
     bootstrap: [AppComponent]

@@ -2,7 +2,6 @@ import {NgModule} from "@angular/core";
 import {Routes, RouterModule} from "@angular/router";
 import {UserSearchComponent} from "./user/search/user-search.component";
 import {LoginComponent} from "./authorization/login.component";
-import {SecuredComponent} from "./secured/secured.component";
 import {AuthorizationGuard} from "./guard/authorization.guard";
 import {HomeComponent} from "./home/home.component";
 import {ProductComponent} from "./product/product.component";
@@ -23,7 +22,6 @@ const routes: Routes = [
     {path: 'user', component: UserComponent},
     {path: 'all-users', component: AllUsersComponent},
     {path: 'user-search', component: UserSearchComponent},
-    {path: 'secured', component: SecuredComponent, canActivate: [AuthorizationGuard], data: { roles: ['ROLE_ADMIN']} }
 ];
 
 @NgModule({
