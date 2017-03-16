@@ -13,6 +13,11 @@ public interface UserService {
      */
     User create(User object);
 
+    /**
+     * Find {@link User} in database by identifier
+     * @param id
+     * @return {@link User}
+     */
     User find(Integer id);
 
     /**
@@ -27,7 +32,18 @@ public interface UserService {
      */
     List<User> findAll();
 
+    /**
+     * Update information about {@link User} in database
+     * @param id
+     * @param object
+     * object - user model
+     * @return {@link User} with changed data
+     */
     User update(Integer id, User object);
 
+    /**
+     * Delete {@link User} from database by identifier
+     * @param id
+     */
     void delete(Integer id);
 }

@@ -16,5 +16,5 @@ public interface StockService {
 
     Stock update(Integer id, Stock object);
 
-    void delete(Integer id, Stock object);
+    void delete(Integer id);
 }

@@ -39,11 +39,11 @@ public class StockController {
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public void createStock(@RequestBody Stock stock) {
-        LOGGER.info("Start createProduct");
+        LOGGER.info("Start createStock");
         try {
             stockService.create(stock);
         } catch (Exception e) {
-            LOGGER.info("Error in createProduct. " + e.getLocalizedMessage());
+            LOGGER.info("Error in createStock. " + e.getLocalizedMessage());
         }
     }
 
@@ -53,11 +53,25 @@ public class StockController {
      */
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public void updateStock(@RequestBody Stock stock) {
-        LOGGER.info("Start update Stock");
+        LOGGER.info("Start updateStock");
         try {
             stockService.update(stock.id, stock);
         } catch (NullPointerException e) {
-            LOGGER.error("Exception in update Stock. " + e.getLocalizedMessage());
+            LOGGER.error("Exception in updateStock. " + e.getLocalizedMessage());
+        }
+    }
+
+    /**
+     * Delete {@link Stock} from database by identifier
+     * @param id
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteStock(@PathVariable("id") Integer id) {
+        LOGGER.info("Start deleteStock");
+        try {
+            stockService.delete(id);
+        } catch (NullPointerException e) {
+            LOGGER.error("Exception in deleteStock. " + e.getLocalizedMessage());
         }
     }
 }

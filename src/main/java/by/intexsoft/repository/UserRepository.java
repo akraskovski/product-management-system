@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * Providing a level of communication with database
- * {@link org.springframework.data.repository.Repository} for {@link User}
+ * DAO repository for working with {@link User}.
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
 

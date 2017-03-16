@@ -40,7 +40,7 @@ public class StockServiceImpl implements StockService{
     }
 
     @Override
-    public void delete(Integer id, Stock object) {
-        stockRepository.delete(object);
+    public void delete(Integer id) {
+        stockRepository.delete(id);
     }
 }
