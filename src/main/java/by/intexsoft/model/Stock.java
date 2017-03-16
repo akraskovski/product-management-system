@@ -19,12 +19,13 @@ public class Stock extends BaseEntity{
     public String specialize;
 
     /**
-     * OneToMany relation to {@link Product} entities
+     * ManyToMany relation to {@link Product} entities
      */
-    @OneToMany(
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
-            mappedBy = "stock"
+    @ManyToMany(targetEntity = Product.class, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "product_stock",
+            joinColumns = {@JoinColumn(name = "stock_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
     public List<Product> productList;
 

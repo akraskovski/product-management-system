@@ -12,8 +12,6 @@ public interface ProductService {
 
     List<Product> findByName(String name);
 
-    Product findByType(String type);
-
     List<Product> findAll();
 
     Product update(Integer id, Product object);

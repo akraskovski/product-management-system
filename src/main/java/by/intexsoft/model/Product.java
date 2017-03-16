@@ -3,6 +3,7 @@ package by.intexsoft.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Description database table "user"
@@ -30,10 +31,14 @@ public class Product extends BaseEntity{
     public String type;
 
     /**
-     * ManyToOne relation to {@link Stock} entity
+     * ManyToMany relation to {@link Stock} entities
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stock_id")
+    @ManyToMany(targetEntity = Stock.class, fetch = FetchType.LAZY)
     @JsonIgnore
-    public Stock stock;
+    @JoinTable(
+            name = "product_stock",
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "stock_id")}
+    )
+    private List<Stock> stockList;
 }

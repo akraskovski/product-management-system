@@ -22,10 +22,22 @@ public class StockController {
     public List<Stock> loadAllStocks() {
         LOGGER.info("Start loadAllStocks");
         try {
-            return stockService.findAll();
+            List<Stock> test = stockService.findAll();
+            return test;
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllStocks. " + e.getLocalizedMessage());
             return null;
+        }
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public void createProduct(@RequestBody Stock stock) {
+        LOGGER.info("Start createProduct");
+        try {
+            stockService.create(stock);
+            System.out.println(stock.id);
+        } catch (Exception e) {
+            LOGGER.info("Error in createProduct. " + e.getLocalizedMessage());
         }
     }
 

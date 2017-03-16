@@ -22,7 +22,8 @@ public class ProductController {
     public List<Product> loadAllProducts() {
         LOGGER.info("Start loadAllProducts");
         try {
-            return productService.findAll();
+            List<Product> test = productService.findAll();
+            return test;
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllProducts. " + e.getLocalizedMessage());
             return null;
@@ -44,7 +45,7 @@ public class ProductController {
         }
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public void createProduct(@RequestBody Product product) {
         LOGGER.info("Start createProduct");
         try {
