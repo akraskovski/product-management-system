@@ -18,29 +18,39 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
-    @RequestMapping("/")
+    /**
+     * Find all products in database
+     * @return entites of {@link Stock}
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Stock> loadAllStocks() {
         LOGGER.info("Start loadAllStocks");
         try {
-            List<Stock> test = stockService.findAll();
-            return test;
+            return stockService.findAll();
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllStocks. " + e.getLocalizedMessage());
             return null;
         }
     }
 
+    /**
+     * Creating {@link Stock} from client form
+     * @param stock model
+     */
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void createProduct(@RequestBody Stock stock) {
+    public void createStock(@RequestBody Stock stock) {
         LOGGER.info("Start createProduct");
         try {
             stockService.create(stock);
-            System.out.println(stock.id);
         } catch (Exception e) {
             LOGGER.info("Error in createProduct. " + e.getLocalizedMessage());
         }
     }
 
+    /**
+     * Update {@link Stock} entity in database
+     * @param stock model
+     */
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public void updateStock(@RequestBody Stock stock) {
         LOGGER.info("Start update Stock");

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,7 +20,11 @@ public class StoreController {
     @Autowired
     private StoreService storeService;
 
-    @RequestMapping("/all")
+    /**
+     * Find all stores in database
+     * @return entites of {@link Store}
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Store> loadAllStores() {
         LOGGER.info("Start loadAllStores");
         try {

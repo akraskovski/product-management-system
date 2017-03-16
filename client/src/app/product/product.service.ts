@@ -28,7 +28,7 @@ export class ProductService {
         const body = JSON.stringify({name: product.name, cost: product.cost, type: product.type});
         const headers = new Headers({'Content-Type': 'application/json', 'x-auth-token': userToken});
         const options = new RequestOptions({headers: headers});
-        return this.http.put(environment.PRODUCT_URL, body, options).map(() => {
+        return this.http.post(environment.PRODUCT_URL, body, options).map(() => {
             return true;
         });
     }

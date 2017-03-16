@@ -18,12 +18,15 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping("/")
+    /**
+     * Find all products in database
+     * @return entites of {@link Product}
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Product> loadAllProducts() {
         LOGGER.info("Start loadAllProducts");
         try {
-            List<Product> test = productService.findAll();
-            return test;
+            return productService.findAll();
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllProducts. " + e.getLocalizedMessage());
             return null;
@@ -34,7 +37,7 @@ public class ProductController {
      * Find products in database with setting name in browser
      * @return entity of {@link Product}
      */
-    @RequestMapping("/{name}")
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public List<Product> loadProducts(@PathVariable("name") String name) {
         LOGGER.info("Start loadProduct: " + name);
         try {
@@ -45,6 +48,10 @@ public class ProductController {
         }
     }
 
+    /**
+     * Creating {@link Product} from client form
+     * @param product model
+     */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public void createProduct(@RequestBody Product product) {
         LOGGER.info("Start createProduct");
@@ -55,6 +62,24 @@ public class ProductController {
         }
     }
 
+    /**
+     * Update {@link Product}'s information in database
+     * @param product model
+     */
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public void updateProduct(@RequestBody Product product) {
+        LOGGER.info("start updateProduct");
+        try {
+            productService.update(product.id, product);
+        } catch (Exception e) {
+            LOGGER.info("Error in updateProduct. " + e.getLocalizedMessage());
+        }
+    }
+
+    /**
+     * Delete {@link Product} from database by identifier
+     * @param id
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteProduct(@PathVariable("id") Integer id) {
         LOGGER.info("Start deleteProduct");
