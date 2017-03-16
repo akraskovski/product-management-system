@@ -1,5 +1,7 @@
 package by.intexsoft.model;
 
+import by.intexsoft.model.base.BaseEntity;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table
-public class Product extends BaseEntity{
+public class Product extends BaseEntity {
 
     /**
      * Product name

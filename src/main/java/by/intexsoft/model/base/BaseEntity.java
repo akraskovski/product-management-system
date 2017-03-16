@@ -1,4 +1,4 @@
-package by.intexsoft.model;
+package by.intexsoft.model.base;
 
 import javax.persistence.*;
 

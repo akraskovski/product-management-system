@@ -1,5 +1,6 @@
 package by.intexsoft.model;
 
+import by.intexsoft.model.base.BaseEntity;
 import by.intexsoft.model.enums.Authority;
 import org.springframework.security.core.GrantedAuthority;
 

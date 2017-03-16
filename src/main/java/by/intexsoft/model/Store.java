@@ -1,5 +1,7 @@
 package by.intexsoft.model;
 
+import by.intexsoft.model.base.BaseEntity;
+
 import javax.persistence.*;
 import java.util.List;
 

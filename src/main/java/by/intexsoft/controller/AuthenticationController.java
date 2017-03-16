@@ -1,7 +1,7 @@
 package by.intexsoft.controller;
 
-import by.intexsoft.dto.LoginDTO;
-import by.intexsoft.dto.TokenDTO;
+import by.intexsoft.model.dto.TokenDTO;
+import by.intexsoft.model.User;
 import by.intexsoft.security.service.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,15 +28,14 @@ public class AuthenticationController {
 
     /**
      * Login method
-     * Parse income {@link LoginDTO} object
      * Find {@link by.intexsoft.model.User} in database by username
      * Generate token from {@link TokenService}
      * @return {@link TokenDTO} model
      */
     @RequestMapping(value="/login", method = RequestMethod.POST)
-    public ResponseEntity<?> authenticate(@RequestBody LoginDTO dto) {
+    public ResponseEntity<?> authenticate(@RequestBody User user) {
         LOGGER.info("Start authentication");
-        String token = tokenService.generateToken(dto.username, dto.password);
+        String token = tokenService.generateToken(user.username, user.password);
         if (token != null) {
             TokenDTO response = new TokenDTO();
             response.token = token;

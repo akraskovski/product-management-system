@@ -1,5 +1,7 @@
 package by.intexsoft.model;
 
+import by.intexsoft.model.base.BaseEntity;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table
-public class Stock extends BaseEntity{
+public class Stock extends BaseEntity {
 
     /**
      * Stock specialize

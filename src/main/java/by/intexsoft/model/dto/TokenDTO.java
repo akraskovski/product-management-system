@@ -1,4 +1,4 @@
-package by.intexsoft.dto;
+package by.intexsoft.model.dto;
 
 import java.io.Serializable;
 
