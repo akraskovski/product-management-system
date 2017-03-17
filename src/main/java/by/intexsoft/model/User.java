@@ -28,9 +28,6 @@ public class User extends BaseEntity {
     @Column
     public String password;
 
-    /**
-     * ManyToMany relation to {@link Role} entities
-     */
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",

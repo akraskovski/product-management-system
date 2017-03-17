@@ -2,9 +2,9 @@ package by.intexsoft.security.service.impl;
 
 import by.intexsoft.model.User;
 import by.intexsoft.model.UserAuthentication;
+import by.intexsoft.security.exception.UserNotFoundException;
 import by.intexsoft.security.service.TokenAuthenticationService;
 
-import by.intexsoft.security.service.TokenService;
 import by.intexsoft.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -34,7 +34,7 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
         if (token != null) {
             final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             User user = getUserFromToken(tokenData);
-            if (user != null) {
+            if (validatePassword(tokenData, user)) {
                 return new UserAuthentication(user);
             }
         }
@@ -45,7 +45,17 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
         try {
             return userService.findByUsername(tokenData.getBody().get("username").toString());
         } catch (UsernameNotFoundException e) {
-            return null;
+            throw new UserNotFoundException("User:" + tokenData.getBody().get("username").toString() + " not found");
         }
+    }
+
+    private Boolean validatePassword(Jws<Claims> tokenData, User user) {
+        if (user != null) {
+            String tokenPassword = tokenData.getBody().get("password").toString();
+            if (user.password.equals(tokenPassword)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

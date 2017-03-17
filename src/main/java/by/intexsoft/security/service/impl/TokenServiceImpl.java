@@ -19,7 +19,7 @@ import java.util.Map;
 public class TokenServiceImpl implements TokenService {
 
     @Value("security.token.secret.key")
-    private String tokenKey;
+    private String secretKey;
 
     @Autowired
     private UserService userService;
@@ -29,22 +29,21 @@ public class TokenServiceImpl implements TokenService {
         if (username == null || password == null)
             return null;
         User user = userService.findByUsername(username);
-        Map<String, Object> tokenData = new HashMap<>();
-        if (password.equals(user.password)) {
-            tokenData.put("clientType", "user");
-            tokenData.put("userID", user.id);
-            tokenData.put("username", user.username);
-            tokenData.put("token_create_date", LocalDateTime.now());
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.MINUTE, 60);
-            tokenData.put("token_expiration_date", calendar.getTime());
-            JwtBuilder jwtBuilder = Jwts.builder();
-            jwtBuilder.setExpiration(calendar.getTime());
-            jwtBuilder.setClaims(tokenData);
-            return jwtBuilder.signWith(SignatureAlgorithm.HS512, tokenKey).compact();
-        } else {
-            System.out.println("ERROR");
-            return null;
+        if (user != null) {
+            Map<String, Object> tokenData = new HashMap<>();
+            if (password.equals(user.password)) {
+                tokenData.put("username", user.username);
+                tokenData.put("password", user.password);
+                tokenData.put("token_create_date", LocalDateTime.now());
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.MINUTE, 60);
+                tokenData.put("token_expiration_date", calendar.getTime());
+                JwtBuilder jwtBuilder = Jwts.builder();
+                jwtBuilder.setExpiration(calendar.getTime());
+                jwtBuilder.setClaims(tokenData);
+                return jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact();
+            }
         }
+        return null;
     }
 }

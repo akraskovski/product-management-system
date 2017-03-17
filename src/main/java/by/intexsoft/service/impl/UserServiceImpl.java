@@ -4,6 +4,7 @@ import by.intexsoft.model.User;
 import by.intexsoft.repository.UserRepository;
 import by.intexsoft.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
