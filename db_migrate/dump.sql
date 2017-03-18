@@ -26,10 +26,10 @@ ALTER SCHEMA products OWNER TO postgres;
 SET search_path = products, pg_catalog;
 
 --
--- Name: authority; Type: TYPE; Schema: products; Owner: postgres
+-- Name: authorities; Type: TYPE; Schema: products; Owner: postgres
 --
 
-CREATE TYPE authority AS ENUM (
+CREATE TYPE authorities AS ENUM (
     'ROLE_ADMIN',
     'ROLE_STOCK_MANAGER',
     'ROLE_STORE_MANAGER',
@@ -37,11 +37,44 @@ CREATE TYPE authority AS ENUM (
 );
 
 
-ALTER TYPE authority OWNER TO postgres;
+ALTER TYPE authorities OWNER TO postgres;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: authority; Type: TABLE; Schema: products; Owner: postgres
+--
+
+CREATE TABLE authority (
+    id integer NOT NULL,
+    name authorities
+);
+
+
+ALTER TABLE authority OWNER TO postgres;
+
+--
+-- Name: authority_id_seq; Type: SEQUENCE; Schema: products; Owner: postgres
+--
+
+CREATE SEQUENCE authority_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE authority_id_seq OWNER TO postgres;
+
+--
+-- Name: authority_id_seq; Type: SEQUENCE OWNED BY; Schema: products; Owner: postgres
+--
+
+ALTER SEQUENCE authority_id_seq OWNED BY authority.id;
+
 
 --
 -- Name: product; Type: TABLE; Schema: products; Owner: postgres
@@ -89,39 +122,6 @@ CREATE TABLE product_stock (
 
 
 ALTER TABLE product_stock OWNER TO postgres;
-
---
--- Name: role; Type: TABLE; Schema: products; Owner: postgres
---
-
-CREATE TABLE role (
-    id integer NOT NULL,
-    name authority
-);
-
-
-ALTER TABLE role OWNER TO postgres;
-
---
--- Name: role_id_seq; Type: SEQUENCE; Schema: products; Owner: postgres
---
-
-CREATE SEQUENCE role_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE role_id_seq OWNER TO postgres;
-
---
--- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: products; Owner: postgres
---
-
-ALTER SEQUENCE role_id_seq OWNED BY role.id;
-
 
 --
 -- Name: stock; Type: TABLE; Schema: products; Owner: postgres
@@ -215,6 +215,18 @@ CREATE TABLE "user" (
 ALTER TABLE "user" OWNER TO postgres;
 
 --
+-- Name: user_authority; Type: TABLE; Schema: products; Owner: postgres
+--
+
+CREATE TABLE user_authority (
+    user_id integer NOT NULL,
+    authority_id integer NOT NULL
+);
+
+
+ALTER TABLE user_authority OWNER TO postgres;
+
+--
 -- Name: user_id_seq; Type: SEQUENCE; Schema: products; Owner: postgres
 --
 
@@ -236,29 +248,17 @@ ALTER SEQUENCE user_id_seq OWNED BY "user".id;
 
 
 --
--- Name: user_role; Type: TABLE; Schema: products; Owner: postgres
+-- Name: authority id; Type: DEFAULT; Schema: products; Owner: postgres
 --
 
-CREATE TABLE user_role (
-    user_id integer NOT NULL,
-    role_id integer NOT NULL
-);
+ALTER TABLE ONLY authority ALTER COLUMN id SET DEFAULT nextval('authority_id_seq'::regclass);
 
-
-ALTER TABLE user_role OWNER TO postgres;
 
 --
 -- Name: product id; Type: DEFAULT; Schema: products; Owner: postgres
 --
 
 ALTER TABLE ONLY product ALTER COLUMN id SET DEFAULT nextval('product_id_seq'::regclass);
-
-
---
--- Name: role id; Type: DEFAULT; Schema: products; Owner: postgres
---
-
-ALTER TABLE ONLY role ALTER COLUMN id SET DEFAULT nextval('role_id_seq'::regclass);
 
 
 --
@@ -283,6 +283,23 @@ ALTER TABLE ONLY "user" ALTER COLUMN id SET DEFAULT nextval('user_id_seq'::regcl
 
 
 --
+-- Data for Name: authority; Type: TABLE DATA; Schema: products; Owner: postgres
+--
+
+INSERT INTO authority (id, name) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO authority (id, name) VALUES (2, 'ROLE_STOCK_MANAGER');
+INSERT INTO authority (id, name) VALUES (3, 'ROLE_STORE_MANAGER');
+INSERT INTO authority (id, name) VALUES (4, 'ANONYMOUS');
+
+
+--
+-- Name: authority_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
+--
+
+SELECT pg_catalog.setval('authority_id_seq', 1, false);
+
+
+--
 -- Data for Name: product; Type: TABLE DATA; Schema: products; Owner: postgres
 --
 
@@ -293,7 +310,7 @@ INSERT INTO product (id, name, cost, type) VALUES (1, 'NE Hleb', 2.02, 'Food');
 -- Name: product_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
 --
 
-SELECT pg_catalog.setval('product_id_seq', 7, true);
+SELECT pg_catalog.setval('product_id_seq', 10, true);
 
 
 --
@@ -301,23 +318,6 @@ SELECT pg_catalog.setval('product_id_seq', 7, true);
 --
 
 INSERT INTO product_stock (product_id, stock_id) VALUES (1, 1);
-
-
---
--- Data for Name: role; Type: TABLE DATA; Schema: products; Owner: postgres
---
-
-INSERT INTO role (id, name) VALUES (1, 'ROLE_ADMIN');
-INSERT INTO role (id, name) VALUES (2, 'ROLE_STOCK_MANAGER');
-INSERT INTO role (id, name) VALUES (3, 'ROLE_STORE_MANAGER');
-INSERT INTO role (id, name) VALUES (4, 'ANONYMOUS');
-
-
---
--- Name: role_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
---
-
-SELECT pg_catalog.setval('role_id_seq', 4, true);
 
 
 --
@@ -361,6 +361,15 @@ INSERT INTO "user" (id, username, password) VALUES (1, 'Inna', 'qwerty');
 
 
 --
+-- Data for Name: user_authority; Type: TABLE DATA; Schema: products; Owner: postgres
+--
+
+INSERT INTO user_authority (user_id, authority_id) VALUES (1, 2);
+INSERT INTO user_authority (user_id, authority_id) VALUES (1, 3);
+INSERT INTO user_authority (user_id, authority_id) VALUES (1, 1);
+
+
+--
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
 --
 
@@ -368,10 +377,11 @@ SELECT pg_catalog.setval('user_id_seq', 1, true);
 
 
 --
--- Data for Name: user_role; Type: TABLE DATA; Schema: products; Owner: postgres
+-- Name: authority authority_pkey; Type: CONSTRAINT; Schema: products; Owner: postgres
 --
 
-INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
+ALTER TABLE ONLY authority
+    ADD CONSTRAINT authority_pkey PRIMARY KEY (id);
 
 
 --
@@ -388,14 +398,6 @@ ALTER TABLE ONLY product
 
 ALTER TABLE ONLY product_stock
     ADD CONSTRAINT product_stock_pkey PRIMARY KEY (product_id, stock_id);
-
-
---
--- Name: role role_pkey; Type: CONSTRAINT; Schema: products; Owner: postgres
---
-
-ALTER TABLE ONLY role
-    ADD CONSTRAINT role_pkey PRIMARY KEY (id);
 
 
 --
@@ -423,6 +425,14 @@ ALTER TABLE ONLY store
 
 
 --
+-- Name: user_authority user_authority_pkey; Type: CONSTRAINT; Schema: products; Owner: postgres
+--
+
+ALTER TABLE ONLY user_authority
+    ADD CONSTRAINT user_authority_pkey PRIMARY KEY (user_id, authority_id);
+
+
+--
 -- Name: user user_pkey; Type: CONSTRAINT; Schema: products; Owner: postgres
 --
 
@@ -431,11 +441,17 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: user_role user_role_pkey; Type: CONSTRAINT; Schema: products; Owner: postgres
+-- Name: authority_id_uindex; Type: INDEX; Schema: products; Owner: postgres
 --
 
-ALTER TABLE ONLY user_role
-    ADD CONSTRAINT user_role_pkey PRIMARY KEY (user_id, role_id);
+CREATE UNIQUE INDEX authority_id_uindex ON authority USING btree (id);
+
+
+--
+-- Name: authority_name_uindex; Type: INDEX; Schema: products; Owner: postgres
+--
+
+CREATE UNIQUE INDEX authority_name_uindex ON authority USING btree (name);
 
 
 --
@@ -471,19 +487,19 @@ ALTER TABLE ONLY stock_store
 
 
 --
--- Name: user_role fk_user_role_role1; Type: FK CONSTRAINT; Schema: products; Owner: postgres
+-- Name: user_authority fk_user_authority_authority1; Type: FK CONSTRAINT; Schema: products; Owner: postgres
 --
 
-ALTER TABLE ONLY user_role
-    ADD CONSTRAINT fk_user_role_role1 FOREIGN KEY (role_id) REFERENCES role(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY user_authority
+    ADD CONSTRAINT fk_user_authority_authority1 FOREIGN KEY (authority_id) REFERENCES authority(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: user_role fk_user_role_user1; Type: FK CONSTRAINT; Schema: products; Owner: postgres
+-- Name: user_authority fk_user_authority_user1; Type: FK CONSTRAINT; Schema: products; Owner: postgres
 --
 
-ALTER TABLE ONLY user_role
-    ADD CONSTRAINT fk_user_role_user1 FOREIGN KEY (user_id) REFERENCES "user"(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY user_authority
+    ADD CONSTRAINT fk_user_authority_user1 FOREIGN KEY (user_id) REFERENCES "user"(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
