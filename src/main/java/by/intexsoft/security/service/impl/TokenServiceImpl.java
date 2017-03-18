@@ -15,18 +15,24 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 @Service
 public class TokenServiceImpl implements TokenService {
 
     @Value("security.token.secret.key")
     private String secretKey;
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public TokenServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
-    public String generateToken(String username, String password) {
-        if (username == null || password == null)
+    public String generate(String username, String password) {
+        if (isEmpty(username) || isEmpty(password))
             return null;
         User user = userService.findByUsername(username);
         if (user != null) {

@@ -25,8 +25,12 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
 
     private final static String AUTH_HEADER_NAME = "x-auth-token";
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public TokenAuthenticationServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public Authentication authenticate(HttpServletRequest request) {

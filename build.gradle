@@ -19,6 +19,7 @@ dependencies {
     compile 'org.springframework.security:spring-security-core:4.2.1.RELEASE'
     compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'io.jsonwebtoken:jjwt:0.7.0'
+    compile 'org.apache.commons:commons-lang3:3.5'
 }
 
 war.dependsOn 'client:npm_run_build'

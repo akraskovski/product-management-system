@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Handle requests for authentication operations
@@ -23,27 +20,34 @@ public class AuthenticationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
+    private final TokenService tokenService;
+
     @Autowired
-    private TokenService tokenService;
+    public AuthenticationController(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     /**
      * Login method
      * Find {@link by.intexsoft.model.User} in database by username
      * Generate token from {@link TokenService}
+     *
      * @return {@link TokenDTO} model
      */
-    @RequestMapping(value="/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> authenticate(@RequestBody User user) {
         LOGGER.info("Start authentication");
-        String token = tokenService.generateToken(user.username, user.password);
+        String token = tokenService.generate(user.username, user.password);
         if (token != null) {
-            TokenDTO response = new TokenDTO();
-            response.token = token;
             LOGGER.info("Authentication successful! Returning token");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            LOGGER.error("Authentication failed");
-            return new ResponseEntity<>("Authentication failed", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new TokenDTO(token), HttpStatus.OK);
         }
+        LOGGER.error("Authentication failed");
+        return new ResponseEntity<>("Authentication failed", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    private void securedMethod() {
+
     }
 }

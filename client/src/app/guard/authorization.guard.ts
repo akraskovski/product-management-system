@@ -14,26 +14,21 @@ export class AuthorizationGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot) {
         const roles = route.data["roles"] as Array<string>;
-        const user: User = this.getUser();
+        const user: User = AuthorizationGuard.getCurrentUser();
         if (roles.length > 0 && user) {
-            return this.checkRoles(roles, user.roles);
-        } else {
-            alert('You dont have permissions!');
-            this.router.navigate(['/']);
-            return false;
+            return AuthorizationGuard.checkRoles(roles, user.roles);
         }
+        alert('You dont have permissions!');
+        this.router.navigate(['/']);
+        return false;
     }
 
-    private getUser(): User {
+    private static getCurrentUser(): User {
         const user = localStorage.getItem(environment.USER_KEY);
-        if (user) {
-            return JSON.parse(user);
-        } else {
-            return null;
-        }
+        return user && JSON.parse(user);
     }
 
-    private checkRoles(avialableRoleList: string[], currentRoleList: string[]): boolean {
+    private static checkRoles(avialableRoleList: string[], currentRoleList: string[]): boolean {
         for (let avialableRole = 0; avialableRole < avialableRoleList.length; avialableRole++) {
             for (let userRole = 0; userRole < currentRoleList.length; userRole++)
                 if (avialableRoleList[avialableRole] == currentRoleList[userRole]) {

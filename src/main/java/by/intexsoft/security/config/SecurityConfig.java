@@ -20,8 +20,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final TokenAuthenticationService tokenAuthenticationService;
+
     @Autowired
-    private TokenAuthenticationService tokenAuthenticationService;
+    public SecurityConfig(TokenAuthenticationService tokenAuthenticationService) {
+        this.tokenAuthenticationService = tokenAuthenticationService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
