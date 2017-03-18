@@ -2,11 +2,9 @@ package by.intexsoft.security.service.impl;
 
 import by.intexsoft.model.User;
 import by.intexsoft.security.service.TokenService;
-import by.intexsoft.service.UserService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +18,6 @@ public class TokenServiceImpl implements TokenService {
 
     @Value("security.token.secret.key")
     private String secretKey;
-
-    private final UserService userService;
-
-    @Autowired
-    public TokenServiceImpl(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public String generate(User user, String password) {

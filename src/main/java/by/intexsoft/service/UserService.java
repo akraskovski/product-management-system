@@ -34,7 +34,6 @@ public interface UserService {
 
     /**
      * Update information about {@link User} in database
-     * @param id
      * @param object
      * object - user model
      * @return {@link User} with changed data
