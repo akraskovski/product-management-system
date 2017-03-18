@@ -15,8 +15,12 @@ public class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
+    private final ProductService productService;
+
     @Autowired
-    private ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     /**
      * Find all products in database
@@ -70,7 +74,7 @@ public class ProductController {
     public void updateProduct(@RequestBody Product product) {
         LOGGER.info("start updateProduct");
         try {
-            productService.update(product.id, product);
+            productService.update(product);
         } catch (Exception e) {
             LOGGER.info("Error in updateProduct. " + e.getLocalizedMessage());
         }

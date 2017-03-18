@@ -45,9 +45,4 @@ public class AuthenticationController {
         LOGGER.error("Authentication failed");
         return new ResponseEntity<>("Authentication failed", HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler
-    private void securedMethod() {
-
-    }
 }

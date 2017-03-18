@@ -15,8 +15,12 @@ public class StockController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StockController.class);
 
+    private final StockService stockService;
+
     @Autowired
-    private StockService stockService;
+    public StockController(StockService stockService) {
+        this.stockService = stockService;
+    }
 
     /**
      * Find all products in database
@@ -55,7 +59,7 @@ public class StockController {
     public void updateStock(@RequestBody Stock stock) {
         LOGGER.info("Start updateStock");
         try {
-            stockService.update(stock.id, stock);
+            stockService.update(stock);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in updateStock. " + e.getLocalizedMessage());
         }

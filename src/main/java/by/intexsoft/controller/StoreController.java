@@ -15,8 +15,12 @@ public class StoreController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StoreController.class);
 
+    private final StoreService storeService;
+
     @Autowired
-    private StoreService storeService;
+    public StoreController(StoreService storeService) {
+        this.storeService = storeService;
+    }
 
     /**
      * Find all stores in database
@@ -55,7 +59,7 @@ public class StoreController {
     public void updateStore(@RequestBody Store store) {
         LOGGER.info("Start updateStore");
         try {
-            storeService.update(store.id, store);
+            storeService.update(store);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in updateStore. " + e.getLocalizedMessage());
         }

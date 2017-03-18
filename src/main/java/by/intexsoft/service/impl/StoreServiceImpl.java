@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class StoreServiceImpl implements StoreService{
 
+    private final StoreRepository storeRepository;
+
     @Autowired
-    private StoreRepository storeRepository;
+    public StoreServiceImpl(StoreRepository storeRepository) {
+        this.storeRepository = storeRepository;
+    }
 
     @Override
     public Store create(Store object) {
@@ -35,7 +39,7 @@ public class StoreServiceImpl implements StoreService{
     }
 
     @Override
-    public Store update(Integer id, Store object) {
+    public Store update(Store object) {
         return storeRepository.save(object);
     }
 

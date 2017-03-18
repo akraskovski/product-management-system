@@ -14,7 +14,7 @@ public interface StockService {
 
     List<Stock> findAll();
 
-    Stock update(Integer id, Stock object);
+    Stock update(Stock object);
 
     void delete(Integer id);
 }

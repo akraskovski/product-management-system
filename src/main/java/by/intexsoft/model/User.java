@@ -1,11 +1,9 @@
 package by.intexsoft.model;
 
 import by.intexsoft.model.base.BaseEntity;
-import by.intexsoft.model.enums.Authority;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,21 +26,12 @@ public class User extends BaseEntity {
     @Column
     public String password;
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_role",
+            name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+            inverseJoinColumns = {@JoinColumn(name = "authority_id")}
     )
-    private List<Role> roles;
+    public List<Authority> authorities;
 
-    /**
-     * Getter method returns {@link User}'s collection of role names
-     */
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<Authority> currentRoles = new ArrayList<>();
-        for (Role role : roles)
-            currentRoles.add(role.name);
-        return currentRoles;
-    }
 }

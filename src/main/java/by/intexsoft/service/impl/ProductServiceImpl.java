@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product update(Integer id, Product object) {
+    public Product update(Product object) {
         return productRepository.save(object);
     }
 

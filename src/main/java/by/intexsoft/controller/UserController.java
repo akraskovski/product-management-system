@@ -5,9 +5,7 @@ import by.intexsoft.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +18,12 @@ public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Return json-information about all users in database
@@ -31,7 +33,8 @@ public class UserController {
     public List<User> loadAllUsers() {
         LOGGER.info("Start loadAllUsers");
         try {
-            return userService.findAll();
+            List<User> users = userService.findAll();
+            return users;
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllUsers. " + e.getLocalizedMessage());
             return null;
@@ -50,6 +53,48 @@ public class UserController {
         } catch (NullPointerException e) {
             LOGGER.error("Exception in getUserByName. " + e.getLocalizedMessage());
             return null;
+        }
+    }
+
+    /**
+     * Creating {@link User} from client form
+     * @param user model
+     */
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public void createUser(@RequestBody User user) {
+        LOGGER.info("Start createUser");
+        try {
+            userService.create(user);
+        } catch (NullPointerException e) {
+            LOGGER.error("Exception in createUser. " + e.getLocalizedMessage());
+        }
+    }
+
+    /**
+     * Update {@link User} entity in database
+     * @param user model
+     */
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public void updateUser(@RequestBody User user) {
+        LOGGER.info("Start updateUser");
+        try {
+            userService.update(user);
+        } catch (NullPointerException e) {
+            LOGGER.error("Exception in updateUser. " + e.getLocalizedMessage());
+        }
+    }
+
+    /**
+     * Delete {@link User} from database by identifier
+     * @param id
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteUser(@PathVariable("id") Integer id) {
+        LOGGER.info("Start deleteUser");
+        try {
+            userService.delete(id);
+        } catch (NullPointerException e) {
+            LOGGER.error("Exception in deleteUser. " + e.getLocalizedMessage());
         }
     }
 }

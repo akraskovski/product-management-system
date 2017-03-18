@@ -1,6 +1,5 @@
 package by.intexsoft.service;
 
-import by.intexsoft.model.Stock;
 import by.intexsoft.model.Store;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface StoreService {
 
     List<Store> findAll();
 
-    Store update(Integer id, Store object);
+    Store update(Store object);
 
     void delete(Integer id);
 }

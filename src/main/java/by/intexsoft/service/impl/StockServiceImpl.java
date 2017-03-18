@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class StockServiceImpl implements StockService{
 
+    private final StockRepository stockRepository;
+
     @Autowired
-    private StockRepository stockRepository;
+    public StockServiceImpl(StockRepository stockRepository) {
+        this.stockRepository = stockRepository;
+    }
 
     @Override
     public Stock create(Stock object) {
@@ -35,7 +39,7 @@ public class StockServiceImpl implements StockService{
     }
 
     @Override
-    public Stock update(Integer id, Stock object) {
+    public Stock update(Stock object) {
         return stockRepository.save(object);
     }
 

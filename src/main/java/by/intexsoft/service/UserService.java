@@ -39,7 +39,7 @@ public interface UserService {
      * object - user model
      * @return {@link User} with changed data
      */
-    User update(Integer id, User object);
+    User update(User object);
 
     /**
      * Delete {@link User} from database by identifier
