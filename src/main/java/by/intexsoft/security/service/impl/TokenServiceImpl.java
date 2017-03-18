@@ -15,8 +15,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.commons.lang3.StringUtils.isEmpty;
-
 @Service
 public class TokenServiceImpl implements TokenService {
 
@@ -31,10 +29,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public String generate(String username, String password) {
-        if (isEmpty(username) || isEmpty(password))
-            return null;
-        User user = userService.findByUsername(username);
+    public String generate(User user, String password) {
         if (user != null) {
             Map<String, Object> tokenData = new HashMap<>();
             if (password.equals(user.password)) {

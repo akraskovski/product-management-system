@@ -1,5 +1,7 @@
 package by.intexsoft.security.service;
 
+import by.intexsoft.model.User;
+
 /**
  * Service for generating token
  */
@@ -7,9 +9,7 @@ public interface TokenService {
 
     /**
      * Generate token
-     * @param username {@link by.intexsoft.model.User#username}
-     * @param password {@link by.intexsoft.model.User#username}
      * @return generated token
      */
-    String generate(String username, String password);
+    String generate(User user, String password);
 }

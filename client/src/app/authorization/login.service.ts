@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import {User} from "../model/user";
 import {environment} from "../constants/environment";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class LoginService {
@@ -19,17 +20,17 @@ export class LoginService {
         return this.http.post(environment.LOGIN_URL, body, options)
             .map((response: Response) => {
                 let token = response.json() && response.json().token;
-                if (token) {
+                let user = response.json() && response.json().user;
+                if (token && user) {
                     this.currentUser = user;
                     this.currentUser.token = token;
-                    this.currentUser.roles = ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER'];
-                    alert('Welcome, ' + this.currentUser.username);
                     localStorage.setItem(environment.USER_KEY, JSON.stringify(this.currentUser));
                     return true;
                 } else {
                     return false;
                 }
-            });
+            })
+            .catch(LoginService.handleError);
     }
 
     logout(): void {
@@ -37,8 +38,16 @@ export class LoginService {
         localStorage.removeItem(environment.USER_KEY);
     }
 
-    get userRoles() : Array<string> {
-        const user = JSON.parse(localStorage.getItem(environment.USER_KEY));
-        return user ? user.roles : [];
+    private static handleError(error: Response | any) {
+        let errMsg: string;
+        if (error instanceof Response) {
+            const body = error.json() || '';
+            const err = body.error || JSON.stringify(body);
+            errMsg = `${error.status} - ${error.statusText} || ''} ${err}`;
+        } else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        console.error(errMsg);
+        return Observable.throw(errMsg);
     }
 }
