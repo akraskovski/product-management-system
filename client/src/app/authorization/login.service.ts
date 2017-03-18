@@ -7,28 +7,26 @@ import {Observable} from "rxjs";
 @Injectable()
 export class LoginService {
 
-    private currentUser: User;
+    public currentUser: User;
 
     constructor(private http: Http) {
     }
 
-    login(user: User) {
-        let body = JSON.stringify({username: user.username, password: user.password});
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-
+    login(user: User): Observable<Boolean> {
+        const body = JSON.stringify({username: user.username, password: user.password});
+        const options = new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})});
         return this.http.post(environment.LOGIN_URL, body, options)
             .map((response: Response) => {
-                let token = response.json() && response.json().token;
-                let user = response.json() && response.json().user;
+                const token = response.json() && response.json().token;
+                alert(token);
+                const user = response.json() && response.json().user;
                 if (token && user) {
                     this.currentUser = user;
                     this.currentUser.token = token;
                     localStorage.setItem(environment.USER_KEY, JSON.stringify(this.currentUser));
                     return true;
-                } else {
-                    return false;
                 }
+                return false;
             })
             .catch(LoginService.handleError);
     }

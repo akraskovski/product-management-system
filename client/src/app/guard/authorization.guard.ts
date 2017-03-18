@@ -20,8 +20,8 @@ export class AuthorizationGuard implements CanActivate {
             if (AuthorizationGuard.checkRoles(roles, user.authorities))
                 return true;
         }
-        alert('You dont have permissions!');
-        this.router.navigate(['/']);
+        alert('You don\'t have permissions!');
+        this.router.navigate(['/home']);
         return false;
     }
 

@@ -9,15 +9,15 @@ import {Router} from "@angular/router";
     templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-    user: FormGroup;
-    loading = false;
-    error = '';
+    loginForm: FormGroup;
+    loading: boolean = false;
+    error: string = '';
 
     constructor(private loginService: LoginService, private router: Router) {
     }
 
     ngOnInit(): void {
-        this.user = new FormGroup({
+        this.loginForm = new FormGroup({
             username: new FormControl('', Validators.required),
             password: new FormControl('', Validators.required)
         });
@@ -25,20 +25,21 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
-        this.authenticate();
-    }
-
-    private authenticate(): void {
         this.loading = true;
-        this.loginService.login(new User(this.user.value.username, this.user.value.password))
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['/']);
-                } else {
-                    this.error = 'Authentification error';
-                    this.loading = false;
+        this.loginService.login(new User(this.loginForm.value.username, this.loginForm.value.password))
+            .subscribe(
+                result => {
+                    if (result === true) {
+                        alert("Login success!");
+                        this.router.navigate(['/']);
+                    } else {
+                        alert("Login Failed!");
+                        this.error = 'Authentification error';
+                        this.loading = false;
+                        this.router.navigate(['/login']);
+                    }
                 }
-            });
+            );
     }
 
 }

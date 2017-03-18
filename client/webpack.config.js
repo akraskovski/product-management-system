@@ -1,4 +1,3 @@
-const path = require('path');
 const webpack = require('webpack');
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -33,12 +32,10 @@ module.exports = {
     },
 
     plugins: [
-        //delete imports from app which defined in this files
         new CommonsChunkPlugin({
             names: ['vendor', 'polyfills']
         }),
 
-        // Inject script and link tags into html files
         new HtmlWebpackPlugin({
             template: './src/index.html'
         })
