@@ -303,21 +303,22 @@ SELECT pg_catalog.setval('authority_id_seq', 1, false);
 -- Data for Name: product; Type: TABLE DATA; Schema: products; Owner: postgres
 --
 
-INSERT INTO product (id, name, cost, type) VALUES (1, 'NE Hleb', 2.02, 'Food');
+INSERT INTO product (id, name, cost, type) VALUES (2, 'Bonaqua', 1.22, 'Water');
+INSERT INTO product (id, name, cost, type) VALUES (16, 'Test', 1, 'Fooood');
 
 
 --
 -- Name: product_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
 --
 
-SELECT pg_catalog.setval('product_id_seq', 14, true);
+SELECT pg_catalog.setval('product_id_seq', 18, true);
 
 
 --
 -- Data for Name: product_stock; Type: TABLE DATA; Schema: products; Owner: postgres
 --
 
-INSERT INTO product_stock (product_id, stock_id) VALUES (1, 1);
+INSERT INTO product_stock (product_id, stock_id) VALUES (2, 2);
 
 
 --
@@ -325,6 +326,7 @@ INSERT INTO product_stock (product_id, stock_id) VALUES (1, 1);
 --
 
 INSERT INTO stock (id, specialize) VALUES (1, 'Food');
+INSERT INTO stock (id, specialize) VALUES (2, 'Drink');
 
 
 --
@@ -338,12 +340,15 @@ SELECT pg_catalog.setval('stock_id_seq', 5, true);
 -- Data for Name: stock_store; Type: TABLE DATA; Schema: products; Owner: postgres
 --
 
+INSERT INTO stock_store (stock_id, store_id) VALUES (1, 1);
+INSERT INTO stock_store (stock_id, store_id) VALUES (2, 1);
 
 
 --
 -- Data for Name: store; Type: TABLE DATA; Schema: products; Owner: postgres
 --
 
+INSERT INTO store (id, name) VALUES (1, 'Almi');
 
 
 --

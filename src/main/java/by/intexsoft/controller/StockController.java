@@ -5,6 +5,8 @@ import by.intexsoft.service.StockService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,13 +29,13 @@ public class StockController {
      * @return entites of {@link Stock}
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Stock> loadAllStocks() {
+    public ResponseEntity<?> loadAllStocks() {
         LOGGER.info("Start loadAllStocks");
         try {
-            return stockService.findAll();
+            return new ResponseEntity<>(stockService.findAll(), HttpStatus.OK);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllStocks. " + e.getLocalizedMessage());
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -42,12 +44,13 @@ public class StockController {
      * @param stock model
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void createStock(@RequestBody Stock stock) {
+    public ResponseEntity<?> createStock(@RequestBody Stock stock) {
         LOGGER.info("Start createStock");
         try {
-            stockService.create(stock);
+            return new ResponseEntity<>(stockService.create(stock), HttpStatus.CREATED);
         } catch (Exception e) {
             LOGGER.info("Error in createStock. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -56,12 +59,13 @@ public class StockController {
      * @param stock model
      */
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public void updateStock(@RequestBody Stock stock) {
+    public ResponseEntity<?> updateStock(@RequestBody Stock stock) {
         LOGGER.info("Start updateStock");
         try {
-            stockService.update(stock);
+            return new ResponseEntity<>(stockService.update(stock), HttpStatus.OK);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in updateStock. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -70,12 +74,14 @@ public class StockController {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteStock(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteStock(@PathVariable("id") Integer id) {
         LOGGER.info("Start deleteStock");
         try {
             stockService.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in deleteStock. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

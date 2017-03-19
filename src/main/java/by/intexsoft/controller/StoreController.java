@@ -5,6 +5,8 @@ import by.intexsoft.service.StoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,13 +29,13 @@ public class StoreController {
      * @return entites of {@link Store}
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Store> loadAllStores() {
+    public ResponseEntity<?> loadAllStores() {
         LOGGER.info("Start loadAllStores");
         try {
-            return storeService.findAll();
+            return new ResponseEntity<>(storeService.findAll(), HttpStatus.OK);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllStores. " + e.getLocalizedMessage());
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -42,12 +44,13 @@ public class StoreController {
      * @param store model
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void createStore(@RequestBody Store store) {
+    public ResponseEntity<?> createStore(@RequestBody Store store) {
         LOGGER.info("Start createStore");
         try {
-            storeService.create(store);
+            return new ResponseEntity<>(storeService.create(store), HttpStatus.CREATED);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in createStore. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -56,12 +59,13 @@ public class StoreController {
      * @param store model
      */
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public void updateStore(@RequestBody Store store) {
+    public ResponseEntity<?> updateStore(@RequestBody Store store) {
         LOGGER.info("Start updateStore");
         try {
-            storeService.update(store);
+            return new ResponseEntity<>(storeService.update(store), HttpStatus.OK);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in updateStore. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -70,12 +74,14 @@ public class StoreController {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteStore(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteStore(@PathVariable("id") Integer id) {
         LOGGER.info("Start deleteStore");
         try {
             storeService.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in deleteStore. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
