@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.2
+-- Dumped from database version 9.6.1
+-- Dumped by pg_dump version 9.6.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -49,7 +49,7 @@ SET default_with_oids = false;
 
 CREATE TABLE authority (
     id integer NOT NULL,
-    name authorities
+    name authorities NOT NULL
 );
 
 
@@ -84,7 +84,7 @@ CREATE TABLE product (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     cost double precision NOT NULL,
-    type character varying(255)
+    type character varying(255) NOT NULL
 );
 
 
@@ -174,7 +174,7 @@ ALTER TABLE stock_store OWNER TO postgres;
 
 CREATE TABLE store (
     id integer NOT NULL,
-    name character varying(255)
+    name character varying(255) NOT NULL
 );
 
 
@@ -310,7 +310,7 @@ INSERT INTO product (id, name, cost, type) VALUES (1, 'NE Hleb', 2.02, 'Food');
 -- Name: product_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
 --
 
-SELECT pg_catalog.setval('product_id_seq', 10, true);
+SELECT pg_catalog.setval('product_id_seq', 14, true);
 
 
 --
@@ -358,6 +358,8 @@ SELECT pg_catalog.setval('store_id_seq', 1, false);
 --
 
 INSERT INTO "user" (id, username, password) VALUES (1, 'Inna', 'qwerty');
+INSERT INTO "user" (id, username, password) VALUES (3, 'admin', 'admin');
+INSERT INTO "user" (id, username, password) VALUES (4, 'new-admin-edited', 'admin');
 
 
 --
@@ -365,15 +367,15 @@ INSERT INTO "user" (id, username, password) VALUES (1, 'Inna', 'qwerty');
 --
 
 INSERT INTO user_authority (user_id, authority_id) VALUES (1, 2);
-INSERT INTO user_authority (user_id, authority_id) VALUES (1, 3);
 INSERT INTO user_authority (user_id, authority_id) VALUES (1, 1);
+INSERT INTO user_authority (user_id, authority_id) VALUES (3, 1);
 
 
 --
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
 --
 
-SELECT pg_catalog.setval('user_id_seq', 1, true);
+SELECT pg_catalog.setval('user_id_seq', 7, true);
 
 
 --
@@ -452,6 +454,34 @@ CREATE UNIQUE INDEX authority_id_uindex ON authority USING btree (id);
 --
 
 CREATE UNIQUE INDEX authority_name_uindex ON authority USING btree (name);
+
+
+--
+-- Name: product_name_uindex; Type: INDEX; Schema: products; Owner: postgres
+--
+
+CREATE UNIQUE INDEX product_name_uindex ON product USING btree (name);
+
+
+--
+-- Name: stock_specialize_uindex; Type: INDEX; Schema: products; Owner: postgres
+--
+
+CREATE UNIQUE INDEX stock_specialize_uindex ON stock USING btree (specialize);
+
+
+--
+-- Name: store_name_uindex; Type: INDEX; Schema: products; Owner: postgres
+--
+
+CREATE UNIQUE INDEX store_name_uindex ON store USING btree (name);
+
+
+--
+-- Name: user_username_uindex; Type: INDEX; Schema: products; Owner: postgres
+--
+
+CREATE UNIQUE INDEX user_username_uindex ON "user" USING btree (username);
 
 
 --

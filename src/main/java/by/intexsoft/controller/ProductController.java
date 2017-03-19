@@ -29,13 +29,13 @@ public class ProductController {
      * @return entites of {@link Product}
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Product> loadAllProducts() {
+    public ResponseEntity<?> loadAllProducts() {
         LOGGER.info("Start loadAllProducts");
         try {
-            return productService.findAll();
+            return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadAllProducts. " + e.getLocalizedMessage());
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -44,13 +44,13 @@ public class ProductController {
      * @return entity of {@link Product}
      */
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public List<Product> loadProducts(@PathVariable("name") String name) {
+    public ResponseEntity<?> loadProducts(@PathVariable("name") String name) {
         LOGGER.info("Start loadProduct: " + name);
         try {
-            return productService.findByName(name);
+            return new ResponseEntity<>(productService.findByName(name), HttpStatus.OK);
         } catch (NullPointerException e) {
             LOGGER.error("Exception in loadProduct. " + e.getLocalizedMessage());
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -59,12 +59,13 @@ public class ProductController {
      * @param product model
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void createProduct(@RequestBody Product product) {
+    public ResponseEntity<?> createProduct(@RequestBody Product product) {
         LOGGER.info("Start createProduct");
         try {
-            productService.create(product);
+            return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
         } catch (Exception e) {
             LOGGER.info("Error in createProduct. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -73,12 +74,13 @@ public class ProductController {
      * @param product model
      */
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public void updateProduct(@RequestBody Product product) {
+    public ResponseEntity<?> updateProduct(@RequestBody Product product) {
         LOGGER.info("start updateProduct");
         try {
-            productService.update(product);
+            return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
         } catch (Exception e) {
             LOGGER.info("Error in updateProduct. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

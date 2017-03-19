@@ -1,12 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 import {ProductService} from "../product.service";
 import {Product} from "../../model/product";
+import {SecurityService} from "../../security/security.service";
 
 @Component({
-    selector: 'all-products-component',
-    templateUrl: './all-products.component.html'
+    selector: 'product-content-component',
+    templateUrl: 'product-content.component.html'
 })
-export class AllProductsComponent implements OnInit {
+export class ProductContentComponent implements OnInit {
 
     productList: Product[];
 
@@ -31,5 +32,9 @@ export class AllProductsComponent implements OnInit {
                     alert("Error!");
                 }
             }, error => alert(error));
+    }
+
+    isAdmin(): boolean{
+        return SecurityService.isAdmin();
     }
 }

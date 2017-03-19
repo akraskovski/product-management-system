@@ -5,18 +5,18 @@ import {Router} from "@angular/router";
 import {Product} from "../../model/product";
 
 @Component({
-    selector: 'add-product-component',
-    templateUrl: './add-product.component.html'
+    selector: 'product-create-component',
+    templateUrl: 'product-create.component.html'
 })
-export class AddProductComponent implements OnInit{
-    product: FormGroup;
+export class ProductCreateComponent implements OnInit{
+    productForm: FormGroup;
     loading = false;
 
     constructor(private productService: ProductService, private router: Router) {
     }
 
     ngOnInit(): void {
-        this.product = new FormGroup({
+        this.productForm = new FormGroup({
             name: new FormControl('', Validators.required),
             cost: new FormControl('', Validators.required),
             type: new FormControl('', Validators.required)
@@ -25,7 +25,7 @@ export class AddProductComponent implements OnInit{
 
     onSubmit() {
         this.loading = true;
-        this.productService.create(new Product(this.product.value.name, this.product.value.cost, this.product.value.type))
+        this.productService.create(new Product(this.productForm.value.name, this.productForm.value.cost, this.productForm.value.type))
             .subscribe(result => {
                 if (result === true) {
                     alert("Success!");

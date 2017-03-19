@@ -10,13 +10,14 @@ import {AuthorizationComponent} from "./authorization/authorization.component";
 import {AuthorizationService} from "./authorization/authorization.service";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
-import {AuthorizationGuard} from "./guard/authorization.guard";
+import {SecurityService} from "./security/security.service";
 import {HomeComponent} from "./home/home.component";
 import {ProductComponent} from "./product/product.component";
 import {ProductService} from "./product/product.service";
-import {AllProductsComponent} from "./product/all/all-products.component";
-import {AddProductComponent} from "./product/add/add-product.component";
+import {ProductContentComponent} from "./product/content/product-content.component";
+import {ProductCreateComponent} from "./product/create/product-create.component";
 import {ProductSearchComponent} from "./product/search/product-search.component";
+import {ProductUpdateComponent} from "./product/update/product-update.component";
 import {UserComponent} from "./user/user.component";
 import {AllUsersComponent} from "./user/all/all-users.component";
 
@@ -38,14 +39,15 @@ import {AllUsersComponent} from "./user/all/all-users.component";
         AllUsersComponent,
         UserSearchComponent,
         ProductComponent,
-        AllProductsComponent,
-        AddProductComponent,
-        ProductSearchComponent
+        ProductContentComponent,
+        ProductCreateComponent,
+        ProductSearchComponent,
+        ProductUpdateComponent
     ],
     providers: [
-        AuthorizationGuard,
-        UserService,
         AuthorizationService,
+        SecurityService,
+        UserService,
         ProductService
     ],
     bootstrap: [AppComponent]

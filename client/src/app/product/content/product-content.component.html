@@ -8,8 +8,8 @@
                 <p>Name: {{product.name}}</p>
                 <p>Cost: {{product.cost}}</p>
                 <p>Type: {{product.type}}</p>
-                <button>Edit</button>
-                <button (click)="onDelete(product)">Delete</button>
+                <button *ngIf="isAdmin() ">Edit</button>
+                <button *ngIf="isAdmin()" (click)="onDelete(product)">Delete</button>
             </div>
         </li>
     </ul>

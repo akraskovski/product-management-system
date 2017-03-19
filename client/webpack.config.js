@@ -46,7 +46,7 @@ module.exports = {
         historyApiFallback: true,
         quiet: true,
         proxy: {
-            '/**': 'http://localhost:8081/SpringRestHibernateJpa'
+            '/**': 'http://localhost:8081'
         }
     }
 };

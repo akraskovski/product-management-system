@@ -14,20 +14,36 @@ export class ProductService {
     loadAll() {
         return this.http.get(environment.PRODUCT_URL)
             .map((responce: Response) => responce.json())
-            .catch(this.handleError);
+            .catch(ProductService.handleError);
     }
 
     loadByName(name: string) {
         return this.http.get(environment.PRODUCT_URL + name)
             .map(responce => responce.json())
-            .catch(this.handleError);
+            .catch(ProductService.handleError);
     }
 
     create(product: Product) {
-        const body = JSON.stringify({name: product.name, cost: product.cost, type: product.type});
-        const headers = new Headers({'Content-Type': 'application/json', 'x-auth-token': AuthorizationService.getCurrentUser().token});
+        const body = product;
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'x-auth-token': AuthorizationService.getCurrentUser().token
+        });
         const options = new RequestOptions({headers: headers});
-        return this.http.post(environment.PRODUCT_URL, body, options).map(() => {
+        return this.http.post(environment.PRODUCT_URL, body, options)
+            .map(() => {
+                return true;
+            });
+    }
+
+    update(product: Product) {
+        const body = product;
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'x-auth-token': AuthorizationService.getCurrentUser().token
+        });
+        const options = new RequestOptions({headers: headers});
+        return this.http.put(environment.PRODUCT_URL, body, options).map(() => {
             return true;
         });
     }
@@ -37,10 +53,10 @@ export class ProductService {
         const headers = new Headers({'x-auth-token': userToken});
         return this.http.delete(environment.PRODUCT_URL + identifier, {headers: headers})
             .map((response) => response.status === 200)
-            .catch(this.handleError);
+            .catch(ProductService.handleError);
     }
 
-    private handleError(error: any) {
+    private static handleError(error: any) {
         let errMsg: string;
         if (error instanceof Response) {
             const body = error.json() || '';
