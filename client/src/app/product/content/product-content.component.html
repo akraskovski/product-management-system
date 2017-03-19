@@ -1,16 +1,25 @@
 <h2>All entites from database</h2>
-
-<div>
-    <ul>
-        <li *ngFor="let product of productList">
-            <div style="border: 1px solid black; margin-top: 3px;">
-                <p>Id: {{product.id}}</p>
-                <p>Name: {{product.name}}</p>
-                <p>Cost: {{product.cost}}</p>
-                <p>Type: {{product.type}}</p>
+<div class="panel">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of productList">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.cost}}</td>
+            <td>{{item.type}}</td>
+            <td>
                 <button *ngIf="isAdmin() ">Edit</button>
                 <button *ngIf="isAdmin()" (click)="onDelete(product)">Delete</button>
-            </div>
-        </li>
-    </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
