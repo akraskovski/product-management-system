@@ -5,7 +5,7 @@ import {environment} from "../constants/environment";
 import {Observable} from "rxjs";
 
 @Injectable()
-export class LoginService {
+export class AuthorizationService {
 
     public currentUser: User;
 
@@ -17,7 +17,7 @@ export class LoginService {
         const options = new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})});
         return this.http.post(environment.LOGIN_URL, body, options)
             .map(this.extractData)
-            .catch(LoginService.handleError);
+            .catch(AuthorizationService.handleError);
     }
 
     logout(): void {
@@ -49,5 +49,9 @@ export class LoginService {
         }
         console.error(errMsg);
         return Observable.throw(errMsg);
+    }
+
+    static getCurrentUser() {
+        return JSON.parse(localStorage.getItem(environment.USER_KEY));
     }
 }

@@ -1,19 +1,19 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {LoginService} from "./login.service";
+import {AuthorizationService} from "./authorization.service";
 import {User} from "../model/user";
 import {Router} from "@angular/router";
 
 @Component({
-    selector: 'login-component',
-    templateUrl: './login.component.html'
+    selector: 'authorization-component',
+    templateUrl: './authorization.component.html'
 })
-export class LoginComponent implements OnInit {
+export class AuthorizationComponent implements OnInit {
     loginForm: FormGroup;
     loading: boolean = false;
     error: string = '';
 
-    constructor(private loginService: LoginService, private router: Router) {
+    constructor(private authorizationService: AuthorizationService, private router: Router) {
     }
 
     ngOnInit(): void {
@@ -21,12 +21,12 @@ export class LoginComponent implements OnInit {
             username: new FormControl('', Validators.required),
             password: new FormControl('', Validators.required)
         });
-        this.loginService.logout();
+        this.authorizationService.logout();
     }
 
     onSubmit() {
         this.loading = true;
-        this.loginService.login(new User(this.loginForm.value.username, this.loginForm.value.password))
+        this.authorizationService.login(new User(this.loginForm.value.username, this.loginForm.value.password))
             .subscribe(
                 result => {
                     result && this.router.navigate(['/']);

@@ -6,8 +6,8 @@ import {HttpModule} from "@angular/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {UserSearchComponent} from "./user/search/user-search.component";
 import {AppRoutingModule} from "./app-routing.module";
-import {LoginComponent} from "./authorization/login.component";
-import {LoginService} from "./authorization/login.service";
+import {AuthorizationComponent} from "./authorization/authorization.component";
+import {AuthorizationService} from "./authorization/authorization.service";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {AuthorizationGuard} from "./guard/authorization.guard";
@@ -33,7 +33,7 @@ import {AllUsersComponent} from "./user/all/all-users.component";
     declarations: [
         AppComponent,
         HomeComponent,
-        LoginComponent,
+        AuthorizationComponent,
         UserComponent,
         AllUsersComponent,
         UserSearchComponent,
@@ -45,7 +45,7 @@ import {AllUsersComponent} from "./user/all/all-users.component";
     providers: [
         AuthorizationGuard,
         UserService,
-        LoginService,
+        AuthorizationService,
         ProductService
     ],
     bootstrap: [AppComponent]

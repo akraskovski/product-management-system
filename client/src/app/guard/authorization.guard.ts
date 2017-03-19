@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {CanActivate, Router, ActivatedRouteSnapshot} from "@angular/router";
-import {environment} from "../constants/environment";
 import {User} from "../model/user";
 import {Authority} from "../model/authority";
+import {AuthorizationService} from "../authorization/authorization.service";
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
@@ -15,7 +15,7 @@ export class AuthorizationGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot) {
         const roles = route.data["roles"] as Array<string>;
-        const user: User = AuthorizationGuard.getCurrentUser();
+        const user: User = AuthorizationService.getCurrentUser();
         if (roles.length > 0 && user) {
             if (AuthorizationGuard.checkRoles(roles, user.authorities))
                 return true;
@@ -23,11 +23,6 @@ export class AuthorizationGuard implements CanActivate {
         alert('You don\'t have permissions!');
         this.router.navigate(['/home']);
         return false;
-    }
-
-    private static getCurrentUser(): User {
-        const user = localStorage.getItem(environment.USER_KEY);
-        return user && JSON.parse(user);
     }
 
     private static checkRoles(avialableRoleList: string[], currentRoleList: Authority[]): boolean {

@@ -90,6 +90,7 @@ public class ProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Integer id) {
         LOGGER.info("Start deleteProduct");
         try {
+            productService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             LOGGER.info("Error in deleteProduct. " + e.getLocalizedMessage());
