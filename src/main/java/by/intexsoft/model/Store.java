@@ -15,7 +15,7 @@ public class Store extends BaseEntity {
     /**
      * Store name
      */
-    @Column
+    @Column(unique = true, nullable = false)
     public String name;
 
     /**

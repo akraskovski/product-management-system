@@ -15,14 +15,14 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.ts', '.js', '.css', '.html'],
+        extensions: ['.ts', '.js', '.css', '.html']
     },
 
     module: {
         rules: [
             {
                 test: /\.ts$/,
-                loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
+                loaders: ['awesome-typescript-loader', 'angular2-template-loader']
             },
             {
                 test: /\.(html|css)$/,

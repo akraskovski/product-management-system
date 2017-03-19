@@ -15,6 +15,17 @@ export class AllProductsComponent implements OnInit {
 
     ngOnInit(): void {
         this.productService.loadAll()
-            .then(productList => this.productList = productList);
+            .subscribe(productList => this.productList = productList);
+    }
+
+    onDelete(identifier: number) {
+        this.productService.remove(identifier)
+            .subscribe(result => {
+                if (result === true) {
+                    alert("Success!");
+                } else {
+                    alert("Error!");
+                }
+            }, error => alert(error));
     }
 }

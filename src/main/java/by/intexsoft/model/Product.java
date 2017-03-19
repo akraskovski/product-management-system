@@ -14,18 +14,18 @@ public class Product extends BaseEntity {
     /**
      * Product name
      */
-    @Column
+    @Column(unique = true, nullable = false)
     public String name;
 
     /**
      * Product cost
      */
-    @Column
+    @Column(nullable = false)
     public Double cost;
 
     /**
      * Product type
      */
-    @Column
+    @Column(nullable = false)
     public String type;
 }

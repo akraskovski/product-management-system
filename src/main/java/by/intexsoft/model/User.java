@@ -17,13 +17,13 @@ public class User extends BaseEntity {
     /**
      * User name
      */
-    @Column
+    @Column(unique = true, nullable = false)
     public String username;
 
     /**
      * User password
      */
-    @Column
+    @Column(nullable = false)
     public String password;
 
     @ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER)

@@ -16,6 +16,6 @@ export class ProductSearchComponent {
 
     loadProductByName(): void {
         this.productService.loadByName(this.inputText)
-            .then(responce => this.findProducts = responce);
+            .subscribe(responce => this.findProducts = responce);
     }
 }

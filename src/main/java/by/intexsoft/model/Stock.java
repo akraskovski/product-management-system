@@ -15,7 +15,7 @@ public class Stock extends BaseEntity {
     /**
      * Stock specialize
      */
-    @Column
+    @Column(unique = true, nullable = false)
     public String specialize;
 
     /**

@@ -29,15 +29,11 @@ export class LoginComponent implements OnInit {
         this.loginService.login(new User(this.loginForm.value.username, this.loginForm.value.password))
             .subscribe(
                 result => {
-                    if (result === true) {
-                        alert("Login success!");
-                        this.router.navigate(['/']);
-                    } else {
-                        alert("Login Failed!");
-                        this.error = 'Authentification error';
-                        this.loading = false;
-                        this.router.navigate(['/login']);
-                    }
+                    result && this.router.navigate(['/']);
+                },
+                error => {
+                    this.error = <any>error;
+                    this.loading = false;
                 }
             );
     }

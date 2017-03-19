@@ -53,6 +53,6 @@ public class AuthenticationController {
             }
         }
         LOGGER.error("Authentication failed");
-        return new ResponseEntity<>("Authentication failed", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

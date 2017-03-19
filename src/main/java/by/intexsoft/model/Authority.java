@@ -16,7 +16,7 @@ public class Authority extends BaseEntity implements GrantedAuthority{
     /**
      * Authority name
      */
-    @Column
+    @Column(unique = true, nullable = false)
     public String name;
 
     @Override

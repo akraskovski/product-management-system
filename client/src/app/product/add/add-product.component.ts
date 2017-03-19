@@ -24,12 +24,8 @@ export class AddProductComponent implements OnInit{
     }
 
     onSubmit() {
-        this.add();
-    }
-
-    private add(): void {
         this.loading = true;
-        this.productService.add(new Product(this.product.value.name, this.product.value.cost, this.product.value.type))
+        this.productService.create(new Product(this.product.value.name, this.product.value.cost, this.product.value.type))
             .subscribe(result => {
                 if (result === true) {
                     alert("Success!");

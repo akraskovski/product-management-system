@@ -16,18 +16,7 @@ export class LoginService {
         const body = JSON.stringify({username: user.username, password: user.password});
         const options = new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})});
         return this.http.post(environment.LOGIN_URL, body, options)
-            .map((response: Response) => {
-                const token = response.json() && response.json().token;
-                alert(token);
-                const user = response.json() && response.json().user;
-                if (token && user) {
-                    this.currentUser = user;
-                    this.currentUser.token = token;
-                    localStorage.setItem(environment.USER_KEY, JSON.stringify(this.currentUser));
-                    return true;
-                }
-                return false;
-            })
+            .map(this.extractData)
             .catch(LoginService.handleError);
     }
 
@@ -36,12 +25,25 @@ export class LoginService {
         localStorage.removeItem(environment.USER_KEY);
     }
 
+    private extractData(response: Response) {
+        const token = response.json().token;
+        const user = response.json().user;
+        if (token && user) {
+            this.currentUser = user;
+            this.currentUser.token = token;
+            localStorage.setItem(environment.USER_KEY, JSON.stringify(this.currentUser));
+            return true;
+        }
+        return false;
+    }
+
     private static handleError(error: Response | any) {
         let errMsg: string;
         if (error instanceof Response) {
             const body = error.json() || '';
             const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText} || ''} ${err}`;
+            errMsg = `${error.status} - ${error.statusText}`;
+            errMsg += `${err}`;
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
