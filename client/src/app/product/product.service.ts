@@ -13,13 +13,19 @@ export class ProductService {
 
     loadAll() {
         return this.http.get(environment.PRODUCT_URL)
-            .map((responce: Response) => responce.json())
+            .map((response: Response) => response.json())
+            .catch(ProductService.handleError);
+    }
+
+    loadById(id: number) {
+        return this.http.get(environment.PRODUCT_URL + id)
+            .map((response: Response) => response.json())
             .catch(ProductService.handleError);
     }
 
     loadByName(name: string) {
-        return this.http.get(environment.PRODUCT_URL + name)
-            .map(responce => responce.json())
+        return this.http.get(environment.PRODUCT_URL + "name/" + name)
+            .map(response => response.json())
             .catch(ProductService.handleError);
     }
 
@@ -43,9 +49,10 @@ export class ProductService {
             'x-auth-token': AuthorizationService.getCurrentUser().token
         });
         const options = new RequestOptions({headers: headers});
-        return this.http.put(environment.PRODUCT_URL, body, options).map(() => {
-            return true;
-        });
+        return this.http.put(environment.PRODUCT_URL, body, options)
+            .map(() => {
+                return true;
+            });
     }
 
     remove(identifier: number): Observable<Boolean> {

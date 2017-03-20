@@ -10,13 +10,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of productList">
-            <td>{{item.id}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.cost}}</td>
-            <td>{{item.type}}</td>
+        <tr *ngFor="let product of productList">
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.cost}}</td>
+            <td>{{product.type}}</td>
             <td>
-                <button *ngIf="isAdmin() ">Edit</button>
+                <button *ngIf="isAdmin()" (click)="onEdit(product)">Edit</button>
                 <button *ngIf="isAdmin()" (click)="onDelete(product)">Delete</button>
             </td>
         </tr>

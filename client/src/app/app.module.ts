@@ -11,7 +11,6 @@ import {AuthorizationService} from "./authorization/authorization.service";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {SecurityService} from "./security/security.service";
-import {HomeComponent} from "./home/home.component";
 import {ProductComponent} from "./product/product.component";
 import {ProductService} from "./product/product.service";
 import {ProductContentComponent} from "./product/content/product-content.component";
@@ -33,7 +32,6 @@ import {AllUsersComponent} from "./user/all/all-users.component";
     ],
     declarations: [
         AppComponent,
-        HomeComponent,
         AuthorizationComponent,
         UserComponent,
         AllUsersComponent,

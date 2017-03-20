@@ -29,7 +29,7 @@ export class ProductCreateComponent implements OnInit{
             .subscribe(result => {
                 if (result === true) {
                     alert("Success!");
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/product-content']);
                 } else {
                     this.loading = false;
                 }

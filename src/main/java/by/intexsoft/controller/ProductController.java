@@ -43,13 +43,28 @@ public class ProductController {
      * Find products in database with setting name in browser
      * @return entity of {@link Product}
      */
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public ResponseEntity<?> loadProducts(@PathVariable("name") String name) {
-        LOGGER.info("Start loadProduct: " + name);
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> loadProductById(@PathVariable("id") Integer id) {
+        LOGGER.info("Start loadProductById: " + id);
+        try {
+            return new ResponseEntity<>(productService.find(id), HttpStatus.OK);
+        } catch (NullPointerException e) {
+            LOGGER.error("Exception in loadProductById. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Find products in database with setting name in browser
+     * @return entity of {@link Product}
+     */
+    @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
+    public ResponseEntity<?> loadProductsByName(@PathVariable("name") String name) {
+        LOGGER.info("Start loadProductByName: " + name);
         try {
             return new ResponseEntity<>(productService.findByName(name), HttpStatus.OK);
         } catch (NullPointerException e) {
-            LOGGER.error("Exception in loadProduct. " + e.getLocalizedMessage());
+            LOGGER.error("Exception in loadProductByName. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }

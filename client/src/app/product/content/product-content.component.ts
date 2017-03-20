@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {ProductService} from "../product.service";
 import {Product} from "../../model/product";
 import {SecurityService} from "../../security/security.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'product-content-component',
@@ -11,7 +12,7 @@ export class ProductContentComponent implements OnInit {
 
     productList: Product[];
 
-    constructor(private productService: ProductService) {
+    constructor(private productService: ProductService, private router: Router) {
     }
 
     ngOnInit(): void {
@@ -32,6 +33,11 @@ export class ProductContentComponent implements OnInit {
                     alert("Error!");
                 }
             }, error => alert(error));
+    }
+
+    onEdit(product: Product): void {
+        if (product)
+            this.router.navigate(['/product-update', product.id]);
     }
 
     isAdmin(): boolean{
