@@ -8,7 +8,7 @@ import {Product} from "../../model/product";
     selector: 'product-create-component',
     templateUrl: 'product-create.component.html'
 })
-export class ProductCreateComponent implements OnInit{
+export class ProductCreateComponent implements OnInit {
     productForm: FormGroup;
     loading = false;
 
@@ -18,7 +18,7 @@ export class ProductCreateComponent implements OnInit{
     ngOnInit(): void {
         this.productForm = new FormGroup({
             name: new FormControl('', Validators.required),
-            cost: new FormControl('', Validators.required),
+            cost: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]+)?$")]),
             type: new FormControl('', Validators.required)
         });
     }
@@ -28,10 +28,10 @@ export class ProductCreateComponent implements OnInit{
         this.productService.create(new Product(this.productForm.value.name, this.productForm.value.cost, this.productForm.value.type))
             .subscribe(result => {
                 if (result === true) {
-                    alert("Success!");
                     this.router.navigate(['/product-content']);
                 } else {
                     this.loading = false;
+                    alert("Error!");
                 }
             });
     }

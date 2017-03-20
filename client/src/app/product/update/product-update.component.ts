@@ -17,29 +17,42 @@ export class ProductUpdateComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        let id = this.route.snapshot.params['id'];
-        this.productService.loadById(id)
+        this.createEmptyForm();
+        this.fillForm();
+    }
+
+    private createEmptyForm(): void {
+        this.productForm = new FormGroup({
+            name: new FormControl('', Validators.required),
+            cost: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]+)?$")]),
+            type: new FormControl('', Validators.required)
+        });
+    }
+
+    private fillForm(): void {
+        this.productService.loadById(this.route.snapshot.params['id'])
             .subscribe(product => {
                 this.product = product;
-                console.log(this.product.id);
-                console.log(this.product.name);
-                this.productForm = new FormGroup({
-                    name: new FormControl(this.product.name, Validators.required),
-                    cost: new FormControl(this.product.cost, Validators.required),
-                    type: new FormControl(this.product.type, Validators.required)
+                this.productForm.setValue({
+                    name: this.product.name,
+                    cost: this.product.cost,
+                    type: this.product.type
                 });
             });
     }
 
     onSubmit() {
         this.loading = true;
-        this.productService.update(new Product(this.productForm.value.name, this.productForm.value.cost, this.productForm.value.type))
+        this.product.name = this.productForm.value.name;
+        this.product.cost = this.productForm.value.cost;
+        this.product.type = this.productForm.value.type;
+        this.productService.update(this.product)
             .subscribe(result => {
                 if (result === true) {
-                    alert("Success!");
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/product-content']);
                 } else {
                     this.loading = false;
+                    alert("Error!");
                 }
             });
     }

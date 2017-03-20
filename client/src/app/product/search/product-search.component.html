@@ -1,11 +1,28 @@
-<h2>Search product by name</h2>
+<h2>Search products by name</h2>
 <input type="text" [(ngModel)]='inputText'/>
-<button (click)="loadProductByName()">Find</button>
+<button (click)="onSubmit()">Find</button>
 
-<div *ngIf="findProducts">
-    <ul>
-        <li *ngFor="let product of findProducts">
-            <span>{{product.name}}</span> {{product.cost}}
-        </li>
-    </ul>
+<div *ngIf="findProducts" class="panel">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let product of findProducts">
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.cost}}</td>
+            <td>{{product.type}}</td>
+            <td>
+                <button *ngIf="isAdmin()" (click)="onEdit(product)">Edit</button>
+                <button *ngIf="isAdmin()" (click)="onDelete(product)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>

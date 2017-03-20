@@ -37,9 +37,8 @@ export class ProductService {
         });
         const options = new RequestOptions({headers: headers});
         return this.http.post(environment.PRODUCT_URL, body, options)
-            .map(() => {
-                return true;
-            });
+            .map((response: Response) => response.status === 201)
+            .catch(ProductService.handleError);
     }
 
     update(product: Product) {
@@ -50,9 +49,8 @@ export class ProductService {
         });
         const options = new RequestOptions({headers: headers});
         return this.http.put(environment.PRODUCT_URL, body, options)
-            .map(() => {
-                return true;
-            });
+            .map((response: Response) => response.status === 200)
+            .catch(ProductService.handleError);
     }
 
     remove(identifier: number): Observable<Boolean> {

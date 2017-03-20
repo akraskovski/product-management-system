@@ -18,7 +18,7 @@ const routes: Routes = [
     {path: 'product-content', component: ProductContentComponent},
     {path: 'product-create', component: ProductCreateComponent, canActivate: [SecurityService], data: { roles: ['ROLE_ADMIN']}},
     {path: 'product-search', component: ProductSearchComponent},
-    {path: 'product-update/:id', component: ProductUpdateComponent},
+    {path: 'product-update/:id', component: ProductUpdateComponent, canActivate: [SecurityService], data: { roles: ['ROLE_ADMIN']}},
     {path: 'user', component: UserComponent},
     {path: 'all-users', component: AllUsersComponent},
     {path: 'user-search', component: UserSearchComponent},
