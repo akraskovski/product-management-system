@@ -1,24 +1,27 @@
 import {NgModule} from "@angular/core";
 import {UserSearchComponent} from "./search/user-search.component";
-import {AllUsersComponent} from "./all/all-users.component";
 import {UserComponent} from "./user.component";
 import {UserService} from "./user.service";
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
+import {UserContentComponent} from "./content/user-content.component";
+import {UserCreateComponent} from "./create/user-create.component";
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         RouterModule,
         HttpModule,
+        ReactiveFormsModule,
         CommonModule
     ],
     declarations: [
         UserComponent,
-        AllUsersComponent,
+        UserContentComponent,
+        UserCreateComponent,
         UserSearchComponent
     ],
     providers: [
@@ -26,5 +29,4 @@ import {RouterModule} from "@angular/router";
     ]
 })
 export class UserModule {
-
 }

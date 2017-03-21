@@ -1,29 +1,51 @@
 import {Injectable} from "@angular/core";
-import {Http} from "@angular/http";
-import 'rxjs/add/operator/toPromise';
+import {Http, Response, Headers, RequestOptions} from "@angular/http";
+import "rxjs/add/operator/toPromise";
 import {User} from "../model/user";
 import {environment} from "../constants/environment";
+import {Observable} from "rxjs";
+import {AuthorizationService} from "../authorization/authorization.service";
+import {Authority} from "../model/authority";
 
 @Injectable()
 export class UserService {
 
     constructor(private http: Http) { }
 
-    getUsers(): Promise<User[]> {
-        return this.http.get(environment.USER_URL)
-            .toPromise()
-            .then(responce => responce.json())
-            .catch(this.handleError);
+    loadAll(): Observable<User[]> {
+        return this.http.get(environment.USER_URL, this.generateOptions())
+            .map(responce => responce.json())
+            .catch(UserService.handleError);
     }
 
-    getUserByUsername(inputText: string): Promise<User> {
-        return this.http.get(environment.USER_URL + inputText)
-            .toPromise()
-            .then(responce => responce.json())
-            .catch(this.handleError);
+    loadAllAuthorities(): Observable<Authority[]> {
+        return this.http.get(environment.AUTHORITY_URL, this.generateOptions())
+            .map(responce => responce.json())
+            .catch(UserService.handleError);
     }
 
-    private handleError(error: any): Promise<any> {
+    loadByUsername(inputText: string): Observable<User> {
+        return this.http.get(environment.USER_URL + "/username/" + inputText, this.generateOptions())
+            .map(responce => responce.json())
+            .catch(UserService.handleError);
+    }
+
+    create(user: User) {
+        const body = user;
+        return this.http.post(environment.USER_URL, body, this.generateOptions())
+            .map((response: Response) => response.status === 201)
+            .catch(UserService.handleError);
+    }
+
+    private generateOptions(): RequestOptions {
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'x-auth-token': AuthorizationService.getCurrentUser().token
+        });
+        return new RequestOptions({headers: headers});
+    }
+
+    private static handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
     }

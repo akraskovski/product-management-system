@@ -1,0 +1,19 @@
+<h2>All entites from database</h2>
+<div class="panel">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Authorities</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of userList">
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+            <td *ngFor="let authority of user.authorities">{{authority.name}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

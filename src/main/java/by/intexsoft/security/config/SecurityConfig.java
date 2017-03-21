@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/product/").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.PUT,"/product/").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/product/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/user/**").hasAuthority("ROLE_ADMIN")
                 .and()
                 .addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -17,7 +17,7 @@ import {BrowserModule} from "@angular/platform-browser";
         HttpModule,
         CommonModule,
         ReactiveFormsModule,
-        RouterModule,
+        RouterModule
     ],
     declarations: [
         ProductComponent,

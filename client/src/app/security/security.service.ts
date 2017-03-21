@@ -17,8 +17,7 @@ export class SecurityService implements CanActivate {
         const authorities = route.data["roles"] as Array<string>;
         const user: User = AuthorizationService.getCurrentUser();
         if (authorities.length > 0 && user) {
-            if (SecurityService.checkAuthorities(authorities, user.authorities))
-                return true;
+                return SecurityService.checkAuthorities(authorities, user.authorities);
         }
         alert('You don\'t have permissions!');
         this.router.navigate(['/']);

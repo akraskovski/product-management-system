@@ -14,8 +14,8 @@ export class UserSearchComponent {
     }
 
     loadUserByUsername(): void {
-        this.userService.getUserByUsername(this.inputText)
-            .then(user => {
+        this.userService.loadByUsername(this.inputText)
+            .subscribe(user => {
                 this.findUser = user;
                 alert(`
                     USERNAME: ${this.findUser.username}\n

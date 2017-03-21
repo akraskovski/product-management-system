@@ -1,6 +1,7 @@
 package by.intexsoft.controller;
 
 import by.intexsoft.model.User;
+import by.intexsoft.service.AuthorityService;
 import by.intexsoft.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ public class UserController {
      * Return json-information about all users in database
      * @return list of {@link User}s
      */
-    @RequestMapping("/")
+    @RequestMapping
     public ResponseEntity<?> loadAllUsers() {
         LOGGER.info("Start loadAllUsers");
         try {
@@ -41,18 +42,33 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    /**
+     * Return json-information about all users in database
+     * @return list of {@link User}s
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> loadUserById(@PathVariable("id") Integer id) {
+        LOGGER.info("Start loadUserById");
+        try {
+            return new ResponseEntity<>(userService.find(id), HttpStatus.OK);
+        } catch (NullPointerException e) {
+            LOGGER.error("Exception in loadUserByID. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
     
     /**
      * Find user in database with setting name in browser
      * @return entity of {@link User}
      */
-    @RequestMapping("/{username}")
-    public ResponseEntity<?> loadUser(@PathVariable String username) {
-        LOGGER.info("Start loadUser: " + username);
+    @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
+    public ResponseEntity<?> loadUserByUsername(@PathVariable String username) {
+        LOGGER.info("Start loadUserByUsername: " + username);
         try {
             return new ResponseEntity<>(userService.findByUsername(username), HttpStatus.OK);
         } catch (NullPointerException e) {
-            LOGGER.error("Exception in getUserByName. " + e.getLocalizedMessage());
+            LOGGER.error("Exception in loadUserByUsername. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -61,7 +77,7 @@ public class UserController {
      * Creating {@link User} from client form
      * @param user model
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody User user) {
         LOGGER.info("Start createUser");
         try {
@@ -76,7 +92,7 @@ public class UserController {
      * Update {@link User} entity in database
      * @param user model
      */
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateUser(@RequestBody User user) {
         LOGGER.info("Start updateUser");
         try {

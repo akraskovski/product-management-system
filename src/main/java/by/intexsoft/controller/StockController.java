@@ -28,7 +28,7 @@ public class StockController {
      * Find all products in database
      * @return entites of {@link Stock}
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping
     public ResponseEntity<?> loadAllStocks() {
         LOGGER.info("Start loadAllStocks");
         try {
@@ -43,7 +43,7 @@ public class StockController {
      * Creating {@link Stock} from client form
      * @param stock model
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createStock(@RequestBody Stock stock) {
         LOGGER.info("Start createStock");
         try {
@@ -58,7 +58,7 @@ public class StockController {
      * Update {@link Stock} entity in database
      * @param stock model
      */
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateStock(@RequestBody Stock stock) {
         LOGGER.info("Start updateStock");
         try {

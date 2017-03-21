@@ -28,7 +28,7 @@ public class ProductController {
      * Find all products in database
      * @return entites of {@link Product}
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping
     public ResponseEntity<?> loadAllProducts() {
         LOGGER.info("Start loadAllProducts");
         try {
@@ -73,7 +73,7 @@ public class ProductController {
      * Creating {@link Product} from client form
      * @param product model
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createProduct(@RequestBody Product product) {
         LOGGER.info("Start createProduct");
         try {
@@ -88,7 +88,7 @@ public class ProductController {
      * Update {@link Product}'s information in database
      * @param product model
      */
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateProduct(@RequestBody Product product) {
         LOGGER.info("start updateProduct");
         try {

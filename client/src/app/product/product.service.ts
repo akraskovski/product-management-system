@@ -18,13 +18,13 @@ export class ProductService {
     }
 
     loadById(id: number) {
-        return this.http.get(environment.PRODUCT_URL + id)
+        return this.http.get(environment.PRODUCT_URL + "/" + id)
             .map((response: Response) => response.json())
             .catch(ProductService.handleError);
     }
 
     loadByName(name: string) {
-        return this.http.get(environment.PRODUCT_URL + "name/" + name)
+        return this.http.get(environment.PRODUCT_URL + "/name/" + name)
             .map(response => response.json())
             .catch(ProductService.handleError);
     }
@@ -56,7 +56,7 @@ export class ProductService {
     remove(identifier: number): Observable<Boolean> {
         const userToken = AuthorizationService.getCurrentUser().token;
         const headers = new Headers({'x-auth-token': userToken});
-        return this.http.delete(environment.PRODUCT_URL + identifier, {headers: headers})
+        return this.http.delete(environment.PRODUCT_URL + "/" + identifier, {headers: headers})
             .map((response) => response.status === 200)
             .catch(ProductService.handleError);
     }

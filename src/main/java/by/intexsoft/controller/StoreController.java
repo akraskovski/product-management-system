@@ -28,7 +28,7 @@ public class StoreController {
      * Find all stores in database
      * @return entites of {@link Store}
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping
     public ResponseEntity<?> loadAllStores() {
         LOGGER.info("Start loadAllStores");
         try {
@@ -43,7 +43,7 @@ public class StoreController {
      * Creating {@link Store} from client form
      * @param store model
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createStore(@RequestBody Store store) {
         LOGGER.info("Start createStore");
         try {
@@ -58,7 +58,7 @@ public class StoreController {
      * Update {@link Store} entity in database
      * @param store model
      */
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateStore(@RequestBody Store store) {
         LOGGER.info("Start updateStore");
         try {
