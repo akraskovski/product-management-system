@@ -3,7 +3,8 @@
     <nav>
         <a routerLink="/user" routerLinkActive="active">User</a>
         <a routerLink="/product" routerLinkActive="active">Product</a>
-        <a routerLink="/login" routerLinkActive="active">Login page</a>
+        <a *ngIf="!isLoggedIn()" routerLink="/login" routerLinkActive="active">Login page</a>
+        <a *ngIf="isLoggedIn()" (click)="logout()" routerLinkActive="active">Logout</a>
     </nav>
 </div>
 <router-outlet></router-outlet>
