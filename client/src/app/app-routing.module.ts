@@ -14,11 +14,14 @@ import {AllUsersComponent} from "./user/all/all-users.component";
 const routes: Routes = [
     {path: '', redirectTo: '', pathMatch: 'full'},
     {path: 'login', component: AuthorizationComponent},
-    {path: 'product', component: ProductComponent},
-    {path: 'product-content', component: ProductContentComponent},
-    {path: 'product-create', component: ProductCreateComponent, canActivate: [SecurityService], data: { roles: ['ROLE_ADMIN']}},
-    {path: 'product-search', component: ProductSearchComponent},
-    {path: 'product-update/:id', component: ProductUpdateComponent, canActivate: [SecurityService], data: { roles: ['ROLE_ADMIN']}},
+    {path: 'product', component: ProductComponent,
+        children: [
+            {path: 'product-content', component: ProductContentComponent},
+            {path: 'product-create', component: ProductCreateComponent, canActivate: [SecurityService], data: { roles: ['ROLE_ADMIN']}},
+            {path: 'product-search', component: ProductSearchComponent},
+            {path: 'product-update/:id', component: ProductUpdateComponent, canActivate: [SecurityService], data: { roles: ['ROLE_ADMIN']}},
+        ]
+    },
     {path: 'user', component: UserComponent},
     {path: 'all-users', component: AllUsersComponent},
     {path: 'user-search', component: UserSearchComponent},

@@ -49,7 +49,7 @@ export class ProductUpdateComponent implements OnInit {
         this.productService.update(this.product)
             .subscribe(result => {
                 if (result === true) {
-                    this.router.navigate(['/product-content']);
+                    this.router.navigate(['product-content']);
                 } else {
                     this.loading = false;
                     alert("Error!");

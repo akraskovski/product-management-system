@@ -21,7 +21,7 @@ export class SecurityService implements CanActivate {
                 return true;
         }
         alert('You don\'t have permissions!');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
         return false;
     }
 
