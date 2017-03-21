@@ -28,7 +28,7 @@ export class ProductCreateComponent implements OnInit {
         this.productService.create(new Product(this.productForm.value.name, this.productForm.value.cost, this.productForm.value.type))
             .subscribe(result => {
                 if (result === true) {
-                    this.router.navigate(['product-content']);
+                    this.router.navigate(['product/product-content']);
                 } else {
                     this.loading = false;
                     alert("Error!");

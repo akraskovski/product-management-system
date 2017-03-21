@@ -37,7 +37,7 @@ export class ProductContentComponent implements OnInit {
 
     onEdit(product: Product): void {
         if (product)
-            this.router.navigate(['product-update', product.id]);
+            this.router.navigate(['product/product-update', product.id]);
     }
 
     isAdmin(): boolean{

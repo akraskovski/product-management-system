@@ -25,7 +25,7 @@ export class ProductSearchComponent {
         this.productService.remove(product.id)
             .subscribe(result => {
                 if (result === true) {
-                    this.router.navigate(['/product-content']);
+                    this.router.navigate(['product/product-content']);
                 } else {
                     alert("Error!");
                 }
@@ -34,7 +34,7 @@ export class ProductSearchComponent {
 
     onEdit(product: Product): void {
         if (product)
-            this.router.navigate(['/product-update', product.id]);
+            this.router.navigate(['product/product-update', product.id]);
     }
 
     isAdmin(): boolean{
