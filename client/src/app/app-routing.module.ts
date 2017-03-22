@@ -10,6 +10,7 @@ import {ProductUpdateComponent} from "./product/update/product-update.component"
 import {UserComponent} from "./user/user.component";
 import {UserContentComponent} from "./user/content/user-content.component";
 import {UserCreateComponent} from "./user/create/user-create.component";
+import {UserUpdateComponent} from "./user/update/user-update.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '', pathMatch: 'full'},
@@ -48,6 +49,12 @@ const routes: Routes = [
                 canActivate: [SecurityService],
                 data: {roles: ['ROLE_ADMIN']}
             },
+            {
+                path: 'user-update/:id',
+                component: UserUpdateComponent,
+                canActivate: [SecurityService],
+                data: {roles: ['ROLE_ADMIN']}
+            }
         ]
     }
 ];

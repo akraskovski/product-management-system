@@ -22,7 +22,7 @@ export class UserCreateComponent {
             .subscribe(availableAuthorities => this.availableAuthorities = availableAuthorities);
         this.userForm = new FormGroup({
             username: new FormControl('', Validators.required),
-            password: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]+)?$")]),
+            password: new FormControl('', Validators.required),
         });
     }
 

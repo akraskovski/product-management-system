@@ -24,16 +24,21 @@ export class UserService {
             .catch(UserService.handleError);
     }
 
-    loadByUsername(inputText: string): Observable<User> {
-        return this.http.get(environment.USER_URL + "/username/" + inputText, this.generateOptions())
-            .map(responce => responce.json())
+    loadById(identifier: number) {
+        return this.http.get(environment.USER_URL + "/" + identifier, this.generateOptions())
+            .map((response: Response) => response.json())
             .catch(UserService.handleError);
     }
 
     create(user: User) {
-        const body = user;
-        return this.http.post(environment.USER_URL, body, this.generateOptions())
+        return this.http.post(environment.USER_URL, user, this.generateOptions())
             .map((response: Response) => response.status === 201)
+            .catch(UserService.handleError);
+    }
+
+    update(user: User) {
+        return this.http.put(environment.USER_URL, user, this.generateOptions())
+            .map((response: Response) => response.status === 200)
             .catch(UserService.handleError);
     }
 

@@ -29,9 +29,9 @@ import {UserModule} from "./user/user.module";
         AuthorizationComponent,
     ],
     providers: [
+        {provide: LocationStrategy, useClass: HashLocationStrategy},
         AuthorizationService,
-        SecurityService,
-        {provide: LocationStrategy, useClass: HashLocationStrategy}
+        SecurityService
     ],
     bootstrap: [AppComponent]
 })

@@ -8,6 +8,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {UserContentComponent} from "./content/user-content.component";
 import {UserCreateComponent} from "./create/user-create.component";
+import {UserUpdateComponent} from "./update/user-update.component";
 @NgModule({
     imports: [
         BrowserModule,
@@ -21,6 +22,7 @@ import {UserCreateComponent} from "./create/user-create.component";
         UserComponent,
         UserContentComponent,
         UserCreateComponent,
+        UserUpdateComponent
     ],
     providers: [
         UserService
