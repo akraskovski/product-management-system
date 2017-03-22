@@ -10,8 +10,8 @@ import {Authority} from "../../model/authority";
 })
 export class UserCreateComponent {
     userForm: FormGroup;
-    availableAuthorities: Authority[];
-    selectedAuthority: Authority;
+    availableAuthorities: Authority[] = [];
+    selectedAuthorities: Authority[] = [];
     loading = false;
 
     constructor(private userService: UserService, private router: Router) {
@@ -28,7 +28,9 @@ export class UserCreateComponent {
 
     onSubmit() {
         this.loading = true;
-        this.userService.create(new User(this.userForm.value.username, this.userForm.value.password))
+        let user: User = new User(this.userForm.value.username, this.userForm.value.password);
+        user.authorities = this.selectedAuthorities;
+        this.userService.create(user)
             .subscribe(result => {
                 if (result === true) {
                     this.router.navigate(['user/user-content']);
@@ -37,5 +39,15 @@ export class UserCreateComponent {
                     alert("Error!");
                 }
             });
+    }
+
+    addAuthorityToSelected(authority: Authority): void {
+        this.availableAuthorities.splice(this.availableAuthorities.indexOf(authority), 1);
+        this.selectedAuthorities.push(authority);
+    }
+
+    deleteAuthorityFromSelected(authority: Authority): void {
+        this.selectedAuthorities.splice(this.selectedAuthorities.indexOf(authority), 1);
+        this.availableAuthorities.push(authority);
     }
 }
