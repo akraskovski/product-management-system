@@ -1,5 +1,4 @@
 import {NgModule} from "@angular/core";
-import {UserSearchComponent} from "./search/user-search.component";
 import {UserComponent} from "./user.component";
 import {UserService} from "./user.service";
 import {BrowserModule} from "@angular/platform-browser";
@@ -9,7 +8,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {UserContentComponent} from "./content/user-content.component";
 import {UserCreateComponent} from "./create/user-create.component";
-import {DualListComponent} from "./create/dual-list.component";
 @NgModule({
     imports: [
         BrowserModule,
@@ -23,8 +21,6 @@ import {DualListComponent} from "./create/dual-list.component";
         UserComponent,
         UserContentComponent,
         UserCreateComponent,
-        UserSearchComponent,
-        DualListComponent
     ],
     providers: [
         UserService

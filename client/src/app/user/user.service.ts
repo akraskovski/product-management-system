@@ -37,6 +37,12 @@ export class UserService {
             .catch(UserService.handleError);
     }
 
+    remove(identifier: number): Observable<Boolean> {
+        return this.http.delete(environment.USER_URL + "/" + identifier, this.generateOptions())
+            .map((response) => response.status === 200)
+            .catch(UserService.handleError);
+    }
+
     private generateOptions(): RequestOptions {
         const headers = new Headers({
             'Content-Type': 'application/json',

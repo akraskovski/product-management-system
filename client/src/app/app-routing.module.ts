@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
 import {Routes, RouterModule} from "@angular/router";
-import {UserSearchComponent} from "./user/search/user-search.component";
 import {AuthorizationComponent} from "./authorization/authorization.component";
 import {SecurityService} from "./security/security.service";
 import {ProductComponent} from "./product/product.component";
@@ -49,12 +48,6 @@ const routes: Routes = [
                 canActivate: [SecurityService],
                 data: {roles: ['ROLE_ADMIN']}
             },
-            {
-                path: 'user-search',
-                component: UserSearchComponent,
-                canActivate: [SecurityService],
-                data: {roles: ['ROLE_ADMIN']}
-            }
         ]
     }
 ];

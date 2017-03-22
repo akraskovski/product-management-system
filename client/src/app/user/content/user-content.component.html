@@ -13,6 +13,9 @@
             <td>{{user.id}}</td>
             <td>{{user.username}}</td>
             <td *ngFor="let authority of user.authorities">{{authority.name}}</td>
+            <td>
+                <button *ngIf="isAdmin()" (click)="onDelete(user.id)">Delete</button>
+            </td>
         </tr>
         </tbody>
     </table>
