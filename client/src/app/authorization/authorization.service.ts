@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
 @Injectable()
 export class AuthorizationService {
 
-    public currentUser: User;
+    private currentUser: User;
 
     constructor(private http: Http) {
     }

@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {ProductService} from "../product.service";
 import {Product} from "../../model/product";
 import {SecurityService} from "../../security/security.service";
 import {Router} from "@angular/router";
+import {CommonService} from "../../common/common.service";
+import {environment} from "../../constants/environment";
 
 @Component({
     selector: 'product-content-component',
@@ -12,7 +13,7 @@ export class ProductContentComponent implements OnInit {
 
     productList: Product[];
 
-    constructor(private productService: ProductService, private router: Router) {
+    constructor(private productService: CommonService, private router: Router) {
     }
 
     ngOnInit(): void {
@@ -20,12 +21,12 @@ export class ProductContentComponent implements OnInit {
     }
 
     private loadData() {
-        this.productService.loadAll()
+        this.productService.loadAll(environment.PRODUCT_URL)
             .subscribe(productList => this.productList = productList);
     }
 
     onDelete(product: Product): void {
-        this.productService.remove(product.id)
+        this.productService.remove(environment.PRODUCT_URL, product.id)
             .subscribe(result => {
                 if (result === true) {
                     this.loadData();
@@ -40,7 +41,7 @@ export class ProductContentComponent implements OnInit {
             this.router.navigate(['product/product-update', product.id]);
     }
 
-    isAdmin(): boolean{
+    isAdmin(): boolean {
         return SecurityService.isAdmin();
     }
 }

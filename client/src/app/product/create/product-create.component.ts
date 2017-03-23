@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {ProductService} from "../product.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Product} from "../../model/product";
+import {CommonService} from "../../common/common.service";
+import {environment} from "../../constants/environment";
 
 @Component({
     selector: 'product-create-component',
@@ -12,7 +13,7 @@ export class ProductCreateComponent implements OnInit {
     productForm: FormGroup;
     loading = false;
 
-    constructor(private productService: ProductService, private router: Router) {
+    constructor(private productService: CommonService, private router: Router) {
     }
 
     ngOnInit(): void {
@@ -25,7 +26,8 @@ export class ProductCreateComponent implements OnInit {
 
     onSubmit() {
         this.loading = true;
-        this.productService.create(new Product(this.productForm.value.name, this.productForm.value.cost, this.productForm.value.type))
+        const product: Product = new Product(this.productForm.value.name, this.productForm.value.cost, this.productForm.value.type);
+        this.productService.create(environment.PRODUCT_URL, product)
             .subscribe(result => {
                 if (result === true) {
                     this.router.navigate(['product/product-content']);

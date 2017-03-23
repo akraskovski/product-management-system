@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {ProductService} from "../product.service";
 import {Router, ActivatedRoute} from "@angular/router";
 import {Product} from "../../model/product";
+import {CommonService} from "../../common/common.service";
+import {environment} from "../../constants/environment";
 
 @Component({
     selector: 'product-update-component',
@@ -13,7 +14,7 @@ export class ProductUpdateComponent implements OnInit {
     loading = false;
     product: Product;
 
-    constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute) {
+    constructor(private productService: CommonService, private router: Router, private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
@@ -30,7 +31,7 @@ export class ProductUpdateComponent implements OnInit {
     }
 
     private fillForm(): void {
-        this.productService.loadById(this.route.snapshot.params['id'])
+        this.productService.loadById(environment.PRODUCT_URL, this.route.snapshot.params['id'])
             .subscribe(product => {
                 this.product = product;
                 this.productForm.setValue({
@@ -46,7 +47,7 @@ export class ProductUpdateComponent implements OnInit {
         this.product.name = this.productForm.value.name;
         this.product.cost = this.productForm.value.cost;
         this.product.type = this.productForm.value.type;
-        this.productService.update(this.product)
+        this.productService.update(environment.PRODUCT_URL, this.product)
             .subscribe(result => {
                 if (result === true) {
                     this.router.navigate(['product/product-content']);

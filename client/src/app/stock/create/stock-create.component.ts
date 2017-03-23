@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Product} from "../../model/product";
-import {ProductService} from "../../product/product.service";
 import {Router} from "@angular/router";
-import {StockService} from "../stock.service";
 import {Stock} from "../../model/stock";
+import {CommonService} from "../../common/common.service";
+import {environment} from "../../constants/environment";
 
 @Component({
     selector: 'stock-create-component',
@@ -16,11 +16,11 @@ export class StockCreateComponent {
     selectedProducts: Product[] = [];
     loading = false;
 
-    constructor(private stockService: StockService, private productService: ProductService, private router: Router) {
+    constructor(private stockService: CommonService, private router: Router) {
     }
 
     ngOnInit(): void {
-        this.productService.loadAll()
+        this.stockService.loadAll(environment.PRODUCT_URL)
             .subscribe(productList => this.availableProducts = productList);
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
@@ -30,7 +30,7 @@ export class StockCreateComponent {
     onSubmit() {
         this.loading = true;
         let stock: Stock = new Stock(this.stockForm.value.specialize, this.selectedProducts);
-        this.stockService.create(stock)
+        this.stockService.create(environment.STOCK_URL, stock)
             .subscribe(result => {
                 if (result === true) {
                     this.router.navigate(['stock/stock-content']);

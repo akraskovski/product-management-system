@@ -1,9 +1,10 @@
 import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../model/user";
-import {UserService} from "../user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Authority} from "../../model/authority";
+import {CommonService} from "../../common/common.service";
+import {environment} from "../../constants/environment";
 
 @Component({
     selector: 'user-update-component',
@@ -16,11 +17,11 @@ export class UserUpdateComponent implements OnInit {
     availableAuthorities: Authority[] = [];
     selectedAuthorities: Authority[] = [];
 
-    constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
+    constructor(private userService: CommonService, private router: Router, private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.userService.loadAllAuthorities()
+        this.userService.loadAll(environment.AUTHORITY_URL)
             .subscribe(availableAuthorities => this.availableAuthorities = availableAuthorities);
         this.createEmptyForm();
         this.fillForm();
@@ -34,7 +35,7 @@ export class UserUpdateComponent implements OnInit {
     }
 
     private fillForm(): void {
-        this.userService.loadById(this.route.snapshot.params['id'])
+        this.userService.loadById(environment.USER_URL, this.route.snapshot.params['id'])
             .subscribe(user => {
                 this.user = user;
                 this.selectedAuthorities = this.user.authorities;
@@ -58,7 +59,7 @@ export class UserUpdateComponent implements OnInit {
         this.user.username = this.userForm.value.username;
         this.user.password = this.userForm.value.password;
         this.user.authorities = this.selectedAuthorities;
-        this.userService.update(this.user)
+        this.userService.update(environment.USER_URL, this.user)
             .subscribe(result => {
                 if (result === true) {
                     this.router.navigate(['user/user-content']);

@@ -5,10 +5,9 @@ import {HttpModule} from "@angular/http";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {StockComponent} from "./stock.component";
-import {StockService} from "./stock.service";
 import {StockContentComponent} from "./content/stock-content.component";
 import {StockCreateComponent} from "./create/stock-create.component";
-import {ProductService} from "../product/product.service";
+import {CommonService} from "../common/common.service";
 @NgModule({
     imports: [
         BrowserModule,
@@ -24,8 +23,7 @@ import {ProductService} from "../product/product.service";
         StockCreateComponent
     ],
     providers: [
-        StockService,
-        ProductService
+        CommonService
     ]
 })
 export class StockModule {

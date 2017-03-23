@@ -19,8 +19,8 @@
             <td>{{product.cost}}</td>
             <td>{{product.type}}</td>
             <td>
-                <button *ngIf="isAdmin()" (click)="onEdit(product)">Edit</button>
-                <button *ngIf="isAdmin()" (click)="onDelete(product)">Delete</button>
+                <button *ngIf="isAdmin()" (click)="onEdit(product.id)">Edit</button>
+                <button *ngIf="isAdmin()" (click)="onDelete(product.id)">Delete</button>
             </td>
         </tr>
         </tbody>
