@@ -7,21 +7,25 @@ import {RouterModule} from "@angular/router";
 import {StockComponent} from "./stock.component";
 import {StockService} from "./stock.service";
 import {StockContentComponent} from "./content/stock-content.component";
+import {StockCreateComponent} from "./create/stock-create.component";
+import {ProductService} from "../product/product.service";
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
-        HttpModule,
-        CommonModule,
-        ReactiveFormsModule,
         RouterModule,
+        HttpModule,
+        ReactiveFormsModule,
+        CommonModule
     ],
     declarations: [
         StockComponent,
-        StockContentComponent
+        StockContentComponent,
+        StockCreateComponent
     ],
     providers: [
-        StockService
+        StockService,
+        ProductService
     ]
 })
 export class StockModule {

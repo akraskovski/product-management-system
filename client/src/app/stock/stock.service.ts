@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers, RequestOptions} from "@angular/http";
+import {Http, Response, Headers, RequestOptions} from "@angular/http";
 import {Observable} from "rxjs";
 import {environment} from "../constants/environment";
 import {Stock} from "../model/stock";
@@ -13,6 +13,30 @@ export class StockService {
     loadAll(): Observable<Stock[]> {
         return this.http.get(environment.STOCK_URL, this.generateOptions())
             .map(responce => responce.json())
+            .catch(StockService.handleError);
+    }
+
+    loadById(identifier: number) {
+        return this.http.get(environment.STOCK_URL + "/" + identifier, this.generateOptions())
+            .map((response: Response) => response.json())
+            .catch(StockService.handleError);
+    }
+
+    create(stock: Stock) {
+        return this.http.post(environment.STOCK_URL, stock, this.generateOptions())
+            .map((response: Response) => response.status === 201)
+            .catch(StockService.handleError);
+    }
+
+    update(stock: Stock) {
+        return this.http.put(environment.STOCK_URL, stock, this.generateOptions())
+            .map((response: Response) => response.status === 200)
+            .catch(StockService.handleError);
+    }
+
+    remove(identifier: number): Observable<Boolean> {
+        return this.http.delete(environment.STOCK_URL + "/" + identifier, this.generateOptions())
+            .map((response) => response.status === 200)
             .catch(StockService.handleError);
     }
 

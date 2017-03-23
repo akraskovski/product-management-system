@@ -38,7 +38,8 @@ export class SecurityService implements CanActivate {
         const user: User = AuthorizationService.getCurrentUser();
         if (user != null)
             for (let authority of user.authorities) {
-                return authority.name === "ROLE_ADMIN";
+                if (authority.name === "ROLE_ADMIN")
+                    return true;
             }
         return false;
     }
