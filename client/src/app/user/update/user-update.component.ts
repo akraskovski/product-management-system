@@ -12,7 +12,7 @@ import {environment} from "../../constants/environment";
 })
 export class UserUpdateComponent implements OnInit {
     userForm: FormGroup;
-    loading = false;
+    loading: boolean = false;
     user: User;
     availableAuthorities: Authority[] = [];
     selectedAuthorities: Authority[] = [];
@@ -60,14 +60,7 @@ export class UserUpdateComponent implements OnInit {
         this.user.password = this.userForm.value.password;
         this.user.authorities = this.selectedAuthorities;
         this.userService.update(environment.USER_URL, this.user)
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['user/user-content']);
-                } else {
-                    this.loading = false;
-                    alert("Error!");
-                }
-            });
+            .subscribe(result => result ? this.router.navigate(['user/user-content']) : this.errorMsg);
     }
 
     addAuthorityToSelected(authority: Authority): void {
@@ -78,5 +71,10 @@ export class UserUpdateComponent implements OnInit {
     deleteAuthorityFromSelected(authority: Authority): void {
         this.selectedAuthorities.splice(this.selectedAuthorities.indexOf(authority), 1);
         this.availableAuthorities.push(authority);
+    }
+
+    private errorMsg(): void {
+        this.loading = false;
+        alert("Error!");
     }
 }

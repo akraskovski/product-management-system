@@ -9,10 +9,11 @@ import {Router} from "@angular/router";
     selector: 'user-content-component',
     templateUrl: 'user-content.component.html'
 })
-export class UserContentComponent implements OnInit{
+export class UserContentComponent implements OnInit {
     userList: User[];
 
-    constructor(private userService: CommonService, private router: Router) { }
+    constructor(private userService: CommonService, private router: Router) {
+    }
 
     ngOnInit(): void {
         this.loadData();
@@ -25,21 +26,15 @@ export class UserContentComponent implements OnInit{
 
     onDelete(identifier: number): void {
         this.userService.remove(environment.USER_URL, identifier)
-            .subscribe(result => {
-                if (result === true) {
-                    this.loadData();
-                } else {
-                    alert("Error!");
-                }
-            }, error => alert(error));
+            .subscribe(result => result ? this.loadData() : alert("Error!"),
+            error => alert(error));
     }
 
     onEdit(identifier: number): void {
-        if (identifier)
-            this.router.navigate(['user/user-update', identifier]);
+        identifier && this.router.navigate(['user/user-update', identifier]);
     }
 
-    isAdmin(): boolean{
+    isAdmin(): boolean {
         return SecurityService.isAdmin();
     }
 }

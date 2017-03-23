@@ -53,6 +53,6 @@ export class ProductUpdateComponent implements OnInit {
 
     private errorMsg(): void {
         this.loading = false;
-        alert("Error while creating new product!");
+        alert("Error while updating product!");
     }
 }

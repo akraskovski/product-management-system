@@ -31,14 +31,7 @@ export class StockCreateComponent {
         this.loading = true;
         let stock: Stock = new Stock(this.stockForm.value.specialize, this.selectedProducts);
         this.stockService.create(environment.STOCK_URL, stock)
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['stock/stock-content']);
-                } else {
-                    this.loading = false;
-                    alert("Error!");
-                }
-            });
+            .subscribe(result => result ? this.router.navigate(['stock/stock-content']) : this.errorMsg);
     }
 
     addProductToSelected(product: Product): void {
@@ -49,5 +42,10 @@ export class StockCreateComponent {
     deleteProductFromSelected(product: Product): void {
         this.selectedProducts.splice(this.selectedProducts.indexOf(product), 1);
         this.availableProducts.push(product);
+    }
+
+    private errorMsg(): void {
+        this.loading = false;
+        alert("Error while creating new stock!");
     }
 }

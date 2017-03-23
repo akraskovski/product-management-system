@@ -32,14 +32,7 @@ export class UserCreateComponent {
         let user: User = new User(this.userForm.value.username, this.userForm.value.password);
         user.authorities = this.selectedAuthorities;
         this.userService.create(environment.USER_URL, user)
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['user/user-content']);
-                } else {
-                    this.loading = false;
-                    alert("Error!");
-                }
-            });
+            .subscribe(result => result ? this.router.navigate(['user/user-content']) : this.errorMsg);
     }
 
     addAuthorityToSelected(authority: Authority): void {
@@ -50,5 +43,10 @@ export class UserCreateComponent {
     deleteAuthorityFromSelected(authority: Authority): void {
         this.selectedAuthorities.splice(this.selectedAuthorities.indexOf(authority), 1);
         this.availableAuthorities.push(authority);
+    }
+
+    private errorMsg(): void {
+        this.loading = false;
+        alert("Error!");
     }
 }
