@@ -1,0 +1,19 @@
+<h2>All entites from database</h2>
+<div class="panel">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Specialize</th>
+            <th>Products</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let stock of stockList">
+            <td>{{stock.id}}</td>
+            <td>{{stock.specialize}}</td>
+            <td *ngFor="let product of stock.productList">{{product.name}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -6,6 +6,7 @@ import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {StockComponent} from "./stock.component";
 import {StockService} from "./stock.service";
+import {StockContentComponent} from "./content/stock-content.component";
 @NgModule({
     imports: [
         BrowserModule,
@@ -16,7 +17,8 @@ import {StockService} from "./stock.service";
         RouterModule,
     ],
     declarations: [
-        StockComponent
+        StockComponent,
+        StockContentComponent
     ],
     providers: [
         StockService

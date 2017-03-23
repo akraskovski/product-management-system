@@ -11,29 +11,12 @@ import {UserComponent} from "./user/user.component";
 import {UserContentComponent} from "./user/content/user-content.component";
 import {UserCreateComponent} from "./user/create/user-create.component";
 import {UserUpdateComponent} from "./user/update/user-update.component";
+import {StockComponent} from "./stock/stock.component";
+import {StockContentComponent} from "./stock/content/stock-content.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '', pathMatch: 'full'},
     {path: 'login', component: AuthorizationComponent},
-    {
-        path: 'product', component: ProductComponent,
-        children: [
-            {path: 'product-content', component: ProductContentComponent},
-            {path: 'product-search', component: ProductSearchComponent},
-            {
-                path: 'product-create',
-                component: ProductCreateComponent,
-                canActivate: [SecurityService],
-                data: {roles: ['ROLE_ADMIN']}
-            },
-            {
-                path: 'product-update/:id',
-                component: ProductUpdateComponent,
-                canActivate: [SecurityService],
-                data: {roles: ['ROLE_ADMIN']}
-            },
-        ]
-    },
     {
         path: 'user', component: UserComponent, canActivate: [SecurityService], data: {roles: ['ROLE_ADMIN']},
         children: [
@@ -54,6 +37,36 @@ const routes: Routes = [
                 component: UserUpdateComponent,
                 canActivate: [SecurityService],
                 data: {roles: ['ROLE_ADMIN']}
+            }
+        ]
+    },
+    {
+        path: 'product', component: ProductComponent,
+        children: [
+            {path: 'product-content', component: ProductContentComponent},
+            {path: 'product-search', component: ProductSearchComponent},
+            {
+                path: 'product-create',
+                component: ProductCreateComponent,
+                canActivate: [SecurityService],
+                data: {roles: ['ROLE_ADMIN']}
+            },
+            {
+                path: 'product-update/:id',
+                component: ProductUpdateComponent,
+                canActivate: [SecurityService],
+                data: {roles: ['ROLE_ADMIN']}
+            },
+        ]
+    },
+    {
+        path: 'stock', component: StockComponent,
+        children: [
+            {
+                path: 'stock-content',
+                component: StockContentComponent,
+                canActivate: [SecurityService],
+                data: {roles: ['ROLE_ADMIN', "ROLE_STOCK_MANAGER"]}
             }
         ]
     }

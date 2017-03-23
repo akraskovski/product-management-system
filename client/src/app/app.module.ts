@@ -11,6 +11,7 @@ import {RouterModule} from "@angular/router";
 import {SecurityService} from "./security/security.service";
 import {ProductModule} from "./product/product.module";
 import {UserModule} from "./user/user.module";
+import {StockModule} from "./stock/stock.module";
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import {UserModule} from "./user/user.module";
         RouterModule,
         UserModule,
         ProductModule,
+        StockModule,
         AppRoutingModule,
     ],
     declarations: [
