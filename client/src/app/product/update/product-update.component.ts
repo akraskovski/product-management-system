@@ -11,7 +11,7 @@ import {environment} from "../../constants/environment";
 })
 export class ProductUpdateComponent implements OnInit {
     productForm: FormGroup;
-    loading = false;
+    loading: boolean = false;
     product: Product;
 
     constructor(private productService: CommonService, private router: Router, private route: ActivatedRoute) {
@@ -25,7 +25,7 @@ export class ProductUpdateComponent implements OnInit {
     private createEmptyForm(): void {
         this.productForm = new FormGroup({
             name: new FormControl('', Validators.required),
-            cost: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]+)?$")]),
+            cost: new FormControl('', [Validators.required, Validators.pattern(environment.DOUBLE_REGEX)]),
             type: new FormControl('', Validators.required)
         });
     }
@@ -48,13 +48,11 @@ export class ProductUpdateComponent implements OnInit {
         this.product.cost = this.productForm.value.cost;
         this.product.type = this.productForm.value.type;
         this.productService.update(environment.PRODUCT_URL, this.product)
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['product/product-content']);
-                } else {
-                    this.loading = false;
-                    alert("Error!");
-                }
-            });
+            .subscribe(result => result ? this.router.navigate(['product/product-content']) : this.errorMsg);
+    }
+
+    private errorMsg(): void {
+        this.loading = false;
+        alert("Error while creating new product!");
     }
 }

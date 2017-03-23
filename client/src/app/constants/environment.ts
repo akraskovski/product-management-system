@@ -1,4 +1,5 @@
 export const environment = {
+    //Server REST API urls
     LOGIN_URL: '/auth/login',
     USER_URL: '/user',
     AUTHORITY_URL: '/authority',
@@ -6,5 +7,9 @@ export const environment = {
     STOCK_URL: '/stock',
     STORE_URL: '/store',
 
-    USER_KEY: "CURRENT_USER"
+    //Local storage key
+    USER_KEY: "CURRENT_USER",
+
+    //Patterns
+    DOUBLE_REGEX: "^[0-9]+(\.[0-9]+)?$",
 };

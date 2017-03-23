@@ -11,7 +11,7 @@ import {environment} from "../../constants/environment";
 })
 export class ProductCreateComponent implements OnInit {
     productForm: FormGroup;
-    loading = false;
+    loading: boolean = false;
 
     constructor(private productService: CommonService, private router: Router) {
     }
@@ -19,7 +19,7 @@ export class ProductCreateComponent implements OnInit {
     ngOnInit(): void {
         this.productForm = new FormGroup({
             name: new FormControl('', Validators.required),
-            cost: new FormControl('', [Validators.required, Validators.pattern("^[0-9]+(\.[0-9]+)?$")]),
+            cost: new FormControl('', [Validators.required, Validators.pattern(environment.DOUBLE_REGEX)]),
             type: new FormControl('', Validators.required)
         });
     }
@@ -28,13 +28,11 @@ export class ProductCreateComponent implements OnInit {
         this.loading = true;
         const product: Product = new Product(this.productForm.value.name, this.productForm.value.cost, this.productForm.value.type);
         this.productService.create(environment.PRODUCT_URL, product)
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['product/product-content']);
-                } else {
-                    this.loading = false;
-                    alert("Error!");
-                }
-            });
+            .subscribe(result => result ? this.router.navigate(['product/product-content']) : this.errorMsg);
+    }
+
+    private errorMsg(): void {
+        this.loading = false;
+        alert("Error while creating new product!");
     }
 }

@@ -10,7 +10,6 @@ import {environment} from "../../constants/environment";
     templateUrl: 'product-content.component.html'
 })
 export class ProductContentComponent implements OnInit {
-
     productList: Product[];
 
     constructor(private productService: CommonService, private router: Router) {
@@ -27,18 +26,12 @@ export class ProductContentComponent implements OnInit {
 
     onDelete(product: Product): void {
         this.productService.remove(environment.PRODUCT_URL, product.id)
-            .subscribe(result => {
-                if (result === true) {
-                    this.loadData();
-                } else {
-                    alert("Error!");
-                }
-            }, error => alert(error));
+            .subscribe(result => result ? this.loadData() : alert("Error!"),
+                error => alert(error));
     }
 
     onEdit(product: Product): void {
-        if (product)
-            this.router.navigate(['product/product-update', product.id]);
+        product && this.router.navigate(['product/product-update', product.id]);
     }
 
     isAdmin(): boolean {

@@ -19,23 +19,17 @@ export class ProductSearchComponent {
 
     onSubmit(): void {
         this.productService.loadByName(environment.PRODUCT_URL, this.inputText)
-            .subscribe(responce => this.findProducts = responce);
+            .subscribe(response => this.findProducts = response);
     }
 
     onDelete(identifier): void {
         this.productService.remove(environment.PRODUCT_URL, identifier)
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['product/product-content']);
-                } else {
-                    alert("Error!");
-                }
-            }, error => alert(error));
+            .subscribe(result => result ? this.router.navigate(['product/product-content']) : alert("Error!"),
+                error => alert(error));
     }
 
     onEdit(identifier: number): void {
-        if (identifier)
-            this.router.navigate(['product/product-update', identifier]);
+        identifier && this.router.navigate(['product/product-update', identifier]);
     }
 
     isAdmin(): boolean{

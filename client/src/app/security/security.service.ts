@@ -20,17 +20,16 @@ export class SecurityService implements CanActivate {
             return SecurityService.checkAuthorities(authorities, user.authorities);
         }
         alert('You don\'t have permissions!');
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
         return false;
     }
 
     private static checkAuthorities(availableAuthorityList: string[], currentAuthorityList: Authority[]): boolean {
-        for (let availableAuthority = 0; availableAuthority < availableAuthorityList.length; availableAuthority++) {
+        for (let availableAuthority = 0; availableAuthority < availableAuthorityList.length; availableAuthority++)
             for (let userAuthority = 0; userAuthority < currentAuthorityList.length; userAuthority++)
                 if (availableAuthorityList[availableAuthority] == currentAuthorityList[userAuthority].name) {
                     return true;
                 }
-        }
         return false;
     }
 
