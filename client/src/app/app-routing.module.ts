@@ -62,7 +62,9 @@ const routes: Routes = [
         ]
     },
     {
-        path: 'stock', component: StockComponent,
+        path: 'stock', component: StockComponent, canActivate: [SecurityService], data: {
+        roles: ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER']
+    },
         children: [
             {
                 path: 'stock-content',

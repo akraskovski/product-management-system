@@ -13,6 +13,10 @@
             <td>{{stock.id}}</td>
             <td>{{stock.specialize}}</td>
             <td *ngFor="let product of stock.productList">{{product.name}}</td>
+            <td>
+                <button *ngIf="isAdmin()" (click)="onEdit(stock.id)">Edit</button>
+                <button *ngIf="isAdmin()" (click)="onDelete(stock.id)">Delete</button>
+            </td>
         </tr>
         </tbody>
     </table>

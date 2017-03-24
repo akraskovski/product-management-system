@@ -56,7 +56,7 @@ export class StockUpdateComponent {
         this.stock.specialize = this.stockForm.value.specialize;
         this.stock.productList = this.selectedProducts;
         this.stockService.update(environment.STOCK_URL, this.stock)
-            .subscribe(result => result ? this.router.navigate(['user/user-content']) : this.errorMsg);
+            .subscribe(result => result ? this.router.navigate(['stock/stock-content']) : this.errorMsg);
     }
 
     addProductToSelected(product: Product): void {
