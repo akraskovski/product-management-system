@@ -40,6 +40,21 @@ public class StockController {
     }
 
     /**
+     * Find stocks in database with setting id in browser
+     * @return entity of {@link Stock}
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> loadStockById(@PathVariable("id") Integer id) {
+        LOGGER.info("Start loadStockById: " + id);
+        try {
+            return new ResponseEntity<>(stockService.find(id), HttpStatus.OK);
+        } catch (NullPointerException e) {
+            LOGGER.error("Exception in loadStockById. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * Creating {@link Stock} from client form
      * @param stock model
      */

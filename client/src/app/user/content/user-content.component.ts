@@ -27,7 +27,7 @@ export class UserContentComponent implements OnInit {
     onDelete(identifier: number): void {
         this.userService.remove(environment.USER_URL, identifier)
             .subscribe(result => result ? this.loadData() : alert("Error!"),
-            error => alert(error));
+                error => alert(error));
     }
 
     onEdit(identifier: number): void {

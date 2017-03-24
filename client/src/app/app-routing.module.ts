@@ -14,6 +14,7 @@ import {UserUpdateComponent} from "./user/update/user-update.component";
 import {StockComponent} from "./stock/stock.component";
 import {StockContentComponent} from "./stock/content/stock-content.component";
 import {StockCreateComponent} from "./stock/create/stock-create.component";
+import {StockUpdateComponent} from "./stock/update/stock-update.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '', pathMatch: 'full'},
@@ -72,6 +73,12 @@ const routes: Routes = [
             {
                 path: 'stock-create',
                 component: StockCreateComponent,
+                canActivate: [SecurityService],
+                data: {roles: ['ROLE_ADMIN', "ROLE_STOCK_MANAGER"]}
+            },
+            {
+                path: 'stock-update/:id',
+                component: StockUpdateComponent,
                 canActivate: [SecurityService],
                 data: {roles: ['ROLE_ADMIN', "ROLE_STOCK_MANAGER"]}
             }

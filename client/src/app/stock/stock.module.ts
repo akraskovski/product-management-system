@@ -8,6 +8,7 @@ import {StockComponent} from "./stock.component";
 import {StockContentComponent} from "./content/stock-content.component";
 import {StockCreateComponent} from "./create/stock-create.component";
 import {CommonService} from "../common/common.service";
+import {StockUpdateComponent} from "./update/stock-update.component";
 @NgModule({
     imports: [
         BrowserModule,
@@ -20,7 +21,8 @@ import {CommonService} from "../common/common.service";
     declarations: [
         StockComponent,
         StockContentComponent,
-        StockCreateComponent
+        StockCreateComponent,
+        StockUpdateComponent
     ],
     providers: [
         CommonService
