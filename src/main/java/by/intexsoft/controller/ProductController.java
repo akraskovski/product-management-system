@@ -26,6 +26,7 @@ public class ProductController {
 
     /**
      * Find all products in database
+     *
      * @return entites of {@link Product}
      */
     @RequestMapping
@@ -41,6 +42,7 @@ public class ProductController {
 
     /**
      * Find products in database with setting name in browser
+     *
      * @return entity of {@link Product}
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -56,6 +58,7 @@ public class ProductController {
 
     /**
      * Find products in database with setting name in browser
+     *
      * @return entity of {@link Product}
      */
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
@@ -71,6 +74,7 @@ public class ProductController {
 
     /**
      * Creating {@link Product} from client form
+     *
      * @param product model
      */
     @RequestMapping(method = RequestMethod.POST)
@@ -86,6 +90,7 @@ public class ProductController {
 
     /**
      * Update {@link Product}'s information in database
+     *
      * @param product model
      */
     @RequestMapping(method = RequestMethod.PUT)
@@ -101,6 +106,7 @@ public class ProductController {
 
     /**
      * Delete {@link Product} from database by identifier
+     *
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

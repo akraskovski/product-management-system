@@ -40,6 +40,21 @@ public class StoreController {
     }
 
     /**
+     * Find stores in database with setting id in browser
+     * @return entity of {@link Store}
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> loadStoreById(@PathVariable("id") Integer id) {
+        LOGGER.info("Start loadStoreById: " + id);
+        try {
+            return new ResponseEntity<>(storeService.find(id), HttpStatus.OK);
+        } catch (NullPointerException e) {
+            LOGGER.error("Exception in loadStoreById. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * Creating {@link Store} from client form
      * @param store model
      */

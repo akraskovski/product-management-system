@@ -9,6 +9,7 @@ import {StockContentComponent} from "./content/stock-content.component";
 import {StockCreateComponent} from "./create/stock-create.component";
 import {CommonService} from "../common/common.service";
 import {StockUpdateComponent} from "./update/stock-update.component";
+import {StockRoutingModule} from "./stock-routing.module";
 @NgModule({
     imports: [
         BrowserModule,
@@ -16,7 +17,8 @@ import {StockUpdateComponent} from "./update/stock-update.component";
         RouterModule,
         HttpModule,
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        StockRoutingModule
     ],
     declarations: [
         StockComponent,

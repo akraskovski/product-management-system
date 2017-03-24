@@ -9,6 +9,7 @@ import {UserContentComponent} from "./content/user-content.component";
 import {UserCreateComponent} from "./create/user-create.component";
 import {UserUpdateComponent} from "./update/user-update.component";
 import {CommonService} from "../common/common.service";
+import {UserRoutingModule} from "./user-routing.module";
 @NgModule({
     imports: [
         BrowserModule,
@@ -16,7 +17,8 @@ import {CommonService} from "../common/common.service";
         RouterModule,
         HttpModule,
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        UserRoutingModule
     ],
     declarations: [
         UserComponent,
