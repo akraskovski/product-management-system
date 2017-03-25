@@ -9,7 +9,7 @@ import {environment} from "../../constants/environment";
     selector: 'store-update-component',
     templateUrl: './store-update.component.html'
 })
-export class StoreUpdateComponent{
+export class StoreUpdateComponent {
     storeForm: FormGroup;
     loading: boolean = false;
     store: Store;
@@ -23,10 +23,10 @@ export class StoreUpdateComponent{
         this.storeService.loadAll(environment.STOCK_URL)
             .subscribe(stockList => {
                 this.availableStocks = stockList;
-                this.createEmptyForm();
-                this.fillForm();
             });
-        }
+        this.createEmptyForm();
+        this.fillForm();
+    }
 
     private createEmptyForm(): void {
         this.storeForm = new FormGroup({

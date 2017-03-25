@@ -2,7 +2,7 @@
     <h3>Edit store</h3>
     <form name="form" novalidate [formGroup]="storeForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label for="specialize">Name</label>
+            <label for="name">Name</label>
             <input type="text" class="form-control" name="name" formControlName="name" required/>
             <div *ngIf="storeForm.get('name').hasError('required') && storeForm.get('name').touched"
                  class="alert alert-danger">Name
