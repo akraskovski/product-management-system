@@ -13,12 +13,22 @@ export class SecurityService implements CanActivate {
         this.router = router;
     }
 
-    canActivate(route: ActivatedRouteSnapshot) {
+    canActivate(route: ActivatedRouteSnapshot): boolean {
+        let canActivate: boolean = false;
         const authorities = route.data["roles"] as Array<string>;
         const user: User = AuthorizationService.getCurrentUser();
         if (authorities.length > 0 && user) {
-            return SecurityService.checkAuthorities(authorities, user.authorities);
+            canActivate = SecurityService.checkAuthorities(authorities, user.authorities);
         }
+        return canActivate ? this.allowAccess() : this.denyAccess();
+    }
+
+    private allowAccess(): boolean {
+        alert("Welcome!");
+        return true;
+    }
+
+    private denyAccess(): boolean {
         alert('You don\'t have permissions!');
         this.router.navigate(['/login']);
         return false;

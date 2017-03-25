@@ -28,9 +28,7 @@ export class AuthorizationComponent implements OnInit {
         this.loading = true;
         this.authorizationService.login(new User(this.loginForm.value.username, this.loginForm.value.password))
             .subscribe(
-                result => {
-                    result && this.router.navigate(['/']);
-                },
+                result => result && this.router.navigate(['/']),
                 error => {
                     this.error = <any>error;
                     this.loading = false;

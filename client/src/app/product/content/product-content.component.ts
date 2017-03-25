@@ -1,18 +1,19 @@
 import {Component, OnInit} from "@angular/core";
 import {Product} from "../../model/product";
-import {SecurityService} from "../../security/security.service";
 import {Router} from "@angular/router";
 import {CommonService} from "../../common/common.service";
-import {environment} from "../../constants/environment";
+import {api} from "../../constants/api";
+import {CommonComponent} from "../../common/common.component";
 
 @Component({
     selector: 'product-content-component',
     templateUrl: 'product-content.component.html'
 })
-export class ProductContentComponent implements OnInit {
+export class ProductContentComponent extends CommonComponent implements OnInit{
     productList: Product[];
 
     constructor(private productService: CommonService, private router: Router) {
+        super();
     }
 
     ngOnInit(): void {
@@ -20,12 +21,12 @@ export class ProductContentComponent implements OnInit {
     }
 
     private loadData() {
-        this.productService.loadAllUnauthorized(environment.PRODUCT_URL)
+        this.productService.loadAllUnauthorized(api.PRODUCT)
             .subscribe(productList => this.productList = productList);
     }
 
     onDelete(product: Product): void {
-        this.productService.remove(environment.PRODUCT_URL, product.id)
+        this.productService.remove(api.PRODUCT, product.id)
             .subscribe(result => result ? this.loadData() : alert("Error!"),
                 error => alert(error));
     }
@@ -34,7 +35,4 @@ export class ProductContentComponent implements OnInit {
         product && this.router.navigate(['product/product-update', product.id]);
     }
 
-    isAdmin(): boolean {
-        return SecurityService.isAdmin();
-    }
 }

@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Stock} from "../../model/stock";
 import {CommonService} from "../../common/common.service";
 import {Router} from "@angular/router";
-import {environment} from "../../constants/environment";
+import {api} from "../../constants/api";
 import {Store} from "../../model/store";
 @Component({
     selector: 'store-create-component',
@@ -19,7 +19,7 @@ export class StoreCreateComponent{
     }
 
     ngOnInit(): void {
-        this.storeService.loadAll(environment.STOCK_URL)
+        this.storeService.loadAll(api.STOCK)
             .subscribe(stockList => this.availableStocks = stockList);
         this.storeForm = new FormGroup({
             name: new FormControl('', Validators.required),
@@ -29,7 +29,7 @@ export class StoreCreateComponent{
     onSubmit() {
         this.loading = true;
         const store: Store = new Store(this.storeForm.value.name, this.selectedStocks);
-        this.storeService.create(environment.STORE_URL, store)
+        this.storeService.create(api.STORE, store)
             .subscribe(result => result ? this.router.navigate(['store/store-content']) : this.errorMsg);
     }
 

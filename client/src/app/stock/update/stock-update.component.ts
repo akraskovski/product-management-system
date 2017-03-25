@@ -4,7 +4,7 @@ import {Stock} from "../../model/stock";
 import {Product} from "../../model/product";
 import {CommonService} from "../../common/common.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {environment} from "../../constants/environment";
+import {api} from "../../constants/api";
 @Component({
     selector: 'stock-update-component',
     templateUrl: './stock-update.component.html'
@@ -20,7 +20,7 @@ export class StockUpdateComponent {
     }
 
     ngOnInit(): void {
-        this.stockService.loadAll(environment.PRODUCT_URL)
+        this.stockService.loadAll(api.PRODUCT)
             .subscribe(productList => this.availableProducts = productList);
         this.createEmptyForm();
         this.fillForm();
@@ -33,7 +33,7 @@ export class StockUpdateComponent {
     }
 
     private fillForm(): void {
-        this.stockService.loadById(environment.STOCK_URL, this.route.snapshot.params['id'])
+        this.stockService.loadById(api.STOCK, this.route.snapshot.params['id'])
             .subscribe(stock => {
                 this.stock = stock;
                 this.selectedProducts = this.stock.productList;
@@ -55,7 +55,7 @@ export class StockUpdateComponent {
         this.loading = true;
         this.stock.specialize = this.stockForm.value.specialize;
         this.stock.productList = this.selectedProducts;
-        this.stockService.update(environment.STOCK_URL, this.stock)
+        this.stockService.update(api.STOCK, this.stock)
             .subscribe(result => result ? this.router.navigate(['stock/stock-content']) : this.errorMsg);
     }
 

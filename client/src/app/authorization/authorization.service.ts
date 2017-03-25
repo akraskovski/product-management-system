@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers, RequestOptions, Response} from "@angular/http";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {User} from "../model/user";
-import {environment} from "../constants/environment";
 import {Observable} from "rxjs";
+import {api} from "../constants/api";
+import {keys} from "../constants/keys";
 
 @Injectable()
 export class AuthorizationService {
@@ -15,14 +16,14 @@ export class AuthorizationService {
     login(user: User): Observable<Boolean> {
         const body = JSON.stringify({username: user.username, password: user.password});
         const options = new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})});
-        return this.http.post(environment.LOGIN_URL, body, options)
+        return this.http.post(api.LOGIN, body, options)
             .map(this.extractData)
             .catch(AuthorizationService.handleError);
     }
 
     logout(): void {
         this.currentUser = null;
-        localStorage.removeItem(environment.USER_KEY);
+        localStorage.removeItem(keys.USER_KEY);
     }
 
     private extractData(response: Response) {
@@ -31,7 +32,7 @@ export class AuthorizationService {
         if (token && user) {
             this.currentUser = user;
             this.currentUser.token = token;
-            localStorage.setItem(environment.USER_KEY, JSON.stringify(this.currentUser));
+            localStorage.setItem(keys.USER_KEY, JSON.stringify(this.currentUser));
             return true;
         }
         return false;
@@ -52,6 +53,6 @@ export class AuthorizationService {
     }
 
     static getCurrentUser() {
-        return JSON.parse(localStorage.getItem(environment.USER_KEY));
+        return JSON.parse(localStorage.getItem(keys.USER_KEY));
     }
 }

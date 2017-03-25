@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {User} from "../../model/user";
 import {Authority} from "../../model/authority";
 import {CommonService} from "../../common/common.service";
-import {environment} from "../../constants/environment";
+import {api} from "../../constants/api";
 @Component({
     selector: 'user-create-component',
     templateUrl: 'user-create.component.html'
@@ -19,7 +19,7 @@ export class UserCreateComponent {
     }
 
     ngOnInit(): void {
-        this.userService.loadAll(environment.AUTHORITY_URL)
+        this.userService.loadAll(api.AUTHORITY)
             .subscribe(availableAuthorities => this.availableAuthorities = availableAuthorities);
         this.userForm = new FormGroup({
             username: new FormControl('', Validators.required),
@@ -31,7 +31,7 @@ export class UserCreateComponent {
         this.loading = true;
         let user: User = new User(this.userForm.value.username, this.userForm.value.password);
         user.authorities = this.selectedAuthorities;
-        this.userService.create(environment.USER_URL, user)
+        this.userService.create(api.USER, user)
             .subscribe(result => result ? this.router.navigate(['user/user-content']) : this.errorMsg);
     }
 

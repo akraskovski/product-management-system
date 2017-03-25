@@ -4,7 +4,7 @@ import {Product} from "../../model/product";
 import {Router} from "@angular/router";
 import {Stock} from "../../model/stock";
 import {CommonService} from "../../common/common.service";
-import {environment} from "../../constants/environment";
+import {api} from "../../constants/api";
 
 @Component({
     selector: 'stock-create-component',
@@ -20,7 +20,7 @@ export class StockCreateComponent {
     }
 
     ngOnInit(): void {
-        this.stockService.loadAll(environment.PRODUCT_URL)
+        this.stockService.loadAll(api.PRODUCT)
             .subscribe(productList => this.availableProducts = productList);
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
@@ -30,7 +30,7 @@ export class StockCreateComponent {
     onSubmit() {
         this.loading = true;
         let stock: Stock = new Stock(this.stockForm.value.specialize, this.selectedProducts);
-        this.stockService.create(environment.STOCK_URL, stock)
+        this.stockService.create(api.STOCK, stock)
             .subscribe(result => result ? this.router.navigate(['stock/stock-content']) : this.errorMsg);
     }
 

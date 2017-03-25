@@ -1,9 +1,10 @@
 import {Component, OnInit} from "@angular/core";
-import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {Router, ActivatedRoute} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Product} from "../../model/product";
 import {CommonService} from "../../common/common.service";
-import {environment} from "../../constants/environment";
+import {api} from "../../constants/api";
+import {regex} from "../../constants/regex";
 
 @Component({
     selector: 'product-update-component',
@@ -25,13 +26,13 @@ export class ProductUpdateComponent implements OnInit {
     private createEmptyForm(): void {
         this.productForm = new FormGroup({
             name: new FormControl('', Validators.required),
-            cost: new FormControl('', [Validators.required, Validators.pattern(environment.DOUBLE_REGEX)]),
+            cost: new FormControl('', [Validators.required, Validators.pattern(regex.DOUBLE)]),
             type: new FormControl('', Validators.required)
         });
     }
 
     private fillForm(): void {
-        this.productService.loadById(environment.PRODUCT_URL, this.route.snapshot.params['id'])
+        this.productService.loadById(api.PRODUCT, this.route.snapshot.params['id'])
             .subscribe(product => {
                 this.product = product;
                 this.productForm.setValue({
@@ -47,7 +48,7 @@ export class ProductUpdateComponent implements OnInit {
         this.product.name = this.productForm.value.name;
         this.product.cost = this.productForm.value.cost;
         this.product.type = this.productForm.value.type;
-        this.productService.update(environment.PRODUCT_URL, this.product)
+        this.productService.update(api.PRODUCT, this.product)
             .subscribe(result => result ? this.router.navigate(['product/product-content']) : this.errorMsg);
     }
 

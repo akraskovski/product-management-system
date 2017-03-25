@@ -3,7 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Product} from "../../model/product";
 import {CommonService} from "../../common/common.service";
-import {environment} from "../../constants/environment";
+import {api} from "../../constants/api";
+import {regex} from "../../constants/regex";
 
 @Component({
     selector: 'product-create-component',
@@ -19,7 +20,7 @@ export class ProductCreateComponent implements OnInit {
     ngOnInit(): void {
         this.productForm = new FormGroup({
             name: new FormControl('', Validators.required),
-            cost: new FormControl('', [Validators.required, Validators.pattern(environment.DOUBLE_REGEX)]),
+            cost: new FormControl('', [Validators.required, Validators.pattern(regex.DOUBLE)]),
             type: new FormControl('', Validators.required)
         });
     }
@@ -27,7 +28,7 @@ export class ProductCreateComponent implements OnInit {
     onSubmit() {
         this.loading = true;
         const product: Product = new Product(this.productForm.value.name, this.productForm.value.cost, this.productForm.value.type);
-        this.productService.create(environment.PRODUCT_URL, product)
+        this.productService.create(api.PRODUCT, product)
             .subscribe(result => result ? this.router.navigate(['product/product-content']) : this.errorMsg);
     }
 

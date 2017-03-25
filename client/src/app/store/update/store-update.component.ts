@@ -4,7 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../common/common.service";
 import {Stock} from "../../model/stock";
 import {ActivatedRoute, Router} from "@angular/router";
-import {environment} from "../../constants/environment";
+import {api} from "../../constants/api";
 @Component({
     selector: 'store-update-component',
     templateUrl: './store-update.component.html'
@@ -20,7 +20,7 @@ export class StoreUpdateComponent {
     }
 
     ngOnInit(): void {
-        this.storeService.loadAll(environment.STOCK_URL)
+        this.storeService.loadAll(api.STOCK)
             .subscribe(stockList => {
                 this.availableStocks = stockList;
             });
@@ -35,7 +35,7 @@ export class StoreUpdateComponent {
     }
 
     private fillForm(): void {
-        this.storeService.loadById(environment.STORE_URL, this.route.snapshot.params['id'])
+        this.storeService.loadById(api.STORE, this.route.snapshot.params['id'])
             .subscribe(store => {
                 this.store = store;
                 this.selectedStocks = this.store.stockList;
@@ -59,7 +59,7 @@ export class StoreUpdateComponent {
         this.loading = true;
         this.store.name = this.storeForm.value.name;
         this.store.stockList = this.selectedStocks;
-        this.storeService.update(environment.STORE_URL, this.store)
+        this.storeService.update(api.STORE, this.store)
             .subscribe(result => result ? this.router.navigate(['store/store-content']) : this.errorMsg);
     }
 

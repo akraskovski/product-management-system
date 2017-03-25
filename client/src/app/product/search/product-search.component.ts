@@ -1,9 +1,8 @@
 import {Component} from "@angular/core";
 import {Product} from "../../model/product";
-import {SecurityService} from "../../security/security.service";
 import {Router} from "@angular/router";
 import {CommonService} from "../../common/common.service";
-import {environment} from "../../constants/environment";
+import {api} from "../../constants/api";
 
 @Component({
     selector: 'product-search-component',
@@ -18,21 +17,17 @@ export class ProductSearchComponent {
     }
 
     onSubmit(): void {
-        this.productService.loadByName(environment.PRODUCT_URL, this.inputText)
+        this.productService.loadByName(api.PRODUCT, this.inputText)
             .subscribe(response => this.findProducts = response);
     }
 
     onDelete(identifier): void {
-        this.productService.remove(environment.PRODUCT_URL, identifier)
+        this.productService.remove(api.PRODUCT, identifier)
             .subscribe(result => result ? this.router.navigate(['product/product-content']) : alert("Error!"),
                 error => alert(error));
     }
 
     onEdit(identifier: number): void {
         identifier && this.router.navigate(['product/product-update', identifier]);
-    }
-
-    isAdmin(): boolean{
-        return SecurityService.isAdmin();
     }
 }

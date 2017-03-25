@@ -6,7 +6,8 @@ import {AuthorizationService} from "../authorization/authorization.service";
 @Injectable()
 export class CommonService {
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
 
     loadAll(URL: string) {
         return this.http.get(URL, this.generateOptions())
