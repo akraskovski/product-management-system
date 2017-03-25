@@ -21,7 +21,7 @@ export class ProductSearchComponent {
             .subscribe(response => this.findProducts = response);
     }
 
-    onDelete(identifier): void {
+    onDelete(identifier: number): void {
         this.productService.remove(api.PRODUCT, identifier)
             .subscribe(result => result ? this.router.navigate(['product/product-content']) : alert("Error!"),
                 error => alert(error));

@@ -14,8 +14,8 @@
             <td>{{store.name}}</td>
             <td *ngFor="let stock of store.stockList">{{stock.id}}.{{stock.specialize}}</td>
             <td>
-                <button *ngIf="isAdmin()" (click)="onEdit(store.id)">Edit</button>
-                <button *ngIf="isAdmin()" (click)="onDelete(store.id)">Delete</button>
+                <button *ngIf="canWorkWithStore()" (click)="onEdit(store.id)">Edit</button>
+                <button *ngIf="canWorkWithStore()" (click)="onDelete(store.id)">Delete</button>
             </td>
         </tr>
         </tbody>

@@ -20,8 +20,16 @@ export class StockCreateComponent {
     }
 
     ngOnInit(): void {
+        this.loadData();
+        this.createEmptyForm();
+    }
+
+    private loadData(): void {
         this.stockService.loadAll(api.PRODUCT)
             .subscribe(productList => this.availableProducts = productList);
+    }
+
+    private createEmptyForm(): void {
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
         });
@@ -29,7 +37,7 @@ export class StockCreateComponent {
 
     onSubmit() {
         this.loading = true;
-        let stock: Stock = new Stock(this.stockForm.value.specialize, this.selectedProducts);
+        const stock: Stock = new Stock(this.stockForm.value.specialize, this.selectedProducts);
         this.stockService.create(api.STOCK, stock)
             .subscribe(result => result ? this.router.navigate(['stock/stock-content']) : this.errorMsg);
     }

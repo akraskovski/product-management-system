@@ -3,13 +3,13 @@ import {User} from "../../model/user";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {Router} from "@angular/router";
-import {CommonComponent} from "../../common/common.component";
+import {AuthorityWorker} from "../../common/authority-worker";
 
 @Component({
     selector: 'user-content-component',
     templateUrl: 'user-content.component.html'
 })
-export class UserContentComponent extends CommonComponent implements OnInit {
+export class UserContentComponent extends AuthorityWorker implements OnInit {
     userList: User[];
 
     constructor(private userService: CommonService, private router: Router) {

@@ -20,12 +20,17 @@ export class StoreUpdateComponent {
     }
 
     ngOnInit(): void {
+        //Fix async!
+        this.loadData();
+        this.createEmptyForm();
+        this.fillForm();
+    }
+
+    private loadData(): void {
         this.storeService.loadAll(api.STOCK)
             .subscribe(stockList => {
                 this.availableStocks = stockList;
             });
-        this.createEmptyForm();
-        this.fillForm();
     }
 
     private createEmptyForm(): void {

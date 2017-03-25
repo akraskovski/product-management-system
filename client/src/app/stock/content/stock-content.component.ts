@@ -3,12 +3,12 @@ import {Stock} from "../../model/stock";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {Router} from "@angular/router";
-import {CommonComponent} from "../../common/common.component";
+import {AuthorityWorker} from "../../common/authority-worker";
 @Component({
     selector: 'stock-content-component',
     templateUrl: './stock-content.component.html'
 })
-export class StockContentComponent extends CommonComponent implements OnInit {
+export class StockContentComponent extends AuthorityWorker implements OnInit {
 
     stockList: Stock[];
 

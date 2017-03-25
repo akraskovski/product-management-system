@@ -14,8 +14,8 @@
             <td>{{user.username}}</td>
             <td *ngFor="let authority of user.authorities">{{authority.name}}</td>
             <td>
-                <button *ngIf="isAdmin()" (click)="onEdit(user.id)">Edit</button>
-                <button *ngIf="isAdmin()" (click)="onDelete(user.id)">Delete</button>
+                <button *ngIf="canWorkWithUser()" (click)="onEdit(user.id)">Edit</button>
+                <button *ngIf="canWorkWithUser()" (click)="onDelete(user.id)">Delete</button>
             </td>
         </tr>
         </tbody>

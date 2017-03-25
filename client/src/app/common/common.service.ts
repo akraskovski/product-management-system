@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import "rxjs/add/operator/toPromise";
-import {AuthorizationService} from "../authorization/authorization.service";
+import {AuthorityWorker} from "./authority-worker";
 
 @Injectable()
 export class CommonService {
@@ -54,7 +54,7 @@ export class CommonService {
     private generateOptions(): RequestOptions {
         const headers = new Headers({
             'Content-Type': 'application/json',
-            'x-auth-token': AuthorizationService.getCurrentUser().token
+            'x-auth-token': AuthorityWorker.getCurrentUser().token
         });
         return new RequestOptions({headers: headers});
     }

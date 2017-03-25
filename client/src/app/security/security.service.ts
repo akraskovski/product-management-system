@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {CanActivate, Router, ActivatedRouteSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, Router} from "@angular/router";
 import {User} from "../model/user";
 import {Authority} from "../model/authority";
-import {AuthorizationService} from "../authorization/authorization.service";
+import {AuthorityWorker} from "../common/authority-worker";
 
 @Injectable()
 export class SecurityService implements CanActivate {
@@ -16,21 +16,16 @@ export class SecurityService implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot): boolean {
         let canActivate: boolean = false;
         const authorities = route.data["roles"] as Array<string>;
-        const user: User = AuthorizationService.getCurrentUser();
+        const user: User = AuthorityWorker.getCurrentUser();
         if (authorities.length > 0 && user) {
             canActivate = SecurityService.checkAuthorities(authorities, user.authorities);
         }
-        return canActivate ? this.allowAccess() : this.denyAccess();
+        return canActivate ? true : SecurityService.denyAccess();
     }
 
-    private allowAccess(): boolean {
-        alert("Welcome!");
-        return true;
-    }
-
-    private denyAccess(): boolean {
+    private static denyAccess(): boolean {
         alert('You don\'t have permissions!');
-        this.router.navigate(['/login']);
+        //this.router.navigate(['/login']);
         return false;
     }
 
@@ -43,11 +38,11 @@ export class SecurityService implements CanActivate {
         return false;
     }
 
-    public static isAdmin(): boolean {
-        const user: User = AuthorizationService.getCurrentUser();
+    public static hasAuthority(authority: string): boolean {
+        const user: User = AuthorityWorker.getCurrentUser();
         if (user != null)
-            for (let authority of user.authorities) {
-                if (authority.name === "ROLE_ADMIN")
+            for (let currentAuthority of user.authorities) {
+                if (currentAuthority.name === authority)
                     return true;
             }
         return false;

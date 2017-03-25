@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthorizationService} from "./authorization/authorization.service";
 import {Router} from "@angular/router";
+import {AuthorityWorker} from "./common/authority-worker";
 
 @Component({
     selector: 'my-app',
@@ -14,7 +15,7 @@ export class AppComponent {
     }
 
     isLoggedIn(): boolean {
-        return AuthorizationService.getCurrentUser();
+        return AuthorityWorker.getCurrentUser();
     }
 
     logout(): void {

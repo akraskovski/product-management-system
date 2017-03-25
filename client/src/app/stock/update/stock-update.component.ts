@@ -20,10 +20,15 @@ export class StockUpdateComponent {
     }
 
     ngOnInit(): void {
-        this.stockService.loadAll(api.PRODUCT)
-            .subscribe(productList => this.availableProducts = productList);
+        //Fix async!
+        this.loadData();
         this.createEmptyForm();
         this.fillForm();
+    }
+
+    private loadData(): void {
+        this.stockService.loadAll(api.PRODUCT)
+            .subscribe(productList => this.availableProducts = productList);
     }
 
     private createEmptyForm(): void {

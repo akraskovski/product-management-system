@@ -9,7 +9,7 @@ import {Store} from "../../model/store";
     selector: 'store-create-component',
     templateUrl: './store-create.component.html'
 })
-export class StoreCreateComponent{
+export class StoreCreateComponent {
     storeForm: FormGroup;
     availableStocks: Stock[] = [];
     selectedStocks: Stock[] = [];
@@ -19,8 +19,16 @@ export class StoreCreateComponent{
     }
 
     ngOnInit(): void {
+        this.loadData();
+        this.createEmptyForm();
+    }
+
+    private loadData(): void {
         this.storeService.loadAll(api.STOCK)
             .subscribe(stockList => this.availableStocks = stockList);
+    }
+
+    private createEmptyForm(): void {
         this.storeForm = new FormGroup({
             name: new FormControl('', Validators.required),
         });

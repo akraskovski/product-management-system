@@ -8,7 +8,7 @@ import {keys} from "../constants/keys";
 @Injectable()
 export class AuthorizationService {
 
-    private currentUser: User;
+    //private currentUser: User;
 
     constructor(private http: Http) {
     }
@@ -22,17 +22,18 @@ export class AuthorizationService {
     }
 
     logout(): void {
-        this.currentUser = null;
+        //this.currentUser = null;
         localStorage.removeItem(keys.USER_KEY);
     }
 
     private extractData(response: Response) {
         const token = response.json().token;
-        const user = response.json().user;
+        let user = response.json().user;
         if (token && user) {
-            this.currentUser = user;
-            this.currentUser.token = token;
-            localStorage.setItem(keys.USER_KEY, JSON.stringify(this.currentUser));
+            //this.currentUser = user;
+            //this.currentUser.token = token;
+            user.token = token;
+            localStorage.setItem(keys.USER_KEY, JSON.stringify(user));
             return true;
         }
         return false;
@@ -50,9 +51,5 @@ export class AuthorizationService {
         }
         console.error(errMsg);
         return Observable.throw(errMsg);
-    }
-
-    static getCurrentUser() {
-        return JSON.parse(localStorage.getItem(keys.USER_KEY));
     }
 }

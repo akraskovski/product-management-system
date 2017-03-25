@@ -3,13 +3,13 @@ import {Product} from "../../model/product";
 import {Router} from "@angular/router";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
-import {CommonComponent} from "../../common/common.component";
+import {AuthorityWorker} from "../../common/authority-worker";
 
 @Component({
     selector: 'product-content-component',
     templateUrl: 'product-content.component.html'
 })
-export class ProductContentComponent extends CommonComponent implements OnInit{
+export class ProductContentComponent extends AuthorityWorker implements OnInit{
     productList: Product[];
 
     constructor(private productService: CommonService, private router: Router) {
@@ -25,14 +25,14 @@ export class ProductContentComponent extends CommonComponent implements OnInit{
             .subscribe(productList => this.productList = productList);
     }
 
-    onDelete(product: Product): void {
-        this.productService.remove(api.PRODUCT, product.id)
+    onDelete(identifier: number): void {
+        this.productService.remove(api.PRODUCT, identifier)
             .subscribe(result => result ? this.loadData() : alert("Error!"),
                 error => alert(error));
     }
 
-    onEdit(product: Product): void {
-        product && this.router.navigate(['product/product-update', product.id]);
+    onEdit(identifier: number): void {
+        identifier && this.router.navigate(['product/product-update', identifier]);
     }
 
 }

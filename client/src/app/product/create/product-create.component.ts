@@ -18,6 +18,10 @@ export class ProductCreateComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.createEmptyForm();
+    }
+
+    private createEmptyForm(): void {
         this.productForm = new FormGroup({
             name: new FormControl('', Validators.required),
             cost: new FormControl('', [Validators.required, Validators.pattern(regex.DOUBLE)]),

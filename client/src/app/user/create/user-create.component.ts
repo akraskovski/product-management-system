@@ -19,8 +19,16 @@ export class UserCreateComponent {
     }
 
     ngOnInit(): void {
+        this.loadData();
+        this.createEmptyForm();
+    }
+
+    private loadData(): void {
         this.userService.loadAll(api.AUTHORITY)
             .subscribe(availableAuthorities => this.availableAuthorities = availableAuthorities);
+    }
+
+    private createEmptyForm(): void {
         this.userForm = new FormGroup({
             username: new FormControl('', Validators.required),
             password: new FormControl('', Validators.required),

@@ -3,13 +3,13 @@ import {Store} from "../../model/store";
 import {CommonService} from "../../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../../constants/api";
-import {CommonComponent} from "../../common/common.component";
+import {AuthorityWorker} from "../../common/authority-worker";
 
 @Component({
     selector: 'store-content-component',
     templateUrl: './store-content.component.html'
 })
-export class StoreContentComponent extends CommonComponent {
+export class StoreContentComponent extends AuthorityWorker {
     storeList: Store[];
 
     constructor(private storeService: CommonService, private router: Router) {

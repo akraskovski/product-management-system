@@ -21,10 +21,14 @@ export class UserUpdateComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.userService.loadAll(api.AUTHORITY)
-            .subscribe(availableAuthorities => this.availableAuthorities = availableAuthorities);
+        this.loadData();
         this.createEmptyForm();
         this.fillForm();
+    }
+
+    private loadData(): void {
+        this.userService.loadAll(api.AUTHORITY)
+            .subscribe(availableAuthorities => this.availableAuthorities = availableAuthorities);
     }
 
     private createEmptyForm(): void {
