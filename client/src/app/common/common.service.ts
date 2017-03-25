@@ -14,6 +14,12 @@ export class CommonService {
             .catch(CommonService.handleError);
     }
 
+    loadAllUnauthorized(URL: string) {
+        return this.http.get(URL)
+            .map(responce => responce.json())
+            .catch(CommonService.handleError);
+    }
+
     loadById(URL: string, identifier: number) {
         return this.http.get(URL + "/" + identifier, this.generateOptions())
             .map((response: Response) => response.json())

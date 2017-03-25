@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.1
--- Dumped by pg_dump version 9.6.1
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -304,14 +304,15 @@ SELECT pg_catalog.setval('authority_id_seq', 1, false);
 --
 
 INSERT INTO product (id, name, cost, type) VALUES (2, 'Bonaqua', 1.22, 'Water');
-INSERT INTO product (id, name, cost, type) VALUES (16, 'Test', 1, 'Fooood');
+INSERT INTO product (id, name, cost, type) VALUES (16, 'Test edited new', 29.300000000000001, 'Fooood');
+INSERT INTO product (id, name, cost, type) VALUES (24, 'testtest', 123.1231234, 'erth');
 
 
 --
 -- Name: product_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
 --
 
-SELECT pg_catalog.setval('product_id_seq', 18, true);
+SELECT pg_catalog.setval('product_id_seq', 24, true);
 
 
 --
@@ -333,7 +334,7 @@ INSERT INTO stock (id, specialize) VALUES (2, 'Drink');
 -- Name: stock_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
 --
 
-SELECT pg_catalog.setval('stock_id_seq', 5, true);
+SELECT pg_catalog.setval('stock_id_seq', 6, true);
 
 
 --
@@ -355,7 +356,7 @@ INSERT INTO store (id, name) VALUES (1, 'Almi');
 -- Name: store_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
 --
 
-SELECT pg_catalog.setval('store_id_seq', 1, false);
+SELECT pg_catalog.setval('store_id_seq', 3, true);
 
 
 --
@@ -364,7 +365,8 @@ SELECT pg_catalog.setval('store_id_seq', 1, false);
 
 INSERT INTO "user" (id, username, password) VALUES (1, 'Inna', 'qwerty');
 INSERT INTO "user" (id, username, password) VALUES (3, 'admin', 'admin');
-INSERT INTO "user" (id, username, password) VALUES (4, 'new-admin-edited', 'admin');
+INSERT INTO "user" (id, username, password) VALUES (10, 'test', '123123');
+INSERT INTO "user" (id, username, password) VALUES (13, 'ythh', 'dsasfdsf');
 
 
 --
@@ -374,13 +376,15 @@ INSERT INTO "user" (id, username, password) VALUES (4, 'new-admin-edited', 'admi
 INSERT INTO user_authority (user_id, authority_id) VALUES (1, 2);
 INSERT INTO user_authority (user_id, authority_id) VALUES (1, 1);
 INSERT INTO user_authority (user_id, authority_id) VALUES (3, 1);
+INSERT INTO user_authority (user_id, authority_id) VALUES (10, 2);
+INSERT INTO user_authority (user_id, authority_id) VALUES (13, 2);
 
 
 --
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: products; Owner: postgres
 --
 
-SELECT pg_catalog.setval('user_id_seq', 7, true);
+SELECT pg_catalog.setval('user_id_seq', 13, true);
 
 
 --

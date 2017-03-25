@@ -20,7 +20,7 @@ export class ProductContentComponent implements OnInit {
     }
 
     private loadData() {
-        this.productService.loadAll(environment.PRODUCT_URL)
+        this.productService.loadAllUnauthorized(environment.PRODUCT_URL)
             .subscribe(productList => this.productList = productList);
     }
 
