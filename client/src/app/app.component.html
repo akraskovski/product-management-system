@@ -1,12 +1,39 @@
-<h1 align="center">Home page</h1>
-<div align="center">
-    <nav>
-        <a routerLink="/user" routerLinkActive="active">User</a>
-        <a routerLink="/product" routerLinkActive="active">Product</a>
-        <a routerLink="/stock" routerLinkActive="active">Stock</a>
-        <a routerLink="/store" routerLinkActive="active">Store</a>
-        <a *ngIf="!isLoggedIn()" routerLink="/login" routerLinkActive="active">Login page</a>
-        <a *ngIf="isLoggedIn()" (click)="logout()" routerLinkActive="active">Logout</a>
-    </nav>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <p class="navbar-text">Product Management System</p>
+        </div>
+        <ul class="nav navbar-nav">
+            <li>
+                <a routerLink="/" routerLinkActive="active">Home</a>
+            </li>
+            <li>
+                <a routerLink="/user" routerLinkActive="active">User</a>
+            </li>
+            <li>
+                <a routerLink="/product" routerLinkActive="active">Product</a>
+            </li>
+            <li>
+                <a routerLink="/stock" routerLinkActive="active">Stock</a>
+            </li>
+            <li>
+                <a routerLink="/store" routerLinkActive="active">Store</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li *ngIf="!isLoggedIn()">
+                <a routerLink="/login">
+                    Login
+                </a>
+            </li>
+            <li *ngIf="isLoggedIn()">
+                <a (click)="logout()">
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <router-outlet></router-outlet>
 </div>
-<router-outlet></router-outlet>
