@@ -1,39 +1,22 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <p class="navbar-text">Product Management System</p>
-        </div>
-        <ul class="nav navbar-nav">
-            <li>
-                <a routerLink="/" routerLinkActive="active">Home</a>
-            </li>
-            <li>
-                <a routerLink="/user" routerLinkActive="active">User</a>
-            </li>
-            <li>
-                <a routerLink="/product" routerLinkActive="active">Product</a>
-            </li>
-            <li>
-                <a routerLink="/stock" routerLinkActive="active">Stock</a>
-            </li>
-            <li>
-                <a routerLink="/store" routerLinkActive="active">Store</a>
-            </li>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <a class="navbar-brand">Product Management System</a>
+        <ul class="nav navbar-nav" routerLinkActive="active">
+            <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/user">User</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/product">Product</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/stock">Stock</a></li >
+            <li class="nav-item"><a class="nav-link" routerLink="/store">Store</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li *ngIf="!isLoggedIn()">
-                <a routerLink="/login">
-                    Login
-                </a>
+            <li class="nav-item" *ngIf="!isLoggedIn()">
+                <a class="nav-link" routerLink="/login">Login</a>
             </li>
-            <li *ngIf="isLoggedIn()">
-                <a (click)="logout()">
-                    Logout
-                </a>
+            <li class="nav-item" *ngIf="isLoggedIn()">
+                <a class="nav-link" (click)="logout()">Logout</a>
             </li>
         </ul>
     </div>
 </nav>
-<div class="container">
-    <router-outlet></router-outlet>
-</div>
+
+<router-outlet></router-outlet>
