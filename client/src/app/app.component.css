@@ -1,3 +1,6 @@
+body {
+    background: url(../images/image.jpg) no-repeat top left;
+}
 .navbar {
     margin-bottom: 0;
     border: 0;
