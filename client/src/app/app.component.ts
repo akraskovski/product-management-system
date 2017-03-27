@@ -8,13 +8,10 @@ import {AuthorityWorker} from "./common/authority-worker";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent extends AuthorityWorker{
 
     constructor(private router: Router, private authorizationService: AuthorizationService) {
-    }
-
-    isLoggedIn(): boolean {
-        return AuthorityWorker.getCurrentUser()
+        super();
     }
 
     logout(): void {

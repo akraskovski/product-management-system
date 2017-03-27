@@ -1,7 +1,26 @@
-<div align="center">
-    <nav>
-        <a routerLink="user-content" routerLinkActive="active">All Users</a>
-        <a routerLink="user-create" routerLinkActive="active">Create User</a>
-    </nav>
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-3 sidenav">
+            <h3>Navigation</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a routerLink="user-content" routerLinkActive="active"><span
+                        class="glyphicon glyphicon-th-list"></span> All Users</a></li>
+                <li><a routerLink="user-create" routerLinkActive="active"><span
+                        class="glyphicon glyphicon-plus-sign"></span> Create User</a></li>
+            </ul>
+            <br>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Blog..">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-sm-9">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>
-<router-outlet></router-outlet>

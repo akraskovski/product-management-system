@@ -1,21 +1,19 @@
-<h2>All entites from database</h2>
 <div class="panel">
-    <table class="table table-striped">
+    <table class="table table-bordered table-hover">
         <thead>
         <tr>
             <th>Id</th>
             <th>Username</th>
-            <th>Authorities</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let user of userList">
             <td>{{user.id}}</td>
             <td>{{user.username}}</td>
-            <td *ngFor="let authority of user.authorities">{{authority.name}}</td>
             <td>
-                <button *ngIf="canWorkWithUser()" (click)="onEdit(user.id)">Edit</button>
-                <button *ngIf="canWorkWithUser()" (click)="onDelete(user.id)">Delete</button>
+                <button class="btn btn-warning" *ngIf="canWorkWithUser()" (click)="onEdit(user.id)">Edit</button>
+                <button class="btn btn-danger" *ngIf="canWorkWithUser()" (click)="onDelete(user.id)">Delete</button>
             </td>
         </tr>
         </tbody>

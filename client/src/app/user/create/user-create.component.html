@@ -1,5 +1,5 @@
-<div class="col-md-6 col-md-offset-3">
-    <h3>Add new user</h3>
+<div>
+    <h3>Create User Form</h3>
     <form name="form" novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="username">Username</label>
@@ -19,23 +19,23 @@
                 required
             </div>
         </div>
-        <div class="form-group">
-            <div style="border: 1px solid black">
-                <ul>
-                    <li *ngFor="let authority of availableAuthorities" (dblclick)="addAuthorityToSelected(authority)">
-                        <label>{{authority.name}}</label>
-                    </li>
-                </ul>
+            <div class="row">
+                <div class="col-sm-3">
+                    <ul>
+                        <li *ngFor="let authority of availableAuthorities" (dblclick)="addAuthorityToSelected(authority)">
+                            <label>{{authority.name}}</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <ul>
+                        <li *ngFor="let selectedAuthority of selectedAuthorities"
+                            (dblclick)="deleteAuthorityFromSelected(selectedAuthority)">
+                            <label>{{selectedAuthority.name}}</label>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div style="border: 1px solid black">
-                <ul>
-                    <li *ngFor="let selectedAuthority of selectedAuthorities"
-                        (dblclick)="deleteAuthorityFromSelected(selectedAuthority)">
-                        <label>{{selectedAuthority.name}}</label>
-                    </li>
-                </ul>
-            </div>
-        </div>
 
         <div class="form-group">
             <button type="submit" [disabled]="userForm.invalid || loading" class="btn btn-default">Submit
