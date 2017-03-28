@@ -28,7 +28,9 @@ export class StockUpdateComponent {
 
     private loadData(): void {
         this.stockService.loadAll(api.PRODUCT)
-            .subscribe(productList => this.availableProducts = productList);
+            .subscribe(productList => {
+                this.availableProducts = productList;
+            });
     }
 
     private createEmptyForm(): void {
@@ -50,10 +52,11 @@ export class StockUpdateComponent {
     }
 
     private cleanAvailableProducts(): void {
-        for (let availableProduct = 0; availableProduct < this.availableProducts.length; availableProduct++)
-            for (let selectedProduct = 0; selectedProduct < this.selectedProducts.length; selectedProduct++)
-                if (this.availableProducts[availableProduct].id === this.selectedProducts[selectedProduct].id)
-                    this.availableProducts.splice(this.availableProducts.indexOf(this.availableProducts[availableProduct]), 1);
+        if (this.availableProducts && this.selectedProducts)
+            for (let availableProduct = 0; availableProduct < this.availableProducts.length; availableProduct++)
+                for (let selectedProduct = 0; selectedProduct < this.selectedProducts.length; selectedProduct++)
+                    if (this.availableProducts[availableProduct].id === this.selectedProducts[selectedProduct].id)
+                        this.availableProducts.splice(this.availableProducts.indexOf(this.availableProducts[availableProduct]), 1);
     }
 
     onSubmit(): void {

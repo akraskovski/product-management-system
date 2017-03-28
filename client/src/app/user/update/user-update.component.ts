@@ -21,14 +21,8 @@ export class UserUpdateComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadData();
         this.createEmptyForm();
         this.fillForm();
-    }
-
-    private loadData(): void {
-        this.userService.loadAll(api.AUTHORITY)
-            .subscribe(availableAuthorities => this.availableAuthorities = availableAuthorities);
     }
 
     private createEmptyForm(): void {
@@ -43,11 +37,19 @@ export class UserUpdateComponent implements OnInit {
             .subscribe(user => {
                 this.user = user;
                 this.selectedAuthorities = this.user.authorities;
-                this.cleanAvailableAuthorities();
+                this.loadAuthorities();
                 this.userForm.setValue({
                     username: this.user.username,
                     password: this.user.password
                 });
+            });
+    }
+
+    private loadAuthorities(): void {
+        this.userService.loadAll(api.AUTHORITY)
+            .subscribe(availableAuthorities => {
+                this.availableAuthorities = availableAuthorities;
+                this.cleanAvailableAuthorities();
             });
     }
 

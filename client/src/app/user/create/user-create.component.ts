@@ -19,11 +19,11 @@ export class UserCreateComponent {
     }
 
     ngOnInit(): void {
-        this.loadData();
+        this.loadAuthorities();
         this.createEmptyForm();
     }
 
-    private loadData(): void {
+    private loadAuthorities(): void {
         this.userService.loadAll(api.AUTHORITY)
             .subscribe(availableAuthorities => this.availableAuthorities = availableAuthorities);
     }
