@@ -20,11 +20,11 @@ export class StockCreateComponent {
     }
 
     ngOnInit(): void {
-        this.loadData();
+        this.loadProducts();
         this.createEmptyForm();
     }
 
-    private loadData(): void {
+    private loadProducts(): void {
         this.stockService.loadAll(api.PRODUCT)
             .subscribe(productList => this.availableProducts = productList);
     }

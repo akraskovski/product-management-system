@@ -9,7 +9,7 @@ import {AuthorityWorker} from "../../common/authority-worker";
     selector: 'product-content-component',
     templateUrl: 'product-content.component.html'
 })
-export class ProductContentComponent extends AuthorityWorker implements OnInit{
+export class ProductContentComponent extends AuthorityWorker implements OnInit {
     productList: Product[];
 
     constructor(private productService: CommonService, private router: Router) {

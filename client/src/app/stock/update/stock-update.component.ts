@@ -20,17 +20,8 @@ export class StockUpdateComponent {
     }
 
     ngOnInit(): void {
-        //Fix async!
-        this.loadData();
         this.createEmptyForm();
         this.fillForm();
-    }
-
-    private loadData(): void {
-        this.stockService.loadAll(api.PRODUCT)
-            .subscribe(productList => {
-                this.availableProducts = productList;
-            });
     }
 
     private createEmptyForm(): void {
@@ -44,19 +35,24 @@ export class StockUpdateComponent {
             .subscribe(stock => {
                 this.stock = stock;
                 this.selectedProducts = this.stock.productList;
-                this.cleanAvailableProducts();
+                this.loadProducts();
                 this.stockForm.setValue({
                     specialize: this.stock.specialize
                 });
             });
     }
 
-    private cleanAvailableProducts(): void {
-        if (this.availableProducts && this.selectedProducts)
-            for (let availableProduct = 0; availableProduct < this.availableProducts.length; availableProduct++)
-                for (let selectedProduct = 0; selectedProduct < this.selectedProducts.length; selectedProduct++)
-                    if (this.availableProducts[availableProduct].id === this.selectedProducts[selectedProduct].id)
-                        this.availableProducts.splice(this.availableProducts.indexOf(this.availableProducts[availableProduct]), 1);
+    private loadProducts(): void {
+        this.stockService.loadAll(api.PRODUCT)
+            .subscribe(productList => this.availableProducts = this.cleanAvailableProducts(productList))
+    }
+
+    private cleanAvailableProducts(productList: Product[]): Product[] {
+        for (let product = 0; product < productList.length; product++)
+            for (let selectedProduct = 0; selectedProduct < this.selectedProducts.length; selectedProduct++)
+                if (productList[product].id === this.selectedProducts[selectedProduct].id)
+                    productList.splice(productList.indexOf(productList[product]), 1);
+        return productList;
     }
 
     onSubmit(): void {

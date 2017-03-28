@@ -47,9 +47,7 @@ export class UserUpdateComponent implements OnInit {
 
     private loadAuthorities(): void {
         this.userService.loadAll(api.AUTHORITY)
-            .subscribe(availableAuthorities => {
-                this.availableAuthorities = this.cleanAvailableAuthorities(availableAuthorities);
-            });
+            .subscribe(availableAuthorities => this.availableAuthorities = this.cleanAvailableAuthorities(availableAuthorities))
     }
 
     private cleanAvailableAuthorities(authoritiesList: Authority[]): Authority[] {
