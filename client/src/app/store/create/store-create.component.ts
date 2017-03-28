@@ -19,11 +19,11 @@ export class StoreCreateComponent {
     }
 
     ngOnInit(): void {
-        this.loadData();
+        this.loadStocks();
         this.createEmptyForm();
     }
 
-    private loadData(): void {
+    private loadStocks(): void {
         this.storeService.loadAll(api.STOCK)
             .subscribe(stockList => this.availableStocks = stockList);
     }

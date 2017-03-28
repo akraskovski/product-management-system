@@ -20,17 +20,8 @@ export class StoreUpdateComponent {
     }
 
     ngOnInit(): void {
-        //Fix async!
-        this.loadData();
         this.createEmptyForm();
         this.fillForm();
-    }
-
-    private loadData(): void {
-        this.storeService.loadAll(api.STOCK)
-            .subscribe(stockList => {
-                this.availableStocks = stockList;
-            });
     }
 
     private createEmptyForm(): void {
@@ -44,20 +35,24 @@ export class StoreUpdateComponent {
             .subscribe(store => {
                 this.store = store;
                 this.selectedStocks = this.store.stockList;
-                this.cleanAvailableStocks();
+                this.loadStocks();
                 this.storeForm.setValue({
                     name: this.store.name
                 });
             });
     }
 
-    private cleanAvailableStocks(): void {
-        console.log("available: " + this.availableStocks.length);
-        console.log("selected: " + this.selectedStocks.length);
-        for (let availableStock = 0; availableStock < this.availableStocks.length; availableStock++)
+    private loadStocks(): void {
+        this.storeService.loadAll(api.STOCK)
+            .subscribe(stockList => this.availableStocks = this.cleanAvailableStocks(stockList))
+    }
+
+    private cleanAvailableStocks(stockList: Stock[]): Stock[] {
+        for (let stock = 0; stock < stockList.length; stock++)
             for (let selectedStock = 0; selectedStock < this.selectedStocks.length; selectedStock++)
-                if (this.availableStocks[availableStock].id === this.selectedStocks[selectedStock].id)
-                    this.availableStocks.splice(this.availableStocks.indexOf(this.availableStocks[availableStock]), 1);
+                if (stockList[stock].id === this.selectedStocks[selectedStock].id)
+                    stockList.splice(stockList.indexOf(stockList[stock]), 1);
+        return stockList;
     }
 
     onSubmit(): void {
