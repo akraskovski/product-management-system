@@ -48,16 +48,16 @@ export class UserUpdateComponent implements OnInit {
     private loadAuthorities(): void {
         this.userService.loadAll(api.AUTHORITY)
             .subscribe(availableAuthorities => {
-                this.availableAuthorities = availableAuthorities;
-                this.cleanAvailableAuthorities();
+                this.availableAuthorities = this.cleanAvailableAuthorities(availableAuthorities);
             });
     }
 
-    private cleanAvailableAuthorities(): void {
-        for (let availableAuthority = 0; availableAuthority < this.availableAuthorities.length; availableAuthority++)
+    private cleanAvailableAuthorities(authoritiesList: Authority[]): Authority[] {
+        for (let authority = 0; authority < authoritiesList.length; authority++)
             for (let selectedAuthority = 0; selectedAuthority < this.selectedAuthorities.length; selectedAuthority++)
-                if (this.availableAuthorities[availableAuthority].id === this.selectedAuthorities[selectedAuthority].id)
-                    this.availableAuthorities.splice(this.availableAuthorities.indexOf(this.availableAuthorities[availableAuthority]), 1);
+                if (authoritiesList[authority].id === this.selectedAuthorities[selectedAuthority].id)
+                    authoritiesList.splice(authoritiesList.indexOf(authoritiesList[authority]), 1);
+        return authoritiesList;
     }
 
     onSubmit(): void {
