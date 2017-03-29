@@ -29,6 +29,6 @@ export class ProductSearchComponent extends AuthorityWorker {
     }
 
     onEdit(identifier: number): void {
-        identifier && this.router.navigate(['product/product-update', identifier]);
+        identifier ? this.router.navigate(['product/product-update', identifier]) : alert("Wrong ID!");
     }
 }

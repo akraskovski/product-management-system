@@ -8,8 +8,6 @@ import {keys} from "../constants/keys";
 @Injectable()
 export class AuthorizationService {
 
-    //private currentUser: User;
-
     constructor(private http: Http) {
     }
 
@@ -22,7 +20,6 @@ export class AuthorizationService {
     }
 
     logout(): void {
-        //this.currentUser = null;
         localStorage.removeItem(keys.USER_KEY);
     }
 
@@ -30,8 +27,6 @@ export class AuthorizationService {
         const token = response.json().token;
         let user = response.json().user;
         if (token && user) {
-            //this.currentUser = user;
-            //this.currentUser.token = token;
             user.token = token;
             localStorage.setItem(keys.USER_KEY, JSON.stringify(user));
             return true;

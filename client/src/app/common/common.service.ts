@@ -12,19 +12,31 @@ export class CommonService {
 
     loadAll(URL: string): Observable<any> {
         return this.http.get(URL, this.generateOptions())
-            .map((response: Response) => response.json())
+            .map((response: Response) => {
+                if(response.status != 200) {
+                    throw new Error('Error while loading all entities! code status: ' + response.status);
+                } else {
+                    return response.json();
+                }
+            })
     }
 
     loadAllUnauthorized(URL: string): Observable<any> {
         return this.http.get(URL)
-            .map(response => response.json())
+            .map(response => {
+                if(response.status != 200) {
+                    throw new Error('Error while loading all entities! code status: ' + response.status);
+                } else {
+                    return response.json();
+                }
+            })
     }
 
     loadById(URL: string, identifier: number): Observable<any> {
         return this.http.get(URL + "/" + identifier, this.generateOptions())
             .map((response: Response) => {
                 if(response.status != 200) {
-                    throw new Error('User not found! code status ' + response.status);
+                    throw new Error('Entity not found! code status: ' + response.status);
                 } else {
                     return response.json();
                 }
@@ -33,7 +45,13 @@ export class CommonService {
 
     loadByName(URL: string, name: string): Observable<any> {
         return this.http.get(URL + "/name/" + name, this.generateOptions())
-            .map((response: Response) => response.json())
+            .map((response: Response) => {
+                if(response.status != 200) {
+                    throw new Error('Entity not found! code status: ' + response.status);
+                } else {
+                    return response.json();
+                }
+            })
     }
 
     create(URL: string, body: any): Observable<any> {
