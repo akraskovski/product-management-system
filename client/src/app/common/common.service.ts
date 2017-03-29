@@ -29,7 +29,7 @@ export class CommonService {
     }
 
     loadByName(URL: string, name: string): Observable<any> {
-        return this.http.get(URL + "/name/" + name)
+        return this.http.get(URL + "/name/" + name, this.generateOptions())
             .map((response: Response) => response.json())
             .catch(CommonService.handleError);
     }

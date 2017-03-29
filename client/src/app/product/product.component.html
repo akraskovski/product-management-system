@@ -1,9 +1,26 @@
-<div class="container">
-    <nav>
-        <a routerLink="product-content" routerLinkActive="active">All Products</a>
-        <a routerLink="product-create" routerLinkActive="active">Add Product</a>
-        <a routerLink="product-search" routerLinkActive="active">Search Product</a>
-    </nav>
-</div>
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-3 sidenav">
+            <h3>Navigation</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a routerLink="product-content" routerLinkActive="active"><span
+                        class="glyphicon glyphicon-th-list"></span> All products</a></li>
+                <li><a routerLink="product-create" routerLinkActive="active"><span
+                        class="glyphicon glyphicon-plus-sign"></span> Add product</a></li>
+            </ul>
+            <br>
+            <div class="input-group">
+                <input type="text" class="form-control" [(ngModel)]="keyword">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" (click)="onSearchClick()">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
 
-<router-outlet></router-outlet>
+        <div class="col-sm-9">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
