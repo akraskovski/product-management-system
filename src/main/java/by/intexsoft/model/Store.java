@@ -1,6 +1,8 @@
 package by.intexsoft.model;
 
 import by.intexsoft.model.base.BaseEntity;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +23,8 @@ public class Store extends BaseEntity {
     /**
      * ManyToMany relation to {@link Stock} entities
      */
-    @ManyToMany(targetEntity = Stock.class, fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(targetEntity = Stock.class)
     @JoinTable(
             name = "stock_store",
             joinColumns = {@JoinColumn(name = "store_id")},
