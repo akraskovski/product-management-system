@@ -35,20 +35,24 @@ export class UserUpdateComponent implements OnInit {
 
     private fillForm(): void {
         this.userService.loadById(api.USER, this.route.snapshot.params['id'])
-            .subscribe(user => {
-                this.user = user;
-                this.selectedAuthorities = this.user.authorities;
-                this.loadAuthorities();
-                this.userForm.setValue({
-                    username: this.user.username,
-                    password: this.user.password
-                });
-            });
+            .subscribe(
+                (user: User) => {
+                    this.user = user;
+                    this.selectedAuthorities = this.user.authorities;
+                    this.loadAuthorities();
+                    this.userForm.setValue({
+                        username: this.user.username,
+                        password: this.user.password
+                    });
+                },
+                error => this.logError(error));
     }
 
     private loadAuthorities(): void {
         this.userService.loadAll(api.AUTHORITY)
-            .subscribe(availableAuthorities => this.availableAuthorities = CommonFunctions.cleanAvailableItems(availableAuthorities, this.selectedAuthorities))
+            .subscribe(
+                availableAuthorities => this.availableAuthorities = CommonFunctions.cleanAvailableItems(availableAuthorities, this.selectedAuthorities),
+                error => this.logError(error));
     }
 
     onSubmit(): void {
@@ -57,7 +61,9 @@ export class UserUpdateComponent implements OnInit {
         this.user.password = this.userForm.value.password;
         this.user.authorities = this.selectedAuthorities;
         this.userService.update(api.USER, this.user)
-            .subscribe(result => result ? this.router.navigate(['user/user-content']) : this.errorMsg);
+            .subscribe(
+                () => this.router.navigate(['user/user-content']),
+                error => this.logError(error));
     }
 
     addAuthorityToSelected(authority: Authority): void {
@@ -70,8 +76,9 @@ export class UserUpdateComponent implements OnInit {
         this.availableAuthorities.push(authority);
     }
 
-    private errorMsg(): void {
+    logError(err) {
         this.loading = false;
-        alert("Error!");
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }

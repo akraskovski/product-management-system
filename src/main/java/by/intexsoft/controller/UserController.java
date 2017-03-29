@@ -1,16 +1,14 @@
 package by.intexsoft.controller;
 
 import by.intexsoft.model.User;
-import by.intexsoft.service.AuthorityService;
 import by.intexsoft.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Handles requests for the {@link UserService}
@@ -30,6 +28,7 @@ public class UserController {
 
     /**
      * Return json-information about all users in database
+     *
      * @return list of {@link User}s
      */
     @RequestMapping
@@ -45,21 +44,25 @@ public class UserController {
 
     /**
      * Return json-information about all users in database
+     *
      * @return list of {@link User}s
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> loadUserById(@PathVariable("id") Integer id) {
         LOGGER.info("Start loadUserById");
         try {
-            return new ResponseEntity<>(userService.find(id), HttpStatus.OK);
-        } catch (NullPointerException e) {
-            LOGGER.error("Exception in loadUserByID. " + e.getLocalizedMessage());
+            User user = userService.find(id);
+            Assert.notNull(user, "Unable to find user with id: " + id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("User with id: " + id + " does not exist!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     /**
      * Find user in database with setting name in browser
+     *
      * @return entity of {@link User}
      */
     @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
@@ -75,6 +78,7 @@ public class UserController {
 
     /**
      * Creating {@link User} from client form
+     *
      * @param user model
      */
     @RequestMapping(method = RequestMethod.POST)
@@ -90,6 +94,7 @@ public class UserController {
 
     /**
      * Update {@link User} entity in database
+     *
      * @param user model
      */
     @RequestMapping(method = RequestMethod.PUT)
@@ -105,6 +110,7 @@ public class UserController {
 
     /**
      * Delete {@link User} from database by identifier
+     *
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

@@ -13,43 +13,42 @@ export class CommonService {
     loadAll(URL: string): Observable<any> {
         return this.http.get(URL, this.generateOptions())
             .map((response: Response) => response.json())
-            .catch(CommonService.handleError);
     }
 
     loadAllUnauthorized(URL: string): Observable<any> {
         return this.http.get(URL)
             .map(response => response.json())
-            .catch(CommonService.handleError);
     }
 
     loadById(URL: string, identifier: number): Observable<any> {
         return this.http.get(URL + "/" + identifier, this.generateOptions())
-            .map((response: Response) => response.json())
-            .catch(CommonService.handleError);
+            .map((response: Response) => {
+                if(response.status != 200) {
+                    throw new Error('User not found! code status ' + response.status);
+                } else {
+                    return response.json();
+                }
+            })
     }
 
     loadByName(URL: string, name: string): Observable<any> {
         return this.http.get(URL + "/name/" + name, this.generateOptions())
             .map((response: Response) => response.json())
-            .catch(CommonService.handleError);
     }
 
     create(URL: string, body: any): Observable<any> {
         return this.http.post(URL, body, this.generateOptions())
             .map((response: Response) => response.status === 201)
-            .catch(CommonService.handleError);
     }
 
     update(URL: string, body: any): Observable<any> {
         return this.http.put(URL, body, this.generateOptions())
             .map((response: Response) => response.status === 200)
-            .catch(CommonService.handleError);
     }
 
     remove(URL: string, identifier: number): Observable<any> {
         return this.http.delete(URL + "/" + identifier, this.generateOptions())
             .map((response) => response.status === 200)
-            .catch(CommonService.handleError);
     }
 
     private generateOptions(): RequestOptions {
@@ -58,10 +57,5 @@ export class CommonService {
             'x-auth-token': AuthorityWorker.getCurrentUser().token
         });
         return new RequestOptions({headers: headers});
-    }
-
-    private static handleError(error: any): Promise<any> {
-        console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
     }
 }

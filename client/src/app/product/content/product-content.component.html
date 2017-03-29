@@ -1,6 +1,5 @@
-<h2>All entites from database</h2>
 <div class="panel">
-    <table class="table table-striped">
+    <table class="table table-bordered table-hover">
         <thead>
         <tr>
             <th>Id</th>
@@ -16,8 +15,8 @@
             <td>{{product.cost}}</td>
             <td>{{product.type}}</td>
             <td>
-                <button *ngIf="canWorkWithProduct()" (click)="onEdit(product.id)">Edit</button>
-                <button *ngIf="canWorkWithProduct()" (click)="onDelete(product.id)">Delete</button>
+                <button class="btn btn-warning" *ngIf="canWorkWithProduct()" (click)="onEdit(product.id)">Edit</button>
+                <button class="btn btn-danger" *ngIf="canWorkWithProduct()" (click)="onDelete(product.id)">Delete</button>
             </td>
         </tr>
         </tbody>
