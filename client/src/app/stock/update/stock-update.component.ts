@@ -5,6 +5,7 @@ import {Product} from "../../model/product";
 import {CommonService} from "../../common/common.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {api} from "../../constants/api";
+import {CommonFunctions} from "../../common/common-functions";
 @Component({
     selector: 'stock-update-component',
     templateUrl: './stock-update.component.html'
@@ -44,15 +45,7 @@ export class StockUpdateComponent {
 
     private loadProducts(): void {
         this.stockService.loadAll(api.PRODUCT)
-            .subscribe(productList => this.availableProducts = this.cleanAvailableProducts(productList))
-    }
-
-    private cleanAvailableProducts(productList: Product[]): Product[] {
-        for (let product = 0; product < productList.length; product++)
-            for (let selectedProduct = 0; selectedProduct < this.selectedProducts.length; selectedProduct++)
-                if (productList[product].id === this.selectedProducts[selectedProduct].id)
-                    productList.splice(productList.indexOf(productList[product]), 1);
-        return productList;
+            .subscribe(productList => this.availableProducts = CommonFunctions.cleanAvailableItems(productList, this.selectedProducts))
     }
 
     onSubmit(): void {

@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Authority} from "../../model/authority";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
+import {CommonFunctions} from "../../common/common-functions";
 
 @Component({
     selector: 'user-update-component',
@@ -47,15 +48,7 @@ export class UserUpdateComponent implements OnInit {
 
     private loadAuthorities(): void {
         this.userService.loadAll(api.AUTHORITY)
-            .subscribe(availableAuthorities => this.availableAuthorities = this.cleanAvailableAuthorities(availableAuthorities))
-    }
-
-    private cleanAvailableAuthorities(authoritiesList: Authority[]): Authority[] {
-        for (let authority = 0; authority < authoritiesList.length; authority++)
-            for (let selectedAuthority = 0; selectedAuthority < this.selectedAuthorities.length; selectedAuthority++)
-                if (authoritiesList[authority].id === this.selectedAuthorities[selectedAuthority].id)
-                    authoritiesList.splice(authoritiesList.indexOf(authoritiesList[authority]), 1);
-        return authoritiesList;
+            .subscribe(availableAuthorities => this.availableAuthorities = CommonFunctions.cleanAvailableItems(availableAuthorities, this.selectedAuthorities))
     }
 
     onSubmit(): void {
