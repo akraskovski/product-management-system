@@ -12,7 +12,7 @@ export const routes: Routes = [
         path: 'product', component: ProductComponent,
         children: [
             {path: 'product-content', component: ProductContentComponent},
-            {path: 'product-search/:keyword', component: ProductSearchComponent},
+            {path: 'product-search', component: ProductSearchComponent},
             {
                 path: 'product-create',
                 component: ProductCreateComponent,

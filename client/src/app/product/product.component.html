@@ -7,16 +7,9 @@
                         class="glyphicon glyphicon-th-list"></span> All products</a></li>
                 <li><a routerLink="product-create" routerLinkActive="active"><span
                         class="glyphicon glyphicon-plus-sign"></span> Add product</a></li>
+                <li><a routerLink="product-search" routerLinkActive="active"><span
+                        class="glyphicon glyphicon-search"></span> Find products</a></li>
             </ul>
-            <br>
-            <div class="input-group">
-                <input type="text" class="form-control" [(ngModel)]="keyword">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" (click)="onSearchClick()">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
-            </div>
         </div>
 
         <div class="col-sm-9">

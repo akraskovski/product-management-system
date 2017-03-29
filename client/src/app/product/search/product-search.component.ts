@@ -1,6 +1,6 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {Product} from "../../model/product";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {AuthorityWorker} from "../../common/authority-worker";
@@ -9,16 +9,16 @@ import {AuthorityWorker} from "../../common/authority-worker";
     selector: 'product-search-component',
     templateUrl: './product-search.component.html'
 })
-export class ProductSearchComponent extends AuthorityWorker implements OnInit{
-
+export class ProductSearchComponent extends AuthorityWorker {
+    keyword: string;
     findProducts: Product[];
 
-    constructor(private productService: CommonService, private router: Router, private route: ActivatedRoute) {
+    constructor(private productService: CommonService, private router: Router) {
         super();
     }
 
-    ngOnInit(): void {
-        this.productService.loadByName(api.PRODUCT, this.route.snapshot.params['keyword'])
+    onSubmit(): void {
+        this.productService.loadByName(api.PRODUCT, this.keyword)
             .subscribe(response => this.findProducts = response);
     }
 
