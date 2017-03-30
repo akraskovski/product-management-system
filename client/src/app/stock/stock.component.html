@@ -1,7 +1,17 @@
-<div align="center">
-    <nav>
-        <a routerLink="stock-content" routerLinkActive="active">All Stocks</a>
-        <a routerLink="stock-create" routerLinkActive="active">Create</a>
-    </nav>
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-3 sidenav">
+            <h3>Navigation</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a routerLink="stock-content" routerLinkActive="active"><span
+                        class="glyphicon glyphicon-th-list"></span> Stock list</a></li>
+                <li><a routerLink="stock-create" routerLinkActive="active"><span
+                        class="glyphicon glyphicon-plus-sign"></span> Create stock</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>
-<router-outlet></router-outlet>

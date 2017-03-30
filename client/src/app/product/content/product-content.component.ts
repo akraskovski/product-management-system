@@ -42,5 +42,4 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
         console.error('There was an error: ' + err);
         this.router.navigate(['/']);
     }
-
 }

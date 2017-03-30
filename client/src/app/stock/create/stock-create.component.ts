@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Product} from "../../model/product";
 import {Router} from "@angular/router";
@@ -10,7 +10,7 @@ import {api} from "../../constants/api";
     selector: 'stock-create-component',
     templateUrl: './stock-create.component.html'
 })
-export class StockCreateComponent {
+export class StockCreateComponent implements OnInit {
     stockForm: FormGroup;
     availableProducts: Product[] = [];
     selectedProducts: Product[] = [];
@@ -26,7 +26,9 @@ export class StockCreateComponent {
 
     private loadProducts(): void {
         this.stockService.loadAll(api.PRODUCT)
-            .subscribe(productList => this.availableProducts = productList);
+            .subscribe(
+                productList => this.availableProducts = productList,
+                err => this.logError(err));
     }
 
     private createEmptyForm(): void {
@@ -39,7 +41,9 @@ export class StockCreateComponent {
         this.loading = true;
         const stock: Stock = new Stock(this.stockForm.value.specialize, this.selectedProducts);
         this.stockService.create(api.STOCK, stock)
-            .subscribe(result => result ? this.router.navigate(['stock/stock-content']) : this.errorMsg);
+            .subscribe(
+                () => this.router.navigate(['stock/stock-content']),
+                err => this.logError(err));
     }
 
     addProductToSelected(product: Product): void {
@@ -52,8 +56,9 @@ export class StockCreateComponent {
         this.availableProducts.push(product);
     }
 
-    private errorMsg(): void {
+    logError(err) {
         this.loading = false;
-        alert("Error while creating new stock!");
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }

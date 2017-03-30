@@ -1,21 +1,23 @@
-<h2>All entites from database</h2>
 <div class="panel">
-    <table class="table table-striped">
+    <table class="table table-bordered table-hover">
         <thead>
         <tr>
             <th>Id</th>
             <th>Specialize</th>
             <th>Products</th>
+            <th *ngIf="canWorkWithStock()">Operations</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let stock of stockList">
             <td>{{stock.id}}</td>
             <td>{{stock.specialize}}</td>
-            <td *ngFor="let product of stock.productList">{{product.name}}</td>
             <td>
-                <button *ngIf="canWorkWithStock()" (click)="onEdit(stock.id)">Edit</button>
-                <button *ngIf="canWorkWithStock()" (click)="onDelete(stock.id)">Delete</button>
+                <p *ngFor="let product of stock.productList">ID: {{product.id}}, NAME: {{product.name}}.</p>
+            </td>
+            <td>
+                <button class="btn btn-warning" *ngIf="canWorkWithStock()" (click)="onEdit(stock.id)">Edit</button>
+                <button class="btn btn-danger" *ngIf="canWorkWithStock()" (click)="onDelete(stock.id)">Delete</button>
             </td>
         </tr>
         </tbody>

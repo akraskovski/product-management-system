@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Stock} from "../../model/stock";
 import {Product} from "../../model/product";
@@ -10,7 +10,7 @@ import {CommonFunctions} from "../../common/common-functions";
     selector: 'stock-update-component',
     templateUrl: './stock-update.component.html'
 })
-export class StockUpdateComponent {
+export class StockUpdateComponent implements OnInit {
     stockForm: FormGroup;
     loading: boolean = false;
     stock: Stock;
@@ -33,19 +33,23 @@ export class StockUpdateComponent {
 
     private fillForm(): void {
         this.stockService.loadById(api.STOCK, this.route.snapshot.params['id'])
-            .subscribe(stock => {
-                this.stock = stock;
-                this.selectedProducts = this.stock.productList;
-                this.loadProducts();
-                this.stockForm.setValue({
-                    specialize: this.stock.specialize
-                });
-            });
+            .subscribe(
+                stock => {
+                    this.stock = stock;
+                    this.selectedProducts = this.stock.productList;
+                    this.loadProducts();
+                    this.stockForm.setValue({
+                        specialize: this.stock.specialize
+                    });
+                },
+                err => this.logError(err));
     }
 
     private loadProducts(): void {
         this.stockService.loadAll(api.PRODUCT)
-            .subscribe(productList => this.availableProducts = CommonFunctions.cleanAvailableItems(productList, this.selectedProducts))
+            .subscribe(
+                productList => this.availableProducts = CommonFunctions.cleanAvailableItems(productList, this.selectedProducts),
+                err => this.logError(err))
     }
 
     onSubmit(): void {
@@ -53,7 +57,9 @@ export class StockUpdateComponent {
         this.stock.specialize = this.stockForm.value.specialize;
         this.stock.productList = this.selectedProducts;
         this.stockService.update(api.STOCK, this.stock)
-            .subscribe(result => result ? this.router.navigate(['stock/stock-content']) : this.errorMsg);
+            .subscribe(
+                () => this.router.navigate(['stock/stock-content']),
+                err => this.logError(err));
     }
 
     addProductToSelected(product: Product): void {
@@ -66,8 +72,9 @@ export class StockUpdateComponent {
         this.availableProducts.push(product);
     }
 
-    private errorMsg(): void {
+    private logError(err) {
         this.loading = false;
-        alert("Error!");
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }

@@ -9,7 +9,6 @@ import {AuthorityWorker} from "../../common/authority-worker";
     templateUrl: './stock-content.component.html'
 })
 export class StockContentComponent extends AuthorityWorker implements OnInit {
-
     stockList: Stock[];
 
     constructor(private stockService: CommonService, private router: Router) {
@@ -22,16 +21,24 @@ export class StockContentComponent extends AuthorityWorker implements OnInit {
 
     private loadData() {
         this.stockService.loadAll(api.STOCK)
-            .subscribe(stockList => this.stockList = stockList);
+            .subscribe(
+                stockList => this.stockList = stockList,
+                err => this.logError(err));
     }
 
     onDelete(identifier: number): void {
         this.stockService.remove(api.STOCK, identifier)
-            .subscribe(result => result ? this.loadData() : alert("Error!"),
-                error => alert(error));
+            .subscribe(
+                () => this.loadData(),
+                err => this.logError(err));
     }
 
     onEdit(identifier: number): void {
         identifier && this.router.navigate(['stock/stock-update', identifier]);
+    }
+
+    logError(err) {
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }
