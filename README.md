@@ -32,8 +32,8 @@ Installing environment (You need Java 8 installed):
 
 4. Download [NodeJS](https://nodejs.org/en/download/) with npm.
 
-##Building project
-
+Building project
+================
 1. Download or clone project from this repository.
 
 2. In the console, go to the folder with the project and run the command `gradle clean build`(you must have installed npm)
@@ -42,8 +42,10 @@ Installing environment (You need Java 8 installed):
 
 4. Import `classpath:db/migrate/dump.sql` to your database with schema *product*.
 
+Debug
+=====
 To debug the client use `npm run server` to run Webpack DevServer (port :3000)
 
-##Logging
-
-* Logging save to Tomcat `/logs/spring-rest-hibernate-jpa.log`.
+Logging
+=======
+* Logs save to Tomcat base dir `/logs/spring-rest-hibernate-jpa.log`.
