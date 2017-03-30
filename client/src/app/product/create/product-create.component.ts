@@ -33,11 +33,14 @@ export class ProductCreateComponent implements OnInit {
         this.loading = true;
         const product: Product = new Product(this.productForm.value.name, this.productForm.value.cost, this.productForm.value.type);
         this.productService.create(api.PRODUCT, product)
-            .subscribe(result => result ? this.router.navigate(['product/product-content']) : this.errorMsg);
+            .subscribe(
+                () => this.router.navigate(['product/product-content']),
+                err => this.logError(err));
     }
 
-    private errorMsg(): void {
+    logError(err) {
         this.loading = false;
-        alert("Error while creating new product!");
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }

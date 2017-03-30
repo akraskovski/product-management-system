@@ -22,17 +22,25 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
 
     private loadData() {
         this.productService.loadAllUnauthorized(api.PRODUCT)
-            .subscribe(productList => this.productList = productList);
+            .subscribe(
+                productList => this.productList = productList,
+                err => this.logError(err));
     }
 
     onDelete(identifier: number): void {
         this.productService.remove(api.PRODUCT, identifier)
-            .subscribe(result => result ? this.loadData() : alert("Error!"),
+            .subscribe(
+                result => result ? this.loadData() : alert("Error!"),
                 error => alert(error));
     }
 
     onEdit(identifier: number): void {
         identifier && this.router.navigate(['product/product-update', identifier]);
+    }
+
+    logError(err) {
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 
 }

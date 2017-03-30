@@ -19,7 +19,10 @@ export class ProductSearchComponent extends AuthorityWorker {
 
     onSubmit(): void {
         this.productService.loadByName(api.PRODUCT, this.keyword)
-            .subscribe(response => this.findProducts = response);
+            .subscribe(
+                response => this.findProducts = response,
+                err => this.logError(err)
+            );
     }
 
     onDelete(identifier: number): void {
@@ -30,5 +33,10 @@ export class ProductSearchComponent extends AuthorityWorker {
 
     onEdit(identifier: number): void {
         identifier ? this.router.navigate(['product/product-update', identifier]) : alert("Wrong ID!");
+    }
+
+    logError(err) {
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }

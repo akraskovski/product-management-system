@@ -25,7 +25,9 @@ export class UserCreateComponent {
 
     private loadAuthorities(): void {
         this.userService.loadAll(api.AUTHORITY)
-            .subscribe(availableAuthorities => this.availableAuthorities = availableAuthorities);
+            .subscribe(
+                availableAuthorities => this.availableAuthorities = availableAuthorities,
+                err => this.logError(err));
     }
 
     private createEmptyForm(): void {
@@ -40,7 +42,9 @@ export class UserCreateComponent {
         let user: User = new User(this.userForm.value.username, this.userForm.value.password);
         user.authorities = this.selectedAuthorities;
         this.userService.create(api.USER, user)
-            .subscribe(result => result ? this.router.navigate(['user/user-content']) : this.errorMsg);
+            .subscribe(
+                () => this.router.navigate(['user/user-content']),
+                err => this.logError(err));
     }
 
     addAuthorityToSelected(authority: Authority): void {
@@ -53,8 +57,9 @@ export class UserCreateComponent {
         this.availableAuthorities.push(authority);
     }
 
-    private errorMsg(): void {
+    logError(err) {
         this.loading = false;
-        alert("Error!");
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }

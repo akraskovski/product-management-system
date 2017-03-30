@@ -33,14 +33,16 @@ export class ProductUpdateComponent implements OnInit {
 
     private fillForm(): void {
         this.productService.loadById(api.PRODUCT, this.route.snapshot.params['id'])
-            .subscribe(product => {
-                this.product = product;
-                this.productForm.setValue({
-                    name: this.product.name,
-                    cost: this.product.cost,
-                    type: this.product.type
-                });
-            });
+            .subscribe(
+                product => {
+                    this.product = product;
+                    this.productForm.setValue({
+                        name: this.product.name,
+                        cost: this.product.cost,
+                        type: this.product.type
+                    });
+                },
+                err => this.logError(err));
     }
 
     onSubmit() {
@@ -49,11 +51,14 @@ export class ProductUpdateComponent implements OnInit {
         this.product.cost = this.productForm.value.cost;
         this.product.type = this.productForm.value.type;
         this.productService.update(api.PRODUCT, this.product)
-            .subscribe(result => result ? this.router.navigate(['product/product-content']) : this.errorMsg);
+            .subscribe(
+                () => this.router.navigate(['product/product-content']),
+                err => this.logError(err));
     }
 
-    private errorMsg(): void {
+    logError(err) {
         this.loading = false;
-        alert("Error while updating product!");
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }
