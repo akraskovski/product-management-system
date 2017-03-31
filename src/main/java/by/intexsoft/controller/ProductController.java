@@ -5,12 +5,17 @@ import by.intexsoft.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller for the {@link ProductService}
+ */
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -34,7 +39,7 @@ public class ProductController {
         LOGGER.info("Start loadAllProducts");
         try {
             return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
-        } catch (NullPointerException e) {
+        } catch (DataAccessException e) {
             LOGGER.error("Exception in loadAllProducts. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -49,9 +54,11 @@ public class ProductController {
     public ResponseEntity<?> loadProductById(@PathVariable("id") Integer id) {
         LOGGER.info("Start loadProductById: " + id);
         try {
-            return new ResponseEntity<>(productService.find(id), HttpStatus.OK);
-        } catch (NullPointerException e) {
-            LOGGER.error("Exception in loadProductById. " + e.getLocalizedMessage());
+            Product product = productService.find(id);
+            Assert.notNull(product, "Unable to find product with id: " + id);
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error(e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -65,9 +72,11 @@ public class ProductController {
     public ResponseEntity<?> loadProductsByName(@PathVariable("name") String name) {
         LOGGER.info("Start loadProductByName: " + name);
         try {
-            return new ResponseEntity<>(productService.findByName(name), HttpStatus.OK);
-        } catch (NullPointerException e) {
-            LOGGER.error("Exception in loadProductByName. " + e.getLocalizedMessage());
+            List<Product> product = productService.findByName(name);
+            Assert.notNull(product, "Unable to find product with name: " + name);
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error(e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -82,7 +91,7 @@ public class ProductController {
         LOGGER.info("Start createProduct");
         try {
             return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             LOGGER.info("Error in createProduct. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -98,7 +107,7 @@ public class ProductController {
         LOGGER.info("start updateProduct");
         try {
             return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             LOGGER.info("Error in updateProduct. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -115,7 +124,7 @@ public class ProductController {
         try {
             productService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             LOGGER.info("Error in deleteProduct. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

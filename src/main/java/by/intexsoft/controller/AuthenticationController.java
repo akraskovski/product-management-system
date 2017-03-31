@@ -42,7 +42,7 @@ public class AuthenticationController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> authenticate(@RequestBody User requestUser) {
-        LOGGER.info("Start authentication");
+        LOGGER.info("Start authentication user with username: " + requestUser.username);
         if (isNotEmpty(requestUser.username) && isNotEmpty(requestUser.password)) {
             User user = userService.findByUsername(requestUser.username);
             String token = tokenService.generate(user, requestUser.password);
