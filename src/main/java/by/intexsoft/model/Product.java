@@ -2,7 +2,9 @@ package by.intexsoft.model;
 
 import by.intexsoft.model.base.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Description database table "user"

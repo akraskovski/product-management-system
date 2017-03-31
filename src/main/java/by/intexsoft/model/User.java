@@ -1,10 +1,8 @@
 package by.intexsoft.model;
 
 import by.intexsoft.model.base.BaseEntity;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 /**

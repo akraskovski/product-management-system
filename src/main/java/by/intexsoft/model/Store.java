@@ -32,6 +32,6 @@ public class Store extends BaseEntity {
             name = "stock_store",
             joinColumns = {@JoinColumn(name = "store_id")},
             inverseJoinColumns = {@JoinColumn(name = "stock_id")}
-            )
+    )
     public List<Stock> stockList;
 }

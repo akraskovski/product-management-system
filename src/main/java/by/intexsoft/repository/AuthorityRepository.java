@@ -10,10 +10,4 @@ import java.util.List;
  */
 public interface AuthorityRepository extends JpaRepository<Authority,Integer> {
 
-    /**
-     * find {@link Authority} from database by name
-     * @param name of role
-     * @return {@link Authority}
-     */
-    List<Authority> findByName(String name);
 }

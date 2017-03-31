@@ -12,7 +12,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-public class AuthenticationTokenFilter extends GenericFilterBean{
+/**
+ * Main validation filter
+ */
+public class AuthenticationTokenFilter extends GenericFilterBean {
 
     private final TokenAuthenticationService authenticationService;
 
@@ -20,6 +23,14 @@ public class AuthenticationTokenFilter extends GenericFilterBean{
         this.authenticationService = authenticationService;
     }
 
+    /**
+     * Validating income user with token
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {

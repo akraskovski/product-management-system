@@ -1,12 +1,19 @@
 package by.intexsoft.security.service;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Interface for authentication token
+ */
 public interface TokenAuthenticationService {
 
+    /**
+     * Authenticate method
+     * Working with security
+     * @param request
+     * @return user authentication
+     */
     Authentication authenticate(HttpServletRequest request);
 }
