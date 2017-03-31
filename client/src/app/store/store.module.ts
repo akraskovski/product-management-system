@@ -10,6 +10,7 @@ import {StoreContentComponent} from "./content/store-content.component";
 import {StoreCreateComponent} from "./create/store-create.component";
 import {StoreUpdateComponent} from "./update/store-update.component";
 import {StoreRoutingModule} from "./store-routing.module";
+import {StoreDetailsComponent} from "./details/store-details.component";
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import {StoreRoutingModule} from "./store-routing.module";
         StoreComponent,
         StoreContentComponent,
         StoreCreateComponent,
-        StoreUpdateComponent
+        StoreUpdateComponent,
+        StoreDetailsComponent
     ],
     providers: [
         CommonService

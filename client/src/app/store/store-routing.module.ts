@@ -5,18 +5,15 @@ import {SecurityService} from "../security/security.service";
 import {StoreContentComponent} from "./content/store-content.component";
 import {StoreCreateComponent} from "./create/store-create.component";
 import {StoreUpdateComponent} from "./update/store-update.component";
+import {StoreDetailsComponent} from "./details/store-details.component";
 
 export const routes: Routes = [
     {
-        path: 'store', component: StoreComponent, canActivate: [SecurityService], data: {
-        roles: ['ROLE_ADMIN', 'ROLE_STORE_MANAGER']
-    },
+        path: 'store', component: StoreComponent,
         children: [
             {
                 path: 'store-content',
-                component: StoreContentComponent,
-                canActivate: [SecurityService],
-                data: {roles: ['ROLE_ADMIN', "ROLE_STORE_MANAGER"]}
+                component: StoreContentComponent
             },
             {
                 path: 'store-create',
@@ -29,6 +26,10 @@ export const routes: Routes = [
                 component: StoreUpdateComponent,
                 canActivate: [SecurityService],
                 data: {roles: ['ROLE_ADMIN', "ROLE_STORE_MANAGER"]}
+            },
+            {
+                path: 'store-details/:id',
+                component: StoreDetailsComponent
             }
         ]
     }
@@ -38,5 +39,5 @@ export const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class StoreRoutingModule{
+export class StoreRoutingModule {
 }
