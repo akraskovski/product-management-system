@@ -38,6 +38,10 @@ export class StoreContentComponent extends AuthorityWorker {
         identifier && this.router.navigate(['store/store-update', identifier]);
     }
 
+    onDetails(identifier: number): void {
+        identifier && this.router.navigate(['store/store-details', identifier]);
+    }
+
     logError(err) {
         console.error('There was an error: ' + err);
         this.router.navigate(['/']);
