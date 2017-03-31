@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
-import "rxjs/add/operator/toPromise";
 import {AuthorityWorker} from "./authority-worker";
 import {Observable} from "rxjs";
 
@@ -56,17 +55,29 @@ export class CommonService {
 
     create(URL: string, body: any): Observable<any> {
         return this.http.post(URL, body, this.generateOptions())
-            .map((response: Response) => response.status === 201)
+            .map((response: Response) => {
+                if (response.status != 201) {
+                    throw new Error('Exception: ' + response.status);
+                }
+            })
     }
 
     update(URL: string, body: any): Observable<any> {
         return this.http.put(URL, body, this.generateOptions())
-            .map((response: Response) => response.status === 200)
+            .map((response: Response) => {
+                if (response.status != 200) {
+                    throw new Error('Exception: ' + response.status);
+                }
+            })
     }
 
     remove(URL: string, identifier: number): Observable<any> {
         return this.http.delete(URL + "/" + identifier, this.generateOptions())
-            .map((response) => response.status === 200)
+            .map((response) => {
+                if (response.status != 200) {
+                    throw new Error('Exception: ' + response.status);
+                }
+            })
     }
 
     private generateOptions(): RequestOptions {

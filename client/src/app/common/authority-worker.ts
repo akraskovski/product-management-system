@@ -7,19 +7,19 @@ export class AuthorityWorker {
         return JSON.parse(localStorage.getItem(keys.USER_KEY));
     }
 
-    public  canWorkWithUser():boolean {
+    public canWorkWithUser():boolean {
         return SecurityService.hasAuthority("ROLE_ADMIN");
     }
 
-    public  canWorkWithProduct(): boolean {
+    public canWorkWithProduct(): boolean {
         return SecurityService.hasAuthority("ROLE_ADMIN");
     }
 
-    public  canWorkWithStock(): boolean {
+    public canWorkWithStock(): boolean {
         return SecurityService.hasAuthority("ROLE_ADMIN") || SecurityService.hasAuthority("ROLE_STOCK_MANAGER");
     }
 
-    public  canWorkWithStore(): boolean {
+    public canWorkWithStore(): boolean {
         return SecurityService.hasAuthority("ROLE_ADMIN") || SecurityService.hasAuthority("ROLE_STORE_MANAGER");
     }
 

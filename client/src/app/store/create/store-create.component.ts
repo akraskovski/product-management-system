@@ -25,7 +25,9 @@ export class StoreCreateComponent {
 
     private loadStocks(): void {
         this.storeService.loadAll(api.STOCK)
-            .subscribe(stockList => this.availableStocks = stockList);
+            .subscribe(
+                stockList => this.availableStocks = stockList,
+                err => this.logError(err));
     }
 
     private createEmptyForm(): void {
@@ -38,7 +40,10 @@ export class StoreCreateComponent {
         this.loading = true;
         const store: Store = new Store(this.storeForm.value.name, this.selectedStocks);
         this.storeService.create(api.STORE, store)
-            .subscribe(result => result ? this.router.navigate(['store/store-content']) : this.errorMsg);
+            .subscribe(
+                () => this.router.navigate(['store/store-content']),
+                err => this.logError(err)
+            );
     }
 
     addStockToSelected(stock: Stock): void {
@@ -51,8 +56,9 @@ export class StoreCreateComponent {
         this.availableStocks.push(stock);
     }
 
-    private errorMsg(): void {
+    logError(err) {
         this.loading = false;
-        alert("Error while creating new stock!");
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }

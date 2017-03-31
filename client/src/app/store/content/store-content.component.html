@@ -1,23 +1,16 @@
-<h2>All entites from database</h2>
+<h3>Shops List</h3>
 <div class="panel">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Stocks</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let store of storeList">
-            <td>{{store.id}}</td>
-            <td>{{store.name}}</td>
-            <td *ngFor="let stock of store.stockList">{{stock.id}}.{{stock.specialize}}</td>
-            <td>
+    <div class="row">
+        <div class="col-sm-4" *ngFor="let store of storeList">
+            <div class="panel panel-primary">
+                <div class="panel-heading">{{store.name}}</div>
+                <div class="panel-body"><img src="../images/no-image.png" class="img-responsive"
+                                             style="width:100%" alt="Image"></div>
                 <button *ngIf="canWorkWithStore()" (click)="onEdit(store.id)">Edit</button>
                 <button *ngIf="canWorkWithStore()" (click)="onDelete(store.id)">Delete</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+                <button (click)="onDetails(store.id)">More info</button>
+                <div class="panel-footer">{{store.details}}</div>
+            </div>
+        </div>
+    </div>
+</div><br>

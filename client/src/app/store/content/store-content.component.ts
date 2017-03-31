@@ -22,16 +22,24 @@ export class StoreContentComponent extends AuthorityWorker {
 
     private loadData() {
         this.storeService.loadAll(api.STORE)
-            .subscribe(storeList => this.storeList = storeList);
+            .subscribe(
+                storeList => this.storeList = storeList,
+                err => this.logError(err));
     }
 
     onDelete(identifier: number): void {
         this.storeService.remove(api.STORE, identifier)
-            .subscribe(result => result ? this.loadData() : alert("Error!"),
-                error => alert(error));
+            .subscribe(
+                () => this.loadData(),
+                err => this.logError(err));
     }
 
     onEdit(identifier: number): void {
         identifier && this.router.navigate(['store/store-update', identifier]);
+    }
+
+    logError(err) {
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }

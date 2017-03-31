@@ -33,19 +33,23 @@ export class StoreUpdateComponent {
 
     private fillForm(): void {
         this.storeService.loadById(api.STORE, this.route.snapshot.params['id'])
-            .subscribe(store => {
-                this.store = store;
-                this.selectedStocks = this.store.stockList;
-                this.loadStocks();
-                this.storeForm.setValue({
-                    name: this.store.name
-                });
-            });
+            .subscribe(
+                store => {
+                    this.store = store;
+                    this.selectedStocks = this.store.stockList;
+                    this.loadStocks();
+                    this.storeForm.setValue({
+                        name: this.store.name
+                    });
+                },
+                err => this.logError(err));
     }
 
     private loadStocks(): void {
         this.storeService.loadAll(api.STOCK)
-            .subscribe(stockList => this.availableStocks = CommonFunctions.cleanAvailableItems(stockList, this.selectedStocks))
+            .subscribe(
+                stockList => this.availableStocks = CommonFunctions.cleanAvailableItems(stockList, this.selectedStocks),
+                err => this.logError(err))
     }
 
     onSubmit(): void {
@@ -53,7 +57,9 @@ export class StoreUpdateComponent {
         this.store.name = this.storeForm.value.name;
         this.store.stockList = this.selectedStocks;
         this.storeService.update(api.STORE, this.store)
-            .subscribe(result => result ? this.router.navigate(['store/store-content']) : this.errorMsg);
+            .subscribe(
+                () => this.router.navigate(['store/store-content']),
+                err => this.logError(err));
     }
 
     addStockToSelected(stock: Stock): void {
@@ -66,8 +72,9 @@ export class StoreUpdateComponent {
         this.availableStocks.push(stock);
     }
 
-    private errorMsg(): void {
+    private logError(err) {
         this.loading = false;
-        alert("Error!");
+        console.error('There was an error: ' + err);
+        this.router.navigate(['/']);
     }
 }

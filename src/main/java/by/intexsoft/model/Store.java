@@ -20,6 +20,9 @@ public class Store extends BaseEntity {
     @Column(unique = true, nullable = false)
     public String name;
 
+    @Column
+    public String details;
+
     /**
      * ManyToMany relation to {@link Stock} entities
      */
