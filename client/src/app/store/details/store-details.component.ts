@@ -18,7 +18,7 @@ export class StoreDetailsComponent implements OnInit {
     }
 
     private loadData() {
-        this.storeService.loadById(api.STORE, this.route.snapshot.params['id'])
+        this.storeService.loadByIdUnauthorized(api.STORE, this.route.snapshot.params['id'])
             .subscribe(
                 store => this.selectedStore = store,
                 err => this.logError(err));

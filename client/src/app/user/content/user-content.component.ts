@@ -31,7 +31,7 @@ export class UserContentComponent extends AuthorityWorker implements OnInit {
     onDelete(identifier: number): void {
         this.userService.remove(api.USER, identifier)
             .subscribe(
-                result => result ? this.loadData() : alert("Error!"),
+                () => this.loadData(),
                 err => this.logError(err));
     }
 

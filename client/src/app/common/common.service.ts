@@ -42,6 +42,17 @@ export class CommonService {
             })
     }
 
+    loadByIdUnauthorized(URL: string, identifier: number): Observable<any> {
+        return this.http.get(URL + "/" + identifier)
+            .map((response: Response) => {
+                if(response.status != 200) {
+                    throw new Error('Entity not found! code status: ' + response.status);
+                } else {
+                    return response.json();
+                }
+            })
+    }
+
     loadByName(URL: string, name: string): Observable<any> {
         return this.http.get(URL + "/name/" + name, this.generateOptions())
             .map((response: Response) => {

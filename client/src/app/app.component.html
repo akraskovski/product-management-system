@@ -9,9 +9,10 @@
                 <li class="nav-item"><a class="nav-link" routerLink="/"><span
                         class="glyphicon glyphicon-home"></span>Home</a></li>
                 <li class="nav-item" *ngIf="canWorkWithUser()"><a class="nav-link" routerLink="/user">User</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/product">Product</a></li>
+                <li class="nav-item" *ngIf="canWorkWithProduct()"><a class="nav-link" routerLink="/product">Product</a>
+                </li>
                 <li class="nav-item" *ngIf="canWorkWithStock()"><a class="nav-link" routerLink="/stock">Stock</a></li>
-                <li class="nav-item" *ngIf="canWorkWithStore()"><a class="nav-link" routerLink="/store">Store</a></li>
+                <li class="nav-item"><a class="nav-link" routerLink="/store">Store</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item" *ngIf="!isLoggedIn()">
