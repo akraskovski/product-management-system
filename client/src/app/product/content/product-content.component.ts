@@ -21,7 +21,7 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
     }
 
     private loadData() {
-        this.productService.loadAllUnauthorized(api.PRODUCT)
+        this.productService.loadAll(api.PRODUCT)
             .subscribe(
                 productList => this.productList = productList,
                 err => this.logError(err));
@@ -30,8 +30,8 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
     onDelete(identifier: number): void {
         this.productService.remove(api.PRODUCT, identifier)
             .subscribe(
-                result => result ? this.loadData() : alert("Error!"),
-                error => alert(error));
+                () => this.loadData(),
+                err => this.logError(err));
     }
 
     onEdit(identifier: number): void {

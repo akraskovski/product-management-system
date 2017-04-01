@@ -21,7 +21,7 @@ export class StoreContentComponent extends AuthorityWorker {
     }
 
     private loadData() {
-        this.storeService.loadAll(api.STORE)
+        this.storeService.loadAllUnauthorized(api.STORE)
             .subscribe(
                 storeList => this.storeList = storeList,
                 err => this.logError(err));
