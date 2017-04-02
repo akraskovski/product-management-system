@@ -37,12 +37,24 @@ war.dependsOn 'client:npm_run_build'
 
 war {
     from "client/dist"
+    archiveName = 'pms.war'
 }
 
+def dbProperties
+
+task loadDbProperties() {
+    file(System.getenv('CATALINA_HOME') + "/conf/pms/pms.properties").withReader { reader ->
+        dbProperties = new Properties()
+        dbProperties.load(reader)
+    }
+}
+
+compileJava.dependsOn loadDbProperties
+
 flyway {
-    url = 'jdbc:postgresql://localhost:5432/postgres'
-    user = 'postgres'
-    password = 'root'
-    schemas = ['products']
+    url = dbProperties.get('db.url')
+    user = dbProperties.get('db.username')
+    password = dbProperties.get('db.password')
+    schemas = [dbProperties.get('db.schema')]
 }
 
