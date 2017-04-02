@@ -22,8 +22,4 @@ export class AuthorityWorker {
     public canWorkWithStore(): boolean {
         return SecurityService.hasAuthority("ROLE_ADMIN") || SecurityService.hasAuthority("ROLE_STORE_MANAGER");
     }
-
-    public isLoggedIn(): boolean {
-        return AuthorityWorker.getCurrentUser()
-    }
 }
