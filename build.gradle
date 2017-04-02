@@ -1,3 +1,7 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'org.flywaydb.flyway'
+
 buildscript {
     repositories {
         mavenCentral()
@@ -6,10 +10,6 @@ buildscript {
         classpath 'org.flywaydb:flyway-gradle-plugin:4.1.2'
     }
 }
-
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'org.flywaydb.flyway'
 
 repositories {
     mavenCentral()
@@ -44,6 +44,5 @@ flyway {
     user = 'postgres'
     password = 'root'
     schemas = ['products']
-    baselineOnMigrate = true
 }
 
