@@ -5,7 +5,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li><a routerLink="store-content" routerLinkActive="active"><span
                         class="glyphicon glyphicon-th-list"></span> Store list</a></li>
-                <li><a routerLink="store-create" routerLinkActive="active"><span
+                <li><a *ngIf="canWorkWithStore()" routerLink="store-create" routerLinkActive="active"><span
                         class="glyphicon glyphicon-plus-sign"></span> Create store</a></li>
             </ul>
         </div>

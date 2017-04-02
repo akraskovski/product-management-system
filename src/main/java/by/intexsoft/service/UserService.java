@@ -15,6 +15,7 @@ public interface UserService {
 
     /**
      * Find {@link User} in database by identifier
+     *
      * @param id
      * @return {@link User}
      */
@@ -22,26 +23,29 @@ public interface UserService {
 
     /**
      * Find one first user by username
+     *
      * @return copy of {@link User}
      */
     User findByUsername(String username);
 
     /**
      * Find all {@link User}s in database
+     *
      * @return list of {@link User} from database
      */
     List<User> findAll();
 
     /**
      * Update information about {@link User} in database
-     * @param object
-     * object - user model
+     *
+     * @param object object - user model
      * @return {@link User} with changed data
      */
     User update(User object);
 
     /**
      * Delete {@link User} from database by identifier
+     *
      * @param id
      */
     void delete(Integer id);
