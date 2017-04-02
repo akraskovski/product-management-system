@@ -19,7 +19,7 @@
 
     <context:property-placeholder ignore-unresolvable="true" location="classpath:application.properties"/>
 
-    <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="flyway">
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
@@ -43,5 +43,14 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="emf"/>
         <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="flyway" init-method="migrate" class="org.flywaydb.core.Flyway">
+        <property name="schemas">
+            <list>
+                <value>products</value>
+            </list>
+        </property>
+        <property name="dataSource" ref="dataSource" />
     </bean>
 </beans>

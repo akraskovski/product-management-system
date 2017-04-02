@@ -1,5 +1,15 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.flywaydb:flyway-gradle-plugin:4.1.2'
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'org.flywaydb.flyway'
 
 repositories {
     mavenCentral()
@@ -20,6 +30,7 @@ dependencies {
     compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'io.jsonwebtoken:jjwt:0.7.0'
     compile 'org.apache.commons:commons-lang3:3.5'
+    compile "org.flywaydb:flyway-core:4.1.2"
 }
 
 war.dependsOn 'client:npm_run_build'
@@ -27,3 +38,12 @@ war.dependsOn 'client:npm_run_build'
 war {
     from "client/dist"
 }
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5432/postgres'
+    user = 'postgres'
+    password = 'root'
+    schemas = ['products']
+    baselineOnMigrate = true
+}
+
