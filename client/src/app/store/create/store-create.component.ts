@@ -5,6 +5,7 @@ import {CommonService} from "../../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {Store} from "../../model/store";
+
 @Component({
     selector: 'store-create-component',
     templateUrl: './store-create.component.html'

@@ -5,7 +5,8 @@
   "scripts": {
     "clean": "rimraf node_modules dist && npm cache clean",
     "build": "rimraf dist && webpack --progress --profile --bail",
-    "server": "webpack-dev-server --inline --progress --port 3000"
+    "server": "webpack-dev-server --inline --progress --port 3000",
+    "protractor": "protractor"
   },
   "dependencies": {
     "@angular/common": "4.0.1",
@@ -24,8 +25,8 @@
   },
   "devDependencies": {
     "@types/node": "^6.0.38",
-    "@types/jasmine": "2.5.41",
-    "@types/selenium-webdriver": "2.53.39",
+    "@types/jasmine": "^2.5.47",
+    "@types/selenium-webdriver": "~2.53.40",
     "@types/lodash": "^4.14.61",
     "angular2-template-loader": "^0.6.0",
     "awesome-typescript-loader": "^3.0.0-beta.17",
@@ -38,6 +39,9 @@
     "typescript": "2.0.10",
     "url-loader": "^0.5.6",
     "webpack": "2.2.1",
-    "webpack-dev-server": "2.3.0"
+    "webpack-dev-server": "2.3.0",
+    "jasmine-core": "^2.5.2",
+    "jasmine-spec-reporter": "^3.2.0",
+    "protractor": "^5.1.1"
   }
 }
