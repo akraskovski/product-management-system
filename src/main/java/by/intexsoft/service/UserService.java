@@ -49,4 +49,9 @@ public interface UserService {
      * @param id
      */
     void delete(Integer id);
+
+    /**
+     * Delete all {@link User}s from database
+     */
+    void deleteAll();
 }

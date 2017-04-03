@@ -30,17 +30,18 @@ public class ProductServiceTest {
         productService.create(product);
     }
 
-    @After
-    public void testDelete() {
-        productService.delete(product.id);
-    }
     @Test
-    public void testForNullRepository() {
+    public void testForNullService() {
         assertNotNull(productService);
     }
 
     @Test
     public void testFindAll() {
         assertNotNull(productService.findAll());
+    }
+
+    @After
+    public void testDelete() {
+        productService.delete(product.id);
     }
 }
