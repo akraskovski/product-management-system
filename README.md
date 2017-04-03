@@ -36,11 +36,25 @@ Building project
 ================
 1. Download or clone project from this repository.
 
-2. In the console, go to the folder with the project and run the command `gradle clean build`(you must have installed npm)
+2. Copy `conf/pms/pms.properties` to `$CATALINA_HOME`
 
-3. Copy file `SpringRestHibernateJpa.war` from folder /build/libs/ to Tomcat's /webapps/
+3. Create schema with random name. As default: `pms`
 
-4. Import `classpath:db/migrate/dump.sql` to your database with schema *product*.
+4. Change(if needed) in `pms.properties` database properties, exactly:
+ - URL and port to your database
+ - username
+ - password
+ - current schema
+
+5. In console, go to the folder with the root of the project and run the command `gradle clean war`(you must have installed npm)
+
+6. Copy file `pms.war` from folder /build/libs/ to `$CATALINA_HOME`/webapps/
+
+Tests
+=====
+To run server tests use command: `gradle test`
+
+To run client tests use command: *will be soon*
 
 Debug
 =====
