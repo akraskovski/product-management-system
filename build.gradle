@@ -31,6 +31,9 @@ dependencies {
     compile 'io.jsonwebtoken:jjwt:0.7.0'
     compile 'org.apache.commons:commons-lang3:3.5'
     compile "org.flywaydb:flyway-core:4.1.2"
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.springframework:spring-test:4.3.6.RELEASE'
 }
 
 war.dependsOn 'client:npm_run_build'
@@ -57,4 +60,3 @@ flyway {
     password = dbProperties.get('db.password')
     schemas = [dbProperties.get('db.schema')]
 }
-
