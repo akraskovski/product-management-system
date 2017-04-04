@@ -5,6 +5,8 @@ import {CommonService} from "../../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {Store} from "../../model/store";
+import {Http} from "@angular/http";
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'store-create-component',
@@ -16,12 +18,28 @@ export class StoreCreateComponent {
     selectedStocks: Stock[] = [];
     loading = false;
 
-    constructor(private storeService: CommonService, private router: Router) {
+    constructor(private storeService: CommonService, private router: Router, private http: Http) {
     }
 
     ngOnInit(): void {
         this.loadStocks();
         this.createEmptyForm();
+    }
+
+    fileChange(event) {
+        let fileList: FileList = event.target.files;
+        if(fileList.length > 0) {
+            let file: File = fileList[0];
+            let formData:FormData = new FormData();
+            formData.append('file', file);
+            this.http.post(api.IMAGE_UPLOAD, formData)
+                .map(res => res.json())
+                .catch(error => Observable.throw(error))
+                .subscribe(
+                    () => console.log('success'),
+                    error => console.log(error)
+                )
+        }
     }
 
     private loadStocks(): void {

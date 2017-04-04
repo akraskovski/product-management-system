@@ -12,4 +12,5 @@
     <context:component-scan base-package="by.intexsoft.controller"/>
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 </beans>

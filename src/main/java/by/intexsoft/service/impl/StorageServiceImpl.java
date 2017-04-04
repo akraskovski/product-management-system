@@ -24,17 +24,13 @@ import java.util.stream.Collectors;
 @Service
 public class StorageServiceImpl implements StorageService {
 
-    private final Path storeLocation;
+    private Path storeLocation;
     private static final Logger LOGGER = LoggerFactory.getLogger(StorageServiceImpl.class);
-
-    @Autowired
-    public StorageServiceImpl() {
-        this.storeLocation = Paths.get("D:/test/");
-    }
 
     @PostConstruct
     public void init() {
         try {
+            storeLocation = Paths.get("classpath:/images/");
             Files.createDirectory(storeLocation);
         } catch (IOException e) {
             LOGGER.error("Storage initialisation, file already exists:", e.getMessage());
@@ -47,14 +43,15 @@ public class StorageServiceImpl implements StorageService {
         try {
             if (file.isEmpty()) {
                 LOGGER.error("Failed to store empty file " + file.getOriginalFilename());
+                return null;
             }
             Files.copy(file.getInputStream(), storeLocation.resolve(id));
             return id;
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e.getCause(), "storage.filesystem.file.storeFail",
                     new Object[]{file.getOriginalFilename()});
+            return null;
         }
-        return null;
     }
 
     @Override
