@@ -4,8 +4,10 @@
         <div class="col-sm-4" *ngFor="let store of storeList">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">{{store.name}}</div>
-                <div class="panel-body"><img src="../images/no-image.png" class="img-responsive"
-                                             style="width:100%" alt="Image"></div>
+                <div class="panel-body">
+                    <img src="{{store.logo}}" class="img-responsive"
+                         style="width:100%" alt="Image">
+                </div>
                 <button *ngIf="canWorkWithStore()" (click)="onEdit(store.id)">Edit</button>
                 <button *ngIf="canWorkWithStore()" (click)="onDelete(store.id)">Delete</button>
                 <button (click)="onDetails(store.id)">More info</button>
@@ -13,4 +15,5 @@
             </div>
         </div>
     </div>
-</div><br>
+</div>
+<br/>

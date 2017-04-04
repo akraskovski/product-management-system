@@ -23,6 +23,9 @@ public class Store extends BaseEntity {
     @Column
     public String details;
 
+    @Column
+    public String logo;
+
     /**
      * ManyToMany relation to {@link Stock} entities
      */

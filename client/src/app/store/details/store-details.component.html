@@ -4,10 +4,7 @@
         <h3 class="sub-header">Store warehouses</h3>
         <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder" *ngFor="let stock of selectedStore.stockList">
-                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                     width="200"
-                     height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                <h4>Identifier: {{stock.id}}</h4>
+                <img src="{{selectedStore.logo}}" class="img-responsive" alt="Store logo">
                 <span class="text-muted">Specialize: {{stock.specialize}}</span>
             </div>
         </div>
