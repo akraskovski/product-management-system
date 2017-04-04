@@ -9,7 +9,7 @@
 }
 .navbar-nav li a:hover, .navbar-nav li.active a {
     color: #02020b !important;
-    background-color: #ededed !important;
+    background-color: #e4e4e4 !important;
 }
 .navbar-default .navbar-toggle {
     border-color: transparent;

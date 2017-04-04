@@ -11,7 +11,7 @@ Server side technologies stack:
 - Hibernate
 - JPA
 
-Client: Angular 2.
+Client: Angular 4.
 
 Build tools: 
 - Gradle
