@@ -18,7 +18,7 @@
                 <li *ngIf="!isLoggedIn()">
                     <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
                 </li>
-                <p *ngIf="welcomeName" class="navbar-text">You logged as, <b>{{welcomeName}}</b></p>
+                <p *ngIf="welcomeName" class="navbar-text">You logged as <b>{{welcomeName}}</b></p>
                 <li *ngIf="isLoggedIn()">
                     <a (click)="logout()">Logout</a>
                 </li>

@@ -11,7 +11,6 @@ import {StoreCreateComponent} from "./create/store-create.component";
 import {StoreUpdateComponent} from "./update/store-update.component";
 import {StoreRoutingModule} from "./store-routing.module";
 import {StoreDetailsComponent} from "./details/store-details.component";
-import {ImageService} from "../image/image.service";
 
 @NgModule({
     imports: [
@@ -32,7 +31,6 @@ import {ImageService} from "../image/image.service";
     ],
     providers: [
         CommonService,
-        ImageService
     ]
 })
 export class StoreModule {

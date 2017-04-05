@@ -1,6 +1,5 @@
 <div>
     <h3>Create store form</h3>
-    <input type="file" (change)="fileChange($event)" placeholder="Upload file">
     <form name="form" novalidate [formGroup]="storeForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Name</label>

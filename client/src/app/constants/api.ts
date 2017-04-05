@@ -4,6 +4,5 @@ export const api = {
     AUTHORITY: '/authority',
     PRODUCT: '/product',
     STOCK: '/stock',
-    STORE: '/store',
-    IMAGE_UPLOAD: '/image/upload'
+    STORE: '/store'
 };

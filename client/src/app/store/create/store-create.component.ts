@@ -5,7 +5,6 @@ import {CommonService} from "../../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {Store} from "../../model/store";
-import {ImageService} from "../../image/image.service";
 
 @Component({
     selector: 'store-create-component',
@@ -18,26 +17,13 @@ export class StoreCreateComponent {
     store: Store;
     loading = false;
 
-    constructor(private storeService: CommonService, private imageService: ImageService, private router: Router) {
+    constructor(private storeService: CommonService, private router: Router) {
     }
 
     ngOnInit(): void {
         this.loadStocks();
         this.createEmptyForm();
         this.store = new Store();
-    }
-
-    fileChange(event) {
-        let fileList: FileList = event.target.files;
-        if (fileList.length > 0) {
-            let file: File = fileList[0];
-            let formData: FormData = new FormData();
-            formData.append('file', file);
-            this.imageService.upload(formData)
-                .subscribe(
-                    id => this.store.logoId = id,
-                    error => console.log(error));
-        }
     }
 
     private loadStocks(): void {
@@ -56,7 +42,7 @@ export class StoreCreateComponent {
     onSubmit() {
         this.loading = true;
         this.store.name = this.storeForm.value.name;
-        this.store.stockList = this.storeForm.value.selectedStocks;
+        this.store.stockList = this.selectedStocks;
         this.storeService.create(api.STORE, this.store)
             .subscribe(
                 () => this.router.navigate(['store/store-content']),
