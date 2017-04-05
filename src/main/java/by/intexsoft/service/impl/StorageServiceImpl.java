@@ -30,7 +30,7 @@ public class StorageServiceImpl implements StorageService {
     @PostConstruct
     public void init() {
         try {
-            storeLocation = Paths.get("classpath:/images/");
+            storeLocation = Paths.get("D:/test/");
             Files.createDirectory(storeLocation);
         } catch (IOException e) {
             LOGGER.error("Storage initialisation, file already exists:", e.getMessage());

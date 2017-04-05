@@ -5,8 +5,7 @@ import {CommonService} from "../../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {Store} from "../../model/store";
-import {Http} from "@angular/http";
-import {Observable} from "rxjs";
+import {ImageService} from "../../image/image.service";
 
 @Component({
     selector: 'store-create-component',
@@ -16,29 +15,28 @@ export class StoreCreateComponent {
     storeForm: FormGroup;
     availableStocks: Stock[] = [];
     selectedStocks: Stock[] = [];
+    store: Store;
     loading = false;
 
-    constructor(private storeService: CommonService, private router: Router, private http: Http) {
+    constructor(private storeService: CommonService, private imageService: ImageService, private router: Router) {
     }
 
     ngOnInit(): void {
         this.loadStocks();
         this.createEmptyForm();
+        this.store = new Store();
     }
 
     fileChange(event) {
         let fileList: FileList = event.target.files;
-        if(fileList.length > 0) {
+        if (fileList.length > 0) {
             let file: File = fileList[0];
-            let formData:FormData = new FormData();
+            let formData: FormData = new FormData();
             formData.append('file', file);
-            this.http.post(api.IMAGE_UPLOAD, formData)
-                .map(res => res.json())
-                .catch(error => Observable.throw(error))
+            this.imageService.upload(formData)
                 .subscribe(
-                    () => console.log('success'),
-                    error => console.log(error)
-                )
+                    id => this.store.logoId = id,
+                    error => console.log(error));
         }
     }
 
@@ -57,8 +55,9 @@ export class StoreCreateComponent {
 
     onSubmit() {
         this.loading = true;
-        const store: Store = new Store(this.storeForm.value.name, this.selectedStocks);
-        this.storeService.create(api.STORE, store)
+        this.store.name = this.storeForm.value.name;
+        this.store.stockList = this.storeForm.value.selectedStocks;
+        this.storeService.create(api.STORE, this.store)
             .subscribe(
                 () => this.router.navigate(['store/store-content']),
                 err => this.logError(err)
