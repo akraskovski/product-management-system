@@ -1,29 +1,22 @@
-<div class="container" style="min-height: 1400px">
-    <h2 class="header" align="center" style="font-family: Montserrat">Product Management System</h2>
-    <div align="center">
-        <img class="img-thumbnail" alt="Product Management System" style="width: 100%" src="../images/header.jpg"/>
-    </div>
+<div class="container" style="min-height: 1400px; background: #fff">
+    <h2 class="page-header" align="center" style="font-family: Montserrat">Product Management System</h2>
     <nav class="navbar navbar-default">
-        <div>
-            <ul class="nav navbar-nav" routerLinkActive="active">
-                <li class="nav-item"><a class="nav-link" routerLink="/"><span
-                        class="glyphicon glyphicon-home"></span>Home</a></li>
-                <li class="nav-item" *ngIf="canWorkWithUser()"><a class="nav-link" routerLink="/user">User</a></li>
-                <li class="nav-item" *ngIf="canWorkWithProduct()"><a class="nav-link" routerLink="/product">Product</a>
-                </li>
-                <li class="nav-item" *ngIf="canWorkWithStock()"><a class="nav-link" routerLink="/stock">Stock</a></li>
-                <li class="nav-item"><a class="nav-link" routerLink="/store">Store</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li *ngIf="!isLoggedIn()">
-                    <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
-                </li>
-                <p *ngIf="welcomeName" class="navbar-text">You logged as <b>{{welcomeName}}</b></p>
-                <li *ngIf="isLoggedIn()">
-                    <a (click)="logout()">Logout</a>
-                </li>
-            </ul>
-        </div>
+        <ul class="nav navbar-nav" routerLinkActive="active">
+            <li class="nav-item" *ngIf="canWorkWithUser()"><a class="nav-link" routerLink="/user">User</a></li>
+            <li class="nav-item" *ngIf="canWorkWithProduct()"><a class="nav-link" routerLink="/product">Product</a>
+            </li>
+            <li class="nav-item" *ngIf="canWorkWithStock()"><a class="nav-link" routerLink="/stock">Stock</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/store">Store</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" style="padding-right: 10px">
+            <li *ngIf="!isLoggedIn()">
+                <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+            </li>
+            <p *ngIf="welcomeName" class="navbar-text">You logged as <b>{{welcomeName}}</b></p>
+            <li *ngIf="isLoggedIn()">
+                <a (click)="logout()">Logout</a>
+            </li>
+        </ul>
     </nav>
     <router-outlet></router-outlet>
 </div>

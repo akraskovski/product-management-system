@@ -8,9 +8,15 @@ import {StockUpdateComponent} from "./update/stock-update.component";
 
 export const routes: Routes = [
     {
-        path: 'stock', component: StockComponent, canActivate: [SecurityService], data: {
-        roles: ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER']
+        path: 'stock', redirectTo: 'stock/stock-content', pathMatch: 'full'
     },
+    {
+        path: 'stock',
+        component: StockComponent,
+        canActivate: [SecurityService],
+        data: {
+            roles: ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER']
+        },
         children: [
             {
                 path: 'stock-content',
@@ -38,5 +44,5 @@ export const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class StockRoutingModule{
+export class StockRoutingModule {
 }

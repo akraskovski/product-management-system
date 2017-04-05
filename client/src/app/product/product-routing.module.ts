@@ -9,6 +9,9 @@ import {ProductUpdateComponent} from "./update/product-update.component";
 
 export const routes: Routes = [
     {
+        path: 'product', redirectTo: 'product/product-content', pathMatch: 'full'
+    },
+    {
         path: 'product', component: ProductComponent, canActivate: [SecurityService],
         data: {roles: ['ROLE_ADMIN']},
         children: [

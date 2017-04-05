@@ -3,7 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {AuthorizationComponent} from "./authorization/authorization.component";
 
 const routes: Routes = [
-    {path: '', redirectTo: '', pathMatch: 'full'},
+    {path: '', redirectTo: 'store/store-content', pathMatch: 'full'},
     {path: 'login', component: AuthorizationComponent},
 ];
 

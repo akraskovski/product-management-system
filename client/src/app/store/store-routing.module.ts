@@ -9,6 +9,9 @@ import {StoreDetailsComponent} from "./details/store-details.component";
 
 export const routes: Routes = [
     {
+        path: 'store', redirectTo: 'store/store-content', pathMatch: 'full'
+    },
+    {
         path: 'store', component: StoreComponent,
         children: [
             {
