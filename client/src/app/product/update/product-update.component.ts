@@ -12,10 +12,11 @@ import {regex} from "../../constants/regex";
 })
 export class ProductUpdateComponent implements OnInit {
     productForm: FormGroup;
-    loading: boolean = false;
+    loading: boolean;
     product: Product;
 
     constructor(private productService: CommonService, private router: Router, private route: ActivatedRoute) {
+        this.loading = false;
     }
 
     ngOnInit(): void {
@@ -27,7 +28,8 @@ export class ProductUpdateComponent implements OnInit {
         this.productForm = new FormGroup({
             name: new FormControl('', Validators.required),
             cost: new FormControl('', [Validators.required, Validators.pattern(regex.DOUBLE)]),
-            type: new FormControl('', Validators.required)
+            type: new FormControl(''),
+            details: new FormControl('')
         });
     }
 
@@ -39,26 +41,32 @@ export class ProductUpdateComponent implements OnInit {
                     this.productForm.setValue({
                         name: this.product.name,
                         cost: this.product.cost,
-                        type: this.product.type
+                        type: this.product.type,
+                        details: this.product.details
                     });
                 },
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
     onSubmit() {
         this.loading = true;
-        this.product.name = this.productForm.value.name;
-        this.product.cost = this.productForm.value.cost;
-        this.product.type = this.productForm.value.type;
+        this.fillUpdatedProduct();
         this.productService.update(api.PRODUCT, this.product)
             .subscribe(
                 () => this.router.navigate(['product/product-content']),
                 err => this.logError(err));
     }
 
-    logError(err) {
+    private fillUpdatedProduct(): void {
+        this.product.name = this.productForm.value.name;
+        this.product.cost = this.productForm.value.cost;
+        this.product.type = this.productForm.value.type;
+        this.product.details = this.productForm.value.details;
+    }
+
+    logError(error) {
         this.loading = false;
-        console.error('There was an error: ' + err);
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

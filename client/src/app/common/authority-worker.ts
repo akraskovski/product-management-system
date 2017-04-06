@@ -1,5 +1,5 @@
-import {SecurityService} from "../security/security.service";
 import {keys} from "../constants/keys";
+import {User} from "../model/user";
 
 export class AuthorityWorker {
 
@@ -7,19 +7,29 @@ export class AuthorityWorker {
         return JSON.parse(localStorage.getItem(keys.USER_KEY));
     }
 
-    public canWorkWithUser():boolean {
-        return SecurityService.hasAuthority("ROLE_ADMIN");
+    public canWorkWithUser(): boolean {
+        return this.componentElementAccess("ROLE_ADMIN");
     }
 
     public canWorkWithProduct(): boolean {
-        return SecurityService.hasAuthority("ROLE_ADMIN");
+        return this.componentElementAccess("ROLE_ADMIN");
     }
 
     public canWorkWithStock(): boolean {
-        return SecurityService.hasAuthority("ROLE_ADMIN") || SecurityService.hasAuthority("ROLE_STOCK_MANAGER");
+        return this.componentElementAccess("ROLE_ADMIN") || this.componentElementAccess("ROLE_STOCK_MANAGER");
     }
 
     public canWorkWithStore(): boolean {
-        return SecurityService.hasAuthority("ROLE_ADMIN") || SecurityService.hasAuthority("ROLE_STORE_MANAGER");
+        return this.componentElementAccess("ROLE_ADMIN") || this.componentElementAccess("ROLE_STORE_MANAGER");
+    }
+
+    private componentElementAccess(authority: string): boolean {
+        const user: User = AuthorityWorker.getCurrentUser();
+        if (user != null)
+            for (let currentAuthority of user.authorities) {
+                if (currentAuthority.name === authority)
+                    return true;
+            }
+        return false;
     }
 }

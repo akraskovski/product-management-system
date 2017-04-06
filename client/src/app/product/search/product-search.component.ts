@@ -25,18 +25,18 @@ export class ProductSearchComponent extends AuthorityWorker {
             );
     }
 
-    onDelete(identifier: number): void {
-        this.productService.remove(api.PRODUCT, identifier)
+    onDelete(id: number): void {
+        this.productService.remove(api.PRODUCT, id)
             .subscribe(result => result ? this.router.navigate(['product/product-content']) : alert("Error!"),
                 error => alert(error));
     }
 
-    onEdit(identifier: number): void {
-        identifier ? this.router.navigate(['product/product-update', identifier]) : alert("Wrong ID!");
+    onEdit(id: number): void {
+        id ? this.router.navigate(['product/product-update', id]) : alert("Wrong ID!");
     }
 
-    logError(err) {
-        console.error('There was an error: ' + err);
+    logError(error) {
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

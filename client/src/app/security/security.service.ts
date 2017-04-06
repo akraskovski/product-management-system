@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivate, Router} from "@angular/router";
 import {User} from "../model/user";
-import {Authority} from "../model/authority";
 import {AuthorityWorker} from "../common/authority-worker";
+import {Authority} from "../model/authority";
 
 @Injectable()
 export class SecurityService implements CanActivate {
@@ -18,33 +18,26 @@ export class SecurityService implements CanActivate {
         const authorities = route.data["roles"] as Array<string>;
         const user: User = AuthorityWorker.getCurrentUser();
         if (authorities.length > 0 && user) {
-            canActivate = SecurityService.checkAuthorities(authorities, user.authorities);
+            canActivate = this.checkAuthorities(authorities, user.authorities);
         }
-        return canActivate ? true : SecurityService.denyAccess();
+        return canActivate;
     }
 
-    private static denyAccess(): boolean {
-        alert('You don\'t have permissions!');
-        //this.router.navigate(['/login']);
+    static containsAuthority(array: any[], obj: any): boolean {
+        let index = array.length;
+        while (index--) {
+            if (array[index] === obj)
+                return true;
+        }
         return false;
     }
 
-    private static checkAuthorities(availableAuthorityList: string[], currentAuthorityList: Authority[]): boolean {
-        for (let availableAuthority = 0; availableAuthority < availableAuthorityList.length; availableAuthority++)
-            for (let userAuthority = 0; userAuthority < currentAuthorityList.length; userAuthority++)
-                if (availableAuthorityList[availableAuthority] == currentAuthorityList[userAuthority].name) {
-                    return true;
-                }
-        return false;
-    }
-
-    public static hasAuthority(authority: string): boolean {
-        const user: User = AuthorityWorker.getCurrentUser();
-        if (user != null)
-            for (let currentAuthority of user.authorities) {
-                if (currentAuthority.name === authority)
-                    return true;
-            }
-        return false;
+    private checkAuthorities(availableAuthorityList: string[], currentAuthorityList: Authority[]): boolean {
+        let flag = false;
+        currentAuthorityList.forEach(currentAuthority => {
+            if (SecurityService.containsAuthority(availableAuthorityList, currentAuthority.name))
+                flag = true;
+        });
+        return flag;
     }
 }

@@ -1,10 +1,11 @@
-<div class="col-md-6 col-md-offset-3">
+<div>
     <h3>Edit product</h3>
     <form name="form" novalidate [formGroup]="productForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" name="name" formControlName="name" required/>
-            <div *ngIf="productForm.get('name').hasError('required') && productForm.get('name').touched" class="help-block">Name
+            <div *ngIf="productForm.get('name').hasError('required') && productForm.get('name').touched"
+                 class="help-block">Name
                 is
                 required
             </div>
@@ -12,7 +13,8 @@
         <div class="form-group">
             <label for="cost">Cost</label>
             <input type="text" class="form-control" name="cost" formControlName="cost" required/>
-            <div *ngIf="productForm.get('cost').hasError('required') && productForm.get('cost').touched" class="help-block">Cost
+            <div *ngIf="productForm.get('cost').hasError('required') && productForm.get('cost').touched"
+                 class="help-block">Cost
                 is
                 required
             </div>
@@ -22,11 +24,11 @@
         </div>
         <div class="form-group">
             <label for="type">Type</label>
-            <input type="text" class="form-control" name="type" formControlName="type" required/>
-            <div *ngIf="productForm.get('type').hasError('required') && productForm.get('type').touched" class="help-block">Type
-                is
-                required
-            </div>
+            <input type="text" class="form-control" name="type" formControlName="type"/>
+        </div>
+        <div class="form-group">
+            <label for="details">Details</label>
+            <input type="text" class="form-control" name="details" formControlName="details"/>
         </div>
 
         <div class="form-group">
