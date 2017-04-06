@@ -31,5 +31,4 @@ public class User extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "authority_id")}
     )
     public List<Authority> authorities;
-
 }

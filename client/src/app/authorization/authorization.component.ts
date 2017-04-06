@@ -10,18 +10,24 @@ import {Router} from "@angular/router";
 })
 export class AuthorizationComponent implements OnInit {
     loginForm: FormGroup;
-    loading: boolean = false;
-    error: string = '';
+    loading: boolean;
+    error: string;
 
     constructor(private authorizationService: AuthorizationService, private router: Router) {
+        this.loading = false;
+        this.error = '';
     }
 
     ngOnInit(): void {
+        this.authorizationService.logout();
+        this.createEmptyForm();
+    }
+
+    private createEmptyForm(): void {
         this.loginForm = new FormGroup({
             username: new FormControl('', Validators.required),
             password: new FormControl('', Validators.required)
         });
-        this.authorizationService.logout();
     }
 
     onSubmit() {
@@ -29,11 +35,13 @@ export class AuthorizationComponent implements OnInit {
         this.authorizationService.login(new User(this.loginForm.value.username, this.loginForm.value.password))
             .subscribe(
                 result => result && this.router.navigate(['/']),
-                error => {
-                    this.error = <any>error;
-                    this.loading = false;
-                }
+                error => this.handleError(error)
             );
     }
 
+    private handleError(error: Error): void {
+        this.error = <any> error;
+        this.loading = false;
+        this.createEmptyForm();
+    }
 }
