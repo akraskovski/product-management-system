@@ -28,6 +28,12 @@ public class Product extends BaseEntity {
     /**
      * Product type
      */
-    @Column(nullable = false)
+    @Column
     public String type;
+
+    /**
+     * Product details
+     */
+    @Column
+    public String details;
 }

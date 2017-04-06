@@ -20,8 +20,41 @@ public class Store extends BaseEntity {
     @Column(unique = true, nullable = false)
     public String name;
 
+    /**
+     * Store details
+     */
     @Column
     public String details;
+
+    /**
+     * Store address
+     */
+    @Column
+    public String address;
+
+    /**
+     * Store contact phone
+     */
+    @Column
+    public Integer phone;
+
+    /**
+     * Store contact skype
+     */
+    @Column
+    public String skype;
+
+    /**
+     * Store discounts system (consist or not)
+     */
+    @Column
+    public Boolean discounts;
+
+    /**
+     * Store contant mail
+     */
+    @Column
+    public String mail;
 
     /**
      * ManyToMany relation to {@link Stock} entities

@@ -21,6 +21,24 @@ public class Stock extends BaseEntity {
     public String specialize;
 
     /**
+     * Stock address
+     */
+    @Column
+    public String address;
+
+    /**
+     * Stocks contact phone
+     */
+    @Column
+    public Integer phone;
+
+    /**
+     * Stock square
+     */
+    @Column
+    public Double square;
+
+    /**
      * ManyToMany relation to {@link Product} entities
      */
     @LazyCollection(LazyCollectionOption.FALSE)
