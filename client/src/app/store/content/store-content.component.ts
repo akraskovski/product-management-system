@@ -24,26 +24,26 @@ export class StoreContentComponent extends AuthorityWorker {
         this.storeService.loadAllUnauthorized(api.STORE)
             .subscribe(
                 storeList => this.storeList = storeList,
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
-    onDelete(identifier: number): void {
-        this.storeService.remove(api.STORE, identifier)
+    onDelete(id: number): void {
+        this.storeService.remove(api.STORE, id)
             .subscribe(
                 () => this.loadData(),
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
-    onEdit(identifier: number): void {
-        identifier && this.router.navigate(['store/store-update', identifier]);
+    onEdit(id: number): void {
+        id && this.router.navigate(['store/store-update', id]);
     }
 
-    onDetails(identifier: number): void {
-        identifier && this.router.navigate(['store/store-details', identifier]);
+    onDetails(id: number): void {
+        id && this.router.navigate(['store/store-details', id]);
     }
 
-    logError(err) {
-        console.error('There was an error: ' + err);
+    logError(error: Error) {
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

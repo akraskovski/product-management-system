@@ -1,17 +1,22 @@
-<h3>Store List</h3>
+<div class="col-lg-12">
+    <h2 class="page-header">
+        All stores in system
+    </h2>
+</div>
 <div class="panel">
     <div class="row">
-        <div class="col-sm-4" *ngFor="let store of storeList">
-            <div class="panel panel-primary">
-                <div class="panel-heading text-center">{{store.name}}</div>
-                <div class="panel-body">
-                    <img src="./images/no-image.png" class="img-responsive"
-                         style="width:100%" alt="Image">
+        <div class="col-md-4" *ngFor="let store of storeList">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4><span class="glyphicon glyphicon-shopping-cart"></span> {{store.name}}</h4>
                 </div>
-                <button *ngIf="canWorkWithStore()" (click)="onEdit(store.id)">Edit</button>
-                <button *ngIf="canWorkWithStore()" (click)="onDelete(store.id)">Delete</button>
-                <button (click)="onDetails(store.id)">More info</button>
-                <div class="panel-footer">{{store.details}}</div>
+                <div class="panel-body">
+                    <p>{{store.details}}</p>
+                    <a class="btn btn-default" (click)="onDetails(store.id)">More</a>
+                    <a class="btn btn-warning"*ngIf="canWorkWithStore()" (click)="onEdit(store.id)">Edit</a>
+                    <a class="btn btn-danger"*ngIf="canWorkWithStore()" (click)="onDelete(store.id)">Delete</a>
+                </div>
+                <div class="panel-footer">{{store.phone}}</div>
             </div>
         </div>
     </div>

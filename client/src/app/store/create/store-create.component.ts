@@ -5,6 +5,7 @@ import {CommonService} from "../../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {Store} from "../../model/store";
+import {regex} from "../../constants/regex";
 
 @Component({
     selector: 'store-create-component',
@@ -12,42 +13,60 @@ import {Store} from "../../model/store";
 })
 export class StoreCreateComponent {
     storeForm: FormGroup;
-    availableStocks: Stock[] = [];
-    selectedStocks: Stock[] = [];
-    store: Store;
-    loading = false;
+    availableStocks: Stock[];
+    selectedStocks: Stock[];
+    loading;
 
     constructor(private storeService: CommonService, private router: Router) {
+        this.availableStocks = [];
+        this.selectedStocks = [];
+        this.loading = false;
     }
 
     ngOnInit(): void {
         this.loadStocks();
         this.createEmptyForm();
-        this.store = new Store();
     }
 
     private loadStocks(): void {
         this.storeService.loadAll(api.STOCK)
             .subscribe(
                 stockList => this.availableStocks = stockList,
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
     private createEmptyForm(): void {
         this.storeForm = new FormGroup({
             name: new FormControl('', Validators.required),
+            details: new FormControl(''),
+            address: new FormControl(''),
+            phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
+            skype: new FormControl(''),
+            discounts: new FormControl(''),
+            mail: new FormControl(''),
         });
     }
 
     onSubmit() {
         this.loading = true;
-        this.store.name = this.storeForm.value.name;
-        this.store.stockList = this.selectedStocks;
-        this.storeService.create(api.STORE, this.store)
+        this.storeService.create(api.STORE, this.fillCreatingStore())
             .subscribe(
                 () => this.router.navigate(['store/store-content']),
                 err => this.logError(err)
             );
+    }
+
+    private fillCreatingStore(): Store {
+        let store: Store = new Store();
+        store.name = this.storeForm.value.name;
+        store.details = this.storeForm.value.details;
+        store.address = this.storeForm.value.address;
+        store.phone = this.storeForm.value.phone;
+        store.skype = this.storeForm.value.skype;
+        store.discounts = this.storeForm.value.discounts;
+        store.mail = this.storeForm.value.mail;
+        store.stockList = this.selectedStocks;
+        return store;
     }
 
     addStockToSelected(stock: Stock): void {
@@ -60,9 +79,9 @@ export class StoreCreateComponent {
         this.availableStocks.push(stock);
     }
 
-    logError(err) {
+    logError(error: Error) {
         this.loading = false;
-        console.error('There was an error: ' + err);
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

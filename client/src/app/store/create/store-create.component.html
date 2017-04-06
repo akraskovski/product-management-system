@@ -1,6 +1,6 @@
 <div>
     <h3>Create store form</h3>
-    <form name="form" novalidate [formGroup]="storeForm" (ngSubmit)="onSubmit()">
+    <form novalidate [formGroup]="storeForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" name="name" formControlName="name" required/>
@@ -10,7 +10,38 @@
                 required
             </div>
         </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" name="address" formControlName="address"/>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" name="phone" formControlName="phone"/>
+        </div>
+        <div *ngIf="storeForm.get('phone').hasError('pattern') && storeForm.get('phone').touched"
+             class="alert alert-danger">Must be only digits
+        </div>
+        <div class="form-group">
+            <label for="skype">Skype</label>
+            <input type="text" class="form-control" name="skype" formControlName="skype"/>
+        </div>
+        <div class="form-group">
+            <label for="mail">Mail</label>
+            <input type="text" class="form-control" name="mail" formControlName="mail"/>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="isActive" formControlName="discounts">
+                    Discounts
+                </label>
+            </div>
+        </div>
 
+        <div class="form-group">
+            <label for="details">Details</label>
+            <input type="text" class="form-control" name="details" formControlName="details"/>
+        </div>
         <div class="form-group row">
             <div class="col-sm-6">
                 <div class="panel panel-info" style="min-height: 200px">
