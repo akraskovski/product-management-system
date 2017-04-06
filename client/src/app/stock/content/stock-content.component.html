@@ -5,7 +5,10 @@
             <th>Id</th>
             <th>Specialize</th>
             <th>Products</th>
-            <th *ngIf="canWorkWithStock()">Operations</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Square</th>
+            <th>Operations</th>
         </tr>
         </thead>
         <tbody>
@@ -15,9 +18,12 @@
             <td>
                 <p *ngFor="let product of stock.productList">ID: {{product.id}}, NAME: {{product.name}}.</p>
             </td>
+            <td>{{stock.address}}</td>
+            <td>{{stock.phone}}</td>
+            <td>{{stock.square}}</td>
             <td>
-                <button class="btn btn-warning" *ngIf="canWorkWithStock()" (click)="onEdit(stock.id)">Edit</button>
-                <button class="btn btn-danger" *ngIf="canWorkWithStock()" (click)="onDelete(stock.id)">Delete</button>
+                <button class="btn btn-warning" (click)="onEdit(stock.id)">Edit</button>
+                <button class="btn btn-danger" (click)="onDelete(stock.id)">Delete</button>
             </td>
         </tr>
         </tbody>

@@ -3,16 +3,14 @@ import {Stock} from "../../model/stock";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {Router} from "@angular/router";
-import {AuthorityWorker} from "../../common/authority-worker";
 @Component({
     selector: 'stock-content-component',
     templateUrl: './stock-content.component.html'
 })
-export class StockContentComponent extends AuthorityWorker implements OnInit {
+export class StockContentComponent implements OnInit {
     stockList: Stock[];
 
     constructor(private stockService: CommonService, private router: Router) {
-        super();
     }
 
     ngOnInit(): void {
@@ -23,22 +21,22 @@ export class StockContentComponent extends AuthorityWorker implements OnInit {
         this.stockService.loadAll(api.STOCK)
             .subscribe(
                 stockList => this.stockList = stockList,
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
-    onDelete(identifier: number): void {
-        this.stockService.remove(api.STOCK, identifier)
+    onDelete(id: number): void {
+        this.stockService.remove(api.STOCK, id)
             .subscribe(
                 () => this.loadData(),
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
-    onEdit(identifier: number): void {
-        identifier && this.router.navigate(['stock/stock-update', identifier]);
+    onEdit(id: number): void {
+        id && this.router.navigate(['stock/stock-update', id]);
     }
 
-    logError(err) {
-        console.error('There was an error: ' + err);
+    logError(error) {
+        console.error('There was an error: ' + + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

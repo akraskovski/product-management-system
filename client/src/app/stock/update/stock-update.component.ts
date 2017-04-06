@@ -6,50 +6,64 @@ import {CommonService} from "../../common/common.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {CommonFunctions} from "../../common/common-functions";
+import {regex} from "../../constants/regex";
 @Component({
     selector: 'stock-update-component',
     templateUrl: './stock-update.component.html'
 })
 export class StockUpdateComponent implements OnInit {
     stockForm: FormGroup;
-    loading: boolean = false;
+    loading: boolean;
     stock: Stock;
-    availableProducts: Product[] = [];
-    selectedProducts: Product[] = [];
+    availableProducts: Product[];
+    selectedProducts: Product[];
 
     constructor(private stockService: CommonService, private router: Router, private route: ActivatedRoute) {
+        this.loading = false;
+        this.availableProducts = [];
+        this.selectedProducts = [];
     }
 
     ngOnInit(): void {
         this.createEmptyForm();
-        this.fillForm();
+        this.load();
     }
 
     private createEmptyForm(): void {
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
+            address: new FormControl(''),
+            phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
+            square: new FormControl('', [Validators.pattern(regex.DOUBLE)])
         });
     }
 
-    private fillForm(): void {
+    private load(): void {
         this.stockService.loadById(api.STOCK, this.route.snapshot.params['id'])
             .subscribe(
                 stock => {
                     this.stock = stock;
                     this.selectedProducts = this.stock.productList;
                     this.loadProducts();
-                    this.stockForm.setValue({
-                        specialize: this.stock.specialize
-                    });
+                    this.fillForm(this.stock);
                 },
-                err => this.logError(err));
+                error => this.logError(error));
+    }
+
+    private fillForm(stock: Stock): void {
+        this.stockForm.setValue({
+            specialize: stock.specialize,
+            address: stock.address,
+            phone: stock.phone,
+            square: stock.square
+        });
     }
 
     private loadProducts(): void {
         this.stockService.loadAll(api.PRODUCT)
             .subscribe(
                 productList => this.availableProducts = CommonFunctions.cleanAvailableItems(productList, this.selectedProducts),
-                err => this.logError(err))
+                error => this.logError(error))
     }
 
     onSubmit(): void {
@@ -59,7 +73,7 @@ export class StockUpdateComponent implements OnInit {
         this.stockService.update(api.STOCK, this.stock)
             .subscribe(
                 () => this.router.navigate(['stock/stock-content']),
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
     addProductToSelected(product: Product): void {
@@ -72,9 +86,9 @@ export class StockUpdateComponent implements OnInit {
         this.availableProducts.push(product);
     }
 
-    private logError(err) {
+    private logError(error: Error) {
         this.loading = false;
-        console.error('There was an error: ' + err);
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

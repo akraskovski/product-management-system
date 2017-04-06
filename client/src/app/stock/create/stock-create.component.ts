@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {Stock} from "../../model/stock";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
+import {regex} from "../../constants/regex";
 
 @Component({
     selector: 'stock-create-component',
@@ -38,8 +39,8 @@ export class StockCreateComponent implements OnInit {
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
             address: new FormControl(''),
-            phone: new FormControl(''),
-            square: new FormControl(''),
+            phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
+            square: new FormControl('', [Validators.pattern(regex.DOUBLE)])
         });
     }
 
@@ -55,7 +56,7 @@ export class StockCreateComponent implements OnInit {
         this.stockService.create(api.STOCK, stock)
             .subscribe(
                 () => this.router.navigate(['stock/stock-content']),
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
     addProductToSelected(product: Product): void {
@@ -68,9 +69,9 @@ export class StockCreateComponent implements OnInit {
         this.availableProducts.push(product);
     }
 
-    logError(err) {
+    logError(error: Error) {
         this.loading = false;
-        console.error('There was an error: ' + err);
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

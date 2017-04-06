@@ -10,9 +10,9 @@ export class Stock {
 
     constructor(specialize: string, address: string, phone: number, square: number, productList: Product[]) {
         this.specialize = specialize;
-        this.productList = productList;
         this.address = address;
         this.phone = phone;
         this.square = square;
+        this.productList = productList;
     }
 }

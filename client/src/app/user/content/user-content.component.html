@@ -12,8 +12,8 @@
             <td>{{user.id}}</td>
             <td>{{user.username}}</td>
             <td>
-                <button class="btn btn-warning" *ngIf="canWorkWithUser()" (click)="onEdit(user.id)">Edit</button>
-                <button class="btn btn-danger" *ngIf="canWorkWithUser()" (click)="onDelete(user.id)">Delete</button>
+                <button class="btn btn-warning" (click)="onEdit(user.id)">Edit</button>
+                <button class="btn btn-danger" (click)="onDelete(user.id)">Delete</button>
             </td>
         </tr>
         </tbody>

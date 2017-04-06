@@ -8,22 +8,22 @@ export class AuthorityWorker {
     }
 
     public canWorkWithUser(): boolean {
-        return this.componentElementAccess("ROLE_ADMIN");
+        return AuthorityWorker.componentElementAccess("ROLE_ADMIN");
     }
 
     public canWorkWithProduct(): boolean {
-        return this.componentElementAccess("ROLE_ADMIN");
+        return AuthorityWorker.componentElementAccess("ROLE_ADMIN");
     }
 
     public canWorkWithStock(): boolean {
-        return this.componentElementAccess("ROLE_ADMIN") || this.componentElementAccess("ROLE_STOCK_MANAGER");
+        return AuthorityWorker.componentElementAccess("ROLE_ADMIN") || AuthorityWorker.componentElementAccess("ROLE_STOCK_MANAGER");
     }
 
     public canWorkWithStore(): boolean {
-        return this.componentElementAccess("ROLE_ADMIN") || this.componentElementAccess("ROLE_STORE_MANAGER");
+        return AuthorityWorker.componentElementAccess("ROLE_ADMIN") || AuthorityWorker.componentElementAccess("ROLE_STORE_MANAGER");
     }
 
-    private componentElementAccess(authority: string): boolean {
+    static componentElementAccess(authority: string): boolean {
         const user: User = AuthorityWorker.getCurrentUser();
         if (user != null)
             for (let currentAuthority of user.authorities) {
