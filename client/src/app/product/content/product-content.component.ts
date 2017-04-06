@@ -17,29 +17,29 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadData();
+        this.load();
     }
 
-    private loadData() {
+    private load() {
         this.productService.loadAll(api.PRODUCT)
             .subscribe(
                 productList => this.productList = productList,
                 err => this.logError(err));
     }
 
-    onDelete(identifier: number): void {
-        this.productService.remove(api.PRODUCT, identifier)
+    onDelete(id: number): void {
+        this.productService.remove(api.PRODUCT, id)
             .subscribe(
-                () => this.loadData(),
-                err => this.logError(err));
+                () => this.load(),
+                error => this.logError(error));
     }
 
     onEdit(identifier: number): void {
         identifier && this.router.navigate(['product/product-update', identifier]);
     }
 
-    logError(err) {
-        console.error('There was an error: ' + err);
+    logError(error: Error) {
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

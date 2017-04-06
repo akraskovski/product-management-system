@@ -12,11 +12,14 @@ import {api} from "../../constants/api";
 })
 export class StockCreateComponent implements OnInit {
     stockForm: FormGroup;
-    availableProducts: Product[] = [];
-    selectedProducts: Product[] = [];
-    loading = false;
+    availableProducts: Product[];
+    selectedProducts: Product[];
+    loading;
 
     constructor(private stockService: CommonService, private router: Router) {
+        this.availableProducts = [];
+        this.selectedProducts = [];
+        this.loading = false;
     }
 
     ngOnInit(): void {
@@ -28,18 +31,27 @@ export class StockCreateComponent implements OnInit {
         this.stockService.loadAll(api.PRODUCT)
             .subscribe(
                 productList => this.availableProducts = productList,
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
     private createEmptyForm(): void {
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
+            address: new FormControl(''),
+            phone: new FormControl(''),
+            square: new FormControl(''),
         });
     }
 
     onSubmit() {
         this.loading = true;
-        const stock: Stock = new Stock(this.stockForm.value.specialize, this.selectedProducts);
+        const stock: Stock = new Stock(
+            this.stockForm.value.specialize,
+            this.stockForm.value.address,
+            this.stockForm.value.phone,
+            this.stockForm.value.square,
+            this.selectedProducts
+        );
         this.stockService.create(api.STOCK, stock)
             .subscribe(
                 () => this.router.navigate(['stock/stock-content']),

@@ -24,14 +24,12 @@
         </div>
         <div class="form-group">
             <label for="type">Type</label>
-            <input type="text" class="form-control" name="type" formControlName="type" required/>
-            <div *ngIf="productForm.get('type').hasError('required') && productForm.get('type').touched"
-                 class="alert alert-danger">Type
-                is
-                required
-            </div>
+            <input type="text" class="form-control" name="type" formControlName="type"/>
         </div>
-
+        <div class="form-group">
+            <label for="details">Details</label>
+            <input type="text" class="form-control" name="details" formControlName="details"/>
+        </div>
         <div class="form-group">
             <button type="submit" [disabled]="productForm.invalid || loading" class="btn btn-default">Submit
             </button>

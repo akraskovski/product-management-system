@@ -4,5 +4,10 @@ export class Store {
     id: number;
     name: string;
     details: string;
+    address: string;
+    phone: number;
+    skype: string;
+    discounts: boolean;
+    mail: string;
     stockList: Stock[];
 }

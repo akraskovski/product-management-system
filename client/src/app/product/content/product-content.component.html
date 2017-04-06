@@ -6,6 +6,7 @@
             <th>Name</th>
             <th>Cost</th>
             <th>Type</th>
+            <th>Details</th>
             <th>Operations</th>
         </tr>
         </thead>
@@ -15,6 +16,7 @@
             <td>{{product.name}}</td>
             <td>{{product.cost}}</td>
             <td>{{product.type}}</td>
+            <td>{{product.details}}</td>
             <td>
                 <button class="btn btn-warning" *ngIf="canWorkWithProduct()" (click)="onEdit(product.id)">Edit</button>
                 <button class="btn btn-danger" *ngIf="canWorkWithProduct()" (click)="onDelete(product.id)">Delete</button>
