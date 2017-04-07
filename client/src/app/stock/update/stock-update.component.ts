@@ -68,15 +68,19 @@ export class StockUpdateComponent implements OnInit {
 
     onSubmit(): void {
         this.loading = true;
+        this.fillUpdatedStock();
+        this.stockService.update(api.STOCK, this.stock)
+            .subscribe(
+                () => this.router.navigate(['stock/stock-content']),
+                error => this.logError(error));
+    }
+
+    private fillUpdatedStock(): void {
         this.stock.specialize = this.stockForm.value.specialize;
         this.stock.address = this.stockForm.value.address;
         this.stock.phone = this.stockForm.value.phone;
         this.stock.square = this.stockForm.value.square;
         this.stock.productList = this.selectedProducts;
-        this.stockService.update(api.STOCK, this.stock)
-            .subscribe(
-                () => this.router.navigate(['stock/stock-content']),
-                error => this.logError(error));
     }
 
     addProductToSelected(product: Product): void {

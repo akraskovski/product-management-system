@@ -1,4 +1,4 @@
-<div class="container" style="min-height: 1400px; background: #fff">
+<!--div class="container" style="min-height: 1400px; background: #fff">
     <h2 class="page-header" align="center" style="font-family: Montserrat">Product Management System</h2>
     <nav class="navbar navbar-default">
         <ul class="nav navbar-nav" routerLinkActive="active">
@@ -18,5 +18,43 @@
             </li>
         </ul>
     </nav>
-    <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
+</div-->
+<nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav top-nav navbar-right" style="padding-right: 10px">
+            <li *ngIf="!isLoggedIn()">
+                <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+            </li>
+            <p *ngIf="welcomeName" class="navbar-text">You logged as <b>{{welcomeName}}</b></p>
+            <li *ngIf="isLoggedIn()">
+                <a (click)="logout()">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="#section1">Dashboard</a></li>
+                <li><a href="#section2">Age</a></li>
+                <li><a href="#section3">Gender</a></li>
+                <li><a href="#section3">Geo</a></li>
+            </ul>
+            <ul class="nav navbar-nav" routerLinkActive="active">
+                <li class="nav-item" *ngIf="canWorkWithUser()"><a class="nav-link" routerLink="/user">User</a></li>
+                <li class="nav-item" *ngIf="canWorkWithProduct()"><a class="nav-link" routerLink="/product">Product</a>
+                </li>
+                <li class="nav-item" *ngIf="canWorkWithStock()"><a class="nav-link" routerLink="/stock">Stock</a></li>
+                <li class="nav-item"><a class="nav-link" routerLink="/store">Store</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-8">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>

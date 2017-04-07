@@ -46,17 +46,20 @@ export class StockCreateComponent implements OnInit {
 
     onSubmit() {
         this.loading = true;
-        const stock: Stock = new Stock(
+        this.stockService.create(api.STOCK, this.createAndFillStock())
+            .subscribe(
+                () => this.router.navigate(['stock/stock-content']),
+                error => this.logError(error));
+    }
+
+    private createAndFillStock(): Stock {
+        return new Stock(
             this.stockForm.value.specialize,
             this.stockForm.value.address,
             this.stockForm.value.phone,
             this.stockForm.value.square,
             this.selectedProducts
         );
-        this.stockService.create(api.STOCK, stock)
-            .subscribe(
-                () => this.router.navigate(['stock/stock-content']),
-                error => this.logError(error));
     }
 
     addProductToSelected(product: Product): void {

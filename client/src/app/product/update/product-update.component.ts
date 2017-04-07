@@ -21,7 +21,7 @@ export class ProductUpdateComponent implements OnInit {
 
     ngOnInit(): void {
         this.createEmptyForm();
-        this.fillForm();
+        this.load();
     }
 
     private createEmptyForm(): void {
@@ -33,19 +33,23 @@ export class ProductUpdateComponent implements OnInit {
         });
     }
 
-    private fillForm(): void {
+    private load(): void {
         this.productService.loadById(api.PRODUCT, this.route.snapshot.params['id'])
             .subscribe(
                 product => {
                     this.product = product;
-                    this.productForm.setValue({
-                        name: this.product.name,
-                        cost: this.product.cost,
-                        type: this.product.type,
-                        details: this.product.details
-                    });
+                    this.fillForm(this.product)
                 },
                 error => this.logError(error));
+    }
+
+    private fillForm(product: Product): void {
+        this.productForm.setValue({
+            name: product.name,
+            cost: product.cost,
+            type: product.type,
+            details: product.details
+        });
     }
 
     onSubmit() {

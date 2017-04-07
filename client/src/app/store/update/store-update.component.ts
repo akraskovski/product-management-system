@@ -74,6 +74,14 @@ export class StoreUpdateComponent {
 
     onSubmit(): void {
         this.loading = true;
+        this.fillUpdatedStore();
+        this.storeService.update(api.STORE, this.store)
+            .subscribe(
+                () => this.router.navigate(['store/store-content']),
+                error => this.logError(error));
+    }
+
+    private fillUpdatedStore(): void {
         this.store.name = this.storeForm.value.name;
         this.store.details = this.storeForm.value.details;
         this.store.address = this.storeForm.value.address;
@@ -82,10 +90,6 @@ export class StoreUpdateComponent {
         this.store.discounts = this.storeForm.value.discounts;
         this.store.mail = this.storeForm.value.mail;
         this.store.stockList = this.selectedStocks;
-        this.storeService.update(api.STORE, this.store)
-            .subscribe(
-                () => this.router.navigate(['store/store-content']),
-                error => this.logError(error));
     }
 
     addStockToSelected(stock: Stock): void {

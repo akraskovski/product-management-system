@@ -33,16 +33,19 @@ export class ProductCreateComponent implements OnInit {
 
     onSubmit() {
         this.loading = true;
-        const product: Product = new Product(
+        this.productService.create(api.PRODUCT, this.createAndFillProduct())
+            .subscribe(
+                () => this.router.navigate(['product/product-content']),
+                error => this.logError(error));
+    }
+
+    private createAndFillProduct(): Product {
+        return new Product(
             this.productForm.value.name,
             this.productForm.value.cost,
             this.productForm.value.type,
             this.productForm.value.details
         );
-        this.productService.create(api.PRODUCT, product)
-            .subscribe(
-                () => this.router.navigate(['product/product-content']),
-                error => this.logError(error));
     }
 
     logError(error: Error) {
