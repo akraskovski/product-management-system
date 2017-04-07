@@ -6,60 +6,86 @@ import {Stock} from "../../model/stock";
 import {ActivatedRoute, Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {CommonFunctions} from "../../common/common-functions";
+import {regex} from "../../constants/regex";
 @Component({
     selector: 'store-update-component',
     templateUrl: './store-update.component.html'
 })
 export class StoreUpdateComponent {
     storeForm: FormGroup;
-    loading: boolean = false;
+    loading: boolean;
     store: Store;
-    availableStocks: Stock[] = [];
-    selectedStocks: Stock[] = [];
+    availableStocks: Stock[];
+    selectedStocks: Stock[];
 
     constructor(private storeService: CommonService, private router: Router, private route: ActivatedRoute) {
+        this.loading = false;
+        this.availableStocks = [];
+        this.selectedStocks = [];
     }
 
     ngOnInit(): void {
         this.createEmptyForm();
-        this.fillForm();
+        this.load();
     }
 
     private createEmptyForm(): void {
         this.storeForm = new FormGroup({
             name: new FormControl('', Validators.required),
+            details: new FormControl(''),
+            address: new FormControl(''),
+            phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
+            skype: new FormControl(''),
+            discounts: new FormControl(''),
+            mail: new FormControl(''),
         });
     }
 
-    private fillForm(): void {
+    private load(): void {
         this.storeService.loadById(api.STORE, this.route.snapshot.params['id'])
             .subscribe(
                 store => {
                     this.store = store;
                     this.selectedStocks = this.store.stockList;
                     this.loadStocks();
-                    this.storeForm.setValue({
-                        name: this.store.name
-                    });
+                    this.fillForm(this.store);
                 },
-                err => this.logError(err));
+                error => this.logError(error));
+    }
+
+    private fillForm(store: Store) {
+        this.storeForm.setValue({
+            name: store.name,
+            details: store.details,
+            address: store.address,
+            phone: store.phone,
+            skype: store.skype,
+            discounts: store.discounts,
+            mail: store.mail
+        });
     }
 
     private loadStocks(): void {
         this.storeService.loadAll(api.STOCK)
             .subscribe(
                 stockList => this.availableStocks = CommonFunctions.cleanAvailableItems(stockList, this.selectedStocks),
-                err => this.logError(err))
+                error => this.logError(error))
     }
 
     onSubmit(): void {
         this.loading = true;
         this.store.name = this.storeForm.value.name;
+        this.store.details = this.storeForm.value.details;
+        this.store.address = this.storeForm.value.address;
+        this.store.phone = this.storeForm.value.phone;
+        this.store.skype = this.storeForm.value.skype;
+        this.store.discounts = this.storeForm.value.discounts;
+        this.store.mail = this.storeForm.value.mail;
         this.store.stockList = this.selectedStocks;
         this.storeService.update(api.STORE, this.store)
             .subscribe(
                 () => this.router.navigate(['store/store-content']),
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
     addStockToSelected(stock: Stock): void {
@@ -72,9 +98,9 @@ export class StoreUpdateComponent {
         this.availableStocks.push(stock);
     }
 
-    private logError(err) {
+    private logError(error: Error) {
         this.loading = false;
-        console.error('There was an error: ' + err);
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }
