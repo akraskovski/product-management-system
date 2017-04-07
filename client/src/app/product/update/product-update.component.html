@@ -1,41 +1,36 @@
-<div>
-    <h3>Edit product</h3>
-    <form name="form" novalidate [formGroup]="productForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="name">Name</label>
+<h3>Edit Product Form</h3>
+<form name="form" novalidate [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="form-group row">
+        <label for="name" class="col-sm-1 col-form-label">Name*</label>
+        <div class="col-sm-4">
             <input type="text" class="form-control" name="name" formControlName="name" required/>
-            <div *ngIf="productForm.get('name').hasError('required') && productForm.get('name').touched"
-                 class="help-block">Name
-                is
-                required
-            </div>
         </div>
-        <div class="form-group">
-            <label for="cost">Cost</label>
+    </div>
+    <div class="form-group row">
+        <label for="cost" class="col-sm-1 col-form-label">$ Cost*</label>
+        <div class="col-sm-4">
             <input type="text" class="form-control" name="cost" formControlName="cost" required/>
-            <div *ngIf="productForm.get('cost').hasError('required') && productForm.get('cost').touched"
-                 class="help-block">Cost
-                is
-                required
-            </div>
-            <div *ngIf="productForm.get('cost').hasError('pattern') && productForm.get('cost').touched"
-                 class="alert alert-danger">Must be only digits
-            </div>
         </div>
-        <div class="form-group">
-            <label for="type">Type</label>
+    </div>
+    <div class="form-group row">
+        <label for="type" class="col-sm-1 col-form-label">Type</label>
+        <div class="col-sm-4">
             <input type="text" class="form-control" name="type" formControlName="type"/>
         </div>
-        <div class="form-group">
-            <label for="details">Details</label>
-            <input type="text" class="form-control" name="details" formControlName="details"/>
+    </div>
+    <div class="form-group row">
+        <label for="details" class="col-sm-1 col-form-label">Details:</label>
+        <div class="col-sm-4">
+            <textarea class="form-control" rows="6" name="details" formControlName="details"></textarea>
         </div>
-
-        <div class="form-group">
-            <button type="submit" [disabled]="productForm.invalid || loading" class="btn btn-primary">Submit
-            </button>
-            <img *ngIf="loading"
-                 src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
-        </div>
-    </form>
-</div>
+        <small class="text-muted">
+            Must be 0-500 characters long.
+        </small>
+    </div>
+    <div class="form-group row">
+        <button type="submit" [disabled]="productForm.invalid || loading" class=" col-sm-1 btn btn-primary">Submit
+        </button>
+        <img *ngIf="loading"
+             src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+    </div>
+</form>

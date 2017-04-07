@@ -13,19 +13,19 @@ export const routes: Routes = [
     },
     {
         path: 'product', component: ProductComponent, canActivate: [SecurityService],
-        data: {roles: ['ROLE_ADMIN']},
+        data: {roles: ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER']},
         children: [
             {
                 path: 'product-content',
                 component: ProductContentComponent,
                 canActivate: [SecurityService],
-                data: {roles: ['ROLE_ADMIN']}
+                data: {roles: ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER']}
             },
             {
                 path: 'product-search',
                 component: ProductSearchComponent,
                 canActivate: [SecurityService],
-                data: {roles: ['ROLE_ADMIN']}
+                data: {roles: ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER']}
             },
             {
                 path: 'product-create',

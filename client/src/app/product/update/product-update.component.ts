@@ -8,7 +8,8 @@ import {regex} from "../../constants/regex";
 
 @Component({
     selector: 'product-update-component',
-    templateUrl: 'product-update.component.html'
+    templateUrl: 'product-update.component.html',
+    styleUrls: ['product-update.component.css']
 })
 export class ProductUpdateComponent implements OnInit {
     productForm: FormGroup;

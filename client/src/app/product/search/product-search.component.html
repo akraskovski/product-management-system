@@ -1,14 +1,16 @@
 <h3>Product Search</h3>
 <br/>
-<label for="keyword">Input name</label>
-<div class="input-group">
-    <input name="keyword" type="text" class="form-control" [(ngModel)]="keyword">
-    <span class="input-group-btn">
-        <button class="btn btn-default" type="button" (click)="onSubmit()">
+<form (ngSubmit)="onSubmit()">
+    <label for="keyword">Input name</label>
+    <div class="input-group">
+        <input name="keyword" type="text" class="form-control" [(ngModel)]="keyword" required>
+        <span class="input-group-btn">
+        <button class="btn btn-default" type="button">
             <span class="glyphicon glyphicon-search"></span>
         </button>
     </span>
-</div>
+    </div>
+</form>
 
 <div *ngIf="findProducts" class="panel">
     <table class="table table-striped">
