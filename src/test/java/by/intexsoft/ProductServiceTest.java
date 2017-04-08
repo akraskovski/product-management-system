@@ -24,7 +24,7 @@ public class ProductServiceTest {
     @Before
     public void testCreate() {
         product = new Product();
-        product.name = "Product for test";
+        product.name = "Tested_Product";
         product.cost = 950.21;
         product.type = "Food";
         productService.create(product);

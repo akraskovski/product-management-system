@@ -3,26 +3,25 @@ import {Product} from "../../model/product";
 import {Router} from "@angular/router";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
-import {AuthorityWorker} from "../../common/authority-worker";
-
 @Component({
     selector: 'product-search-component',
     templateUrl: './product-search.component.html'
 })
-export class ProductSearchComponent extends AuthorityWorker {
+export class ProductSearchComponent {
     keyword: string;
     findProducts: Product[];
 
     constructor(private productService: CommonService, private router: Router) {
-        super();
     }
 
     onSubmit(): void {
-        this.productService.loadByName(api.PRODUCT, this.keyword)
-            .subscribe(
-                response => this.findProducts = response,
-                err => this.logError(err)
-            );
+        if (this.keyword) {
+            this.productService.loadByName(api.PRODUCT, this.keyword)
+                .subscribe(
+                    response => this.findProducts = response,
+                    err => this.logError(err)
+                );
+        }
     }
 
     onDelete(id: number): void {

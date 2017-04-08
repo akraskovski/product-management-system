@@ -34,7 +34,7 @@ public class UserServiceTest {
     public void testCreate() {
         user = new User();
         user.username = "Test_User";
-        user.password = "293922qweqwe";
+        user.password = "passWorD123.92222";
         userService.create(user);
         userService.delete(user.id);
     }
@@ -43,7 +43,7 @@ public class UserServiceTest {
     public void testCreateWithAuthorities() {
         user = new User();
         user.username = "Test_User1";
-        user.password = "293922qweqwe";
+        user.password = "passworD900";
         user.authorities = authorityService.findAll();
         userService.create(user);
         userService.delete(user.id);
@@ -51,7 +51,7 @@ public class UserServiceTest {
 
     @Test
     public void testFindById() {
-        Integer idToFind = 1;
+        int idToFind = 1;
         assertNotNull(userService.find(idToFind));
     }
 

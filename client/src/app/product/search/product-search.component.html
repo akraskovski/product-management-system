@@ -5,15 +5,15 @@
     <div class="input-group">
         <input name="keyword" type="text" class="form-control" [(ngModel)]="keyword" required>
         <span class="input-group-btn">
-        <button class="btn btn-default" type="button">
+        <button class="btn btn-default" type="submit">
             <span class="glyphicon glyphicon-search"></span>
         </button>
     </span>
     </div>
 </form>
 
-<div *ngIf="findProducts" class="panel">
-    <table class="table table-striped">
+<div *ngIf="findProducts" class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
             <th>Id</th>
@@ -21,6 +21,7 @@
             <th>Cost</th>
             <th>Type</th>
             <th>Details</th>
+            <th>Operations</th>
         </tr>
         </thead>
         <tbody>
@@ -31,8 +32,8 @@
             <td>{{product.type}}</td>
             <td>{{product.details}}</td>
             <td>
-                <button *ngIf="canWorkWithProduct()" (click)="onEdit(product.id)">Edit</button>
-                <button *ngIf="canWorkWithProduct()" (click)="onDelete(product.id)">Delete</button>
+                <button class="btn btn-warning" (click)="onEdit(product.id)">Edit</button>
+                <button class="btn btn-danger" (click)="onDelete(product.id)">Delete</button>
             </td>
         </tr>
         </tbody>
