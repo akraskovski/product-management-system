@@ -29,8 +29,6 @@ public class UserController {
 
     /**
      * Return json-information about all users in database
-     *
-     * @return list of {@link User}s
      */
     @RequestMapping
     public ResponseEntity<?> loadAllUsers() {
@@ -45,11 +43,9 @@ public class UserController {
 
     /**
      * Return json-information about all users in database
-     *
-     * @return list of {@link User}s
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> loadUserById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> loadUserById(@PathVariable("id") int id) {
         LOGGER.info("Start loadUserById");
         try {
             User user = userService.find(id);
@@ -63,8 +59,6 @@ public class UserController {
 
     /**
      * Find user in database with setting name in browser
-     *
-     * @return entity of {@link User}
      */
     @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
     public ResponseEntity<?> loadUserByUsername(@PathVariable String username) {
@@ -81,8 +75,6 @@ public class UserController {
 
     /**
      * Creating {@link User} from client form
-     *
-     * @param user model
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody User user) {
@@ -97,8 +89,6 @@ public class UserController {
 
     /**
      * Update {@link User} entity in database
-     *
-     * @param user model
      */
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateUser(@RequestBody User user) {
@@ -113,11 +103,9 @@ public class UserController {
 
     /**
      * Delete {@link User} from database by identifier
-     *
-     * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteUser(@PathVariable("id") int id) {
         LOGGER.info("Start deleteUser with id: " + id);
         try {
             userService.delete(id);

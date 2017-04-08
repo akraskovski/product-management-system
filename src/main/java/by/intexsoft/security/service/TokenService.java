@@ -8,8 +8,7 @@ import by.intexsoft.model.User;
 public interface TokenService {
 
     /**
-     * Generate token
-     * @return generated token
+     * Generate and return token
      */
     String generate(User user, String password);
 }

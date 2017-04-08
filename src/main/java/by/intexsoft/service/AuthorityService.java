@@ -11,16 +11,11 @@ public interface AuthorityService {
 
     /**
      * Find authority in database by id
-     *
-     * @param id
-     * @return Authority
      */
-    Authority find(Integer id);
+    Authority find(int id);
 
     /**
      * Find all authoroties in database
-     *
-     * @return list of {@link Authority}'s
      */
     List<Authority> findAll();
 }

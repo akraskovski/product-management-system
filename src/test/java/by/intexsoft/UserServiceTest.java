@@ -25,16 +25,6 @@ public class UserServiceTest {
 
     private static User user;
 
-    @Before
-    public void before() {
-        userService.deleteAll();
-    }
-
-    @After
-    public void after() {
-        userService.deleteAll();
-    }
-
     @Test
     public void testForNullService() {
         assertNotNull(userService);
@@ -56,6 +46,7 @@ public class UserServiceTest {
         user.password = "293922qweqwe";
         user.authorities = authorityService.findAll();
         userService.create(user);
+        userService.delete(user.id);
     }
 
     @Test
@@ -68,16 +59,5 @@ public class UserServiceTest {
     public void testFindByUsername() {
         String usernameToFind = "admin";
         assertNotNull((userService.findByUsername(usernameToFind)));
-    }
-
-    @Test
-    public void testUpdate() {
-        user = new User();
-        user.username = "Test_User2";
-        user.password = "123903rt4uierhjg";
-        user = userService.create(user);
-        user.username = "Test_User_Edited";
-        user = userService.update(user);
-        userService.delete(user.id);
     }
 }

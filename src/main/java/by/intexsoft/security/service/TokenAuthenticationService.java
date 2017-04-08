@@ -12,8 +12,6 @@ public interface TokenAuthenticationService {
     /**
      * Authenticate method
      * Working with security
-     * @param request
-     * @return user authentication
      */
     Authentication authenticate(HttpServletRequest request);
 }

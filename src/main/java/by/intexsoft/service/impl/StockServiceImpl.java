@@ -24,7 +24,7 @@ public class StockServiceImpl implements StockService{
     }
 
     @Override
-    public Stock find(Integer id) {
+    public Stock find(int id) {
         return stockRepository.findOne(id);
     }
 
@@ -44,7 +44,7 @@ public class StockServiceImpl implements StockService{
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(int id) {
         stockRepository.delete(id);
     }
 }

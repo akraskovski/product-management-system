@@ -29,8 +29,6 @@ public class StockController {
 
     /**
      * Find all products in database
-     *
-     * @return entites of {@link Stock}
      */
     @RequestMapping
     public ResponseEntity<?> loadAllStocks() {
@@ -45,11 +43,9 @@ public class StockController {
 
     /**
      * Find stocks in database with setting id in browser
-     *
-     * @return entity of {@link Stock}
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> loadStockById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> loadStockById(@PathVariable("id") int id) {
         LOGGER.info("Start loadStockById: " + id);
         try {
             Stock stock = stockService.find(id);
@@ -63,8 +59,6 @@ public class StockController {
 
     /**
      * Creating {@link Stock} from client form
-     *
-     * @param stock model
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createStock(@RequestBody Stock stock) {
@@ -99,7 +93,7 @@ public class StockController {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteStock(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteStock(@PathVariable("id") int id) {
         LOGGER.info("Start deleteStock");
         try {
             stockService.delete(id);

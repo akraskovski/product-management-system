@@ -29,8 +29,6 @@ public class StoreController {
 
     /**
      * Find all stores in database
-     *
-     * @return entites of {@link Store}
      */
     @RequestMapping
     public ResponseEntity<?> loadAllStores() {
@@ -45,11 +43,9 @@ public class StoreController {
 
     /**
      * Find stores in database with setting id in browser
-     *
-     * @return entity of {@link Store}
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> loadStoreById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> loadStoreById(@PathVariable("id") int id) {
         LOGGER.info("Start loadStoreById: " + id);
         try {
             Store store = storeService.find(id);
@@ -63,8 +59,6 @@ public class StoreController {
 
     /**
      * Creating {@link Store} from client form
-     *
-     * @param store model
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createStore(@RequestBody Store store) {
@@ -79,8 +73,6 @@ public class StoreController {
 
     /**
      * Update {@link Store} entity in database
-     *
-     * @param store model
      */
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateStore(@RequestBody Store store) {
@@ -99,7 +91,7 @@ public class StoreController {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteStore(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteStore(@PathVariable("id") int id) {
         LOGGER.info("Start deleteStore");
         try {
             storeService.delete(id);

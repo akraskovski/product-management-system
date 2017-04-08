@@ -16,39 +16,27 @@ public interface StockService {
 
     /**
      * Find {@link Stock} in database by identifier
-     *
-     * @param id
-     * @return {@link Stock}
      */
-    Stock find(Integer id);
+    Stock find(int id);
 
     /**
      * Find one first Stock by specialize
-     *
-     * @return {@link Stock}
      */
     Stock findBySpecialize(String specialize);
 
     /**
      * Find all {@link Stock}s in database
-     *
-     * @return list of {@link Stock} from database
      */
     List<Stock> findAll();
 
     /**
      * Update information about {@link Stock} in database
-     *
-     * @param object
-     * @return {@link Stock} with changed data
      */
     Stock update(Stock object);
 
     /**
      * Delete {@link Stock} from database by identifier
-     *
-     * @param id
      */
-    void delete(Integer id);
+    void delete(int id);
 }
 

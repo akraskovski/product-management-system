@@ -31,8 +31,6 @@ public class ProductController {
 
     /**
      * Find all products in database
-     *
-     * @return entites of {@link Product}
      */
     @RequestMapping
     public ResponseEntity<?> loadAllProducts() {
@@ -47,11 +45,9 @@ public class ProductController {
 
     /**
      * Find products in database with setting name in browser
-     *
-     * @return entity of {@link Product}
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> loadProductById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> loadProductById(@PathVariable("id") int id) {
         LOGGER.info("Start loadProductById: " + id);
         try {
             Product product = productService.find(id);
@@ -65,8 +61,6 @@ public class ProductController {
 
     /**
      * Find products in database with setting name in browser
-     *
-     * @return entity of {@link Product}
      */
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
     public ResponseEntity<?> loadProductsByName(@PathVariable("name") String name) {
@@ -83,8 +77,6 @@ public class ProductController {
 
     /**
      * Creating {@link Product} from client form
-     *
-     * @param product model
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createProduct(@RequestBody Product product) {
@@ -99,8 +91,6 @@ public class ProductController {
 
     /**
      * Update {@link Product}'s information in database
-     *
-     * @param product model
      */
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateProduct(@RequestBody Product product) {
@@ -115,11 +105,9 @@ public class ProductController {
 
     /**
      * Delete {@link Product} from database by identifier
-     *
-     * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteProduct(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") int id) {
         LOGGER.info("Start deleteProduct");
         try {
             productService.delete(id);

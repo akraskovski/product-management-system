@@ -24,7 +24,7 @@ public class StoreServiceImpl implements StoreService{
     }
 
     @Override
-    public Store find(Integer id) {
+    public Store find(int id) {
         return storeRepository.findOne(id);
     }
 
@@ -44,7 +44,7 @@ public class StoreServiceImpl implements StoreService{
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(int id) {
         storeRepository.delete(id);
     }
 }

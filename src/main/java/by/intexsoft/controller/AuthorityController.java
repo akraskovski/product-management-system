@@ -28,8 +28,6 @@ public class AuthorityController {
 
     /**
      * Return json-information about all authorities in database
-     *
-     * @return list of {@link by.intexsoft.model.Authority}s
      */
     @RequestMapping
     public ResponseEntity<?> loadAuthorities() {

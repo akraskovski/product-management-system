@@ -24,12 +24,7 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
     }
 
     /**
-     * Validating income user with token
-     * @param request
-     * @param response
-     * @param filterChain
-     * @throws IOException
-     * @throws ServletException
+     * Validate income user with token
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)

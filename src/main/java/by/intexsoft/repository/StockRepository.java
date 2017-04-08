@@ -10,8 +10,6 @@ public interface StockRepository extends JpaRepository<Stock, Integer>{
 
     /**
      * find {@link Stock} from database by specialize
-     * @param specialize
-     * @return {@link Stock}
      */
     Stock findBySpecialize(String specialize);
 }

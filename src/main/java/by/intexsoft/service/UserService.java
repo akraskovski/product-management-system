@@ -15,40 +15,28 @@ public interface UserService {
 
     /**
      * Find {@link User} in database by identifier
-     *
-     * @param id
-     * @return {@link User}
      */
-    User find(Integer id);
+    User find(int id);
 
     /**
      * Find one first user by username
-     *
-     * @return copy of {@link User}
      */
     User findByUsername(String username);
 
     /**
      * Find all {@link User}s in database
-     *
-     * @return list of {@link User} from database
      */
     List<User> findAll();
 
     /**
      * Update information about {@link User} in database
-     *
-     * @param object object - user model
-     * @return {@link User} with changed data
      */
     User update(User object);
 
     /**
      * Delete {@link User} from database by identifier
-     *
-     * @param id
      */
-    void delete(Integer id);
+    void delete(int id);
 
     /**
      * Delete all {@link User}s from database

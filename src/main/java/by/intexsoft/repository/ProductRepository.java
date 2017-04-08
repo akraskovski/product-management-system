@@ -12,8 +12,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     /**
      * find {@link Product} from database by name
-     * @param name of product
-     * @return {@link Product}
      */
     List<Product> findByName(String name);
 }

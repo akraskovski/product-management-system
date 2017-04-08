@@ -10,8 +10,6 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
 
     /**
      * find {@link Store} from database by name
-     * @param name of store
-     * @return {@link Store}
      */
     Store findByName(String name);
 }
