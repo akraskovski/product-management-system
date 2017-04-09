@@ -8,6 +8,9 @@ import {UserUpdateComponent} from "./update/user-update.component";
 
 export const routes: Routes = [
     {
+        path: 'user', redirectTo: 'user/user-content', pathMatch: 'full'
+    },
+    {
         path: 'user', component: UserComponent, canActivate: [SecurityService], data: {roles: ['ROLE_ADMIN']},
         children: [
             {

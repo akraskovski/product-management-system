@@ -39,6 +39,11 @@ export class AuthorizationComponent implements OnInit {
             );
     }
 
+    onClose() {
+        this.loading = false;
+        this.router.navigate(['/']);
+    }
+
     private handleError(error: Error): void {
         this.error = <any> error;
         this.loading = false;
