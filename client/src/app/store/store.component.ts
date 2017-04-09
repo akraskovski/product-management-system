@@ -6,5 +6,4 @@ import {AuthorityWorker} from "../common/authority-worker";
     templateUrl: './store.component.html'
 })
 export class StoreComponent extends AuthorityWorker {
-
 }
