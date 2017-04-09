@@ -19,21 +19,3 @@
         </tbody>
     </table>
 </div>-->
-
-<div class="col-sm-3">
-    <div class="panel panel-primary">
-        <div class="panel-heading">Users in system</div>
-        <div class="panel-body">
-            <div *ngFor="let user of userList">
-                <button type="button" class="list-group-item" (click)="onSelect(user)">
-                    {{user.username}}
-                </button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="selectedUser" class="col-sm-8">
-    <user-update-component [userId]="selectedUser.id"></user-update-component>
-</div>

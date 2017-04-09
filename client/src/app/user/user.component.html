@@ -8,13 +8,24 @@
         <div class="col-sm-2 sidenav">
             <h3>Navigation</h3>
             <ul class="nav nav-pills nav-stacked">
-                <li><a routerLink="user-content" routerLinkActive="active"><span
-                        class="glyphicon glyphicon-th-list"></span> All users</a></li>
                 <li><a routerLink="user-create" routerLinkActive="active"><span
                         class="glyphicon glyphicon-plus-sign"></span> Create user</a></li>
             </ul>
         </div>
         <div class="col-sm-10">
+            <div class="col-sm-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Users in system</div>
+                    <div class="panel-body">
+                        <div *ngFor="let user of userList">
+                            <button type="button" class="list-group-item" (click)="onEdit(user.id)">
+                                {{user.username}}
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             <router-outlet></router-outlet>
         </div>
     </div>

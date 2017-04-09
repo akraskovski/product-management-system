@@ -43,7 +43,7 @@ export class UserCreateComponent {
         user.authorities = this.selectedAuthorities;
         this.userService.create(api.USER, user)
             .subscribe(
-                () => this.router.navigate(['user/user-content']),
+                () => this.router.navigateByUrl('/user', true),
                 err => this.logError(err));
     }
 
