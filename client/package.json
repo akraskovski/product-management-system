@@ -1,12 +1,14 @@
 {
-  "name": "angular2-webpack",
+  "name": "PMS",
   "version": "1.0.0",
+  "description": "Web application produces the system, working with resources (products, stocks, shops)",
   "license": "MIT",
   "scripts": {
     "clean": "rimraf node_modules dist && npm cache clean",
     "build": "rimraf dist && webpack --progress --profile --bail",
     "server": "webpack-dev-server --inline --progress --port 3000",
-    "protractor": "protractor"
+    "selen": "webdriver-manager start",
+    "test": "protractor protractor.conf.js"
   },
   "dependencies": {
     "@angular/common": "4.0.1",
@@ -17,10 +19,9 @@
     "@angular/platform-browser": "4.0.1",
     "@angular/platform-browser-dynamic": "4.0.1",
     "@angular/router": "4.0.1",
-    "typescript": "^2.2.0",
+    "typescript": "^2.2.2",
     "core-js": "^2.4.1",
-    "lodash": "^4.17.4",
-    "rxjs": "5.2.0",
+    "rxjs": "5.3.0",
     "zone.js": "0.8.5"
   },
   "devDependencies": {
@@ -39,9 +40,13 @@
     "typescript": "2.0.10",
     "url-loader": "^0.5.6",
     "webpack": "2.2.1",
-    "webpack-dev-server": "2.3.0",
+    "webpack-dev-server": "^2.4.2",
     "jasmine-core": "^2.5.2",
     "jasmine-spec-reporter": "^3.2.0",
     "protractor": "^5.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akraskovskij/product-management-system.git"
   }
 }

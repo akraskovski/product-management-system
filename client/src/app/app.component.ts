@@ -29,6 +29,6 @@ export class AppComponent extends AuthorityWorker {
     logout(): void {
         this.welcomeName = null;
         this.authorizationService.logout();
-        this.router.navigate(["/login"]);
+        this.router.navigate(["/"]);
     }
 }
