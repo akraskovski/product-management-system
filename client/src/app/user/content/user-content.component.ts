@@ -6,10 +6,12 @@ import {Router} from "@angular/router";
 
 @Component({
     selector: 'user-content-component',
-    templateUrl: 'user-content.component.html'
+    templateUrl: 'user-content.component.html',
+    styleUrls: ['user-content.component.css']
 })
 export class UserContentComponent implements OnInit {
     userList: User[];
+    selectedUser: User;
 
     constructor(private userService: CommonService, private router: Router) {
     }
@@ -24,6 +26,10 @@ export class UserContentComponent implements OnInit {
                 userList => this.userList = userList,
                 err => this.logError(err)
             );
+    }
+
+    onSelect(user: User): void {
+        this.selectedUser = user;
     }
 
     onDelete(identifier: number): void {

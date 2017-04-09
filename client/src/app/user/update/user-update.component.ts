@@ -1,7 +1,7 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../model/user";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {Authority} from "../../model/authority";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
@@ -12,18 +12,27 @@ import {CommonFunctions} from "../../common/common-functions";
     templateUrl: './user-update.component.html'
 })
 export class UserUpdateComponent implements OnInit {
+    private _userId: number;
     userForm: FormGroup;
     loading: boolean = false;
     user: User;
     availableAuthorities: Authority[] = [];
     selectedAuthorities: Authority[] = [];
 
-    constructor(private userService: CommonService, private router: Router, private route: ActivatedRoute) {
+    constructor(private userService: CommonService, private router: Router) {
     }
 
     ngOnInit(): void {
         this.createEmptyForm();
         this.fillForm();
+    }
+
+    @Input()
+    set userId(id: number) {
+        if (id > 0)
+            this._userId = id;
+        else
+            this.router.navigate(['/']);
     }
 
     private createEmptyForm(): void {
@@ -34,7 +43,7 @@ export class UserUpdateComponent implements OnInit {
     }
 
     private fillForm(): void {
-        this.userService.loadById(api.USER, this.route.snapshot.params['id'])
+        this.userService.loadById(api.USER, this._userId)
             .subscribe(
                 (user: User) => {
                     this.user = user;
@@ -62,7 +71,7 @@ export class UserUpdateComponent implements OnInit {
         this.user.authorities = this.selectedAuthorities;
         this.userService.update(api.USER, this.user)
             .subscribe(
-                () => this.router.navigate(['user/user-content']),
+                () => this.router.navigate(['user']),
                 error => this.logError(error));
     }
 
