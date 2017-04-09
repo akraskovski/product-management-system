@@ -32,19 +32,12 @@ export class UserComponent implements OnInit {
         this.selectedUser = user;
     }
 
-    onDelete(identifier: number): void {
-        this.userService.remove(api.USER, identifier)
-            .subscribe(
-                () => this.loadData(),
-                err => this.logError(err));
+    onEdit(id: number): void {
+        this.router.navigate(['user']).then(() => id && this.router.navigate(['user/user-update', id]));
     }
 
-    onEdit(identifier: number): void {
-        identifier && this.router.navigate(['user/user-update', identifier]);
-    }
-
-    logError(err) {
-        console.error('There was an error: ' + err);
+    logError(error: Error) {
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

@@ -37,13 +37,13 @@ export class UserCreateComponent {
         });
     }
 
-    onSubmit() {
+    onSubmit(): void {
         this.loading = true;
         let user: User = new User(this.userForm.value.username, this.userForm.value.password);
         user.authorities = this.selectedAuthorities;
         this.userService.create(api.USER, user)
             .subscribe(
-                () => this.router.navigateByUrl('/user', true),
+                () => this.router.navigate(['/']).then(() => this.router.navigate(['user'])),
                 err => this.logError(err));
     }
 
@@ -57,9 +57,9 @@ export class UserCreateComponent {
         this.availableAuthorities.push(authority);
     }
 
-    logError(err) {
+    logError(error: Error): void {
         this.loading = false;
-        console.error('There was an error: ' + err);
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

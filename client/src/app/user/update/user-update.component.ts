@@ -62,8 +62,17 @@ export class UserUpdateComponent implements OnInit {
         this.user.authorities = this.selectedAuthorities;
         this.userService.update(api.USER, this.user)
             .subscribe(
-                () => this.router.navigate(['user/user-content']),
+                () => this.router.navigate(['/']).then(() => this.router.navigate(['user'])),
                 error => this.logError(error));
+    }
+
+    onDelete(): void {
+        if (this.user.id > 0) {
+            this.userService.remove(api.USER, this.user.id)
+                .subscribe(
+                    () => this.router.navigate(['/']).then(() => this.router.navigate(['user'])),
+                    error => this.logError(error));
+        }
     }
 
     addAuthorityToSelected(authority: Authority): void {
@@ -76,9 +85,9 @@ export class UserUpdateComponent implements OnInit {
         this.availableAuthorities.push(authority);
     }
 
-    logError(err) {
+    logError(error: Error): void {
         this.loading = false;
-        console.error('There was an error: ' + err);
+        console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
 }

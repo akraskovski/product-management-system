@@ -5,7 +5,6 @@ import {HttpModule} from "@angular/http";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
-import {UserContentComponent} from "./content/user-content.component";
 import {UserCreateComponent} from "./create/user-create.component";
 import {UserUpdateComponent} from "./update/user-update.component";
 import {CommonService} from "../common/common.service";
@@ -22,7 +21,6 @@ import {UserRoutingModule} from "./user-routing.module";
     ],
     declarations: [
         UserComponent,
-        UserContentComponent,
         UserCreateComponent,
         UserUpdateComponent
     ],
