@@ -3,7 +3,7 @@ import {User} from "../model/user";
 
 export class AuthorityWorker {
 
-    public static getCurrentUser() {
+    public static getCurrentUser(): User {
         return JSON.parse(localStorage.getItem(keys.USER_KEY));
     }
 
