@@ -30,7 +30,7 @@ public class Stock extends BaseEntity {
      * Stocks contact phone
      */
     @Column
-    public Integer phone;
+    public String phone;
 
     /**
      * Stock square

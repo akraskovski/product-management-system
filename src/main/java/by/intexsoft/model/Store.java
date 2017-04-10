@@ -36,7 +36,7 @@ public class Store extends BaseEntity {
      * Store contact phone
      */
     @Column
-    public Integer phone;
+    public String phone;
 
     /**
      * Store contact skype
