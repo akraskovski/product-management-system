@@ -1,15 +1,22 @@
 <div id="wrapper">
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Product Management System</a>
+            <a class="navbar-brand" href="#">{{'Product Management System' | translate}}</a>
         </div>
         <ul class="nav navbar-right top-nav">
             <li *ngIf="!isLoggedIn()">
                 <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
             </li>
-            <p *ngIf="welcomeName" class="navbar-text">You logged as <b>{{welcomeName}}</b></p>
+            <p *ngIf="welcomeName" class="navbar-text">{{'You logged as' | translate}} <b>{{welcomeName}}</b></p>
             <li *ngIf="isLoggedIn()">
-                <a (click)="logout()">Logout</a>
+                <a (click)="logout()">{{'Logout' | translate}}</a>
+            </li>
+            <li class="btn-group">
+                <a *ngFor="let lang of supportedLanguages"
+                        (click)="selectLang(lang.value)"
+                        class="btn btn-default" [class.btn-primary]="isCurrentLang(lang.value)">
+                    {{ lang.display }}
+                </a>
             </li>
         </ul>
         <div>

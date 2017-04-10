@@ -9,7 +9,8 @@ import {regex} from "../../constants/regex";
 
 @Component({
     selector: 'store-create-component',
-    templateUrl: './store-create.component.html'
+    templateUrl: 'store-create.component.html',
+    styleUrls: ['store-create.component.css']
 })
 export class StoreCreateComponent {
     storeForm: FormGroup;

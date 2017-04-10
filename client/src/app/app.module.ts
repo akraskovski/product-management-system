@@ -13,6 +13,9 @@ import {ProductModule} from "./product/product.module";
 import {UserModule} from "./user/user.module";
 import {StockModule} from "./stock/stock.module";
 import {StoreModule} from "./store/store.module";
+import {TranslateService} from "./translate/translate.service";
+import {TRANSLATION_PROVIDERS} from "./translate/translations";
+import {TranslatePipe} from "./translate/translate.pipe";
 
 @NgModule({
     imports: [
@@ -31,10 +34,13 @@ import {StoreModule} from "./store/store.module";
     declarations: [
         AppComponent,
         AuthorizationComponent,
+        TranslatePipe
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         AuthorizationService,
+        TRANSLATION_PROVIDERS,
+        TranslateService,
         SecurityService
     ],
     bootstrap: [AppComponent]
