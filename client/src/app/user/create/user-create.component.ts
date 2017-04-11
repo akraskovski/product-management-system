@@ -11,11 +11,14 @@ import {api} from "../../constants/api";
 })
 export class UserCreateComponent {
     userForm: FormGroup;
-    availableAuthorities: Authority[] = [];
-    selectedAuthorities: Authority[] = [];
-    loading = false;
+    availableAuthorities: Authority[];
+    selectedAuthorities: Authority[];
+    loading;
 
     constructor(private userService: CommonService, private router: Router) {
+        this.availableAuthorities = [];
+        this.selectedAuthorities = [];
+        this.loading = false;
     }
 
     ngOnInit(): void {
@@ -27,7 +30,7 @@ export class UserCreateComponent {
         this.userService.loadAll(api.AUTHORITY)
             .subscribe(
                 availableAuthorities => this.availableAuthorities = availableAuthorities,
-                err => this.logError(err));
+                error => this.logError(error));
     }
 
     private createEmptyForm(): void {

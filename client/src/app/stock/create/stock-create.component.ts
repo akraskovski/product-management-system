@@ -45,7 +45,7 @@ export class StockCreateComponent implements OnInit {
         });
     }
 
-    onSubmit() {
+    onSubmit(): void {
         this.loading = true;
         this.stockService.create(api.STOCK, this.createAndFillStock())
             .subscribe(
@@ -73,7 +73,7 @@ export class StockCreateComponent implements OnInit {
         this.availableProducts.push(product);
     }
 
-    logError(error: Error) {
+    logError(error: Error): void {
         this.loading = false;
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);

@@ -19,7 +19,7 @@ export class AuthorizationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.authorizationService.logout();
+        AuthorizationService.logout();
         this.createEmptyForm();
     }
 
@@ -30,7 +30,7 @@ export class AuthorizationComponent implements OnInit {
         });
     }
 
-    onSubmit() {
+    onSubmit(): void {
         this.loading = true;
         this.authorizationService.login(new User(this.loginForm.value.username, this.loginForm.value.password))
             .subscribe(
@@ -39,7 +39,7 @@ export class AuthorizationComponent implements OnInit {
             );
     }
 
-    onClose() {
+    onClose(): void {
         this.loading = false;
         this.router.navigate(['/']);
     }

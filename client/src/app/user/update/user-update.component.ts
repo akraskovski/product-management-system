@@ -13,12 +13,15 @@ import {CommonFunctions} from "../../common/common-functions";
 })
 export class UserUpdateComponent implements OnInit {
     userForm: FormGroup;
-    loading: boolean = false;
+    loading: boolean;
     user: User;
-    availableAuthorities: Authority[] = [];
-    selectedAuthorities: Authority[] = [];
+    availableAuthorities: Authority[];
+    selectedAuthorities: Authority[];
 
     constructor(private userService: CommonService, private router: Router, private route: ActivatedRoute) {
+        this.availableAuthorities = [];
+        this.selectedAuthorities = [];
+        this.loading = false;
     }
 
     ngOnInit(): void {

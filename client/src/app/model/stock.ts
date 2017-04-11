@@ -1,6 +1,5 @@
 import {Product} from "./product";
 export class Stock {
-
     id: number;
     specialize: string;
     address: string;

@@ -17,14 +17,14 @@ export class StoreDetailsComponent implements OnInit {
         this.loadData();
     }
 
-    private loadData() {
+    private loadData(): void {
         this.storeService.loadByIdUnauthorized(api.STORE, this.route.snapshot.params['id'])
             .subscribe(
                 store => this.selectedStore = store,
                 err => this.logError(err));
     }
 
-    private logError(err: Error) {
+    private logError(err: Error): void {
         console.error('There was an error: ' + err);
         this.router.navigate(['/']);
     }

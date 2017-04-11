@@ -53,7 +53,7 @@ export class ProductUpdateComponent implements OnInit {
         });
     }
 
-    onSubmit() {
+    onSubmit(): void {
         this.loading = true;
         this.fillUpdatedProduct();
         this.productService.update(api.PRODUCT, this.product)
@@ -69,7 +69,7 @@ export class ProductUpdateComponent implements OnInit {
         this.product.details = this.productForm.value.details;
     }
 
-    logError(error) {
+    logError(error): void {
         this.loading = false;
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);

@@ -94,7 +94,7 @@ export class StockUpdateComponent implements OnInit {
         this.availableProducts.push(product);
     }
 
-    private logError(error: Error) {
+    private logError(error: Error): void {
         this.loading = false;
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);

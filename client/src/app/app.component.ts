@@ -10,18 +10,18 @@ import {TranslateService} from "./translate/translate.service";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent extends AuthorityWorker implements OnInit{
+export class AppComponent extends AuthorityWorker implements OnInit {
     public supportedLanguages: any[];
     welcomeName: string;
 
-    constructor(private router: Router, private authorizationService: AuthorizationService, private translate: TranslateService) {
+    constructor(private router: Router, private translate: TranslateService) {
         super();
     }
 
     ngOnInit(): void {
         this.supportedLanguages = [
-            { display: 'English', value: 'en' },
-            { display: 'Русский', value: 'ru' },
+            {display: 'English', value: 'en'},
+            {display: 'Русский', value: 'ru'},
         ];
         this.selectLang('en');
     }
@@ -45,7 +45,7 @@ export class AppComponent extends AuthorityWorker implements OnInit{
 
     logout(): void {
         this.welcomeName = null;
-        this.authorizationService.logout();
+        AuthorizationService.logout();
         this.router.navigate(["/"]);
     }
 }
