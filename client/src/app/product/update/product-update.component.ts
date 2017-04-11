@@ -30,7 +30,7 @@ export class ProductUpdateComponent implements OnInit {
             name: new FormControl('', Validators.required),
             cost: new FormControl('', [Validators.required, Validators.pattern(regex.DOUBLE)]),
             type: new FormControl(''),
-            details: new FormControl('')
+            details: new FormControl('', Validators.pattern(regex.DETAILS))
         });
     }
 

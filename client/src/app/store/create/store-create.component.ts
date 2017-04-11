@@ -39,7 +39,7 @@ export class StoreCreateComponent {
     private createEmptyForm(): void {
         this.storeForm = new FormGroup({
             name: new FormControl('', Validators.required),
-            details: new FormControl(''),
+            details: new FormControl('', Validators.pattern(regex.DETAILS)),
             address: new FormControl(''),
             phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
             skype: new FormControl(''),

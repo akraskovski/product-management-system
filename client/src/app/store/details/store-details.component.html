@@ -1,35 +1,43 @@
 <div *ngIf="selectedStore">
-    <h2 class="page-header">Welcome to {{selectedStore.name}} Store</h2>
-    <div *ngIf="selectedStore.stockList.length > 0">
-        <h3 class="sub-header">Store warehouses</h3>
-        <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder" *ngFor="let stock of selectedStore.stockList">
-                <span class="text-muted">Specialize: {{stock.specialize}}</span>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h2>Welcome to {{selectedStore.name}} Store</h2>
+        </div>
+        <div class="panel-body">
+            <h3 class="sub-header">Store warehouses</h3>
+            <div class="row placeholders">
+                <div class="col-xs-6 col-sm-3 placeholder" *ngFor="let stock of selectedStore.stockList">
+                    <span class="text-muted">Specialize: {{stock.specialize}}</span>
+                </div>
             </div>
         </div>
-        <h3 class="sub-header">Available products in store</h3>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Cost</th>
-                    <th>Type</th>
-                </tr>
-                </thead>
-                <tbody *ngFor="let stock of selectedStore.stockList">
-                <tr *ngFor="let product of stock.productList">
-                    <td>{{product.id}}</td>
-                    <td>{{product.name}}</td>
-                    <td>{{product.cost}}</td>
-                    <td>{{product.type}}</td>
-                </tr>
-                </tbody>
-            </table>
+        <div *ngIf="selectedStore.stockList.length > 0">
+            <!-- Table -->
+            <h3>Available products in store</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Cost</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let stock of selectedStore.stockList">
+                    <tr *ngFor="let product of stock.productList">
+                        <td>{{product.id}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.cost}}</td>
+                        <td>{{product.type}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div *ngIf="!selectedStore.stockList.length > 0">
-        <p>Store is empty...</p>
+        <div *ngIf="!selectedStore.stockList.length > 0">
+            <p>Store is empty...</p>
+        </div>
     </div>
 </div>
