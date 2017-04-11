@@ -1,5 +1,5 @@
 import {Injectable, Inject} from '@angular/core';
-import {TRANSLATIONS} from './translations'; // import our opaque token
+import {TRANSLATIONS} from './translations';
 
 @Injectable()
 export class TranslateService {

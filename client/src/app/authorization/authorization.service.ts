@@ -15,7 +15,7 @@ export class AuthorizationService {
         const body = JSON.stringify({username: user.username, password: user.password});
         const options = new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})});
         return this.http.post(api.LOGIN, body, options)
-            .map(this.handleResponse)
+            .map(AuthorizationService.handleResponse)
             .catch(AuthorizationService.handleError);
     }
 
@@ -23,7 +23,7 @@ export class AuthorizationService {
         localStorage.removeItem(keys.USER_KEY);
     }
 
-    private handleResponse(response: Response) {
+    private static handleResponse(response: Response) {
         const token = response.json().token;
         let user = response.json().user;
         if (token && user) {
@@ -34,8 +34,8 @@ export class AuthorizationService {
         return false;
     }
 
-    private static handleError(error: Response | any) {
-        console.error(error.message ? error.message : error.toString());
+    private static handleError() {
+        //console.error(error.message ? error.message : error.toString());
         return Observable.throw("Invalid username or password");
     }
 }
