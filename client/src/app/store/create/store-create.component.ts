@@ -48,7 +48,7 @@ export class StoreCreateComponent {
         });
     }
 
-    onSubmit() {
+    onSubmit(): void {
         this.loading = true;
         this.storeService.create(api.STORE, this.fillCreatingStore())
             .subscribe(
@@ -80,7 +80,7 @@ export class StoreCreateComponent {
         this.availableStocks.push(stock);
     }
 
-    logError(error: Error) {
+    logError(error: Error): void {
         this.loading = false;
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);

@@ -20,7 +20,7 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
         this.load();
     }
 
-    private load() {
+    private load(): void {
         this.productService.loadAll(api.PRODUCT)
             .subscribe(
                 productList => this.productList = productList,
@@ -38,7 +38,7 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
         identifier && this.router.navigate(['product/product-update', identifier]);
     }
 
-    logError(error: Error) {
+    logError(error: Error): void {
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }

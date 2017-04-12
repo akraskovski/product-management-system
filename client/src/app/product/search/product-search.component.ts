@@ -19,7 +19,7 @@ export class ProductSearchComponent {
             this.productService.loadByName(api.PRODUCT, this.keyword)
                 .subscribe(
                     response => this.findProducts = response,
-                    err => this.logError(err)
+                    error => this.logError(error)
                 );
         }
     }
@@ -34,7 +34,7 @@ export class ProductSearchComponent {
         id ? this.router.navigate(['product/product-update', id]) : alert("Wrong ID!");
     }
 
-    logError(error) {
+    logError(error): void {
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }

@@ -53,7 +53,7 @@ export class StoreUpdateComponent {
                 error => this.logError(error));
     }
 
-    private fillForm(store: Store) {
+    private fillForm(store: Store): void {
         this.storeForm.setValue({
             name: store.name,
             details: store.details,
@@ -102,7 +102,7 @@ export class StoreUpdateComponent {
         this.availableStocks.push(stock);
     }
 
-    private logError(error: Error) {
+    private logError(error: Error): void {
         this.loading = false;
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);

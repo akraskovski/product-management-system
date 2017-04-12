@@ -20,7 +20,7 @@ export class StoreContentComponent extends AuthorityWorker {
         this.loadData();
     }
 
-    private loadData() {
+    private loadData(): void {
         this.storeService.loadAllUnauthorized(api.STORE)
             .subscribe(
                 storeList => this.storeList = storeList,
@@ -42,7 +42,7 @@ export class StoreContentComponent extends AuthorityWorker {
         id && this.router.navigate(['store/store-details', id]);
     }
 
-    logError(error: Error) {
+    logError(error: Error): void {
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }

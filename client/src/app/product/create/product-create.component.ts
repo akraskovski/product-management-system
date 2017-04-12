@@ -32,7 +32,7 @@ export class ProductCreateComponent implements OnInit {
         });
     }
 
-    onSubmit() {
+    onSubmit(): void {
         this.loading = true;
         this.productService.create(api.PRODUCT, this.createAndFillProduct())
             .subscribe(

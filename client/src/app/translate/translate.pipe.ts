@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from "@angular/core";
 import {TranslateService} from "./translate.service";
 
 @Pipe({
@@ -7,10 +7,11 @@ import {TranslateService} from "./translate.service";
 })
 export class TranslatePipe implements PipeTransform {
 
-    constructor(private _translate: TranslateService) { }
+    constructor(private translateService: TranslateService) {
+    }
 
     transform(value: string): any {
         if (!value) return;
-        return this._translate.instant(value);
+        return this.translateService.instant(value);
     }
 }

@@ -6,10 +6,7 @@ import {Authority} from "../model/authority";
 
 @Injectable()
 export class SecurityService implements CanActivate {
-
-    private router: Router;
-
-    constructor(router: Router) {
+    constructor(private router: Router) {
         this.router = router;
     }
 

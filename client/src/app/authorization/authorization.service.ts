@@ -19,11 +19,11 @@ export class AuthorizationService {
             .catch(AuthorizationService.handleError);
     }
 
-    logout(): void {
+    static logout(): void {
         localStorage.removeItem(keys.USER_KEY);
     }
 
-    private static handleResponse(response: Response) {
+    private static handleResponse(response: Response): boolean {
         const token = response.json().token;
         let user = response.json().user;
         if (token && user) {
@@ -35,7 +35,6 @@ export class AuthorizationService {
     }
 
     private static handleError() {
-        //console.error(error.message ? error.message : error.toString());
         return Observable.throw("Invalid username or password");
     }
 }

@@ -9,7 +9,7 @@ export class TranslateService {
         return this._currentLang;
     }
 
-    constructor(@Inject(TRANSLATIONS) private _translations: any) {
+    constructor(@Inject(TRANSLATIONS) private translations: any) {
     }
 
     public use(lang: string): void {
@@ -18,8 +18,8 @@ export class TranslateService {
 
     private translate(key: string): string {
         let translation = key;
-        if (this._translations[this.currentLang] && this._translations[this.currentLang][key]) {
-            return this._translations[this.currentLang][key];
+        if (this.translations[this.currentLang] && this.translations[this.currentLang][key]) {
+            return this.translations[this.currentLang][key];
         }
         return translation;
     }

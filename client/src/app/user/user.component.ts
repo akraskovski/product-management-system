@@ -20,7 +20,7 @@ export class UserComponent implements OnInit {
         this.loadData();
     }
 
-    private loadData() {
+    private loadData(): void {
         this.userService.loadAll(api.USER)
             .subscribe(
                 userList => this.userList = userList,
@@ -36,7 +36,7 @@ export class UserComponent implements OnInit {
         this.router.navigate(['user']).then(() => id && this.router.navigate(['user/user-update', id]));
     }
 
-    logError(error: Error) {
+    logError(error: Error): void {
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }

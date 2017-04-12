@@ -17,7 +17,7 @@ export class StockContentComponent implements OnInit {
         this.loadData();
     }
 
-    private loadData() {
+    private loadData(): void {
         this.stockService.loadAll(api.STOCK)
             .subscribe(
                 stockList => this.stockList = stockList,
@@ -35,7 +35,7 @@ export class StockContentComponent implements OnInit {
         id && this.router.navigate(['stock/stock-update', id]);
     }
 
-    logError(error) {
+    logError(error): void {
         console.error('There was an error: ' + + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
     }
