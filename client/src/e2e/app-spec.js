@@ -7,6 +7,6 @@ describe('login page', () => {
         username.sendKeys("admin");
         password.sendKeys("admin");
         loginButton.click();
-        expect(browser.getCurrentUrl()).toEqual('http://localhost:3000/#/store/store-content/');
+        expect(browser.getCurrentUrl()).toEqual('http://localhost:3000/#/store/store-content');
     });
 });

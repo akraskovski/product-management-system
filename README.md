@@ -50,11 +50,16 @@ Building project
 
 6. Copy file `pms.war` from folder /build/libs/ to `$CATALINA_HOME`/webapps/
 
+7. Start tomcat and go to `http:localhost:your_port/pms/`
+
 Tests
 =====
 To run server tests use command: `gradle test`
 
-To run client tests use command: *will be soon*
+To run client tests go to `client` folder in project and use command: 
+* `npm run selen-update`
+* `npm run selen`
+* `npm run test`
 
 Debug
 =====
@@ -62,4 +67,4 @@ To debug the client use `npm run server` to run Webpack DevServer (port :3000)
 
 Logging
 =======
-* Logs save to Tomcat base dir `/logs/spring-rest-hibernate-jpa.log`.
+* Logs save to Tomcat base dir `/logs/pms/pms.log`.
