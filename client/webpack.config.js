@@ -38,7 +38,7 @@ module.exports = {
 
     plugins: [
         new CommonsChunkPlugin({
-            names: ['vendor', 'polyfills']
+            names: ['vendor', 'polyfills'],
         }),
 
         new HtmlWebpackPlugin({
