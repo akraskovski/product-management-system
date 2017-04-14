@@ -65,6 +65,7 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
     }
 
     nextPage() {
+        console.log("next page clicked");
         if (this.currentIndex < this.pageNumber) {
             this.currentIndex++;
         }
