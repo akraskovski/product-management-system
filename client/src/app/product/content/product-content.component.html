@@ -1,5 +1,17 @@
 <div class="panel panel-default">
-    <div class="panel-heading text-center">Found products</div>
+    <div class="panel-heading text-center">
+        <div>
+            Found products
+            <select id="pageSelector" class="pull-right" [(ngModel)]="pageSize"
+                    (change)="onChangePageSize()">
+                <option [ngValue]='5'>5</option>
+                <option [ngValue]='10'>10</option>
+                <option [ngValue]='25'>25</option>
+                <option [ngValue]='50'>50</option>
+            </select>
+            <label for="pageSelector" class="pull-right">Count of products in page</label>
+        </div>
+    </div>
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
@@ -30,12 +42,14 @@
             <label style="margin-top:10px">Page {{currentIndex}}/{{pageNumber}}</label>
         </div>
         <div class="btn-group pull-right">
-            <ul class="pagination" >
-                <li [ngClass]="{'disabled': (currentIndex == 1 || pageNumber == 0)}" ><a (click)="prevPage()">Prev</a></li>
+            <ul class="pagination">
+                <li [ngClass]="{'disabled': (currentIndex == 1 || pageNumber == 0)}"><a (click)="prevPage()">Prev</a>
+                </li>
                 <li *ngFor="let page of pagesIndex" [ngClass]="{'active': (currentIndex == page)}">
                     <a (click)="setPage(page)">{{page}}</a>
                 </li>
-                <li [ngClass]="{'disabled': (currentIndex == pageNumber || pageNumber == 0)}" ><a (click)="nextPage()">Next</a></li>
+                <li [ngClass]="{'disabled': (currentIndex == pageNumber || pageNumber == 0)}"><a (click)="nextPage()">Next</a>
+                </li>
             </ul>
         </div>
     </div>
