@@ -5,11 +5,11 @@
         </div>
         <ul class="nav navbar-right top-nav">
             <li *ngIf="!isLoggedIn()">
-                <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+                <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>{{'Login' | translate}}</a>
             </li>
             <p *ngIf="welcomeName" class="navbar-text">{{'You logged as' | translate}} <b>{{welcomeName}}</b></p>
             <li *ngIf="isLoggedIn()">
-                <a (click)="logout()">{{'Logout' | translate}}</a>
+                <a (click)="logout()" class="btn btn-link">{{'Logout' | translate}}</a>
             </li>
             <li class="btn-group">
                 <a *ngFor="let lang of supportedLanguages"

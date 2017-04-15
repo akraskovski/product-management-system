@@ -3,26 +3,27 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" (click)="onClose()" aria-hidden="true">×</button>
-                <h4 class="modal-title">Welcome to product management system</h4>
+                <h4 class="modal-title">{{'Welcome to product management system' | translate}}</h4>
             </div>
             <div class="modal-body">
                 <form name="form" novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
-                        <label for="username">Username</label>
+                        <label for="username">{{'Username' | translate}}</label>
                         <input type="text" class="form-control" id="username" formControlName="username" required/>
-                        <div *ngIf="loginForm.get('username').hasError('required') && loginForm.get('username').touched" class="help-block">Username is
-                            required
+                        <div *ngIf="loginForm.get('username').hasError('required') && loginForm.get('username').touched" class="help-block">
+                            {{'Username is required' | translate}}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password">{{'Password' | translate}}</label>
                         <input type="password" class="form-control" id="password" formControlName="password" required/>
-                        <div *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched" class="help-block">Password
-                            is required
+                        <div *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched" class="help-block">
+                            {{'Password is required' | translate}}
                         </div>
                     </div>
                     <div class="form-group">
-                        <button id="loginButton" type="submit" [disabled]="loginForm.invalid || loading" data-dismiss="modal" class="btn btn-lg btn-success btn-block">Login
+                        <button id="loginButton" type="submit" [disabled]="loginForm.invalid || loading" data-dismiss="modal" class="btn btn-lg btn-success btn-block">
+                            {{'Login' | translate}}
                         </button>
                         <img *ngIf="loading"
                              src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
@@ -31,7 +32,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">{{'Close' | translate}}</button>
             </div>
         </div>
     </div>

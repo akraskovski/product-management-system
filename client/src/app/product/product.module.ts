@@ -11,6 +11,7 @@ import {HttpModule} from "@angular/http";
 import {BrowserModule} from "@angular/platform-browser";
 import {CommonService} from "../common/common.service";
 import {ProductRoutingModule} from "./product-routing.module";
+import {TranslateModule} from "../translate/translate.module";
 @NgModule({
     imports: [
         BrowserModule,
@@ -19,7 +20,8 @@ import {ProductRoutingModule} from "./product-routing.module";
         CommonModule,
         ReactiveFormsModule,
         RouterModule,
-        ProductRoutingModule
+        ProductRoutingModule,
+        TranslateModule
     ],
     declarations: [
         ProductComponent,

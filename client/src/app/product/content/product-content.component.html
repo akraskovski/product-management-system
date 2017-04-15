@@ -1,8 +1,8 @@
 <div class="panel panel-default">
     <div class="panel-heading text-center">
         <div>
-            <label class="pull-left">Total: {{filteredItems.length}} products</label>
-            Found products
+            <label class="pull-left">{{'Total:' | translate}} {{filteredItems.length}}</label>
+            {{'Found products' | translate}}
             <select id="pageSelector" class="pull-right" [(ngModel)]="pageSize"
                     (change)="onChangePageSize()">
                 <option [ngValue]=5>5</option>
@@ -10,18 +10,18 @@
                 <option [ngValue]=25>25</option>
                 <option [ngValue]=50>50</option>
             </select>
-            <label for="pageSelector" class="pull-right">items in page</label>
+            <label for="pageSelector" class="pull-right">{{'items in page' | translate}}</label>
         </div>
     </div>
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Name</th>
-            <th>Cost($)</th>
-            <th>Type</th>
-            <th>Details</th>
-            <th>Operations</th>
+            <th>{{'Name' | translate}}</th>
+            <th>{{'Cost' | translate}}($)</th>
+            <th>{{'Type' | translate}}</th>
+            <th>{{'Details' | translate}}</th>
+            <th>{{'Operations' | translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -32,24 +32,24 @@
             <td>{{product.type}}</td>
             <td>{{product.details}}</td>
             <td>
-                <button class="btn btn-warning" (click)="onEdit(product.id)">Edit</button>
-                <button class="btn btn-danger" (click)="onDelete(product.id)">Delete</button>
+                <button class="btn btn-warning" (click)="onEdit(product.id)">{{'Edit' | translate}}</button>
+                <button class="btn btn-danger" (click)="onDelete(product.id)">{{'Remove' | translate}}</button>
             </td>
         </tr>
         </tbody>
     </table>
     <div class="btn-toolbar" role="toolbar" style="margin: 0;">
         <div class="btn-group">
-            <label style="margin-top:10px">Page {{currentIndex}}/{{pages}}</label>
+            <label style="margin-top:10px">{{'Page' | translate}} {{currentIndex}}/{{pages}}</label>
         </div>
         <div class="btn-group pull-right">
             <ul class="pagination">
-                <li [ngClass]="{'disabled': (currentIndex == 1 || pages == 0)}"><a (click)="prevPage()">Prev</a>
+                <li [ngClass]="{'disabled': (currentIndex == 1 || pages == 0)}"><a (click)="prevPage()">{{'Prev' | translate}}</a>
                 </li>
                 <li *ngFor="let page of pagesIndex" [ngClass]="{'active': (currentIndex == page)}">
                     <a (click)="setPage(page)">{{page}}</a>
                 </li>
-                <li [ngClass]="{'disabled': (currentIndex == pages || pages == 0)}"><a (click)="nextPage()">Next</a>
+                <li [ngClass]="{'disabled': (currentIndex == pages || pages == 0)}"><a (click)="nextPage()">{{'Next' | translate}}</a>
                 </li>
             </ul>
         </div>
