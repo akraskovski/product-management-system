@@ -10,19 +10,16 @@ import {Router} from "@angular/router";
 export class StockContentComponent implements OnInit {
     stockList: Stock[];
     filteredItems: Stock[];
+    pageSize: number = 10;
     pages: number;
-    pageSize: number;
-    pageNumber: number;
     currentIndex: number;
     pagesIndex: number[];
     pageStart: number;
 
     constructor(private stockService: CommonService, private router: Router) {
-        this.currentIndex = 1;
-        this.pageSize = 10;
-        this.pageNumber = 0;
-        this.pageStart = 1;
-        this.pages = 1;
+        this.stockList = [];
+        this.filteredItems = [];
+        this.pagesIndex = [];
     }
 
     ngOnInit(): void {
@@ -36,16 +33,16 @@ export class StockContentComponent implements OnInit {
                     this.stockList = this.filteredItems = stockList;
                     this.createPagination();
                 },
-                error => this.logError(error));
+                err => this.logError(err)
+            );
     }
 
     createPagination(): void {
-        this.pageNumber = parseInt("" + this.filteredItems.length / this.pageSize);
+        this.currentIndex = 1;
+        this.pageStart = 1;
+        this.pages = parseInt("" + this.filteredItems.length / this.pageSize);
         if (this.filteredItems.length % this.pageSize != 0) {
-            this.pageNumber++;
-        }
-        if (this.pageNumber < this.pages) {
-            this.pages = this.pageNumber;
+            this.pages++;
         }
         this.refreshItems();
     }
@@ -74,7 +71,7 @@ export class StockContentComponent implements OnInit {
     }
 
     nextPage(): void {
-        if (this.currentIndex < this.pageNumber) {
+        if (this.currentIndex < this.pages) {
             this.currentIndex++;
         }
         if (this.currentIndex >= (this.pageStart + this.pages)) {

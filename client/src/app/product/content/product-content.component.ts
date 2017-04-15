@@ -12,14 +12,17 @@ import {AuthorityWorker} from "../../common/authority-worker";
 export class ProductContentComponent extends AuthorityWorker implements OnInit {
     productList: Product[];
     filteredItems: Product[];
-    pageSize: number = 2;
-    pageNumber: number = 0;
-    currentIndex: number = 1;
+    pageSize: number = 10;
+    pages: number;
+    currentIndex: number;
     pagesIndex: number[];
-    pageStart: number = 1;
+    pageStart: number;
 
     constructor(private productService: CommonService, private router: Router) {
         super();
+        this.productList = [];
+        this.filteredItems = [];
+        this.pagesIndex = [];
     }
 
     ngOnInit(): void {
@@ -40,9 +43,9 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
     createPagination(): void {
         this.currentIndex = 1;
         this.pageStart = 1;
-        this.pageNumber = parseInt("" + this.filteredItems.length / this.pageSize);
+        this.pages = parseInt("" + this.filteredItems.length / this.pageSize);
         if (this.filteredItems.length % this.pageSize != 0) {
-            this.pageNumber++;
+            this.pages++;
         }
         this.refreshItems();
     }
@@ -54,7 +57,7 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
 
     fillArray(): any {
         let obj = [];
-        for (let index = this.pageStart; index < this.pageStart + this.pageNumber; index++) {
+        for (let index = this.pageStart; index < this.pageStart + this.pages; index++) {
             obj.push(index);
         }
         return obj;
@@ -71,11 +74,11 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
     }
 
     nextPage(): void {
-        if (this.currentIndex < this.pageNumber) {
+        if (this.currentIndex < this.pages) {
             this.currentIndex++;
         }
-        if (this.currentIndex >= (this.pageStart + this.pageNumber)) {
-            this.pageStart = this.currentIndex - this.pageNumber + 1;
+        if (this.currentIndex >= (this.pageStart + this.pages)) {
+            this.pageStart = this.currentIndex - this.pages + 1;
         }
         this.refreshItems();
     }
