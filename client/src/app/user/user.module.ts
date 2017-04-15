@@ -9,6 +9,7 @@ import {UserCreateComponent} from "./create/user-create.component";
 import {UserUpdateComponent} from "./update/user-update.component";
 import {CommonService} from "../common/common.service";
 import {UserRoutingModule} from "./user-routing.module";
+import {TranslateModule} from "../translate/translate.module";
 @NgModule({
     imports: [
         BrowserModule,
@@ -17,7 +18,8 @@ import {UserRoutingModule} from "./user-routing.module";
         HttpModule,
         ReactiveFormsModule,
         CommonModule,
-        UserRoutingModule
+        UserRoutingModule,
+        TranslateModule.forRoot()
     ],
     declarations: [
         UserComponent,

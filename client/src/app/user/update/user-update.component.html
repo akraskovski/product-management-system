@@ -1,25 +1,25 @@
 <div class="col-sm-8">
-    <h3>Edit User Form</h3>
+    <h3>{{'Edit User Form' | translate}}</h3>
     <form name="form" novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label for="username">Username*</label>
+            <label for="username">{{'Username*' | translate}}</label>
             <input type="text" class="form-control" name="username" formControlName="username" required/>
             <div *ngIf="userForm.get('username').hasError('required') && userForm.get('username').touched"
-                 class="alert alert-danger">Username is required
+                 class="alert alert-danger">{{'Username is required' | translate}}
             </div>
         </div>
         <div class="form-group">
-            <label for="password">Password*</label>
+            <label for="password">{{'Password*' | translate}}</label>
             <input type="text" class="form-control" name="password" formControlName="password" required/>
             <div *ngIf="userForm.get('password').hasError('required') && userForm.get('password').touched"
-                 class="alert alert-danger">Password is required
+                 class="alert alert-danger">{{'Password is required' | translate}}
             </div>
         </div>
         <div class="form-group row">
             <div class="col-sm-6">
                 <div class="panel panel-primary" style="min-height: 200px">
                     <div class="panel-heading text-center">
-                        <h3 class="panel-title">Available authorities(click to add)</h3>
+                        <h3 class="panel-title">{{'Available authorities(click to add)' | translate}}</h3>
                     </div>
                     <div class="panel-body">
                         <div *ngFor="let authority of availableAuthorities">
@@ -34,7 +34,7 @@
             <div class="col-sm-6">
                 <div class="panel panel-primary" style="min-height: 200px">
                     <div class="panel-heading text-center">
-                        <h3 class="panel-title">Selected authorities(click to remove)</h3>
+                        <h3 class="panel-title">{{'Selected authorities(click to remove)' | translate}}</h3>
                     </div>
                     <div class="panel-body">
                         <div *ngFor="let selectedAuthority of selectedAuthorities">
@@ -49,8 +49,8 @@
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" [disabled]="userForm.invalid || loading" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+            <button type="submit" [disabled]="userForm.invalid || loading" class="btn btn-primary">{{'Submit' | translate}}</button>
+            <button type="button" class="btn btn-danger" (click)="onDelete()">{{'Remove' | translate}}</button>
             <img *ngIf="loading"
                  src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
         </div>

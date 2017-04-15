@@ -11,7 +11,7 @@ import {TranslateService} from "./translate/translate.service";
     styleUrls: ['./app.component.css']
 })
 export class AppComponent extends AuthorityWorker implements OnInit {
-    public supportedLanguages: any[];
+    supportedLanguages: any[];
     welcomeName: string;
 
     constructor(private router: Router, private translate: TranslateService) {
