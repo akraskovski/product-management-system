@@ -1,28 +1,31 @@
-<h3>Create Stock Form</h3>
+<h3>{{'Create Stock Form' | translate}}</h3>
 <form novalidate [formGroup]="stockForm" (ngSubmit)="onSubmit()">
     <div class="form-group row">
-        <label for="specialize" class="col-sm-1 col-form-label">Specialize*</label>
+        <label for="specialize" class="col-sm-2 col-form-label">{{'Specialize' | translate}}*</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" name="specialize" formControlName="specialize" required/>
         </div>
     </div>
     <div class="form-group row">
-        <label for="address" class="col-sm-1 col-form-label">Address</label>
+        <label for="address" class="col-sm-2 col-form-label">{{'Address' | translate}}</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" name="address" formControlName="address"/>
         </div>
     </div>
     <div class="form-group row">
-        <label for="phone" class="col-sm-1 col-form-label">Phone</label>
+        <label for="phone" class="col-sm-2 col-form-label">{{'Phone' | translate}}</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" name="phone" formControlName="phone"/>
         </div>
     </div>
     <div *ngIf="stockForm.get('phone').hasError('pattern') && stockForm.get('phone').touched"
-         class="alert alert-danger">Phone number must contain only digits and length must be 5-20 symbols!
+         class="alert alert-danger">{{'Phone number must contain only digits and length must be 5-20 symbols!' |
+        translate}}
     </div>
     <div class="form-group row">
-        <label for="square" class="col-sm-1 col-form-label">Square(m<sup><small>2</small></sup>)</label>
+        <label for="square" class="col-sm-2 col-form-label">{{'Square' | translate}}(m<sup>
+            <small>2</small>
+        </sup>)</label>
         <div class="col-sm-4">
             <input type="text" class="form-control" name="square" formControlName="square"/>
         </div>
@@ -31,10 +34,10 @@
         <div class="col-sm-3">
             <div class="panel panel-primary" style="min-height: 200px">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title">Available products(click to add)</h3>
+                    <h3 class="panel-title">{{'Available products(click to add)' | translate}}</h3>
                 </div>
                 <div class="panel-body">
-                    <div *ngFor="let product of availableProducts" >
+                    <div *ngFor="let product of availableProducts">
                         <button type="button" class="list-group-item" (click)="addProductToSelected(product)">
                             {{product.name}}
                             <span aria-hidden="true">→</span>
@@ -46,7 +49,7 @@
         <div class="col-sm-3">
             <div class="panel panel-primary" style="min-height: 200px">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title">Selected products(click to remove)</h3>
+                    <h3 class="panel-title">{{'Selected products(click to remove)' | translate}}</h3>
                 </div>
                 <div class="panel-body">
                     <div *ngFor="let selectedProduct of selectedProducts">
@@ -61,7 +64,8 @@
         </div>
     </div>
     <div class="form-group row">
-        <button type="submit" [disabled]="stockForm.invalid || loading" class="btn btn-default">Submit
+        <button type="submit" [disabled]="stockForm.invalid || loading" class="btn btn-default">
+            {{'Submit' | translate}}
         </button>
         <img *ngIf="loading"
              src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>

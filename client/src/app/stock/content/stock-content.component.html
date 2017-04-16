@@ -1,8 +1,8 @@
 <div class="panel panel-default">
     <div class="panel-heading text-center">
         <div>
-            <label class="pull-left">Total: {{filteredItems.length}} stocks</label>
-            Found stock list
+            <label class="pull-left">{{'Total:' | translate}} {{filteredItems.length}}</label>
+            {{'Found stock list' | translate}}
             <select id="pageSelector" class="pull-right" [(ngModel)]="pageSize"
                     (change)="onChangePageSize()">
                 <option [ngValue]=5>5</option>
@@ -10,19 +10,19 @@
                 <option [ngValue]=25>25</option>
                 <option [ngValue]=50>50</option>
             </select>
-            <label for="pageSelector" class="pull-right">items in page</label>
+            <label for="pageSelector" class="pull-right">{{'items in page' | translate}}</label>
         </div>
     </div>
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Specialize</th>
-            <th>Products</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Square(m<sup><small>2</small></sup>)</th>
-            <th>Operations</th>
+            <th>{{'Specialize' | translate}}</th>
+            <th>{{'Products' | translate}}</th>
+            <th>{{'Address' | translate}}</th>
+            <th>{{'Phone' | translate}}</th>
+            <th>{{'Square' | translate}}(m<sup><small>2</small></sup>)</th>
+            <th>{{'Operations' | translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -36,24 +36,24 @@
             <td>{{stock.phone}}</td>
             <td>{{stock.square}}</td>
             <td>
-                <button class="btn btn-warning" (click)="onEdit(stock.id)">Edit</button>
-                <button class="btn btn-danger" (click)="onDelete(stock.id)">Delete</button>
+                <button class="btn btn-warning" (click)="onEdit(stock.id)">{{'Edit' | translate}}</button>
+                <button class="btn btn-danger" (click)="onDelete(stock.id)">{{'Remove' | translate}}</button>
             </td>
         </tr>
         </tbody>
     </table>
     <div class="btn-toolbar" role="toolbar" style="margin: 0;">
         <div class="btn-group">
-            <label style="margin-top:10px">Page {{currentIndex}}/{{pages}}</label>
+            <label style="margin-top:10px">{{'Page' | translate}} {{currentIndex}}/{{pages}}</label>
         </div>
         <div class="btn-group pull-right">
             <ul class="pagination">
-                <li [ngClass]="{'disabled': (currentIndex == 1 || pages == 0)}"><a (click)="prevPage()">Prev</a>
+                <li [ngClass]="{'disabled': (currentIndex == 1 || pages == 0)}"><a (click)="prevPage()">{{'Prev' | translate}}</a>
                 </li>
                 <li *ngFor="let page of pagesIndex" [ngClass]="{'active': (currentIndex == page)}">
                     <a (click)="setPage(page)">{{page}}</a>
                 </li>
-                <li [ngClass]="{'disabled': (currentIndex == pages || pages == 0)}"><a (click)="nextPage()">Next</a>
+                <li [ngClass]="{'disabled': (currentIndex == pages || pages == 0)}"><a (click)="nextPage()">{{'Next' | translate}}</a>
                 </li>
             </ul>
         </div>
