@@ -39,5 +39,10 @@ export const LANG_RU_TRANS = {
     'Operations': 'Действия',
     'Page': 'Страница',
     'Prev': 'Пред',
-    'Next': 'След'
+    'Next': 'След',
+    'Create Product Form': 'Форма добавления продукта',
+    'Must be 0-500 characters long': 'Длина должна быть 0-500 символов',
+    'Edit Product Form': 'Форма редактирования продукта',
+    'Product Search': 'Поиск продуктов',
+    'Input name': 'Введите имя'
 };

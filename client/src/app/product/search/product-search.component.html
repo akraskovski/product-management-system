@@ -1,7 +1,7 @@
-<h3>Product Search</h3>
+<h3>{{'Product Search' | translate}}</h3>
 <br/>
 <form (ngSubmit)="onSubmit()">
-    <label for="keyword">Input name</label>
+    <label for="keyword">{{'Input name' | translate}}</label>
     <div class="input-group">
         <input name="keyword" type="text" class="form-control" [(ngModel)]="keyword" required>
         <span class="input-group-btn">
@@ -11,17 +11,16 @@
     </span>
     </div>
 </form>
-
 <div *ngIf="findProducts" class="table-responsive">
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Name</th>
-            <th>Cost($)</th>
-            <th>Type</th>
-            <th>Details</th>
-            <th>Operations</th>
+            <th>{{'Name' | translate}}</th>
+            <th>{{'Cost' | translate}}($)</th>
+            <th>{{'Type' | translate}}</th>
+            <th>{{'Details' | translate}}</th>
+            <th>{{'Operations' | translate}}</th>
         </tr>
         </thead>
         <tbody>
@@ -32,8 +31,8 @@
             <td>{{product.type}}</td>
             <td>{{product.details}}</td>
             <td>
-                <button class="btn btn-warning" (click)="onEdit(product.id)">Edit</button>
-                <button class="btn btn-danger" (click)="onDelete(product.id)">Delete</button>
+                <button class="btn btn-warning" (click)="onEdit(product.id)">{{'Edit' | translate}}</button>
+                <button class="btn btn-danger" (click)="onDelete(product.id)">{{'Remove' | translate}}</button>
             </td>
         </tr>
         </tbody>
