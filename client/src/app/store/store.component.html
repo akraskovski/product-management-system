@@ -2,16 +2,16 @@
     <div class="row content">
         <div class="col-sm-12">
             <h2 class="page-header">
-                Store management
+                {{'Store management' | translate}}
             </h2>
         </div>
         <div class="col-sm-2 sidenav">
-            <h3>Navigation</h3>
+            <h3>{{'Navigation' | translate}}</h3>
             <ul class="nav nav-pills nav-stacked">
                 <li><a routerLink="store-content" routerLinkActive="active"><span
-                        class="glyphicon glyphicon-th-list"></span> Store list</a></li>
+                        class="glyphicon glyphicon-th-list"></span> {{'Store list' | translate}}</a></li>
                 <li><a *ngIf="canWorkWithStore()" routerLink="store-create" routerLinkActive="active"><span
-                        class="glyphicon glyphicon-plus-sign"></span> Create store</a></li>
+                        class="glyphicon glyphicon-plus-sign"></span> {{'Create store' | translate}}</a></li>
             </ul>
         </div>
         <div class="col-sm-10">

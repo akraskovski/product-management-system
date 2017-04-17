@@ -55,8 +55,22 @@ export const LANG_RU_TRANS = {
     'Phone': 'Телефон',
     'Square': 'Площадь',
     'Create Stock Form': 'Форма добавления продукта',
+    'Update Stock Form': 'Форма редактирования продукта',
     'Phone number must contain only digits and length must be 5-20 symbols!': 'Номер телефона может содержать только цифры и быть длиной 5-20 символов!',
     'Available products(click to add)': 'Доступные продукты(ЛКМ - добавить)',
     'Selected products(click to remove)': 'Выбранные продукты(ЛКМ - удалить)',
-
+    'Store management': 'Менеджмент магазинов',
+    'Store list': 'Список магазинов',
+    'Create store': 'Добавить магазин',
+    'All stores in system': 'Все магазины в системе',
+    'More': 'Подробнее',
+    'Create store form': 'Форма добавления магазина',
+    'Mail': 'Почта',
+    'Discounts': 'Система скидок',
+    'Available stocks(click to add)': 'Доступные склады',
+    'Selected stocks(click to remove)': 'Сотрудничающие склады',
+    'Edit store form': 'Форма редактирования магазина',
+    'Welcome to': 'Добро пожаловать в',
+    'Contact with us': 'Связь с магазином',
+    'Available products in store': 'Продукты, доступные в магазине'
 };

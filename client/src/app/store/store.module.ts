@@ -11,6 +11,7 @@ import {StoreCreateComponent} from "./create/store-create.component";
 import {StoreUpdateComponent} from "./update/store-update.component";
 import {StoreRoutingModule} from "./store-routing.module";
 import {StoreDetailsComponent} from "./details/store-details.component";
+import {TranslateModule} from "../translate/translate.module";
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {StoreDetailsComponent} from "./details/store-details.component";
         HttpModule,
         ReactiveFormsModule,
         CommonModule,
-        StoreRoutingModule
+        StoreRoutingModule,
+        TranslateModule
     ],
     declarations: [
         StoreComponent,
