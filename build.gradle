@@ -1,15 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'org.flywaydb.flyway'
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.flywaydb:flyway-gradle-plugin:4.1.2'
-    }
-}
 
 repositories {
     mavenCentral()
@@ -30,7 +20,6 @@ dependencies {
     compile 'io.jsonwebtoken:jjwt:0.7.0'
     compile 'org.apache.commons:commons-lang3:3.5'
     compile "org.flywaydb:flyway-core:4.1.2"
-
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework:spring-test:4.3.6.RELEASE'
 }
@@ -40,22 +29,4 @@ war.dependsOn 'client:npm_run_build'
 war {
     from "client/dist"
     archiveName = 'pms.war'
-}
-
-def dbProperties
-
-task loadDbProperties() {
-    file(System.getenv('CATALINA_HOME') + "/conf/pms/pms.properties").withReader { reader ->
-        dbProperties = new Properties()
-        dbProperties.load(reader)
-    }
-}
-
-compileJava.dependsOn loadDbProperties
-
-flyway {
-    url = dbProperties.get('db.url')
-    user = dbProperties.get('db.username')
-    password = dbProperties.get('db.password')
-    schemas = [dbProperties.get('db.schema')]
 }
