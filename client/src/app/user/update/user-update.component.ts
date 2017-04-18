@@ -9,7 +9,7 @@ import {CommonFunctions} from "../../common/common-functions";
 
 @Component({
     selector: 'user-update-component',
-    templateUrl: './user-update.component.html'
+    templateUrl: 'user-update.component.html'
 })
 export class UserUpdateComponent implements OnInit {
     userForm: FormGroup;

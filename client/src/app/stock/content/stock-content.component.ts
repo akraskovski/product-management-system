@@ -5,7 +5,7 @@ import {api} from "../../constants/api";
 import {Router} from "@angular/router";
 @Component({
     selector: 'stock-content-component',
-    templateUrl: './stock-content.component.html'
+    templateUrl: 'stock-content.component.html'
 })
 export class StockContentComponent implements OnInit {
     stockList: Stock[];

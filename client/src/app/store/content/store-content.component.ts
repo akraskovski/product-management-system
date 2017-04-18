@@ -7,7 +7,7 @@ import {AuthorityWorker} from "../../common/authority-worker";
 
 @Component({
     selector: 'store-content-component',
-    templateUrl: './store-content.component.html'
+    templateUrl: 'store-content.component.html'
 })
 export class StoreContentComponent extends AuthorityWorker {
     storeList: Store[];

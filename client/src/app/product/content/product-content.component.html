@@ -32,9 +32,38 @@
             <td>{{product.type}}</td>
             <td>{{product.details}}</td>
             <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                    Details
+                </button>
                 <button class="btn btn-warning" (click)="onEdit(product.id)">{{'Edit' | translate}}</button>
                 <button class="btn btn-danger" (click)="onDelete(product.id)">{{'Remove' | translate}}</button>
             </td>
+            <div class="modal fade" id="myModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" id="exampleModalLabel">{{product.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                    <div class="col-md-12 text-center">
+                                        <img src="http://panoramajournal.ru/wp-content/uploads/%D1%81%D0%BA%D0%BB%D0%B0%D0%B4-%D0%B2-%D0%B0%D1%80%D0%B5%D0%BD%D0%B4%D1%83.jpg"
+                                             class="img-rounded" width="100%" height="100%" alt="{{product.name}} image">
+                                    </div>
+                                    <div class="col-md-4">.col-md-4</div>
+                                    <div class="col-md-4">.col-md-4</div>
+                                    <div class="col-md-4">.col-md-4</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </tr>
         </tbody>
     </table>
@@ -44,12 +73,14 @@
         </div>
         <div class="btn-group pull-right">
             <ul class="pagination">
-                <li [ngClass]="{'disabled': (currentIndex == 1 || pages == 0)}"><a (click)="prevPage()">{{'Prev' | translate}}</a>
+                <li [ngClass]="{'disabled': (currentIndex == 1 || pages == 0)}"><a (click)="prevPage()">{{'Prev' |
+                    translate}}</a>
                 </li>
                 <li *ngFor="let page of pagesIndex" [ngClass]="{'active': (currentIndex == page)}">
                     <a (click)="setPage(page)">{{page}}</a>
                 </li>
-                <li [ngClass]="{'disabled': (currentIndex == pages || pages == 0)}"><a (click)="nextPage()">{{'Next' | translate}}</a>
+                <li [ngClass]="{'disabled': (currentIndex == pages || pages == 0)}"><a (click)="nextPage()">{{'Next' |
+                    translate}}</a>
                 </li>
             </ul>
         </div>

@@ -5,7 +5,7 @@ import {api} from "../../constants/api";
 import {ActivatedRoute, Router} from "@angular/router";
 @Component({
     selector: 'store-details-component',
-    templateUrl: './store-details.component.html'
+    templateUrl: 'store-details.component.html'
 })
 export class StoreDetailsComponent implements OnInit {
     selectedStore: Store;

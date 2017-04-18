@@ -7,8 +7,8 @@ import {TranslateService} from "./translate/translate.service";
 
 @Component({
     selector: 'my-app',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.css']
 })
 export class AppComponent extends AuthorityWorker implements OnInit {
     supportedLanguages: any[];

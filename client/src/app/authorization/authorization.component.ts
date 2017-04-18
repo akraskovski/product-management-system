@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 
 @Component({
     selector: 'authorization-component',
-    templateUrl: './authorization.component.html'
+    templateUrl: 'authorization.component.html'
 })
 export class AuthorizationComponent implements OnInit {
     loginForm: FormGroup;

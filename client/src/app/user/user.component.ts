@@ -6,7 +6,7 @@ import {api} from "../constants/api";
 
 @Component({
     selector: 'user-component',
-    templateUrl: './user.component.html',
+    templateUrl: 'user.component.html',
     styleUrls: ['user.component.css']
 })
 export class UserComponent implements OnInit {

@@ -5,7 +5,7 @@ import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 @Component({
     selector: 'product-search-component',
-    templateUrl: './product-search.component.html'
+    templateUrl: 'product-search.component.html'
 })
 export class ProductSearchComponent {
     keyword: string;

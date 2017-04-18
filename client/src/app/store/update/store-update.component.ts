@@ -9,7 +9,7 @@ import {CommonFunctions} from "../../common/common-functions";
 import {regex} from "../../constants/regex";
 @Component({
     selector: 'store-update-component',
-    templateUrl: './store-update.component.html'
+    templateUrl: 'store-update.component.html'
 })
 export class StoreUpdateComponent {
     storeForm: FormGroup;
