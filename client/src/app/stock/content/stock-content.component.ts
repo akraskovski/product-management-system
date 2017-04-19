@@ -96,6 +96,10 @@ export class StockContentComponent implements OnInit {
         id && this.router.navigate(['stock/stock-update', id]);
     }
 
+    onChangePageSize(): void {
+        this.createPagination();
+    }
+
     logError(error): void {
         console.error('There was an error: ' + + error.message ? error.message : error.toString());
         this.router.navigate(['/']);

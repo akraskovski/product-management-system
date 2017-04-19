@@ -48,12 +48,14 @@
         </div>
         <div class="btn-group pull-right">
             <ul class="pagination">
-                <li [ngClass]="{'disabled': (currentIndex == 1 || pages == 0)}"><a (click)="prevPage()">{{'Prev' | translate}}</a>
+                <li [ngClass]="{'disabled': (currentIndex == 1 || pages == 0)}">
+                    <a class="btn" (click)="prevPage()">{{'Prev' | translate}}</a>
                 </li>
                 <li *ngFor="let page of pagesIndex" [ngClass]="{'active': (currentIndex == page)}">
-                    <a (click)="setPage(page)">{{page}}</a>
+                    <a class="btn" (click)="setPage(page)">{{page}}</a>
                 </li>
-                <li [ngClass]="{'disabled': (currentIndex == pages || pages == 0)}"><a (click)="nextPage()">{{'Next' | translate}}</a>
+                <li [ngClass]="{'disabled': (currentIndex == pages || pages == 0)}">
+                    <a class="btn" (click)="nextPage()">{{'Next' | translate}}</a>
                 </li>
             </ul>
         </div>

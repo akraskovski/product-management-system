@@ -11,6 +11,7 @@ import {AuthorityWorker} from "../../common/authority-worker";
 })
 export class ProductContentComponent extends AuthorityWorker implements OnInit {
     productList: Product[];
+    selectedProduct: Product;
     filteredItems: Product[];
     pageSize: number = 10;
     pages: number;
@@ -97,6 +98,11 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
 
     onEdit(identifier: number): void {
         identifier && this.router.navigate(['product/product-update', identifier]);
+    }
+
+    onDetails(product: Product) {
+        if (product)
+            this.selectedProduct = product;
     }
 
     onChangePageSize(): void {
