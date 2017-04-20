@@ -2,7 +2,7 @@ package by.intexsoft.controller;
 
 import by.intexsoft.model.dto.TokenDTO;
 import by.intexsoft.model.User;
-import by.intexsoft.security.service.TokenService;
+import by.intexsoft.service.TokenService;
 import by.intexsoft.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

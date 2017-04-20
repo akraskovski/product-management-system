@@ -1,7 +1,7 @@
-package by.intexsoft.security.service.impl;
+package by.intexsoft.service.impl;
 
 import by.intexsoft.model.User;
-import by.intexsoft.security.service.TokenService;
+import by.intexsoft.service.TokenService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

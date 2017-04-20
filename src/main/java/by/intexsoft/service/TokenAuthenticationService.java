@@ -1,4 +1,4 @@
-package by.intexsoft.security.service;
+package by.intexsoft.service;
 
 import org.springframework.security.core.Authentication;
 

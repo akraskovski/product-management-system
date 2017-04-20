@@ -1,4 +1,4 @@
-package by.intexsoft.security.service;
+package by.intexsoft.service;
 
 import by.intexsoft.model.User;
 

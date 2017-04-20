@@ -1,9 +1,9 @@
-package by.intexsoft.security.service.impl;
+package by.intexsoft.service.impl;
 
 import by.intexsoft.model.User;
 import by.intexsoft.model.UserAuthentication;
 import by.intexsoft.security.exception.UserNotFoundException;
-import by.intexsoft.security.service.TokenAuthenticationService;
+import by.intexsoft.service.TokenAuthenticationService;
 
 import by.intexsoft.service.UserService;
 import io.jsonwebtoken.Claims;
