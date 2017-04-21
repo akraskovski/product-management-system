@@ -41,17 +41,17 @@ public class AuthenticationController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> authenticate(@RequestBody User requestUser) {
-        LOGGER.info("Start authentication user with username: " + requestUser.username);
-        if (isNotEmpty(requestUser.username) && isNotEmpty(requestUser.password)) {
-            User user = userService.findByUsername(requestUser.username);
-            String token = tokenService.generate(user, requestUser.password);
+        LOGGER.info("Start authentication user with username: " + requestUser.getUsername());
+        if (isNotEmpty(requestUser.getUsername()) && isNotEmpty(requestUser.getPassword())) {
+            User user = userService.findByUsername(requestUser.getUsername());
+            String token = tokenService.generate(user, requestUser.getPassword());
             if (token != null) {
-                LOGGER.info("Authentication successful! user with username: " + requestUser.username);
-                user.password = EMPTY;
+                LOGGER.info("Authentication successful! user with username: " + requestUser.getUsername());
+                user.setPassword(EMPTY);
                 return new ResponseEntity<>(new TokenDTO(token, user), HttpStatus.OK);
             }
         }
-        LOGGER.error("Authentication failed user with username: " + requestUser.username);
+        LOGGER.error("Authentication failed user with username: " + requestUser.getUsername());
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

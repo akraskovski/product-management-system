@@ -25,7 +25,7 @@ public class UserAuthentication implements Authentication {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.authorities;
+        return user.getAuthorities();
     }
 
     /**
@@ -35,7 +35,7 @@ public class UserAuthentication implements Authentication {
      */
     @Override
     public Object getCredentials() {
-        return user.password;
+        return user.getPassword();
     }
 
     /**
@@ -55,7 +55,7 @@ public class UserAuthentication implements Authentication {
      */
     @Override
     public Object getPrincipal() {
-        return user.username;
+        return user.getUsername();
     }
 
     /**
@@ -86,7 +86,7 @@ public class UserAuthentication implements Authentication {
      */
     @Override
     public String getName() {
-        return user.username;
+        return user.getUsername();
     }
 
 }

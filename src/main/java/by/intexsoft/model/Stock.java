@@ -14,33 +14,14 @@ import java.util.List;
 @Table
 public class Stock extends BaseEntity {
 
-    /**
-     * Stock specialize
-     */
     @Column(unique = true, nullable = false)
-    public String specialize;
-
-    /**
-     * Stock address
-     */
+    private String specialize;
     @Column
-    public String address;
-
-    /**
-     * Stocks contact phone
-     */
+    private String address;
     @Column
-    public String phone;
-
-    /**
-     * Stock square
-     */
+    private String phone;
     @Column
-    public Double square;
-
-    /**
-     * ManyToMany relation to {@link Product} entities
-     */
+    private Double square;
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = Product.class)
     @JoinTable(
@@ -48,5 +29,36 @@ public class Stock extends BaseEntity {
             joinColumns = {@JoinColumn(name = "stock_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
-    public List<Product> productList;
+    private List<Product> productList;
+
+    /**
+     * Stock specialize
+     */
+    public String getSpecialize() {
+        return specialize;
+    }
+    /**
+     * Stock address
+     */
+    public String getAddress() {
+        return address;
+    }
+    /**
+     * Stocks contact phone
+     */
+    public String getPhone() {
+        return phone;
+    }
+    /**
+     * Stock square
+     */
+    public Double getSquare() {
+        return square;
+    }
+    /**
+     * ManyToMany relation to {@link Product} entities
+     */
+    public List<Product> getProductList() {
+        return productList;
+    }
 }

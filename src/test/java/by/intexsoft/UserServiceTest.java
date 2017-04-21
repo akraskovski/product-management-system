@@ -33,8 +33,8 @@ public class UserServiceTest {
     @Test
     public void testCreate() {
         user = new User();
-        user.username = "Test_User";
-        user.password = "passWorD123.92222";
+        user.setPassword("Test_User");
+        user.setPassword("passWorD123.92222");
         userService.create(user);
         userService.delete(user.id);
     }
@@ -42,9 +42,9 @@ public class UserServiceTest {
     @Test
     public void testCreateWithAuthorities() {
         user = new User();
-        user.username = "Test_User1";
-        user.password = "passworD900";
-        user.authorities = authorityService.findAll();
+        user.setPassword("Test_User");
+        user.setPassword("passWorD123.92222");
+        user.setAuthorities(authorityService.findAll());
         userService.create(user);
         userService.delete(user.id);
     }

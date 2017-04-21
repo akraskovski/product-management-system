@@ -13,27 +13,53 @@ import javax.persistence.Table;
 @Table
 public class Product extends BaseEntity {
 
+    @Column(unique = true, nullable = false)
+    private String name;
+    @Column(nullable = false)
+    private Double cost;
+    @Column
+    private String type;
+    @Column
+    private String details;
+
     /**
      * Product name
      */
-    @Column(unique = true, nullable = false)
-    public String name;
-
+    public String getName() {
+        return name;
+    }
     /**
      * Product cost
      */
-    @Column(nullable = false)
-    public Double cost;
-
+    public Double getCost() {
+        return cost;
+    }
     /**
      * Product type
      */
-    @Column
-    public String type;
-
+    public String getType() {
+        return type;
+    }
     /**
      * Product details
      */
-    @Column
-    public String details;
+    public String getDetails() {
+        return details;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
 }

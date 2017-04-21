@@ -77,7 +77,7 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        LOGGER.info("Start createUser: " + user.username);
+        LOGGER.info("Start createUser: " + user.getUsername());
         try {
             return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
         } catch (DataAccessException e) {
@@ -91,7 +91,7 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> updateUser(@RequestBody User user) {
-        LOGGER.info("Start updateUser: " + user.username);
+        LOGGER.info("Start updateUser: " + user.getUsername());
         try {
             return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
         } catch (DataAccessException e) {

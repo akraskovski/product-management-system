@@ -23,9 +23,9 @@ public class TokenServiceImpl implements TokenService {
     public String generate(User user, String password) {
         if (user != null) {
             Map<String, Object> tokenData = new HashMap<>();
-            if (password.equals(user.password)) {
-                tokenData.put("username", user.username);
-                tokenData.put("password", user.password);
+            if (password.equals(user.getPassword())) {
+                tokenData.put("username", user.getUsername());
+                tokenData.put("password", user.getPassword());
                 tokenData.put("token_create_date", LocalDateTime.now());
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.MINUTE, 60);
