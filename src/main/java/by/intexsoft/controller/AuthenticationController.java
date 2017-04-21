@@ -23,7 +23,6 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 public class AuthenticationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
-
     private final TokenService tokenService;
     private final UserService userService;
 
@@ -47,12 +46,12 @@ public class AuthenticationController {
             User user = userService.findByUsername(requestUser.username);
             String token = tokenService.generate(user, requestUser.password);
             if (token != null) {
-                LOGGER.info("Authentication successful! Returning token");
+                LOGGER.info("Authentication successful! user with username: " + requestUser.username);
                 user.password = EMPTY;
                 return new ResponseEntity<>(new TokenDTO(token, user), HttpStatus.OK);
             }
         }
-        LOGGER.error("Authentication failed");
+        LOGGER.error("Authentication failed user with username: " + requestUser.username);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

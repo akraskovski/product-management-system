@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class StockController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StockController.class);
-
     private final StockService stockService;
 
     @Autowired

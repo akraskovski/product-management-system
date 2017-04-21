@@ -14,51 +14,20 @@ import java.util.List;
 @Table
 public class Store extends BaseEntity {
 
-    /**
-     * Store name
-     */
     @Column(unique = true, nullable = false)
-    public String name;
-
-    /**
-     * Store details
-     */
+    private String name;
     @Column
-    public String details;
-
-    /**
-     * Store address
-     */
+    private String details;
     @Column
-    public String address;
-
-    /**
-     * Store contact phone
-     */
+    private String address;
     @Column
-    public String phone;
-
-    /**
-     * Store contact skype
-     */
+    private String phone;
     @Column
-    public String skype;
-
-    /**
-     * Store discounts system (consist or not)
-     */
+    private String skype;
     @Column
-    public Boolean discounts;
-
-    /**
-     * Store contant mail
-     */
+    private Boolean discounts;
     @Column
-    public String mail;
-
-    /**
-     * ManyToMany relation to {@link Stock} entities
-     */
+    private String mail;
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = Stock.class)
     @JoinTable(
@@ -66,5 +35,54 @@ public class Store extends BaseEntity {
             joinColumns = {@JoinColumn(name = "store_id")},
             inverseJoinColumns = {@JoinColumn(name = "stock_id")}
     )
-    public List<Stock> stockList;
+    private List<Stock> stockList;
+
+    /**
+     * Store name
+     */
+    public String getName() {
+        return name;
+    }
+    /**
+     * Store details
+     */
+    public String getDetails() {
+        return details;
+    }
+    /**
+     * Store address
+     */
+    public String getAddress() {
+        return address;
+    }
+    /**
+     * Store contact phone
+     */
+    public String getPhone() {
+        return phone;
+    }
+    /**
+     * Store contact skype
+     */
+    public String getSkype() {
+        return skype;
+    }
+    /**
+     * Store discounts system (consist or not)
+     */
+    public Boolean getDiscounts() {
+        return discounts;
+    }
+    /**
+     * Store contant mail
+     */
+    public String getMail() {
+        return mail;
+    }
+    /**
+     * ManyToMany relation to {@link Stock} entities
+     */
+    public List<Stock> getStockList() {
+        return stockList;
+    }
 }

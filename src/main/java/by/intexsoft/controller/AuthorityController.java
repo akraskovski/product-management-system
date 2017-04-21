@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthorityController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorityController.class);
-
     private final AuthorityService authorityService;
 
     @Autowired
