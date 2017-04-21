@@ -1,10 +1,8 @@
 package by.intexsoft.service.impl;
 
 import by.intexsoft.model.User;
-import by.intexsoft.model.UserAuthentication;
 import by.intexsoft.security.exception.UserNotFoundException;
 import by.intexsoft.service.TokenAuthenticationService;
-
 import by.intexsoft.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -39,7 +37,7 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
             final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             User user = getUserFromToken(tokenData);
             if (validatePassword(tokenData, user)) {
-                return new UserAuthentication(user);
+                return user;
             }
         }
         return null;
