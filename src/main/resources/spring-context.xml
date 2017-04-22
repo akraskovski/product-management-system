@@ -15,7 +15,6 @@
             location="classpath:application.properties, file:${catalina.home}/conf/pms/pms.properties"/>
 
     <context:component-scan base-package="by.intexsoft.service"/>
-    <context:component-scan base-package="by.intexsoft.security.service"/>
     <context:component-scan base-package="by.intexsoft.security.config"/>
 
     <jpa:repositories base-package="by.intexsoft.repository" entity-manager-factory-ref="entityManagerFactory"

@@ -8,8 +8,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,12 +24,7 @@ public class TokenServiceImpl implements TokenService {
             if (password.equals(user.getPassword())) {
                 tokenData.put("username", user.getUsername());
                 tokenData.put("password", user.getPassword());
-                tokenData.put("token_create_date", LocalDateTime.now());
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.MINUTE, 60);
-                tokenData.put("token_expiration_date", calendar.getTime());
                 JwtBuilder jwtBuilder = Jwts.builder();
-                jwtBuilder.setExpiration(calendar.getTime());
                 jwtBuilder.setClaims(tokenData);
                 return jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact();
             }
