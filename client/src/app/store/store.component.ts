@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {AuthorityWorker} from "../common/authority-worker";
-import {CommonService} from "../common/common.service";
+import {ImageService} from "../common/image.service";
 
 @Component({
     selector: 'store-component',
@@ -8,7 +8,7 @@ import {CommonService} from "../common/common.service";
 })
 export class StoreComponent extends AuthorityWorker {
 
-    constructor(private imageService: CommonService) {
+    constructor(private imageService: ImageService) {
         super();
     }
 
