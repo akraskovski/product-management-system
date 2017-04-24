@@ -12,6 +12,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {CommonService} from "../common/common.service";
 import {ProductRoutingModule} from "./product-routing.module";
 import {TranslateModule} from "../translate/translate.module";
+import {ImageService} from "../common/image.service";
 @NgModule({
     imports: [
         BrowserModule,
@@ -31,7 +32,8 @@ import {TranslateModule} from "../translate/translate.module";
         ProductUpdateComponent
     ],
     providers: [
-        CommonService
+        CommonService,
+        ImageService
     ]
 })
 export class ProductModule {

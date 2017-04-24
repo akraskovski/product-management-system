@@ -10,7 +10,7 @@ export class CommonService {
     }
 
     loadAll(URL: string): Observable<any> {
-        return this.http.get(URL, this.generateOptions())
+        return this.http.get(URL, CommonService.generateOptions())
             .map((response: Response) => {
                 if (response.status != 200) {
                     throw new Error('Error while loading all entities! code status: ' + response.status);
@@ -32,7 +32,7 @@ export class CommonService {
     }
 
     loadById(URL: string, identifier: number): Observable<any> {
-        return this.http.get(URL + "/" + identifier, this.generateOptions())
+        return this.http.get(URL + "/" + identifier, CommonService.generateOptions())
             .map((response: Response) => {
                 if (response.status != 200) {
                     throw new Error('Entity not found! code status: ' + response.status);
@@ -54,7 +54,7 @@ export class CommonService {
     }
 
     loadByName(URL: string, name: string): Observable<any> {
-        return this.http.get(URL + "/name/" + name, this.generateOptions())
+        return this.http.get(URL + "/name/" + name, CommonService.generateOptions())
             .map((response: Response) => {
                 if (response.status != 200) {
                     throw new Error('Entity not found! code status: ' + response.status);
@@ -65,7 +65,7 @@ export class CommonService {
     }
 
     create(URL: string, body: any): Observable<any> {
-        return this.http.post(URL, body, this.generateOptions())
+        return this.http.post(URL, body, CommonService.generateOptions())
             .map((response: Response) => {
                 if (response.status != 201) {
                     throw new Error('Exception: ' + response.status);
@@ -74,7 +74,7 @@ export class CommonService {
     }
 
     update(URL: string, body: any): Observable<any> {
-        return this.http.put(URL, body, this.generateOptions())
+        return this.http.put(URL, body, CommonService.generateOptions())
             .map((response: Response) => {
                 if (response.status != 200) {
                     throw new Error('Exception: ' + response.status);
@@ -83,7 +83,7 @@ export class CommonService {
     }
 
     remove(URL: string, identifier: number): Observable<any> {
-        return this.http.delete(URL + "/" + identifier, this.generateOptions())
+        return this.http.delete(URL + "/" + identifier, CommonService.generateOptions())
             .map((response) => {
                 if (response.status != 200) {
                     throw new Error('Exception: ' + response.status);
@@ -91,7 +91,7 @@ export class CommonService {
             })
     }
 
-    private generateOptions(): RequestOptions {
+    static generateOptions(): RequestOptions {
         const headers = new Headers({
             'Content-Type': 'application/json',
             'x-auth-token': AuthorityWorker.getCurrentUser().token
