@@ -64,6 +64,10 @@ export class ProductCreateComponent implements OnInit {
         }
     }
 
+    getImageUrl(id: string): string {
+        return api.SERVER + 'image/' + id;
+    }
+
     onSubmit(): void {
         this.loading = true;
         this.fillProduct();
