@@ -30,6 +30,10 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
         this.load();
     }
 
+    getImageUrl(id: string): string {
+        return api.SERVER + 'image/' + id;
+    }
+
     private load(): void {
         this.productService.loadAll(api.PRODUCT)
             .subscribe(
