@@ -36,8 +36,6 @@ public class AuthenticationController {
      * Login method
      * Find {@link by.intexsoft.model.User} in database by username
      * Generate token from {@link TokenService}
-     *
-     * @return {@link TokenDTO} model
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity authenticate(@RequestBody User requestUser) {

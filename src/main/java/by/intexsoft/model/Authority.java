@@ -23,8 +23,6 @@ public class Authority extends BaseEntity implements GrantedAuthority {
 
     /**
      * Implemented method to get Authority name
-     *
-     * @return name
      */
     @Override
     @JsonIgnore

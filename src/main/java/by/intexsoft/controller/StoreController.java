@@ -86,8 +86,6 @@ public class StoreController {
 
     /**
      * Delete {@link Store} from database by identifier
-     *
-     * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStore(@PathVariable("id") int id) {

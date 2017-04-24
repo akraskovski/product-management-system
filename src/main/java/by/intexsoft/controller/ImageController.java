@@ -26,6 +26,9 @@ public class ImageController {
         this.imageService = imageService;
     }
 
+    /**
+     * Uploading image to the system
+     */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity uploadImage(@RequestParam("file") MultipartFile uploadedFile) throws IOException {
         LOGGER.info("uploading image: \"" + uploadedFile.getOriginalFilename() + "\"");
@@ -36,6 +39,9 @@ public class ImageController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Get image from the system
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = {"image/jpeg", "image/jpg", "image/png", "image/gif"})
     @ResponseBody
     public ResponseEntity loadImageAsResource(@PathVariable String id) {
@@ -47,6 +53,9 @@ public class ImageController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Delete image from system
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteImage(@PathVariable String id) {
         LOGGER.info("deleting image with id: \"" + id + "\"");

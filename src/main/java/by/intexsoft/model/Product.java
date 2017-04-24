@@ -48,7 +48,6 @@ public class Product extends BaseEntity {
     public String getDetails() {
         return details;
     }
-
     /**
      * Product image
      */

@@ -72,8 +72,6 @@ public class StockController {
 
     /**
      * Update {@link Stock} entity in database
-     *
-     * @param stock model
      */
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateStock(@RequestBody Stock stock) {
@@ -88,8 +86,6 @@ public class StockController {
 
     /**
      * Delete {@link Stock} from database by identifier
-     *
-     * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStock(@PathVariable("id") int id) {
