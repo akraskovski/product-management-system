@@ -40,7 +40,7 @@ public class AuthenticationController {
      * @return {@link TokenDTO} model
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> authenticate(@RequestBody User requestUser) {
+    public ResponseEntity authenticate(@RequestBody User requestUser) {
         LOGGER.info("Start authentication user with username: " + requestUser.getUsername());
         if (isNotEmpty(requestUser.getUsername()) && isNotEmpty(requestUser.getPassword())) {
             User user = userService.findByUsername(requestUser.getUsername());

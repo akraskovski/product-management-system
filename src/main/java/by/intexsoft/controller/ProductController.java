@@ -32,7 +32,7 @@ public class ProductController {
      * Find all products in database
      */
     @RequestMapping
-    public ResponseEntity<?> loadAllProducts() {
+    public ResponseEntity loadAllProducts() {
         LOGGER.info("Start loadAllProducts");
         try {
             return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
@@ -46,7 +46,7 @@ public class ProductController {
      * Find products in database with setting name in browser
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> loadProductById(@PathVariable("id") int id) {
+    public ResponseEntity loadProductById(@PathVariable("id") int id) {
         LOGGER.info("Start loadProductById: " + id);
         try {
             Product product = productService.find(id);
@@ -62,7 +62,7 @@ public class ProductController {
      * Find products in database with setting name in browser
      */
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
-    public ResponseEntity<?> loadProductsByName(@PathVariable("name") String name) {
+    public ResponseEntity loadProductsByName(@PathVariable("name") String name) {
         LOGGER.info("Start loadProductByName: " + name);
         try {
             List<Product> product = productService.findByName(name);
@@ -78,7 +78,7 @@ public class ProductController {
      * Creating {@link Product} from client form
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> createProduct(@RequestBody Product product) {
+    public ResponseEntity createProduct(@RequestBody Product product) {
         LOGGER.info("Start createProduct");
         try {
             return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
@@ -92,7 +92,7 @@ public class ProductController {
      * Update {@link Product}'s information in database
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<?> updateProduct(@RequestBody Product product) {
+    public ResponseEntity updateProduct(@RequestBody Product product) {
         LOGGER.info("start updateProduct");
         try {
             return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
@@ -106,7 +106,7 @@ public class ProductController {
      * Delete {@link Product} from database by identifier
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteProduct(@PathVariable("id") int id) {
+    public ResponseEntity deleteProduct(@PathVariable("id") int id) {
         LOGGER.info("Start deleteProduct");
         try {
             productService.delete(id);

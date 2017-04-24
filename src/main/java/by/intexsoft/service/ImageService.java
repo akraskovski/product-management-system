@@ -8,4 +8,6 @@ public interface ImageService {
     String upload(MultipartFile uploadedFile);
 
     Resource load(String id);
+
+    boolean delete(String id);
 }

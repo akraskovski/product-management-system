@@ -30,7 +30,7 @@ public class UserController {
      * Return json-information about all users in database
      */
     @RequestMapping
-    public ResponseEntity<?> loadAllUsers() {
+    public ResponseEntity loadAllUsers() {
         LOGGER.info("Start loadAllUsers");
         try {
             return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
@@ -44,7 +44,7 @@ public class UserController {
      * Return json-information about all users in database
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> loadUserById(@PathVariable("id") int id) {
+    public ResponseEntity loadUserById(@PathVariable("id") int id) {
         LOGGER.info("Start loadUserById");
         try {
             User user = userService.find(id);
@@ -60,7 +60,7 @@ public class UserController {
      * Find user in database with setting name in browser
      */
     @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
-    public ResponseEntity<?> loadUserByUsername(@PathVariable String username) {
+    public ResponseEntity loadUserByUsername(@PathVariable String username) {
         LOGGER.info("Start loadUserByUsername: " + username);
         try {
             User user = userService.findByUsername(username);
@@ -76,7 +76,7 @@ public class UserController {
      * Creating {@link User} from client form
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity createUser(@RequestBody User user) {
         LOGGER.info("Start createUser: " + user.getUsername());
         try {
             return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
@@ -90,7 +90,7 @@ public class UserController {
      * Update {@link User} entity in database
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<?> updateUser(@RequestBody User user) {
+    public ResponseEntity updateUser(@RequestBody User user) {
         LOGGER.info("Start updateUser: " + user.getUsername());
         try {
             return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
@@ -104,7 +104,7 @@ public class UserController {
      * Delete {@link User} from database by identifier
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteUser(@PathVariable("id") int id) {
+    public ResponseEntity deleteUser(@PathVariable("id") int id) {
         LOGGER.info("Start deleteUser with id: " + id);
         try {
             userService.delete(id);

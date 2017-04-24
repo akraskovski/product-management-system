@@ -19,8 +19,10 @@ public class Product extends BaseEntity {
     private Double cost;
     @Column
     private String type;
-    @Column
+    @Column(length = 500)
     private String details;
+    @Column
+    private String image;
 
     /**
      * Product name
@@ -47,6 +49,13 @@ public class Product extends BaseEntity {
         return details;
     }
 
+    /**
+     * Product image
+     */
+    public String getImage() {
+        return image;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -61,5 +70,9 @@ public class Product extends BaseEntity {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

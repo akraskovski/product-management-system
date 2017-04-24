@@ -26,6 +26,16 @@ public class ImageController {
         this.imageService = imageService;
     }
 
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public ResponseEntity uploadImage(@RequestParam("file") MultipartFile uploadedFile) throws IOException {
+        LOGGER.info("uploading image: \"" + uploadedFile.getOriginalFilename() + "\"");
+        String image = imageService.upload(uploadedFile);
+        if (isNotEmpty(image))
+            return new ResponseEntity<>(image, HttpStatus.CREATED);
+        LOGGER.error("Error during uploading image: \"" + uploadedFile.getOriginalFilename() + "\"");
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = {"image/jpeg", "image/jpg", "image/png", "image/gif"})
     @ResponseBody
     public ResponseEntity loadImageAsResource(@PathVariable String id) {
@@ -37,18 +47,12 @@ public class ImageController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity uploadImage(@RequestParam("file") MultipartFile uploadedFile) throws IOException {
-        LOGGER.info("uploading image: \"" + uploadedFile.getOriginalFilename() + "\"");
-        String image = imageService.upload(uploadedFile);
-        if (isNotEmpty(image))
-            return new ResponseEntity<>(image, HttpStatus.OK);
-        LOGGER.error("Error during uploading image: \"" + uploadedFile.getOriginalFilename() + "\"");
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteImage(@PathVariable String id) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        LOGGER.info("deleting image with id: \"" + id + "\"");
+        if (imageService.delete(id))
+            return new ResponseEntity<>(HttpStatus.OK);
+        LOGGER.error("Error during deleting image with id: \"" + id + "\"");
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

@@ -49,4 +49,15 @@ public class ImageServiceImpl implements ImageService {
         Resource resource = new FileSystemResource(uploadingDir + id);
         return resource.exists() ? resource : null;
     }
+
+    @Override
+    public boolean delete(String id) {
+        File file = new File(uploadingDir + id);
+        try {
+            return Files.deleteIfExists(file.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

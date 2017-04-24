@@ -29,7 +29,7 @@ public class AuthorityController {
      * Return json-information about all authorities in database
      */
     @RequestMapping
-    public ResponseEntity<?> loadAuthorities() {
+    public ResponseEntity loadAuthorities() {
         LOGGER.info("Start loadAuthorities");
         try {
             return new ResponseEntity<>(authorityService.findAll(), HttpStatus.OK);
