@@ -5,6 +5,7 @@ import {Product} from "../../model/product";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {regex} from "../../constants/regex";
+import {ImageService} from "../../common/image.service";
 
 @Component({
     selector: 'product-update-component',
@@ -16,8 +17,12 @@ export class ProductUpdateComponent implements OnInit {
     loading: boolean;
     product: Product;
 
-    constructor(private productService: CommonService, private router: Router, private route: ActivatedRoute) {
+    constructor(private productService: CommonService,
+                private imageService: ImageService,
+                private router: Router,
+                private route: ActivatedRoute) {
         this.loading = false;
+        this.product = new Product();
     }
 
     ngOnInit(): void {
@@ -53,6 +58,35 @@ export class ProductUpdateComponent implements OnInit {
         });
     }
 
+    fileChange(event) {
+        let fileList: FileList = event.target.files;
+        if (fileList.length > 0) {
+            if (this.product.image)
+                this.imageService.remove(this.product.image)
+                    .subscribe(
+                        () => {
+                            console.log("image with id: \"" + this.product.image + "\" was deleted");
+                            this.product.image = null;
+                        },
+                        error => this.logError(error)
+                    );
+            let file: File = fileList[0];
+            let formData: FormData = new FormData();
+            formData.append('file', file);
+            this.imageService.upload(formData)
+                .subscribe(
+                    (id) => this.product.image = id,
+                    error => this.logError(error));
+        }
+    }
+
+    private fillUpdatedProduct(): void {
+        this.product.name = this.productForm.value.name;
+        this.product.cost = this.productForm.value.cost;
+        this.product.type = this.productForm.value.type;
+        this.product.details = this.productForm.value.details;
+    }
+
     onSubmit(): void {
         this.loading = true;
         this.fillUpdatedProduct();
@@ -62,11 +96,8 @@ export class ProductUpdateComponent implements OnInit {
                 err => this.logError(err));
     }
 
-    private fillUpdatedProduct(): void {
-        this.product.name = this.productForm.value.name;
-        this.product.cost = this.productForm.value.cost;
-        this.product.type = this.productForm.value.type;
-        this.product.details = this.productForm.value.details;
+    getImageUrl(id: string): string {
+        return api.SERVER + 'image/' + id;
     }
 
     logError(error): void {
