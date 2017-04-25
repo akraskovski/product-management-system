@@ -1,10 +1,46 @@
-<div class="panel panel-default col-md-6">
+<div class="panel panel-default">
     <div class="panel-heading">
         <label>{{'Create Product Form' | translate}}</label>
     </div>
     <div class="panel-body">
         <form name="form" novalidate [formGroup]="productForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
+            <div class="col-md-5">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{'Name' | translate}}*</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="name" formControlName="name" required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">${{'Cost' | translate}}*</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="cost" formControlName="cost" required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{'Type' | translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="type" formControlName="type"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{'Details' | translate}}</label>
+                    <div class="col-sm-12">
+            <textarea class="form-control" rows="6" name="details" formControlName="details"
+                      placeholder="{{'Must be 0-500 characters long' | translate}}"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row col-sm-12">
+                    <button type="submit" [disabled]="productForm.invalid || loading" class="btn btn-primary">
+                        {{'Submit' |
+                        translate}}
+                    </button>
+                    <img *ngIf="loading"
+                         src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+                </div>
+            </div>
+
+            <div class="form-group row">
                 <div class="text-center" *ngIf="product.image">
                     <img src="{{getImageUrl(product.image)}}"
                          class="img-rounded">
@@ -13,42 +49,9 @@
                     <img src="./images/no-image.jpg"
                          class="img-rounded">
                 </div>
-            </div>
-            <div class="form-group row">
-                <input type="file" style="display: block; margin: 0 auto;" (change)="fileChange($event)">
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{{'Name' | translate}}*</label>
-                <div class="col-sm-11 col-md-6">
-                    <input type="text" class="form-control" name="name" formControlName="name" required/>
+                <div>
+                    <input type="file" style="display: block; margin: 0 auto;" (change)="fileChange($event)">
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">${{'Cost' | translate}}*</label>
-                <div class="col-sm-11 col-md-6">
-                    <input type="text" class="form-control" name="cost" formControlName="cost" required/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{{'Type' | translate}}</label>
-                <div class="col-sm-11 col-md-6">
-                    <input type="text" class="form-control" name="type" formControlName="type"/>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">{{'Details' | translate}}</label>
-                <div class="col-sm-11 col-md-6">
-            <textarea class="form-control" rows="6" name="details" formControlName="details"
-                      placeholder="{{'Must be 0-500 characters long' | translate}}"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" [disabled]="productForm.invalid || loading" class="btn btn-primary">
-                    {{'Submit' |
-                    translate}}
-                </button>
-                <img *ngIf="loading"
-                     src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
             </div>
         </form>
     </div>
