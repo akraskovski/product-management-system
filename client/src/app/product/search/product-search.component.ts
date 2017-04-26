@@ -10,6 +10,7 @@ import {api} from "../../constants/api";
 export class ProductSearchComponent {
     keyword: string;
     findProducts: Product[];
+    selectedProduct: Product;
 
     constructor(private productService: CommonService, private router: Router) {
     }
@@ -22,6 +23,15 @@ export class ProductSearchComponent {
                     error => this.logError(error)
                 );
         }
+    }
+
+    getImageUrl(id: string): string {
+        return api.SERVER + 'image/' + id;
+    }
+
+    onDetails(product: Product) {
+        if (product)
+            this.selectedProduct = product;
     }
 
     onDelete(id: number): void {

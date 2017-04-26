@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button id="loginButton" type="submit" [disabled]="loginForm.invalid || loading" data-dismiss="modal" class="btn btn-lg btn-success btn-block">
+                        <button type="submit" [disabled]="loginForm.invalid || loading" data-dismiss="modal" class="btn btn-lg btn-success btn-block">
                             {{'Login' | translate}}
                         </button>
                         <img *ngIf="loading"

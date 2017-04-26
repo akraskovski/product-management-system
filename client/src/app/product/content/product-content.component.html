@@ -33,8 +33,7 @@
             <td>{{product.details}}</td>
             <td>
                 <button type="button" class="btn btn-primary" data-toggle="modal" (click)="onDetails(product)"
-                        data-target="#myModal">
-                    Details
+                        data-target="#myModal"> Details
                 </button>
                 <button class="btn btn-warning" (click)="onEdit(product.id)">{{'Edit' | translate}}</button>
                 <button class="btn btn-danger" (click)="onDelete(product.id)">{{'Remove' | translate}}</button>
@@ -84,20 +83,20 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="name" class="col-md-2">Name:</label>
-                        <p id="name" class="col-md-10">{{selectedProduct.name}}</p>
+                        <label class="col-md-2">Name:</label>
+                        <p class="col-md-10">{{selectedProduct.name}}</p>
                     </div>
                     <div class="form-group row">
-                        <label for="type" class="col-md-2">Type:</label>
-                        <p id="type" class="col-md-10">{{selectedProduct.type}}</p>
+                        <label class="col-md-2">Type:</label>
+                        <p class="col-md-10">{{selectedProduct.type}}</p>
                     </div>
                     <div class="form-group row">
-                        <label for="details" class="col-md-2">Details:</label>
-                        <p id="details" class="col-md-10">{{selectedProduct.details}}</p>
+                        <label class="col-md-2">Details:</label>
+                        <p class="col-md-10">{{selectedProduct.details}}</p>
                     </div>
                     <div class="form-group row">
-                        <label for="cost" class="col-md-2">$Cost:</label>
-                        <p id="cost" class="col-md-10">{{selectedProduct.cost}}</p>
+                        <label class="col-md-2">$Cost:</label>
+                        <p class="col-md-10">{{selectedProduct.cost}}</p>
                     </div>
                 </div>
             </div>
