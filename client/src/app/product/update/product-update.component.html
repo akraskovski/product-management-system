@@ -41,8 +41,7 @@
             <div class="col-md-4">
                 <div class="form-group row">
                     <div class="text-center" *ngIf="product.image">
-                        <img src="{{getImageUrl(product.image)}}" style="max-width: 500px; max-height: 300px"
-                             class="img-rounded">
+                        <img src="{{getImageUrl(product.image)}}" class="img-rounded">
                     </div>
                     <div class="text-center" *ngIf="!product.image">
                         <img src="./images/empty-image.jpg" width="300px" height="300px"
@@ -51,7 +50,7 @@
                 </div>
                 <div class="form-group row">
                     <div>
-                        <input type="file" style="display: block; margin: 0 auto;" (change)="fileChange($event)">
+                        <input type="file" (change)="fileChange($event)">
                     </div>
                 </div>
             </div>

@@ -4,3 +4,13 @@
 .ng-invalid:not(form)  {
     border-left: 5px solid #a94442;
 }
+img {
+    max-width: 500px;
+    max-height: 300px;
+    min-width: 200px;
+    min-height: 90px;
+}
+input {
+    display: block;
+    margin: 0 auto;
+}
