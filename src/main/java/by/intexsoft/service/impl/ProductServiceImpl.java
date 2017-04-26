@@ -39,6 +39,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findByType(String type) {
+        return productRepository.findByType(type);
+    }
+
+    @Override
     public List<Product> findAll() {
         return productRepository.findAll();
     }

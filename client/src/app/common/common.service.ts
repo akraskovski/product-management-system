@@ -57,7 +57,18 @@ export class CommonService {
         return this.http.get(URL + "/name/" + name, CommonService.generateOptions())
             .map((response: Response) => {
                 if (response.status != 200) {
-                    throw new Error('Entity not found! code status: ' + response.status);
+                    throw new Error('Result not found! code status: ' + response.status);
+                } else {
+                    return response.json();
+                }
+            })
+    }
+
+    loadByType(URL: string, type: string): Observable<any> {
+        return this.http.get(URL + "/type/" + type, CommonService.generateOptions())
+            .map((response: Response) => {
+                if (response.status != 200) {
+                    throw new Error('Result not found! code status: ' + response.status);
                 } else {
                     return response.json();
                 }

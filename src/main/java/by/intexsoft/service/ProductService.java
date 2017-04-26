@@ -19,9 +19,14 @@ public interface ProductService {
     Product find(int id);
 
     /**
-     * Find one first Product by name
+     * Find {@link Product}s by name
      */
     List<Product> findByName(String name);
+
+    /**
+     * Find {@link Product}s by type
+     */
+    List<Product> findByType(String type);
 
     /**
      * Find all {@link Product}s in database

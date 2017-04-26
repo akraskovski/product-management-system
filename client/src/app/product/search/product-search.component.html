@@ -1,16 +1,33 @@
-<h3>{{'Product Search' | translate}}</h3>
-<br/>
-<form (ngSubmit)="onSubmit()">
-    <label for="keyword">{{'Input name' | translate}}</label>
-    <div class="input-group">
-        <input id="keyword" name="keyword" type="text" class="form-control" [(ngModel)]="keyword" required>
-        <span class="input-group-btn">
-        <button class="btn btn-default" type="submit">
-            <span class="glyphicon glyphicon-search"></span>
-        </button>
-    </span>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{'Search page' | translate}}
     </div>
-</form>
+    <div class="panel-body">
+        <form (ngSubmit)="onSubmit()">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="searchType">Parameter</label>
+                    <div>
+                        <select id="searchType" class="form-control" name="searchType" [(ngModel)]="selectedParameter">
+                            <option value="" disabled>Choose search parameters</option>
+                            <option *ngFor="let parameter of availableParameters" [ngValue]="parameter">{{parameter}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input name="keyword" placeholder="Search in catalog" type="text" class="form-control" [(ngModel)]="keyword"
+                           required>
+                    <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br/>
 <div *ngIf="findProducts" class="table-responsive">
     <table class="table table-bordered table-striped table-hover">
         <thead>

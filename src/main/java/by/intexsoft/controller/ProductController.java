@@ -63,10 +63,26 @@ public class ProductController {
      */
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
     public ResponseEntity loadProductsByName(@PathVariable("name") String name) {
-        LOGGER.info("Start loadProductByName: " + name);
+        LOGGER.info("Start loadProductsByName: " + name);
         try {
             List<Product> product = productService.findByName(name);
-            Assert.notNull(product, "Unable to find product with name: " + name);
+            Assert.notNull(product, "Unable to find products with name: " + name);
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error(e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Find products in database with setting type in browser
+     */
+    @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
+    public ResponseEntity loadProductsByType(@PathVariable("type") String type) {
+        LOGGER.info("Start loadProductsByType: " + type);
+        try {
+            List<Product> product = productService.findByType(type);
+            Assert.notNull(product, "Unable to find products with type: " + type);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());

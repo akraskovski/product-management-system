@@ -9,19 +9,38 @@ import {api} from "../../constants/api";
 })
 export class ProductSearchComponent {
     keyword: string;
+    selectedParameter: string;
+    availableParameters: string[];
     findProducts: Product[];
     selectedProduct: Product;
 
     constructor(private productService: CommonService, private router: Router) {
+        this.availableParameters = ['Name', 'Type'];
+        this.selectedParameter = this.availableParameters[0];
     }
 
     onSubmit(): void {
         if (this.keyword) {
-            this.productService.loadByName(api.PRODUCT, this.keyword)
-                .subscribe(
-                    response => this.findProducts = response,
-                    error => this.logError(error)
-                );
+            switch (this.selectedParameter) {
+                case 'Name': {
+                    console.log("search by name");
+                    this.productService.loadByName(api.PRODUCT, this.keyword)
+                        .subscribe(
+                            response => this.findProducts = response,
+                            error => this.logError(error)
+                        );
+                    break;
+                }
+                case 'Type': {
+                    console.log("search by type");
+                    this.productService.loadByType(api.PRODUCT, this.keyword)
+                        .subscribe(
+                            response => this.findProducts = response,
+                            error => this.logError(error)
+                        );
+                    break;
+                }
+            }
         }
     }
 

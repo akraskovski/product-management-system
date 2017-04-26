@@ -2,6 +2,8 @@ package by.intexsoft.repository;
 
 import by.intexsoft.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -11,7 +13,16 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     /**
-     * find {@link Product} from database by name
+     * find {@link Product}s from database by name
      */
-    List<Product> findByName(String name);
+    @Query("SELECT p FROM Product p WHERE " +
+            "p.name LIKE '%' || :searchString || '%'")
+    List<Product> findByName(@Param("searchString") String searchString);
+
+    /**
+     * find {@link Product}s from database by type
+     */
+    @Query("SELECT p FROM Product p WHERE " +
+            "p.type LIKE '%' || :searchString || '%'")
+    List<Product> findByType(@Param("searchString") String searchString);
 }
