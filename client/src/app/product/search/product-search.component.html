@@ -6,16 +6,16 @@
         <form (ngSubmit)="onSubmit()">
             <div class="col-md-5">
                 <div class="form-group">
-                    <label for="searchType">Parameter</label>
+                    <label for="searchType">{{'Parameter' | translate}}</label>
                     <div>
                         <select id="searchType" class="form-control" name="searchType" [(ngModel)]="selectedParameter">
-                            <option value="" disabled>Choose search parameters</option>
-                            <option *ngFor="let parameter of availableParameters" [ngValue]="parameter">{{parameter}}</option>
+                            <option value="" disabled>{{'Choose search parameters' | translate}}</option>
+                            <option *ngFor="let parameter of availableParameters" [ngValue]="parameter">{{parameter | translate}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="input-group">
-                    <input name="keyword" placeholder="Search in catalog" type="text" class="form-control" [(ngModel)]="keyword"
+                    <input name="keyword" placeholder="{{'Search in catalog' | translate}}" type="text" class="form-control" [(ngModel)]="keyword"
                            required>
                     <span class="input-group-btn">
                 <button class="btn btn-default" type="submit">

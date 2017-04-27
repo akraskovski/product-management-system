@@ -72,5 +72,7 @@ export const LANG_RU_TRANS = {
     'Edit store form': 'Форма редактирования магазина',
     'Welcome to': 'Добро пожаловать в',
     'Contact with us': 'Связь с магазином',
-    'Available products in store': 'Продукты, доступные в магазине'
+    'Available products in store': 'Продукты, доступные в магазине',
+    'Parameter': 'Параметры поиска',
+    'Choose search parameters': 'Выберите параметры поиска',
 };

@@ -33,7 +33,7 @@
             <td>{{product.details}}</td>
             <td>
                 <button type="button" class="btn btn-primary" data-toggle="modal" (click)="onDetails(product)"
-                        data-target="#myModal"> Details
+                        data-target="#myModal"> {{'Details' | translate}}
                 </button>
                 <button class="btn btn-warning" (click)="onEdit(product.id)">{{'Edit' | translate}}</button>
                 <button class="btn btn-danger" (click)="onDelete(product.id)">{{'Remove' | translate}}</button>
@@ -83,25 +83,25 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2">Name:</label>
+                        <label class="col-md-2">{{'Name' | translate}}:</label>
                         <p class="col-md-10">{{selectedProduct.name}}</p>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2">Type:</label>
+                        <label class="col-md-2">{{'Type' | translate}}:</label>
                         <p class="col-md-10">{{selectedProduct.type}}</p>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2">Details:</label>
+                        <label class="col-md-2">{{'Details' | translate}}:</label>
                         <p class="col-md-10">{{selectedProduct.details}}</p>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-2">$Cost:</label>
+                        <label class="col-md-2">${{'Cost' | translate}}:</label>
                         <p class="col-md-10">{{selectedProduct.cost}}</p>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Close' | translate}}</button>
             </div>
         </div>
     </div>
