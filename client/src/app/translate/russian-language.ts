@@ -75,4 +75,6 @@ export const LANG_RU_TRANS = {
     'Available products in store': 'Продукты, доступные в магазине',
     'Parameter': 'Параметры поиска',
     'Choose search parameters': 'Выберите параметры поиска',
+    'true': 'Присутствует',
+    'false': 'Отсутствует'
 };
