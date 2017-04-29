@@ -52,12 +52,6 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
     }
 
     private boolean validatePassword(Jws<Claims> tokenData, User user) {
-        if (user != null) {
-            String tokenPassword = tokenData.getBody().get("password").toString();
-            if (user.getPassword().equals(tokenPassword)) {
-                return true;
-            }
-        }
-        return false;
+        return user != null && tokenData.getBody().get("password").toString().equals(user.getPassword());
     }
 }

@@ -6,6 +6,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -21,7 +22,8 @@ public class TokenServiceImpl implements TokenService {
     public String generate(User user, String password) {
         if (user != null) {
             Map<String, Object> tokenData = new HashMap<>();
-            if (password.equals(user.getPassword())) {
+            final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if (passwordEncoder.matches(password, user.getPassword())) {
                 tokenData.put("username", user.getUsername());
                 tokenData.put("password", user.getPassword());
                 JwtBuilder jwtBuilder = Jwts.builder();
