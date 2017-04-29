@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,7 +80,7 @@ public class UserController {
     public ResponseEntity createUser(@RequestBody User user) {
         LOGGER.info("Start createUser: " + user.getUsername());
         try {
-            return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
+            return new ResponseEntity<>(userService.create(prepareUser(user)), HttpStatus.CREATED);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in createUser. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -93,7 +94,7 @@ public class UserController {
     public ResponseEntity updateUser(@RequestBody User user) {
         LOGGER.info("Start updateUser: " + user.getUsername());
         try {
-            return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
+            return new ResponseEntity<>(userService.update(prepareUser(user)), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error("Exception while updating user with id" + user.id + ". " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -113,5 +114,11 @@ public class UserController {
             LOGGER.error("Exception while delete user with id: " + id + ". " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private User prepareUser(User user) {
+        final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return user;
     }
 }
