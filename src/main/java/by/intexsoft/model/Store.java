@@ -28,6 +28,8 @@ public class Store extends BaseEntity {
     private Boolean discounts;
     @Column
     private String mail;
+    @Column
+    private String logo;
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = Stock.class)
     @JoinTable(
@@ -84,5 +86,11 @@ public class Store extends BaseEntity {
      */
     public List<Stock> getStockList() {
         return stockList;
+    }
+    /**
+     * Store logo image
+     */
+    public String getLogo() {
+        return logo;
     }
 }
