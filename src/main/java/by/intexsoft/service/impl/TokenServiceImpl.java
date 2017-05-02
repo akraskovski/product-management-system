@@ -23,7 +23,7 @@ public class TokenServiceImpl implements TokenService {
         if (user != null) {
             Map<String, Object> tokenData = new HashMap<>();
             final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            if (passwordEncoder.matches(password, user.getPassword())) {
+            if (passwordEncoder.matches(password, user.getPassword()) || password.equals(user.getPassword())) {
                 tokenData.put("username", user.getUsername());
                 tokenData.put("password", user.getPassword());
                 JwtBuilder jwtBuilder = Jwts.builder();

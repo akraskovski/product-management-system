@@ -23,6 +23,12 @@ public class Product extends BaseEntity {
     private String details;
     @Column
     private String image;
+    @Column
+    private Double width;
+    @Column
+    private Double height;
+    @Column
+    private Double weight;
 
     /**
      * Product name
@@ -54,6 +60,24 @@ public class Product extends BaseEntity {
     public String getImage() {
         return image;
     }
+    /**
+     * Product width
+     */
+    public Double getWidth() {
+        return width;
+    }
+    /**
+     * Product height
+     */
+    public Double getHeight() {
+        return height;
+    }
+    /**
+     * Product weight
+     */
+    public Double getWeight() {
+        return weight;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -73,5 +97,17 @@ public class Product extends BaseEntity {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setWidth(Double width) {
+        this.width = width;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 }
