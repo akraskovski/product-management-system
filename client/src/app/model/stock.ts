@@ -2,9 +2,9 @@ import {Product} from "./product";
 export class Stock {
     id: number;
     specialize: string;
-    address: string;
-    phone: string;
-    square: number;
+    address?: string;
+    phone?: string;
+    square?: number;
     productList: Product[];
 
     constructor(specialize: string, address: string, phone: string, square: number, productList: Product[]) {

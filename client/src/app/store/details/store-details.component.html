@@ -6,7 +6,7 @@
         <div class="panel-body">
             <div>
                 <p *ngIf="selectedStore.details"><b>{{'Details' | translate}}: </b>{{selectedStore.details}}</p>
-                <p><b>{{'Discounts' | translate}}:</b> {{selectedStore.discounts.toString() | translate}}</p>
+                <p><b>{{'Discounts' | translate}}:</b> {{selectedStore.discounts | translate}}</p>
                 <div *ngIf="selectedStore.address">
                     <h4>{{'Address' | translate}}</h4>
                     <address>

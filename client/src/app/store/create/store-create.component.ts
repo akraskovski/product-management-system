@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {Store} from "../../model/store";
 import {regex} from "../../constants/regex";
+import {ImageService} from "../../common/image.service";
 
 @Component({
     selector: 'store-create-component',
@@ -16,11 +17,13 @@ export class StoreCreateComponent {
     storeForm: FormGroup;
     availableStocks: Stock[];
     selectedStocks: Stock[];
+    store: Store;
     loading;
 
-    constructor(private storeService: CommonService, private router: Router) {
+    constructor(private storeService: CommonService, private router: Router, private imageService: ImageService) {
         this.availableStocks = [];
         this.selectedStocks = [];
+        this.store = new Store();
         this.loading = false;
     }
 
@@ -48,26 +51,51 @@ export class StoreCreateComponent {
         });
     }
 
+    fileChange(event) {
+        let fileList: FileList = event.target.files;
+        if (fileList.length > 0) {
+            if (this.store.logo)
+                this.imageService.remove(this.store.logo)
+                    .subscribe(
+                        () => {
+                            console.log("image with id: \"" + this.store.logo + "\" was deleted");
+                            this.store.logo = null;
+                        },
+                        error => this.logError(error)
+                    );
+            let file: File = fileList[0];
+            let formData: FormData = new FormData();
+            formData.append('file', file);
+            this.imageService.upload(formData)
+                .subscribe(
+                    (id) => this.store.logo = id,
+                    error => this.logError(error));
+        }
+    }
+
+    getImageUrl(id: string): string {
+        return api.SERVER + 'image/' + id;
+    }
+
     onSubmit(): void {
         this.loading = true;
-        this.storeService.create(api.STORE, this.fillCreatingStore())
+        this.fillCreatingStore();
+        this.storeService.create(api.STORE, this.store)
             .subscribe(
                 () => this.router.navigate(['store/store-content']),
                 err => this.logError(err)
             );
     }
 
-    private fillCreatingStore(): Store {
-        let store: Store = new Store();
-        store.name = this.storeForm.value.name;
-        store.details = this.storeForm.value.details;
-        store.address = this.storeForm.value.address;
-        store.phone = this.storeForm.value.phone;
-        store.skype = this.storeForm.value.skype;
-        store.discounts = this.storeForm.value.discounts;
-        store.mail = this.storeForm.value.mail;
-        store.stockList = this.selectedStocks;
-        return store;
+    private fillCreatingStore(): void {
+        this.store.name = this.storeForm.value.name;
+        this.store.details = this.storeForm.value.details;
+        this.store.address = this.storeForm.value.address;
+        this.store.phone = this.storeForm.value.phone;
+        this.store.skype = this.storeForm.value.skype;
+        this.store.discounts = this.storeForm.value.discounts;
+        this.store.mail = this.storeForm.value.mail;
+        this.store.stockList = this.selectedStocks;
     }
 
     addStockToSelected(stock: Stock): void {
