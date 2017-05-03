@@ -14,10 +14,10 @@
             ignore-unresolvable="true"
             location="classpath:application.properties, file:${catalina.home}/conf/pms/pms.properties"/>
 
-    <context:component-scan base-package="by.intexsoft.service"/>
-    <context:component-scan base-package="by.intexsoft.security.config"/>
+    <context:component-scan base-package="by.kraskovski.service"/>
+    <context:component-scan base-package="by.kraskovski.security.config"/>
 
-    <jpa:repositories base-package="by.intexsoft.repository" entity-manager-factory-ref="entityManagerFactory"
+    <jpa:repositories base-package="by.kraskovski.repository" entity-manager-factory-ref="entityManagerFactory"
                       transaction-manager-ref="transactionManager"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="flyway">
@@ -25,7 +25,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>
-        <property name="packagesToScan" value="by.intexsoft.model"/>
+        <property name="packagesToScan" value="by.kraskovski.model"/>
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.default_schema">${db.schema}</prop>

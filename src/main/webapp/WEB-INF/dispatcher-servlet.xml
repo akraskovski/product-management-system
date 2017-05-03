@@ -9,7 +9,7 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:component-scan base-package="by.intexsoft.controller"/>
+    <context:component-scan base-package="by.kraskovski.controller"/>
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
