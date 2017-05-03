@@ -12,15 +12,27 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="cost" class="col-sm-2">${{'Cost' | translate}}*</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="cost" formControlName="cost" required/>
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label for="type" class="col-sm-2">{{'Type' | translate}}</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="type" formControlName="type"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="width" class="col-sm-2">{{'Width(sm)' | translate}}*</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="width" formControlName="width"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="height" class="col-sm-2">{{'Height(sm)' | translate}}*</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="height" formControlName="height"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="weight" class="col-sm-2">{{'Weight(kg)' | translate}}*</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="weight" formControlName="weight"/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -28,6 +40,12 @@
                     <div class="col-sm-12">
             <textarea class="form-control" rows="6" id="details" formControlName="details"
                       placeholder="{{'Must be 0-500 characters long' | translate}}"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="cost" class="col-sm-2">${{'Cost' | translate}}*</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="cost" formControlName="cost" required/>
                     </div>
                 </div>
                 <div class="form-group row col-sm-12">

@@ -30,6 +30,9 @@ export class ProductCreateComponent implements OnInit {
         this.productForm = new FormGroup({
             name: new FormControl('', Validators.required),
             cost: new FormControl('', [Validators.required, Validators.pattern(regex.DOUBLE)]),
+            width: new FormControl('', Validators.pattern(regex.DOUBLE)),
+            height: new FormControl('', Validators.pattern(regex.DOUBLE)),
+            weight: new FormControl('', Validators.pattern(regex.DOUBLE)),
             type: new FormControl(''),
             details: new FormControl('', [Validators.pattern(regex.DETAILS)])
         });
@@ -38,6 +41,9 @@ export class ProductCreateComponent implements OnInit {
     private fillProduct(): void {
         this.product.name = this.productForm.value.name;
         this.product.cost = this.productForm.value.cost;
+        this.product.width = this.productForm.value.width;
+        this.product.height = this.productForm.value.height;
+        this.product.weight = this.productForm.value.weight;
         this.product.type = this.productForm.value.type;
         this.product.details = this.productForm.value.details;
     }
