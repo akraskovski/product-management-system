@@ -7,9 +7,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {CommonFunctions} from "../../common/common-functions";
 import {regex} from "../../constants/regex";
+import {ImageService} from "../../common/image.service";
 @Component({
     selector: 'store-update-component',
-    templateUrl: 'store-update.component.html'
+    templateUrl: 'store-update.component.html',
+    styleUrls: ['store-update.component.css']
 })
 export class StoreUpdateComponent {
     storeForm: FormGroup;
@@ -18,10 +20,11 @@ export class StoreUpdateComponent {
     availableStocks: Stock[];
     selectedStocks: Stock[];
 
-    constructor(private storeService: CommonService, private router: Router, private route: ActivatedRoute) {
+    constructor(private storeService: CommonService, private router: Router, private route: ActivatedRoute, private imageService: ImageService) {
         this.loading = false;
         this.availableStocks = [];
         this.selectedStocks = [];
+        this.store = new Store();
     }
 
     ngOnInit(): void {
@@ -70,6 +73,32 @@ export class StoreUpdateComponent {
             .subscribe(
                 stockList => this.availableStocks = CommonFunctions.cleanAvailableItems(stockList, this.selectedStocks),
                 error => this.logError(error))
+    }
+
+    fileChange(event) {
+        let fileList: FileList = event.target.files;
+        if (fileList.length > 0) {
+            if (this.store.logo)
+                this.imageService.remove(this.store.logo)
+                    .subscribe(
+                        () => {
+                            console.log("image with id: \"" + this.store.logo + "\" was deleted");
+                            this.store.logo = null;
+                        },
+                        error => this.logError(error)
+                    );
+            let file: File = fileList[0];
+            let formData: FormData = new FormData();
+            formData.append('file', file);
+            this.imageService.upload(formData)
+                .subscribe(
+                    (id) => this.store.logo = id,
+                    error => this.logError(error));
+        }
+    }
+
+    getImageUrl(id: string): string {
+        return api.SERVER + 'image/' + id;
     }
 
     onSubmit(): void {

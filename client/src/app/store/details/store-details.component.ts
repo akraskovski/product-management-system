@@ -5,7 +5,8 @@ import {api} from "../../constants/api";
 import {ActivatedRoute, Router} from "@angular/router";
 @Component({
     selector: 'store-details-component',
-    templateUrl: 'store-details.component.html'
+    templateUrl: 'store-details.component.html',
+    styleUrls: ['store-details.component.css']
 })
 export class StoreDetailsComponent implements OnInit {
     selectedStore: Store;
@@ -15,6 +16,10 @@ export class StoreDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadData();
+    }
+
+    getImageUrl(id: string): string {
+        return api.SERVER + 'image/' + id;
     }
 
     private loadData(): void {

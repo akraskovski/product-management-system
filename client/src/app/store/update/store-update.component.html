@@ -1,92 +1,119 @@
-<h3>{{'Edit store form' | translate}}</h3>
-<form novalidate [formGroup]="storeForm" (ngSubmit)="onSubmit()">
-    <div class="form-group row">
-        <label for="name" class="col-sm-1 col-form-label">{{'Name' | translate}}*</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="name" formControlName="name" required/>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <label>{{'Update store form' | translate}}</label>
     </div>
-    <div class="form-group row">
-        <label for="address" class="col-sm-1 col-form-label">{{'Address' | translate}}</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="address" formControlName="address"/>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="phone" class="col-sm-1 col-form-label">{{'Phone' | translate}}</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="phone" formControlName="phone"/>
-        </div>
-    </div>
-    <div *ngIf="storeForm.get('phone').hasError('pattern') && storeForm.get('phone').touched"
-         class="alert alert-danger">{{'Phone number must contain only digits and length must be 5-20 symbols!' | translate}}
-    </div>
-    <div class="form-group row">
-        <label for="skype" class="col-sm-1 col-form-label">Skype</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="skype" formControlName="skype"/>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="mail" class="col-sm-1 col-form-label">{{'Mail' | translate}}</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" name="mail" formControlName="mail"/>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-1">{{'Discounts' | translate}}</label>
-        <div class="col-sm-10">
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" formControlName="discounts">
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="details" class="col-sm-1 col-form-label">{{'Details' | translate}}:</label>
-        <div class="col-sm-4">
-            <textarea class="form-control" rows="6" name="details" formControlName="details"
+    <div class="panel-body">
+        <form name="form" novalidate [formGroup]="storeForm" (ngSubmit)="onSubmit()">
+            <div class="col-md-5">
+                <div class="col-md-12">
+                    <label>{{'Logo' | translate}}*</label>
+                    <div class="form-group row">
+                        <div *ngIf="store.logo">
+                            <img src="{{getImageUrl(store.logo)}}" class="img-rounded">
+                        </div>
+                        <div *ngIf="!store.logo">
+                            <img src="./images/empty-image.jpg"
+                                 class="img-rounded">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div>
+                            <input type="file" (change)="fileChange($event)">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2">{{'Name' | translate}}*</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" formControlName="name" required/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="address" class="col-sm-2">{{'Address' | translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="address" formControlName="address"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="phone" class="col-sm-2">{{'Phone' | translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="phone" formControlName="phone"/>
+                    </div>
+                </div>
+                <div *ngIf="storeForm.get('phone').hasError('pattern') && storeForm.get('phone').touched"
+                     class="alert alert-danger">
+                    {{'Phone number must contain only digits and length must be 5-20 symbols!' | translate}}
+                </div>
+                <div class="form-group row">
+                    <label for="skype" class="col-sm-2">Skype</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="skype" formControlName="skype"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="mail" class="col-sm-2">{{'Mail' | translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="mail" formControlName="mail"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="details" class="col-sm-2">{{'Details' | translate}}</label>
+                    <div class="col-sm-10">
+            <textarea class="form-control" rows="6" id="details" formControlName="details"
                       placeholder="{{'Must be 0-500 characters long' | translate}}"></textarea>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-sm-3">
-            <div class="panel panel-primary" style="min-height: 200px">
-                <div class="panel-heading text-center">
-                    <h3 class="panel-title">{{'Available stocks(click to add)' | translate}}</h3>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div *ngFor="let stock of availableStocks">
-                        <button type="button" class="list-group-item" (click)="addStockToSelected(stock)">
-                            {{stock.specialize}}
-                            <span aria-hidden="true">→</span>
-                        </button>
+                <div class="form-group row">
+                    <label class="col-sm-2">{{'Discounts' | translate}}</label>
+                    <div class="col-sm-10">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" formControlName="discounts">
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="panel panel-primary" style="min-height: 200px">
-                <div class="panel-heading text-center">
-                    <h3 class="panel-title">{{'Selected stocks(click to remove)' | translate}}</h3>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <div class="panel panel-primary" style="min-height: 200px">
+                        <div class="panel-heading text-center">
+                            <h3 class="panel-title">{{'Available stocks(click to add)' | translate}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div *ngFor="let stock of availableStocks">
+                                <button type="button" class="list-group-item" (click)="addStockToSelected(stock)">
+                                    {{stock.specialize}}
+                                    <span aria-hidden="true">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <div *ngFor="let selectedStock of selectedStocks">
-                        <button type="button" class="list-group-item"
-                                (click)="deleteStockFromSelected(selectedStock)">
-                            <span aria-hidden="true">←</span>
-                            {{selectedStock.specialize}}
-                        </button>
+                <div class="col-sm-3">
+                    <div class="panel panel-primary" style="min-height: 200px">
+                        <div class="panel-heading text-center">
+                            <h3 class="panel-title">{{'Selected stocks(click to remove)' | translate}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div *ngFor="let selectedStock of selectedStocks">
+                                <button type="button" class="list-group-item"
+                                        (click)="deleteStockFromSelected(selectedStock)">
+                                    <span aria-hidden="true">←</span>
+                                    {{selectedStock.specialize}}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="form-group row col-sm-12">
+                <button type="submit" [disabled]="storeForm.invalid || loading" class="btn btn-primary">
+                    {{'Submit' | translate}}
+                </button>
+                <img *ngIf="loading"
+                     src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+            </div>
+        </form>
     </div>
-    <div class="form-group row">
-        <button type="submit" [disabled]="storeForm.invalid || loading" class="btn btn-default">{{'Submit' | translate}}
-        </button>
-        <img *ngIf="loading"
-             src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
-    </div>
-</form>
+</div>

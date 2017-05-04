@@ -1,10 +1,19 @@
-<div *ngIf="selectedStore" class="col-sm-10">
+<div *ngIf="selectedStore" class="col-md-10">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h2>{{'Welcome to' | translate}} {{selectedStore.name}}</h2>
         </div>
         <div class="panel-body">
             <div>
+                <div class="text-center">
+                    <div *ngIf="selectedStore.logo">
+                        <img src="{{getImageUrl(selectedStore.logo)}}" class="img-rounded">
+                    </div>
+                    <div *ngIf="!selectedStore.logo">
+                        <img src="./images/empty-image.jpg"
+                             class="img-rounded">
+                    </div>
+                </div>
                 <p *ngIf="selectedStore.details"><b>{{'Details' | translate}}: </b>{{selectedStore.details}}</p>
                 <div>
                     <label>
@@ -12,7 +21,6 @@
                         <input type="checkbox" disabled="disabled" [(ngModel)]="selectedStore.discounts">
                     </label>
                 </div>
-
                 <div *ngIf="selectedStore.address">
                     <h4>{{'Address' | translate}}</h4>
                     <address>
