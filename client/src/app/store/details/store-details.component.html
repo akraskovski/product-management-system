@@ -6,7 +6,13 @@
         <div class="panel-body">
             <div>
                 <p *ngIf="selectedStore.details"><b>{{'Details' | translate}}: </b>{{selectedStore.details}}</p>
-                <p><b>{{'Discounts' | translate}}:</b> {{selectedStore.discounts | translate}}</p>
+                <div>
+                    <label>
+                        <b>{{'Discounts' | translate}}:</b>
+                        <input type="checkbox" disabled="disabled" [(ngModel)]="selectedStore.discounts">
+                    </label>
+                </div>
+
                 <div *ngIf="selectedStore.address">
                     <h4>{{'Address' | translate}}</h4>
                     <address>
