@@ -1,9 +1,7 @@
 const webpack = require('webpack');
-const helpers = require('./helpers');
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -13,7 +11,7 @@ module.exports = {
     },
 
     output: {
-        path: helpers.root('dist'),
+        path: __dirname + '/dist',
         filename: '[name].js'
     },
 
@@ -28,20 +26,13 @@ module.exports = {
                 loaders: ['awesome-typescript-loader', 'angular2-template-loader']
             },
             {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader'
-                }),
-                include: [helpers.root('src', 'styles')]
-            },
-            {
                 test: /\.(html|css)$/,
+                exclude: 'src/assets/styles',
                 loader: 'raw-loader'
             },
             {
                 test: /\.(png|jpg|gif|ico)$/,
-                loaders: ['file-loader?name=images/[name].[ext]']
+                loaders: ['file-loader?name=assets/img/[name].[ext]']
             }
         ]
     },
@@ -52,13 +43,18 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            template: './src/index.html'
+            template: 'src/index.html'
         }),
-        new CopyWebpackPlugin([{
-            from: './src/images',
-            to: './images'
-        }]),
-        new ExtractTextPlugin('[name].css'),
+        new CopyWebpackPlugin([
+            {
+                from: 'src/assets/img',
+                to: 'images'
+            },
+            {
+                from: 'src/assets/styles',
+                to: 'styles'
+            },
+        ])
     ],
 
     devtool: "source-map",
