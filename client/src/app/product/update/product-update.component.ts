@@ -9,8 +9,7 @@ import {ImageService} from "../../common/image.service";
 
 @Component({
     selector: 'product-update-component',
-    templateUrl: 'product-update.component.html',
-    styleUrls: ['product-update.component.css']
+    templateUrl: 'product-update.component.html'
 })
 export class ProductUpdateComponent implements OnInit {
     productForm: FormGroup;

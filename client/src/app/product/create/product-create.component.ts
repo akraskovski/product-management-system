@@ -9,8 +9,7 @@ import {ImageService} from "../../common/image.service";
 
 @Component({
     selector: 'product-create-component',
-    templateUrl: 'product-create.component.html',
-    styleUrls: ['product-create.component.css']
+    templateUrl: 'product-create.component.html'
 })
 export class ProductCreateComponent implements OnInit {
     productForm: FormGroup;
