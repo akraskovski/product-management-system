@@ -1,7 +1,9 @@
 const webpack = require('webpack');
+const helpers = require('./helpers');
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -11,7 +13,7 @@ module.exports = {
     },
 
     output: {
-        path: __dirname + '/dist',
+        path: helpers.root('dist'),
         filename: '[name].js'
     },
 
@@ -24,6 +26,14 @@ module.exports = {
             {
                 test: /\.ts$/,
                 loaders: ['awesome-typescript-loader', 'angular2-template-loader']
+            },
+            {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader'
+                }),
+                include: [helpers.root('src', 'styles')]
             },
             {
                 test: /\.(html|css)$/,
@@ -47,7 +57,8 @@ module.exports = {
         new CopyWebpackPlugin([{
             from: './src/images',
             to: './images'
-        }])
+        }]),
+        new ExtractTextPlugin('[name].css'),
     ],
 
     devtool: "source-map",
