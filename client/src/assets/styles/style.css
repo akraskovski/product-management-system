@@ -7,23 +7,37 @@
 }
 
 .pagination-label {
-    margin-top:20px;
+    margin-top: 20px;
 }
 
-.ng-valid[required], .ng-valid.required  {
+.ng-valid[required], .ng-valid.required {
     border-left: 5px solid #42A948;
 }
-.ng-invalid:not(form)  {
+
+.ng-valid[pattern], .ng-valid.pattern  {
+    border-left: 5px solid #42A948;
+}
+
+.ng-invalid:not(form) {
     border-left: 5px solid #a94442;
 }
 
-.product-img {
+.custom-img {
     max-width: 100%;
     max-height: 100%;
     min-width: 200px;
     min-height: 90px;
 }
+
 .product-input {
     display: block;
     margin: 0 auto;
+}
+
+.items-panel {
+    min-height: 300px;
+}
+
+.store-details {
+    word-break: break-all;
 }

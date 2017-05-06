@@ -72,11 +72,11 @@
                     <div class="col-md-12 text-center">
                         <div *ngIf="selectedProduct.image">
                             <img src="{{getImageUrl(selectedProduct.image)}}"
-                                 class="img-rounded" width="100%" height="100%" alt="{{selectedProduct.name}}">
+                                 class="img-rounded custom-img" alt="{{selectedProduct.name}}">
                         </div>
                         <div *ngIf="!selectedProduct.image">
                             <img src="./images/no-image.jpg"
-                                 class="img-rounded" width="350px" height="300px" alt="{{selectedProduct.name}}">
+                                 class="img-rounded custom-img" alt="{{selectedProduct.name}}">
                         </div>
                     </div>
                     <div class="form-group row">

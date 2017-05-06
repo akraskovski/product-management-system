@@ -9,8 +9,7 @@ import {regex} from "../../constants/regex";
 
 @Component({
     selector: 'stock-create-component',
-    templateUrl: 'stock-create.component.html',
-    styleUrls: ['stock-create.component.css']
+    templateUrl: 'stock-create.component.html'
 })
 export class StockCreateComponent implements OnInit {
     stockForm: FormGroup;

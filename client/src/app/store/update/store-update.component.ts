@@ -10,8 +10,7 @@ import {regex} from "../../constants/regex";
 import {ImageService} from "../../common/image.service";
 @Component({
     selector: 'store-update-component',
-    templateUrl: 'store-update.component.html',
-    styleUrls: ['store-update.component.css']
+    templateUrl: 'store-update.component.html'
 })
 export class StoreUpdateComponent {
     storeForm: FormGroup;

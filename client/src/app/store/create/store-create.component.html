@@ -9,7 +9,7 @@
                     <label>{{'Logo' | translate}}*</label>
                     <div class="form-group row">
                         <div *ngIf="store.logo">
-                            <img src="{{getImageUrl(store.logo)}}" class="img-rounded">
+                            <img src="{{getImageUrl(store.logo)}}" class="img-rounded custom-img">
                         </div>
                         <div *ngIf="!store.logo">
                             <img src="./images/empty-image.jpg"
@@ -76,7 +76,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-3">
-                    <div class="panel panel-primary" style="min-height: 200px">
+                    <div class="panel panel-primary items-panel" >
                         <div class="panel-heading text-center">
                             <h3 class="panel-title">{{'Available stocks(click to add)' | translate}}</h3>
                         </div>
@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="panel panel-primary" style="min-height: 200px">
+                    <div class="panel panel-primary items-panel">
                         <div class="panel-heading text-center">
                             <h3 class="panel-title">{{'Selected stocks(click to remove)' | translate}}</h3>
                         </div>

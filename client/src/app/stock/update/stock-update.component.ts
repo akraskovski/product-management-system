@@ -9,8 +9,7 @@ import {CommonFunctions} from "../../common/common-functions";
 import {regex} from "../../constants/regex";
 @Component({
     selector: 'stock-update-component',
-    templateUrl: 'stock-update.component.html',
-    styleUrls: ['stock-update.component.css']
+    templateUrl: 'stock-update.component.html'
 })
 export class StockUpdateComponent implements OnInit {
     stockForm: FormGroup;

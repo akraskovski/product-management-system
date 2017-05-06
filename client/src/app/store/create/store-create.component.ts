@@ -10,8 +10,7 @@ import {ImageService} from "../../common/image.service";
 
 @Component({
     selector: 'store-create-component',
-    templateUrl: 'store-create.component.html',
-    styleUrls: ['store-create.component.css']
+    templateUrl: 'store-create.component.html'
 })
 export class StoreCreateComponent {
     storeForm: FormGroup;
