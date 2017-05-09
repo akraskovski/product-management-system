@@ -1,6 +1,7 @@
 package by.kraskovski;
 
 import by.kraskovski.service.ImageService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,11 @@ public class ImageServiceTest {
 
     @Autowired
     private ImageService imageService;
+
+    @After
+    public void deleteAll() {
+        imageService.deleteAll();
+    }
 
     @Test
     public void uploadImage() {
@@ -38,6 +44,18 @@ public class ImageServiceTest {
         try {
             Assert.assertEquals(imageService.load(id).getFilename(), id);
             Assert.assertEquals(imageService.load(id).contentLength(), file.getSize());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteImage() {
+        MultipartFile file = new MockMultipartFile("file", "file.gif", "image/png", "test".getBytes());
+        String id = imageService.upload(file);
+        try {
+            Assert.assertEquals(imageService.load(id).getFilename(), id);
+            Assert.assertEquals(imageService.load(id).contentLength(), file.getSize());
+            imageService.delete(id);
         } catch (IOException e) {
             e.printStackTrace();
         }

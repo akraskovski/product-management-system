@@ -22,4 +22,9 @@ public interface ImageService {
      * Delete image from system
      */
     boolean delete(String id);
+
+    /**
+     * Clean images directory
+     */
+    void deleteAll();
 }

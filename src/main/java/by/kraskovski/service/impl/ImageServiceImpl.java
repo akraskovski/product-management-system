@@ -1,6 +1,7 @@
 package by.kraskovski.service.impl;
 
 import by.kraskovski.service.ImageService;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -58,6 +59,15 @@ public class ImageServiceImpl implements ImageService {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public void deleteAll() {
+        try {
+            FileUtils.cleanDirectory(new File(uploadingDir));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
