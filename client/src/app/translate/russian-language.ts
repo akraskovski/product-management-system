@@ -76,5 +76,9 @@ export const LANG_RU_TRANS = {
     'Parameter': 'Параметры поиска',
     'Choose search parameters': 'Выберите параметры поиска',
     'true': 'Присутствует',
-    'false': 'Отсутствует'
+    'false': 'Отсутствует',
+    'Width(sm)': 'Ширина(см)',
+    'Height(sm)': 'Высота(см)',
+    'Weight(kg)': 'Вес(кг)',
+    'Logo': 'Логотип'
 };
