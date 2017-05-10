@@ -49,7 +49,7 @@
             <td>{{product.details}}</td>
             <td>
                 <button type="button" class="btn btn-primary" data-toggle="modal" (click)="onDetails(product)"
-                        data-target="#myModal"> Details
+                        data-target="#myModal">{{'Details' | translate}}
                 </button>
                 <button class="btn btn-warning" (click)="onEdit(product.id)">{{'Edit' | translate}}</button>
                 <button class="btn btn-danger" (click)="onDelete(product.id)">{{'Remove' | translate}}</button>
