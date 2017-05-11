@@ -1,0 +1,9 @@
+.store-panel {
+    height: 350px;
+}
+
+.store-body {
+    word-break: break-all;
+    min-height: 200px;
+    max-height: 250px;
+}
