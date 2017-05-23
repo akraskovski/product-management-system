@@ -1,4 +1,4 @@
-package by.kraskovski.config;
+package by.kraskovski.security.config;
 
 import by.kraskovski.security.filter.AuthenticationTokenFilter;
 import by.kraskovski.service.TokenAuthenticationService;
