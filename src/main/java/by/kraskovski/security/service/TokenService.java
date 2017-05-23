@@ -1,13 +1,19 @@
-package by.kraskovski.service;
+package by.kraskovski.security.service;
 
+import by.kraskovski.model.User;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Interface for authentication token
+ * Service for generating token
  */
-public interface TokenAuthenticationService {
+public interface TokenService {
+
+    /**
+     * Generate and return token
+     */
+    String generate(User user, String password);
 
     /**
      * Authenticate method

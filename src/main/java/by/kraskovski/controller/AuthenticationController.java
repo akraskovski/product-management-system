@@ -2,7 +2,7 @@ package by.kraskovski.controller;
 
 import by.kraskovski.model.User;
 import by.kraskovski.model.dto.TokenDTO;
-import by.kraskovski.service.TokenService;
+import by.kraskovski.security.service.TokenService;
 import by.kraskovski.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
