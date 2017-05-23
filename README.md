@@ -52,6 +52,8 @@ Building project
 
 7. Start tomcat and go to `http:localhost:your_port/pms/`
 
+8. To run db from docker use command `docker run --name postgres-latest -v /opt/db/postgres-latest:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=postgres -p 5432:5432 -d postgres:9.4`
+
 Tests
 =====
 To run server tests use command: `gradle test`
