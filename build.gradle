@@ -1,25 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE"
+        //classpath "org.flywaydb:flyway-gradle-plugin:4.2.0"
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'spring-boot'
+//apply plugin: 'org.flywaydb.flyway'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile 'org.springframework:spring-context:4.3.6.RELEASE'
-    compile 'org.springframework:spring-jdbc:4.3.6.RELEASE'
-    compile 'org.springframework:spring-webmvc:4.3.6.RELEASE'
-    compile 'org.springframework.data:spring-data-jpa:1.11.0.RELEASE'
+    //compile "org.springframework.boot:spring-boot-starter-actuator:1.5.3.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-web:1.5.3.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.5.3.RELEASE"
+    //compile "org.springframework.boot:spring-boot-starter-jdbc:1.5.3.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-security:1.5.3.RELEASE"
+    //compile "org.flywaydb:flyway-gradle-plugin:4.2.0"
     compile 'org.postgresql:postgresql:9.4.1212.jre7'
-    compile 'org.hibernate:hibernate-core:5.2.6.Final'
+    //compile 'org.hibernate:hibernate-core:5.2.6.Final'
     compile 'ch.qos.logback:logback-classic:1.1.9'
-    compile 'org.springframework.security:spring-security-config:4.2.1.RELEASE'
-    compile 'org.springframework.security:spring-security-web:4.2.1.RELEASE'
-    compile 'org.springframework.security:spring-security-core:4.2.1.RELEASE'
     compile 'javax.servlet:javax.servlet-api:3.1.0'
     compile 'io.jsonwebtoken:jjwt:0.7.0'
     compile 'org.apache.commons:commons-lang3:3.5'
-    compile 'org.flywaydb:flyway-core:4.1.2'
     compile 'commons-fileupload:commons-fileupload:1.3.2'
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework:spring-test:4.3.6.RELEASE'
@@ -31,3 +44,10 @@ war {
     from "client/dist"
     archiveName = 'pms.war'
 }
+
+/*flyway {
+    url = 'jdbc:postgresql://localhost:5432/pms'
+    user = 'postgres'
+    password = 'root'
+    schemas = ['pms']
+}*/
