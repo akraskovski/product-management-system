@@ -33,7 +33,7 @@ public class ImageServiceImpl implements ImageService {
             if (os.contains("nix") || os.contains("nux") || os.indexOf("aix") > 0)
                 root = UNIX_DIR;
             else if (os.contains("win"))
-                root = "D:\\pms";
+                root = WINDOWS_DIR;
             Files.createDirectory(Paths.get(root));
         } catch (IOException e) {
             LOGGER.error("directory: \"" + root + "\" already exists!");

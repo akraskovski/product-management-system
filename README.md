@@ -26,7 +26,7 @@ Installing environment (You need Java 8 installed):
 2. Download [Gradle ver. 3.3](https://gradle.org/install#manually)
     >Unpack and set path in the environment variable Path to foler */bin*.
  
-3. Download [PostgreSQL](https://www.postgresql.org/download/windows/)
+3. Download PostgreSQL from [official site](https://www.postgresql.org/download/windows/) or by docker command: `docker pull postgres:9.4`
 
 4. Download [NodeJS](https://nodejs.org/en/download/) with npm.
 
@@ -34,21 +34,28 @@ Building project
 ================
 1. Download or clone project from this repository.
 
+2. Run db on your system. (use docker command `docker run --name postgres-latest -v /opt/db/postgres-latest:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=postgres -p 5432:5432 -d postgres:9.4`)
+
 3. Create schema with random name. As default: `pms`
 
-4. Change(if needed) in `application.properties` database properties, exactly:
+4. Change(if needed) in `application.properties` project properties, exactly:
  - URL and port to your database
  - username
  - password
  - current schema
+ - secret key for security
+ - storing images directory on your machine
 
-5. In console, go to the folder with the root of the project and run the command `gradle clean war`(you must have installed npm)
+Run backend:
 
-6. Copy file `pms.war` from folder /build/libs/ to `$CATALINA_HOME`/webapps/
+- In console, go to the project root and run the command `gradle jar`, `java -jar build/libs/product-management-system.jar` or just `gradle bootRun`
 
-7. Start tomcat and go to `http:localhost:your_port/pms/`
+Run client:
 
-8. To run db from docker use command `docker run --name postgres-latest -v /opt/db/postgres-latest:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=postgres -p 5432:5432 -d postgres:9.4`
+- In console, go to the project root root.
+- `cd client/`
+- `npm i`
+- `npm run server`
 
 Tests
 =====

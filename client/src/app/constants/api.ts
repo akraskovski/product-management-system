@@ -1,5 +1,5 @@
 export const api = {
-    SERVER: 'http://localhost:8081/',
+    SERVER: 'http://localhost:8080/',
     LOGIN: '/auth/login',
     USER: '/user',
     AUTHORITY: '/authority',
