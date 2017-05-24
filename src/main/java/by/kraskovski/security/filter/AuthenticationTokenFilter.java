@@ -1,6 +1,6 @@
 package by.kraskovski.security.filter;
 
-import by.kraskovski.service.TokenAuthenticationService;
+import by.kraskovski.security.service.TokenService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -17,10 +17,10 @@ import java.io.IOException;
  */
 public class AuthenticationTokenFilter extends GenericFilterBean {
 
-    private final TokenAuthenticationService authenticationService;
+    private final TokenService tokenService;
 
-    public AuthenticationTokenFilter(TokenAuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
+    public AuthenticationTokenFilter(TokenService tokenService) {
+        this.tokenService = tokenService;
     }
 
     /**
@@ -30,7 +30,7 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        Authentication authentication = authenticationService.authenticate(httpRequest);
+        Authentication authentication = tokenService.authenticate(httpRequest);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
         SecurityContextHolder.getContext().setAuthentication(null);
