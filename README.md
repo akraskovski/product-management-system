@@ -23,8 +23,6 @@ Installing the project
 ===================================
 Installing environment (You need Java 8 installed):
 
-1. Download [Tomcat 9 (Core)](http://tomcat.apache.org/download-90.cgi) and unpack it.
-
 2. Download [Gradle ver. 3.3](https://gradle.org/install#manually)
     >Unpack and set path in the environment variable Path to foler */bin*.
  
@@ -36,11 +34,9 @@ Building project
 ================
 1. Download or clone project from this repository.
 
-2. Copy `conf/pms/pms.properties` to `$CATALINA_HOME`
-
 3. Create schema with random name. As default: `pms`
 
-4. Change(if needed) in `pms.properties` database properties, exactly:
+4. Change(if needed) in `application.properties` database properties, exactly:
  - URL and port to your database
  - username
  - password
