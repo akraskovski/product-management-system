@@ -12,7 +12,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Controller for the {@link StockService}
+ * Controller for the {@link StockService}.
  */
 @RestController
 @RequestMapping("/stock")
@@ -22,12 +22,12 @@ public class StockController {
     private final StockService stockService;
 
     @Autowired
-    public StockController(StockService stockService) {
+    public StockController(final StockService stockService) {
         this.stockService = stockService;
     }
 
     /**
-     * Find all products in database
+     * Find all products in database.
      */
     @RequestMapping
     public ResponseEntity loadAllStocks() {
@@ -41,13 +41,13 @@ public class StockController {
     }
 
     /**
-     * Find stocks in database with setting id in browser
+     * Find stocks in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadStockById(@PathVariable("id") int id) {
+    public ResponseEntity loadStockById(@PathVariable("id") final int id) {
         LOGGER.info("Start loadStockById: " + id);
         try {
-            Stock stock = stockService.find(id);
+            final Stock stock = stockService.find(id);
             Assert.notNull(stock, "Unable to find stock with id: " + id);
             return new ResponseEntity<>(stockService.find(id), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
@@ -57,10 +57,10 @@ public class StockController {
     }
 
     /**
-     * Creating {@link Stock} from client form
+     * Creating {@link Stock} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createStock(@RequestBody Stock stock) {
+    public ResponseEntity createStock(@RequestBody final Stock stock) {
         LOGGER.info("Start createStock");
         try {
             return new ResponseEntity<>(stockService.create(stock), HttpStatus.CREATED);
@@ -71,10 +71,10 @@ public class StockController {
     }
 
     /**
-     * Update {@link Stock} entity in database
+     * Update {@link Stock} entity in database.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateStock(@RequestBody Stock stock) {
+    public ResponseEntity updateStock(@RequestBody final Stock stock) {
         LOGGER.info("Start updateStock");
         try {
             return new ResponseEntity<>(stockService.update(stock), HttpStatus.OK);
@@ -85,10 +85,10 @@ public class StockController {
     }
 
     /**
-     * Delete {@link Stock} from database by identifier
+     * Delete {@link Stock} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteStock(@PathVariable("id") int id) {
+    public ResponseEntity deleteStock(@PathVariable("id") final int id) {
         LOGGER.info("Start deleteStock");
         try {
             stockService.delete(id);

@@ -18,8 +18,8 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
- * Handle requests for authentication operations
- * Works with {@link TokenService}
+ * Handle requests for authentication operations.
+ * Works with {@link TokenService}.
  */
 @RestController
 @RequestMapping("/auth")
@@ -30,7 +30,7 @@ public class AuthenticationController {
     private final UserService userService;
 
     @Autowired
-    public AuthenticationController(TokenService tokenService, UserService userService) {
+    public AuthenticationController(final TokenService tokenService, final UserService userService) {
         this.tokenService = tokenService;
         this.userService = userService;
     }
@@ -41,11 +41,11 @@ public class AuthenticationController {
      * Generate token from {@link TokenService}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity authenticate(@RequestBody User requestUser) {
+    public ResponseEntity authenticate(@RequestBody final User requestUser) {
         LOGGER.info("Start authentication user with username: " + requestUser.getUsername());
         if (isNotEmpty(requestUser.getUsername()) && isNotEmpty(requestUser.getPassword())) {
-            User user = userService.findByUsername(requestUser.getUsername());
-            String token = tokenService.generate(user, requestUser.getPassword());
+            final User user = userService.findByUsername(requestUser.getUsername());
+            final String token = tokenService.generate(user, requestUser.getPassword());
             if (token != null) {
                 LOGGER.info("Authentication successful! user with username: " + requestUser.getUsername());
                 user.setPassword(EMPTY);

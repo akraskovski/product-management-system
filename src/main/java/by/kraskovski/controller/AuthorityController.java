@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller for {@link AuthorityService}
+ * Controller for {@link AuthorityService}.
  */
 @RestController
 @RequestMapping("/authority")
@@ -21,12 +21,12 @@ public class AuthorityController {
     private final AuthorityService authorityService;
 
     @Autowired
-    public AuthorityController(AuthorityService authorityService) {
+    public AuthorityController(final AuthorityService authorityService) {
         this.authorityService = authorityService;
     }
 
     /**
-     * Return json-information about all authorities in database
+     * Return json-information about all authorities in database.
      */
     @RequestMapping
     public ResponseEntity loadAuthorities() {

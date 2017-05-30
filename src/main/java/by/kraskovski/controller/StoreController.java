@@ -12,7 +12,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Controller for the {@link StoreService}
+ * Controller for the {@link StoreService}.
  */
 @RestController
 @RequestMapping("/store")
@@ -22,12 +22,12 @@ public class StoreController {
     private final StoreService storeService;
 
     @Autowired
-    public StoreController(StoreService storeService) {
+    public StoreController(final StoreService storeService) {
         this.storeService = storeService;
     }
 
     /**
-     * Find all stores in database
+     * Find all stores in database.
      */
     @RequestMapping
     public ResponseEntity loadAllStores() {
@@ -41,13 +41,13 @@ public class StoreController {
     }
 
     /**
-     * Find stores in database with setting id in browser
+     * Find stores in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadStoreById(@PathVariable("id") int id) {
+    public ResponseEntity loadStoreById(@PathVariable("id") final int id) {
         LOGGER.info("Start loadStoreById: " + id);
         try {
-            Store store = storeService.find(id);
+            final Store store = storeService.find(id);
             Assert.notNull(store, "Unable to find store with id: " + id);
             return new ResponseEntity<>(store, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
@@ -57,10 +57,10 @@ public class StoreController {
     }
 
     /**
-     * Creating {@link Store} from client form
+     * Creating {@link Store} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createStore(@RequestBody Store store) {
+    public ResponseEntity createStore(@RequestBody final Store store) {
         LOGGER.info("Start createStore");
         try {
             return new ResponseEntity<>(storeService.create(store), HttpStatus.CREATED);
@@ -71,10 +71,10 @@ public class StoreController {
     }
 
     /**
-     * Update {@link Store} entity in database
+     * Update {@link Store} entity in database.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateStore(@RequestBody Store store) {
+    public ResponseEntity updateStore(@RequestBody final Store store) {
         LOGGER.info("Start updateStore");
         try {
             return new ResponseEntity<>(storeService.update(store), HttpStatus.OK);
@@ -85,10 +85,10 @@ public class StoreController {
     }
 
     /**
-     * Delete {@link Store} from database by identifier
+     * Delete {@link Store} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteStore(@PathVariable("id") int id) {
+    public ResponseEntity deleteStore(@PathVariable("id") final int id) {
         LOGGER.info("Start deleteStore");
         try {
             storeService.delete(id);

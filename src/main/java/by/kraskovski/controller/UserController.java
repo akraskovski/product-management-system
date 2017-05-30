@@ -13,7 +13,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Controller for the {@link UserService}
+ * Controller for the {@link UserService}.
  */
 @RestController
 @RequestMapping("/user")
@@ -23,12 +23,12 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(final UserService userService) {
         this.userService = userService;
     }
 
     /**
-     * Return json-information about all users in database
+     * Return json-information about all users in database.
      */
     @RequestMapping
     public ResponseEntity loadAllUsers() {
@@ -42,13 +42,13 @@ public class UserController {
     }
 
     /**
-     * Return json-information about all users in database
+     * Return json-information about all users in database.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadUserById(@PathVariable("id") int id) {
+    public ResponseEntity loadUserById(@PathVariable("id") final int id) {
         LOGGER.info("Start loadUserById");
         try {
-            User user = userService.find(id);
+            final User user = userService.find(id);
             Assert.notNull(user, "Unable to find user with id: " + id);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
@@ -58,13 +58,13 @@ public class UserController {
     }
 
     /**
-     * Find user in database with setting name in browser
+     * Find user in database with setting name in browser.
      */
     @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
-    public ResponseEntity loadUserByUsername(@PathVariable String username) {
+    public ResponseEntity loadUserByUsername(@PathVariable final String username) {
         LOGGER.info("Start loadUserByUsername: " + username);
         try {
-            User user = userService.findByUsername(username);
+            final User user = userService.findByUsername(username);
             Assert.notNull(user, "Unable to find user with username: " + username);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
@@ -74,10 +74,10 @@ public class UserController {
     }
 
     /**
-     * Creating {@link User} from client form
+     * Creating {@link User} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createUser(@RequestBody User user) {
+    public ResponseEntity createUser(@RequestBody final User user) {
         LOGGER.info("Start createUser: " + user.getUsername());
         try {
             return new ResponseEntity<>(userService.create(prepareUser(user)), HttpStatus.CREATED);
@@ -88,10 +88,10 @@ public class UserController {
     }
 
     /**
-     * Update {@link User} entity in database
+     * Update {@link User} entity in database.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateUser(@RequestBody User user) {
+    public ResponseEntity updateUser(@RequestBody final User user) {
         LOGGER.info("Start updateUser: " + user.getUsername());
         try {
             return new ResponseEntity<>(userService.update(prepareUser(user)), HttpStatus.OK);
@@ -102,10 +102,10 @@ public class UserController {
     }
 
     /**
-     * Delete {@link User} from database by identifier
+     * Delete {@link User} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteUser(@PathVariable("id") int id) {
+    public ResponseEntity deleteUser(@PathVariable("id") final int id) {
         LOGGER.info("Start deleteUser with id: " + id);
         try {
             userService.delete(id);

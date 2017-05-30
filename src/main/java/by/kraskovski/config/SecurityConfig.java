@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * Spring Security configuration class
+ * Spring Security configuration class.
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,18 +21,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenService tokenService;
 
     @Autowired
-    public SecurityConfig(TokenService tokenService) {
+    public SecurityConfig(final TokenService tokenService) {
         this.tokenService = tokenService;
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/user/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.GET, "/product/**").authenticated()
-                .antMatchers(HttpMethod.POST,"/product/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.PUT,"/product/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST, "/product/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/product/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/product/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers(HttpMethod.GET, "/stock/").authenticated()
                 .antMatchers(HttpMethod.POST, "/stock/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_STOCK_MANAGER")
@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder());
     }
 }

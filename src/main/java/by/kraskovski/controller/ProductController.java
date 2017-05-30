@@ -9,12 +9,16 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 /**
- * Controller for the {@link ProductService}
+ * Controller for the {@link ProductService}.
  */
 @RestController
 @RequestMapping("/product")
@@ -24,12 +28,12 @@ public class ProductController {
     private final ProductService productService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(final ProductService productService) {
         this.productService = productService;
     }
 
     /**
-     * Find all products in database
+     * Find all products in database.
      */
     @RequestMapping
     public ResponseEntity loadAllProducts() {
@@ -43,13 +47,13 @@ public class ProductController {
     }
 
     /**
-     * Find products in database with setting name in browser
+     * Find products in database with setting name in browser.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadProductById(@PathVariable("id") int id) {
+    public ResponseEntity loadProductById(@PathVariable("id") final int id) {
         LOGGER.info("Start loadProductById: " + id);
         try {
-            Product product = productService.find(id);
+            final Product product = productService.find(id);
             Assert.notNull(product, "Unable to find product with id: " + id);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
@@ -62,10 +66,10 @@ public class ProductController {
      * Find products in database with setting name in browser
      */
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
-    public ResponseEntity loadProductsByName(@PathVariable("name") String name) {
+    public ResponseEntity loadProductsByName(@PathVariable("name") final String name) {
         LOGGER.info("Start loadProductsByName: " + name);
         try {
-            List<Product> product = productService.findByName(name);
+             final List<Product> product = productService.findByName(name);
             Assert.notNull(product, "Unable to find products with name: " + name);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
@@ -75,13 +79,13 @@ public class ProductController {
     }
 
     /**
-     * Find products in database with setting type in browser
+     * Find products in database with setting type in browser.
      */
     @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
-    public ResponseEntity loadProductsByType(@PathVariable("type") String type) {
+    public ResponseEntity loadProductsByType(@PathVariable("type") final String type) {
         LOGGER.info("Start loadProductsByType: " + type);
         try {
-            List<Product> product = productService.findByType(type);
+            final List<Product> product = productService.findByType(type);
             Assert.notNull(product, "Unable to find products with type: " + type);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
@@ -91,10 +95,10 @@ public class ProductController {
     }
 
     /**
-     * Creating {@link Product} from client form
+     * Creating {@link Product} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createProduct(@RequestBody Product product) {
+    public ResponseEntity createProduct(@RequestBody final Product product) {
         LOGGER.info("Start createProduct");
         try {
             return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
@@ -105,10 +109,10 @@ public class ProductController {
     }
 
     /**
-     * Update {@link Product}'s information in database
+     * Update {@link Product}'s information in database.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateProduct(@RequestBody Product product) {
+    public ResponseEntity updateProduct(@RequestBody final Product product) {
         LOGGER.info("start updateProduct");
         try {
             return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
@@ -119,10 +123,10 @@ public class ProductController {
     }
 
     /**
-     * Delete {@link Product} from database by identifier
+     * Delete {@link Product} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteProduct(@PathVariable("id") int id) {
+    public ResponseEntity deleteProduct(@PathVariable("id") final int id) {
         LOGGER.info("Start deleteProduct");
         try {
             productService.delete(id);
