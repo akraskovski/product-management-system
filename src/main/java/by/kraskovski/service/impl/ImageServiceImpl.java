@@ -19,21 +19,23 @@ import java.util.UUID;
 
 @Service
 public class ImageServiceImpl implements ImageService {
+
     @Value("${unix.dir}")
-    private String UNIX_DIR;
+    private String unixDir;
     @Value("${win.dir}")
-    private String WINDOWS_DIR;
+    private String winDir;
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageServiceImpl.class);
     private static String root;
 
     @PostConstruct
     public void init() {
         try {
-            String os = System.getProperty("os.name");
-            if (os.contains("nix") || os.contains("nux") || os.indexOf("aix") > 0)
-                root = UNIX_DIR;
-            else if (os.contains("win"))
-                root = WINDOWS_DIR;
+            final String os = System.getProperty("os.name");
+            if (os.contains("nix") || os.contains("nux") || os.indexOf("aix") > 0) {
+                root = unixDir;
+            } else if (os.contains("win")) {
+                root = winDir;
+            }
             Files.createDirectory(Paths.get(root));
         } catch (IOException e) {
             LOGGER.error("directory: \"" + root + "\" already exists!");
@@ -41,10 +43,11 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public String upload(MultipartFile uploadedFile) {
-        if (uploadedFile.isEmpty())
+    public String upload(final MultipartFile uploadedFile) {
+        if (uploadedFile.isEmpty()) {
             return null;
-        File file = new File(root + "/" + UUID.randomUUID().toString());
+        }
+        final File file = new File(root + "/" + UUID.randomUUID().toString());
         try {
             uploadedFile.transferTo(file);
             return file.getName();
@@ -55,14 +58,14 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Resource load(String id) {
-        Resource resource = new FileSystemResource(root + "/" + id);
+    public Resource load(final String id) {
+        final Resource resource = new FileSystemResource(root + "/" + id);
         return resource.exists() ? resource : null;
     }
 
     @Override
-    public boolean delete(String id) {
-        File file = new File(root + id);
+    public boolean delete(final String id) {
+        final File file = new File(root + id);
         try {
             return Files.deleteIfExists(file.toPath());
         } catch (IOException e) {

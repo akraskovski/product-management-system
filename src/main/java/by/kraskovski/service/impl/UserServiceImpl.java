@@ -14,22 +14,22 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public User create(User object) {
+    public User create(final User object) {
         return userRepository.save(object);
     }
 
     @Override
-    public User find(int id) {
+    public User find(final int id) {
         return userRepository.findOne(id);
     }
 
     @Override
-    public User findByUsername(String username) {
+    public User findByUsername(final String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -39,12 +39,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User object) {
+    public User update(final User object) {
         return userRepository.save(object);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(final int id) {
         userRepository.delete(id);
     }
 

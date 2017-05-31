@@ -49,8 +49,8 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Authentication authenticate(final HttpServletRequest request) {
-        final String AUTH_HEADER_NAME = "x-auth-token";
-        final String token = request.getHeader(AUTH_HEADER_NAME);
+        final String authHeaderName = "x-auth-token";
+        final String token = request.getHeader(authHeaderName);
         if (token != null) {
             final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             final User user = getUserFromToken(tokenData);

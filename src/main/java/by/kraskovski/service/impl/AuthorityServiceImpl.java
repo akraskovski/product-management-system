@@ -14,12 +14,12 @@ public class AuthorityServiceImpl implements AuthorityService {
     private final AuthorityRepository authorityRepository;
 
     @Autowired
-    public AuthorityServiceImpl(AuthorityRepository authorityRepository) {
+    public AuthorityServiceImpl(final AuthorityRepository authorityRepository) {
         this.authorityRepository = authorityRepository;
     }
 
     @Override
-    public Authority find(int id) {
+    public Authority find(final int id) {
         return authorityRepository.findOne(id);
     }
 

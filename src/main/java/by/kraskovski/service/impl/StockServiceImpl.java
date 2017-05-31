@@ -9,27 +9,27 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StockServiceImpl implements StockService{
+public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
 
     @Autowired
-    public StockServiceImpl(StockRepository stockRepository) {
+    public StockServiceImpl(final StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
 
     @Override
-    public Stock create(Stock object) {
+    public Stock create(final Stock object) {
         return stockRepository.save(object);
     }
 
     @Override
-    public Stock find(int id) {
+    public Stock find(final int id) {
         return stockRepository.findOne(id);
     }
 
     @Override
-    public Stock findBySpecialize(String specialize) {
+    public Stock findBySpecialize(final String specialize) {
         return stockRepository.findBySpecialize(specialize);
     }
 
@@ -39,12 +39,12 @@ public class StockServiceImpl implements StockService{
     }
 
     @Override
-    public Stock update(Stock object) {
+    public Stock update(final Stock object) {
         return stockRepository.save(object);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(final int id) {
         stockRepository.delete(id);
     }
 }

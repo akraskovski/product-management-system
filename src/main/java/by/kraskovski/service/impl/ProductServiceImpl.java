@@ -18,28 +18,28 @@ public class ProductServiceImpl implements ProductService {
     private final ImageService imageService;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ImageService imageService) {
+    public ProductServiceImpl(final ProductRepository productRepository, final ImageService imageService) {
         this.productRepository = productRepository;
         this.imageService = imageService;
     }
 
     @Override
-    public Product create(Product object) {
+    public Product create(final Product object) {
         return productRepository.save(object);
     }
 
     @Override
-    public Product find(int id) {
+    public Product find(final int id) {
         return productRepository.findOne(id);
     }
 
     @Override
-    public List<Product> findByName(String name) {
+    public List<Product> findByName(final String name) {
         return productRepository.findByName(name);
     }
 
     @Override
-    public List<Product> findByType(String type) {
+    public List<Product> findByType(final String type) {
         return productRepository.findByType(type);
     }
 
@@ -49,15 +49,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product update(Product object) {
+    public Product update(final Product object) {
         return productRepository.save(object);
     }
 
     @Override
-    public void delete(int id) {
-        Product productToDelete = productRepository.findOne(id);
-        if (isNotEmpty(productToDelete.getImage()))
+    public void delete(final int id) {
+        final Product productToDelete = productRepository.findOne(id);
+        if (isNotEmpty(productToDelete.getImage())) {
             imageService.delete(productToDelete.getImage());
+        }
         productRepository.delete(productToDelete);
     }
 }

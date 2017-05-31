@@ -100,7 +100,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(userService.update(prepareUser(user)), HttpStatus.OK);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception while updating user with id" + user.id + ". " + e.getLocalizedMessage());
+            LOGGER.error("Exception while updating user with id" + user.getId() + ". " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
