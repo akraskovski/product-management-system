@@ -19,7 +19,7 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
 
     private final TokenService tokenService;
 
-    public AuthenticationTokenFilter(TokenService tokenService) {
+    public AuthenticationTokenFilter(final TokenService tokenService) {
         this.tokenService = tokenService;
     }
 
@@ -27,10 +27,10 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
      * Validate income user with token
      */
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain filterChain)
             throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        Authentication authentication = tokenService.authenticate(httpRequest);
+        final HttpServletRequest httpRequest = (HttpServletRequest) request;
+        final Authentication authentication = tokenService.authenticate(httpRequest);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
         SecurityContextHolder.getContext().setAuthentication(null);

@@ -17,5 +17,9 @@ public abstract class BaseEntity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
 }

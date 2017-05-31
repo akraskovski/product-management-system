@@ -79,35 +79,35 @@ public class Product extends BaseEntity {
         return weight;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(final Double cost) {
         this.cost = cost;
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
-    public void setDetails(String details) {
+    public void setDetails(final String details) {
         this.details = details;
     }
 
-    public void setImage(String image) {
+    public void setImage(final String image) {
         this.image = image;
     }
 
-    public void setWidth(Double width) {
+    public void setWidth(final Double width) {
         this.width = width;
     }
 
-    public void setHeight(Double height) {
+    public void setHeight(final Double height) {
         this.height = height;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(final Double weight) {
         this.weight = weight;
     }
 }

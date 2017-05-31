@@ -19,7 +19,7 @@ public class Authority extends BaseEntity implements GrantedAuthority {
      * Authority name
      */
     @Column(unique = true, nullable = false)
-    public String name;
+    private String name;
 
     /**
      * Implemented method to get Authority name
@@ -28,5 +28,13 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     @JsonIgnore
     public String getAuthority() {
         return name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
     }
 }

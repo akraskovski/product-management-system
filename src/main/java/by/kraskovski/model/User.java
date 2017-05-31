@@ -5,7 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Transient;
+import javax.persistence.FetchType;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,7 +21,7 @@ import java.util.List;
  */
 @Entity
 @Table
-public class User extends BaseEntity implements Authentication{
+public class User extends BaseEntity implements Authentication {
 
     @Transient
     private boolean authenticated = true;
@@ -37,7 +44,7 @@ public class User extends BaseEntity implements Authentication{
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
@@ -48,7 +55,7 @@ public class User extends BaseEntity implements Authentication{
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -60,7 +67,7 @@ public class User extends BaseEntity implements Authentication{
         return authorities;
     }
 
-    public void setAuthorities(List<Authority> authorities) {
+    public void setAuthorities(final List<Authority> authorities) {
         this.authorities = authorities;
     }
 
@@ -114,7 +121,7 @@ public class User extends BaseEntity implements Authentication{
      */
     @Override
     @JsonIgnore
-    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+    public void setAuthenticated(final boolean isAuthenticated) throws IllegalArgumentException {
         this.authenticated = isAuthenticated;
     }
 }
