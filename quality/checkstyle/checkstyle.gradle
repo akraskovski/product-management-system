@@ -1,0 +1,29 @@
+import java.beans.Introspector
+
+apply plugin: 'checkstyle'
+
+checkstyleMain {
+    configFile = file('quality/checkstyle/checkstyle.xml')
+}
+
+ext.checkType = 'none'
+
+task checkstyleHtml << {
+    def xmlReport = file("$buildDir/reports/checkstyle/${checkType}.xml")
+    if (xmlReport.exists()) {
+        ant.xslt(
+                in: xmlReport,
+                style: file('quality/checkstyle/checkstyle-noframes-sorted.xsl'),
+                out: "$buildDir/reports/checkstyle/${checkType}.html")
+    }
+}
+
+gradle.taskGraph.afterTask { Task task, TaskState state ->
+    if (task.name.startsWith('checkstyle')) {
+        checkType = Introspector.decapitalize(task.name.replace('checkstyle', ''))
+    }
+}
+
+tasks.withType(Checkstyle) {
+    finalizedBy checkstyleHtml
+}
