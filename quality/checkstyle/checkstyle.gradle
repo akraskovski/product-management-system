@@ -2,6 +2,7 @@ apply plugin: 'checkstyle'
 
 checkstyleMain {
     configFile = file('quality/checkstyle/checkstyle.xml')
+    //ignoreFailures = false
 }
 
 ext.checkType = 'none'

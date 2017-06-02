@@ -12,6 +12,7 @@ apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'org.flywaydb.flyway'
 apply from: 'quality/checkstyle/checkstyle.gradle'
+apply from: 'quality/pmd/pmd.gradle'
 
 repositories {
     mavenCentral()

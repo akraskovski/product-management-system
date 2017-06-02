@@ -1,0 +1,5 @@
+apply plugin: 'pmd'
+
+pmdMain {
+    ruleSetFiles = files('quality/pmd/pmd-ruleset.xml')
+}
