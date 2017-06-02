@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public SecurityConfig(final TokenService tokenService) {
+        super();
         this.tokenService = tokenService;
     }
 

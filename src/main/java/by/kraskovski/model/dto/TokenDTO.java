@@ -12,12 +12,12 @@ public class TokenDTO implements Serializable {
     /**
      * {@link User}'s token
      */
-    private String token;
+    private final String token;
 
     /**
      * Current logged {@link User}
      */
-    private User user;
+    private final User user;
 
     public TokenDTO(final String token, final User user) {
         this.token = token;

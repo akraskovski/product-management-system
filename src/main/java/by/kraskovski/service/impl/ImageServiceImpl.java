@@ -52,7 +52,7 @@ public class ImageServiceImpl implements ImageService {
             uploadedFile.transferTo(file);
             return file.getName();
         } catch (IOException e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.error(e.getMessage());
             return null;
         }
     }
@@ -69,7 +69,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             return Files.deleteIfExists(file.toPath());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getLocalizedMessage());
             return false;
         }
     }
@@ -79,7 +79,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             FileUtils.cleanDirectory(new File(root));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getLocalizedMessage());
         }
     }
 }
