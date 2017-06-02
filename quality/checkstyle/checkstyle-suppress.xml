@@ -5,6 +5,6 @@
         "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-    <!--Javadocs are ignored-->
     <suppress files="/src[\\/]" checks="javadoc"/>
+    <suppress files="/src/main/java/by/kraskovski/Application" checks="HideUtilityClassConstructor"/>
 </suppressions>

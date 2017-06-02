@@ -19,7 +19,7 @@ public class Product extends BaseEntity {
     private Double cost;
     @Column
     private String type;
-    @Column(length = 500)
+    @Column
     private String details;
     @Column
     private String image;

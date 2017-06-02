@@ -18,12 +18,6 @@ task checkstyleHtml << {
     }
 }
 
-gradle.taskGraph.afterTask { Task task, TaskState state ->
-    if (task.name.startsWith('checkstyle')) {
-        checkType = Introspector.decapitalize(task.name.replace('checkstyle', ''))
-    }
-}
-
 tasks.withType(Checkstyle) {
     finalizedBy checkstyleHtml
 }
