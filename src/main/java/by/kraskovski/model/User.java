@@ -37,6 +37,20 @@ public class User extends BaseEntity implements Authentication {
     )
     private List<Authority> authorities;
 
+    public User() {
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(int id, String username, String password) {
+        this.setId(id);
+        this.username = username;
+        this.password = password;
+    }
+
     /**
      * User name
      */
