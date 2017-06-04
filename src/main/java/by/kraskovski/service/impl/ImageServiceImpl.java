@@ -20,9 +20,9 @@ import java.util.UUID;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    @Value("${unix.dir}")
+    @Value("${unix.dir:/home/akraskovski/pms}")
     private String unixDir;
-    @Value("${win.dir}")
+    @Value("${win.dir:D:/pms}")
     private String winDir;
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageServiceImpl.class);
     private static String root;

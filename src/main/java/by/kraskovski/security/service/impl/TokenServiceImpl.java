@@ -22,7 +22,7 @@ import java.util.Map;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-    @Value("secret.key")
+    @Value("${secret.key:JKGuhygvuh2v}")
     private String secretKey;
     private final UserService userService;
     private final static String AUTH_HEADER_NAME = "x-auth-token";
