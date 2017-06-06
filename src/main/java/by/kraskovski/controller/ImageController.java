@@ -70,7 +70,7 @@ public class ImageController {
     public ResponseEntity deleteImage(@PathVariable final String id) {
         LOGGER.info("deleting image with id: \"" + id + "\"");
         if (imageService.delete(id)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         LOGGER.error("Error during deleting image with id: \"" + id + "\"");
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

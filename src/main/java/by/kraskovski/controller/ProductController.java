@@ -130,7 +130,7 @@ public class ProductController {
         LOGGER.info("Start deleteProduct");
         try {
             productService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
             LOGGER.info("Error in deleteProduct. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

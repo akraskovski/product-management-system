@@ -96,7 +96,7 @@ public class StockController {
         LOGGER.info("Start deleteStock");
         try {
             stockService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in deleteStock. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -22,7 +22,7 @@ public class UserServiceImplTest {
 
     @Test
     public void find() {
-        int id = 10;
+        final int id = 10;
         when(userService.find(id)).thenReturn(new User(id, "Test", "Test"));
         User foundUser = userService.find(id);
         Assert.assertNotNull(foundUser);

@@ -96,7 +96,7 @@ public class StoreController {
         LOGGER.info("Start deleteStore");
         try {
             storeService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in deleteStore. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

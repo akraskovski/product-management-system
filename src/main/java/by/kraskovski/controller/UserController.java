@@ -113,7 +113,7 @@ public class UserController {
         LOGGER.info("Start deleteUser with id: " + id);
         try {
             userService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
             LOGGER.error("Exception while delete user with id: " + id + ". " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
