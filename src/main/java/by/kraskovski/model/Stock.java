@@ -16,16 +16,12 @@ import java.util.List;
  * Description database table "stock"
  */
 @Entity
-@Table
 public class Stock extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String specialize;
-    @Column
     private String address;
-    @Column
     private String phone;
-    @Column
     private Double square;
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = Product.class)

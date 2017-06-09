@@ -20,22 +20,15 @@ import java.util.List;
  * Description entity by database table "user"
  */
 @Entity
-@Table
 public class User extends BaseEntity implements Authentication {
 
     @Transient
     private boolean authenticated = true;
-
     @Column(unique = true, nullable = false)
     private String username;
-
     @Column(nullable = false)
     private String password;
-
-    @Column
     private String firstName;
-
-    @Column
     private String lastName;
 
     @ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER)
