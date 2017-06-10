@@ -10,24 +10,17 @@ import javax.persistence.Table;
  * Description database table "user"
  */
 @Entity
-@Table
 public class Product extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String name;
     @Column(nullable = false)
     private Double cost;
-    @Column
     private String type;
-    @Column
     private String details;
-    @Column
     private String image;
-    @Column
     private Double width;
-    @Column
     private Double height;
-    @Column
     private Double weight;
 
     /**

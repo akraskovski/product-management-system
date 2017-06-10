@@ -12,7 +12,6 @@ import javax.persistence.Table;
  * Description database table "authority"
  */
 @Entity
-@Table
 public class Authority extends BaseEntity implements GrantedAuthority {
 
     /**

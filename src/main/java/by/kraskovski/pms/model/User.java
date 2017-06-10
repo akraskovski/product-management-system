@@ -20,7 +20,6 @@ import java.util.List;
  * Description entity by database table "user"
  */
 @Entity
-@Table
 public class User extends BaseEntity implements Authentication {
 
     @Transient
@@ -29,6 +28,9 @@ public class User extends BaseEntity implements Authentication {
     private String username;
     @Column(nullable = false)
     private String password;
+    private String firstName;
+    private String lastName;
+
     @ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_authority",
@@ -71,6 +73,22 @@ public class User extends BaseEntity implements Authentication {
 
     public void setPassword(final String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     /**
