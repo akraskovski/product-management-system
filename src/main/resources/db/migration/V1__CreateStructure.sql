@@ -81,7 +81,9 @@ ALTER SEQUENCE store_id_seq OWNED BY store.id;
 CREATE TABLE "user" (
   id       INTEGER           NOT NULL,
   username CHARACTER VARYING NOT NULL,
-  password CHARACTER VARYING NOT NULL
+  password CHARACTER VARYING NOT NULL,
+  first_name CHARACTER VARYING,
+  last_name CHARACTER VARYING
 );
 
 CREATE TABLE user_authority (

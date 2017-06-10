@@ -33,7 +33,7 @@ public class ImageServiceImpl implements ImageService {
             final String os = System.getProperty("os.name");
             if (os.contains("nix") || os.contains("nux") || os.indexOf("aix") > 0) {
                 root = unixDir;
-            } else if (os.contains("win")) {
+            } else if (os.toLowerCase().contains("win")) {
                 root = winDir;
             }
             Files.createDirectory(Paths.get(root));
