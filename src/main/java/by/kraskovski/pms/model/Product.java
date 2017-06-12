@@ -2,19 +2,18 @@ package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Description database table "user"
  */
 @Entity
+@Table
 public class Product extends BaseEntity {
 
-    @Column(unique = true, nullable = false)
     private String name;
-    @Column(nullable = false)
     private Double cost;
     private String type;
     private String details;
@@ -22,6 +21,9 @@ public class Product extends BaseEntity {
     private Double width;
     private Double height;
     private Double weight;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<ProductStock> productStocks = new HashSet<>();
 
     /**
      * Product name
@@ -72,6 +74,13 @@ public class Product extends BaseEntity {
         return weight;
     }
 
+    /**
+     * Product stocks
+     */
+    public Set<ProductStock> getProductStocks() {
+        return productStocks;
+    }
+
     public void setName(final String name) {
         this.name = name;
     }
@@ -102,5 +111,9 @@ public class Product extends BaseEntity {
 
     public void setWeight(final Double weight) {
         this.weight = weight;
+    }
+
+    public void setProductStocks(Set<ProductStock> productStocks) {
+        this.productStocks = productStocks;
     }
 }

@@ -1,21 +1,16 @@
 package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import java.util.List;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Description database table "stock"
  */
 @Entity
+@Table
 public class Stock extends BaseEntity {
 
     @Column(unique = true, nullable = false)
@@ -23,14 +18,16 @@ public class Stock extends BaseEntity {
     private String address;
     private String phone;
     private Double square;
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(targetEntity = Product.class)
-    @JoinTable(
-            name = "product_stock",
-            joinColumns = {@JoinColumn(name = "stock_id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id")}
-    )
-    private List<Product> productList;
+
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+    private Set<ProductStock> productStocks = new HashSet<>();
+
+    /**
+     * ManyToMany relation to {@link Product} entities
+     */
+    public Set<ProductStock> getProductStocks() {
+        return productStocks;
+    }
 
     /**
      * Stock specialize
@@ -56,10 +53,24 @@ public class Stock extends BaseEntity {
     public Double getSquare() {
         return square;
     }
-    /**
-     * ManyToMany relation to {@link Product} entities
-     */
-    public List<Product> getProductList() {
-        return productList;
+
+    public void setSpecialize(String specialize) {
+        this.specialize = specialize;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setSquare(Double square) {
+        this.square = square;
+    }
+
+    public void setProductStocks(Set<ProductStock> productStocks) {
+        this.productStocks = productStocks;
     }
 }
