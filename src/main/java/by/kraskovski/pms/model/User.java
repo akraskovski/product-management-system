@@ -5,14 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Transient;
-import javax.persistence.FetchType;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,6 +31,10 @@ public class User extends BaseEntity implements Authentication {
             inverseJoinColumns = {@JoinColumn(name = "authority_id")}
     )
     private List<Authority> authorities;
+
+    @OneToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     public User() {
     }
@@ -89,6 +86,14 @@ public class User extends BaseEntity implements Authentication {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     /**
