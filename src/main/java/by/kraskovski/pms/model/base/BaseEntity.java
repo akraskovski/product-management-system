@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 public abstract class BaseEntity {
 
     /**
-     * Id field for every entity
+     * General id field
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

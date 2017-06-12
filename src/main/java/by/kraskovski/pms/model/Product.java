@@ -10,7 +10,6 @@ import java.util.Set;
  * Description database table "user"
  */
 @Entity
-@Table
 public class Product extends BaseEntity {
 
     private String name;
@@ -22,7 +21,7 @@ public class Product extends BaseEntity {
     private Double height;
     private Double weight;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductStock> productStocks = new HashSet<>();
 
     /**

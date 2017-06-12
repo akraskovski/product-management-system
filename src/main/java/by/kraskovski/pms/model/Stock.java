@@ -10,7 +10,6 @@ import java.util.Set;
  * Description database table "stock"
  */
 @Entity
-@Table
 public class Stock extends BaseEntity {
 
     @Column(unique = true, nullable = false)
@@ -19,7 +18,7 @@ public class Stock extends BaseEntity {
     private String phone;
     private Double square;
 
-    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "stock")
     private Set<ProductStock> productStocks = new HashSet<>();
 
     /**
