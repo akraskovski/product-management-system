@@ -2,9 +2,8 @@ package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
  * Description database table "user"

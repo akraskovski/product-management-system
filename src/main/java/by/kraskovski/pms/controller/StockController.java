@@ -53,7 +53,7 @@ public class StockController {
         try {
             final Stock stock = stockService.find(id);
             Assert.notNull(stock, "Unable to find stock with id: " + id);
-            return new ResponseEntity<>(stockService.find(id), HttpStatus.OK);
+            return new ResponseEntity<>(stock, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

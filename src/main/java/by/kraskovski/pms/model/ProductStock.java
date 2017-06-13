@@ -1,18 +1,20 @@
 package by.kraskovski.pms.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class ProductStock implements Serializable{
+public class ProductStock implements Serializable {
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
@@ -26,6 +28,7 @@ public class ProductStock implements Serializable{
         this.product = product;
     }
 
+    @JsonIgnore
     public Stock getStock() {
         return stock;
     }
