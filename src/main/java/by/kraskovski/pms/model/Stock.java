@@ -1,6 +1,7 @@
 package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -24,6 +25,7 @@ public class Stock extends BaseEntity {
     /**
      * ManyToMany relation to {@link Product} entities
      */
+    @JsonIgnore
     public Set<ProductStock> getProductStocks() {
         return productStocks;
     }

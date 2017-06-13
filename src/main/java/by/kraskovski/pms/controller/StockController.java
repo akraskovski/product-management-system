@@ -1,6 +1,9 @@
 package by.kraskovski.pms.controller;
 
+import by.kraskovski.pms.model.Product;
+import by.kraskovski.pms.model.ProductStock;
 import by.kraskovski.pms.model.Stock;
+import by.kraskovski.pms.service.ProductService;
 import by.kraskovski.pms.service.StockService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +12,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller for the {@link StockService}.
@@ -24,10 +26,12 @@ public class StockController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StockController.class);
     private final StockService stockService;
+    private final ProductService productService;
 
     @Autowired
-    public StockController(final StockService stockService) {
+    public StockController(final StockService stockService, ProductService productService) {
         this.stockService = stockService;
+        this.productService = productService;
     }
 
     /**
@@ -45,7 +49,7 @@ public class StockController {
     }
 
     /**
-     * Find stocks in database with setting id in browser.
+     * Find stock in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadStockById(@PathVariable("id") final int id) {
@@ -58,6 +62,42 @@ public class StockController {
             LOGGER.error(e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /**
+     * Find stock products in database with setting id in browser.
+     */
+    @RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
+    public ResponseEntity<Object> loadStockProductsById(@PathVariable("id") final int id) {
+        LOGGER.info("Start loadStockProductsById: " + id);
+        try {
+            Map<Integer, Integer> products = new HashMap<>();
+            Stock stock = stockService.find(id);
+            stock.getProductStocks()
+                    .forEach(productStock -> products.put(productStock.getProduct().getId(), productStock.productsCount));
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error(e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Add product to the stock
+     */
+    @RequestMapping(value = "/{id}/products/{product_id}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> addProductToStock(@PathVariable("id") final int id, @PathVariable("product_id") final int productId) {
+        LOGGER.info("Start loadStockById: " + id);
+        Stock stock = stockService.find(id);
+        Product product = productService.find(productId);
+        for (ProductStock productStock : stock.getProductStocks()) {
+            if (productStock.getProduct().getId() == product.getId()) {
+                productStock.productsCount++;
+                stockService.update(stock);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }
+        return null;
     }
 
     /**
