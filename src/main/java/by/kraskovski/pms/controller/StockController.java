@@ -71,12 +71,8 @@ public class StockController {
     public ResponseEntity<Object> loadStockProductsById(@PathVariable("id") final int id) {
         LOGGER.info("Start loadStockProductsById: " + id);
         try {
-            Map<Integer, Integer> products = new HashMap<>();
-            Stock stock = stockService.find(id);
-            stock.getProductStocks()
-                    .forEach(productStock -> products.put(productStock.getProduct().getId(), productStock.productsCount));
-            return new ResponseEntity<>(products, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(stockService.findProducts(id), HttpStatus.OK);
+        } catch (DataAccessException e) {
             LOGGER.error(e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -86,18 +82,10 @@ public class StockController {
      * Add product to the stock
      */
     @RequestMapping(value = "/{id}/products/{product_id}", method = RequestMethod.PUT)
-    public ResponseEntity<Object> addProductToStock(@PathVariable("id") final int id, @PathVariable("product_id") final int productId) {
-        LOGGER.info("Start loadStockById: " + id);
-        Stock stock = stockService.find(id);
-        Product product = productService.find(productId);
-        for (ProductStock productStock : stock.getProductStocks()) {
-            if (productStock.getProduct().getId() == product.getId()) {
-                productStock.productsCount++;
-                stockService.update(stock);
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        }
-        return null;
+    public ResponseEntity<Object> addProductToStock(@PathVariable("id") final int stockId, @PathVariable("product_id") final int productId) {
+        LOGGER.info("Start loadStockById: " + stockId);
+        stockService.addProduct(stockId, productId);
+        return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
     }
 
     /**

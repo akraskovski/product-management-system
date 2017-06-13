@@ -18,17 +18,12 @@ public class Stock extends BaseEntity {
     private String address;
     private String phone;
     private double square;
-
-    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<ProductStock> productStocks = new HashSet<>();
-
-    /**
-     * ManyToMany relation to {@link Product} entities
-     */
     @JsonIgnore
-    public Set<ProductStock> getProductStocks() {
-        return productStocks;
-    }
+    @OneToMany(
+            mappedBy = "stock",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    public Set<ProductStock> productStocks = new HashSet<>();
 
     /**
      * Stock specialize
@@ -72,9 +67,5 @@ public class Stock extends BaseEntity {
 
     public void setSquare(double square) {
         this.square = square;
-    }
-
-    public void setProductStocks(Set<ProductStock> productStocks) {
-        this.productStocks = productStocks;
     }
 }
