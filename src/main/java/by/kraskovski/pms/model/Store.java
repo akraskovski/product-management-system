@@ -24,7 +24,7 @@ public class Store extends BaseEntity {
     private String address;
     private String phone;
     private String skype;
-    private Boolean discounts;
+    private boolean discounts;
     private String mail;
     private String logo;
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -69,7 +69,7 @@ public class Store extends BaseEntity {
     /**
      * Store discounts system (consist or not)
      */
-    public Boolean getDiscounts() {
+    public boolean getDiscounts() {
         return discounts;
     }
     /**

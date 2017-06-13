@@ -16,9 +16,9 @@ public class Stock extends BaseEntity {
     private String specialize;
     private String address;
     private String phone;
-    private Double square;
+    private double square;
 
-    @OneToMany(mappedBy = "stock", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductStock> productStocks = new HashSet<>();
 
     /**
@@ -34,22 +34,25 @@ public class Stock extends BaseEntity {
     public String getSpecialize() {
         return specialize;
     }
+
     /**
      * Stock address
      */
     public String getAddress() {
         return address;
     }
+
     /**
      * Stocks contact phone
      */
     public String getPhone() {
         return phone;
     }
+
     /**
      * Stock square
      */
-    public Double getSquare() {
+    public double getSquare() {
         return square;
     }
 
@@ -65,7 +68,7 @@ public class Stock extends BaseEntity {
         this.phone = phone;
     }
 
-    public void setSquare(Double square) {
+    public void setSquare(double square) {
         this.square = square;
     }
 

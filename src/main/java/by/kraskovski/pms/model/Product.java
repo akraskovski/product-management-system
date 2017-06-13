@@ -12,93 +12,78 @@ import java.util.Set;
 @Entity
 public class Product extends BaseEntity {
 
+    @Column(nullable = false, unique = true)
     private String name;
-    private Double cost;
+    @Column(nullable = false)
+    private double cost;
     private String type;
     private String details;
     private String image;
-    private Double width;
-    private Double height;
-    private Double weight;
+    private double width;
+    private double height;
+    private double weight;
 
-    /**
-     * Product name
-     */
     public String getName() {
         return name;
     }
-    /**
-     * Product cost
-     */
-    public Double getCost() {
-        return cost;
-    }
-    /**
-     * Product type
-     */
-    public String getType() {
-        return type;
-    }
-    /**
-     * Product details
-     */
-    public String getDetails() {
-        return details;
-    }
-    /**
-     * Product image
-     */
-    public String getImage() {
-        return image;
-    }
-    /**
-     * Product width
-     */
-    public Double getWidth() {
-        return width;
-    }
-    /**
-     * Product height
-     */
-    public Double getHeight() {
-        return height;
-    }
-    /**
-     * Product weight
-     */
-    public Double getWeight() {
-        return weight;
-    }
 
-    public void setName(final String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setCost(final Double cost) {
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
-    public void setType(final String type) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
         this.type = type;
     }
 
-    public void setDetails(final String details) {
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
         this.details = details;
     }
 
-    public void setImage(final String image) {
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public void setWidth(final Double width) {
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
         this.width = width;
     }
 
-    public void setHeight(final Double height) {
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
         this.height = height;
     }
 
-    public void setWeight(final Double weight) {
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 }
