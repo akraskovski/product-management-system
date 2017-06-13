@@ -21,9 +21,6 @@ public class Product extends BaseEntity {
     private Double height;
     private Double weight;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ProductStock> productStocks = new HashSet<>();
-
     /**
      * Product name
      */
@@ -73,13 +70,6 @@ public class Product extends BaseEntity {
         return weight;
     }
 
-    /**
-     * Product stocks
-     */
-    public Set<ProductStock> getProductStocks() {
-        return productStocks;
-    }
-
     public void setName(final String name) {
         this.name = name;
     }
@@ -110,9 +100,5 @@ public class Product extends BaseEntity {
 
     public void setWeight(final Double weight) {
         this.weight = weight;
-    }
-
-    public void setProductStocks(Set<ProductStock> productStocks) {
-        this.productStocks = productStocks;
     }
 }

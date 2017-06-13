@@ -33,5 +33,5 @@ dependencies {
     compile "io.springfox:springfox-swagger2:2.7.0"
     compile "io.springfox:springfox-swagger-ui:2.7.0"
     testCompile 'junit:junit:4.12'
-    testCompile 'org.hsqldb:hsqldb:2.4.0'
+    testCompile 'com.h2database:h2:1.4.195'
 }

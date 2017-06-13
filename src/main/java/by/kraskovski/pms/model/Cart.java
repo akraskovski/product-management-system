@@ -19,7 +19,7 @@ public class Cart extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "product_id")})
     private List<Product> productList;
 
-    private int totalCost;
+    private double totalCost;
 
     public User getUser() {
         return user;
@@ -37,11 +37,11 @@ public class Cart extends BaseEntity {
         this.productList = productList;
     }
 
-    public int getTotalCost() {
+    public double getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(int totalCost) {
+    public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
 }
