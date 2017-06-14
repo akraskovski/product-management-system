@@ -18,12 +18,12 @@ public class Stock extends BaseEntity {
     private String address;
     private String phone;
     private double square;
-    @JsonIgnore
+
     @OneToMany(
             mappedBy = "stock",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    public Set<ProductStock> productStocks = new HashSet<>();
+    private Set<ProductStock> productStocks = new HashSet<>();
 
     /**
      * Stock specialize
@@ -53,6 +53,11 @@ public class Stock extends BaseEntity {
         return square;
     }
 
+    @JsonIgnore
+    public Set<ProductStock> getProductStocks() {
+        return productStocks;
+    }
+
     public void setSpecialize(String specialize) {
         this.specialize = specialize;
     }
@@ -67,5 +72,9 @@ public class Stock extends BaseEntity {
 
     public void setSquare(double square) {
         this.square = square;
+    }
+
+    public void setProductStocks(Set<ProductStock> productStocks) {
+        this.productStocks = productStocks;
     }
 }
