@@ -33,7 +33,7 @@ public interface StockService {
     /**
      * Add product to stock.
      */
-    void addProduct(int stockId, int productId);
+    boolean addProduct(int stockId, int productId);
 
     /**
      * Find all {@link Stock}s in database.

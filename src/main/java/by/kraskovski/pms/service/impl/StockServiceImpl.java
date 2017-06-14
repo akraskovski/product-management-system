@@ -3,7 +3,6 @@ package by.kraskovski.pms.service.impl;
 import by.kraskovski.pms.model.Product;
 import by.kraskovski.pms.model.ProductStock;
 import by.kraskovski.pms.model.Stock;
-import by.kraskovski.pms.repository.ProductRepository;
 import by.kraskovski.pms.repository.StockRepository;
 import by.kraskovski.pms.service.ProductService;
 import by.kraskovski.pms.service.StockService;
@@ -41,31 +40,33 @@ public class StockServiceImpl implements StockService {
     public Map<Integer, Integer> findProducts(final int id) {
         Stock stock = stockRepository.findOne(id);
         final Map<Integer, Integer> products = new HashMap<>();
-        stock.productStocks
-                .forEach(productStock -> products.put(productStock.product.getId(), productStock.productsCount));
+        stock.getProductStocks()
+                .forEach(productStock -> products.put(productStock.getProduct().getId(), productStock.productsCount));
         return products;
     }
 
     @Override
-    public void addProduct(final int stockId, final int productId) {
+    @Transactional
+    public boolean addProduct(final int stockId, final int productId) {
         Stock stock = stockRepository.findOne(stockId);
         Product product = productService.find(productId);
-
-        ProductStock productStock = new ProductStock();
-        productStock.stock = stock;
-        productStock.product = product;
-        productStock.productsCount = 1;
-        stock.productStocks.add(productStock);
-        stockRepository.save(stock);
-        //If product exists, increase count
-//        stock.getProductStocks().forEach(param -> {
-//            if (param.getProduct().equals(product)) {
-//                param.productsCount++;
-//                stockRepository.save(stock);
-//                return;
-//            }
-//        });
-
+        if (stock != null && product != null) {
+            for (ProductStock productStock : stock.getProductStocks()) {
+                if (productStock.getProduct().equals(product)) {
+                    productStock.productsCount++;
+                    stockRepository.save(stock);
+                    return true;                                                        
+                }
+            }
+            ProductStock addingProduct = new ProductStock();
+            addingProduct.setProduct(product);
+            addingProduct.setStock(stock);
+            addingProduct.productsCount = 1;
+            stock.getProductStocks().add(addingProduct);
+            stockRepository.save(stock);
+            return true;
+        }
+        return false;
     }
 
     @Override

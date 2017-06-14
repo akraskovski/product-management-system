@@ -68,7 +68,7 @@ public class StockController {
      * Find stock products in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
-    public ResponseEntity<Object> loadStockProductsById(@PathVariable("id") final int id) {
+    public ResponseEntity loadStockProductsById(@PathVariable("id") final int id) {
         LOGGER.info("Start loadStockProductsById: " + id);
         try {
             return new ResponseEntity<>(stockService.findProducts(id), HttpStatus.OK);
@@ -82,10 +82,11 @@ public class StockController {
      * Add product to the stock
      */
     @RequestMapping(value = "/{id}/products/{product_id}", method = RequestMethod.PUT)
-    public ResponseEntity<Object> addProductToStock(@PathVariable("id") final int stockId, @PathVariable("product_id") final int productId) {
+    public ResponseEntity addProductToStock(@PathVariable("id") final int stockId, @PathVariable("product_id") final int productId) {
         LOGGER.info("Start loadStockById: " + stockId);
-        stockService.addProduct(stockId, productId);
-        return new ResponseEntity<Object>(HttpStatus.NO_CONTENT);
+        return stockService.addProduct(stockId, productId) ?
+                new ResponseEntity<>(HttpStatus.NO_CONTENT) :
+                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     /**
