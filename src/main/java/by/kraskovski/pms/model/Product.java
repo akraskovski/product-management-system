@@ -1,9 +1,11 @@
 package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Description database table "user"
@@ -21,6 +23,18 @@ public class Product extends BaseEntity {
     private double width;
     private double height;
     private double weight;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ProductStock> productStocks = new HashSet<>();
+
+    @JsonIgnore
+    public Set<ProductStock> getProductStocks() {
+        return productStocks;
+    }
+
+    public void setProductStocks(Set<ProductStock> productStocks) {
+        this.productStocks = productStocks;
+    }
 
     public String getName() {
         return name;

@@ -20,9 +20,7 @@ public class Stock extends BaseEntity {
     private double square;
 
     @OneToMany(
-            mappedBy = "stock",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+            mappedBy = "stock", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ProductStock> productStocks = new HashSet<>();
 
     /**
