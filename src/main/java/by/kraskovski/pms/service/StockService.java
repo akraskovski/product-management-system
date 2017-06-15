@@ -33,7 +33,7 @@ public interface StockService {
     /**
      * Add product to stock.
      */
-    boolean addProduct(int stockId, int productId);
+    boolean addProduct(int stockId, int productId, int count);
 
     /**
      * Delete one (or more) product(s) from stock.

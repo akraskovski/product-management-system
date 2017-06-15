@@ -47,13 +47,13 @@ public class StockServiceImpl implements StockService {
 
     @Override
     @Transactional
-    public boolean addProduct(final int stockId, final int productId) {
+    public boolean addProduct(final int stockId, final int productId, final int count) {
         Stock stock = stockRepository.findOne(stockId);
         Product product = productService.find(productId);
         if (stock != null && product != null) {
             for (ProductStock productStock : stock.getProductStocks()) {
                 if (productStock.getProduct().equals(product)) {
-                    productStock.productsCount++;
+                    productStock.productsCount += count;
                     stockRepository.save(stock);
                     return true;
                 }
@@ -61,7 +61,7 @@ public class StockServiceImpl implements StockService {
             ProductStock addingProduct = new ProductStock();
             addingProduct.setProduct(product);
             addingProduct.setStock(stock);
-            addingProduct.productsCount = 1;
+            addingProduct.productsCount = count;
             stock.getProductStocks().add(addingProduct);
             stockRepository.save(stock);
             return true;
