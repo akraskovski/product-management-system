@@ -36,6 +36,11 @@ public interface StockService {
     boolean addProduct(int stockId, int productId);
 
     /**
+     * Delete one (or more) product(s) from stock.
+     */
+    boolean deleteProduct(int stockId, int productId, int count);
+
+    /**
      * Find all {@link Stock}s in database.
      */
     List<Stock> findAll();

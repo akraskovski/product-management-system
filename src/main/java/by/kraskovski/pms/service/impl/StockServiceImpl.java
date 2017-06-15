@@ -55,7 +55,7 @@ public class StockServiceImpl implements StockService {
                 if (productStock.getProduct().equals(product)) {
                     productStock.productsCount++;
                     stockRepository.save(stock);
-                    return true;                                                        
+                    return true;
                 }
             }
             ProductStock addingProduct = new ProductStock();
@@ -67,6 +67,32 @@ public class StockServiceImpl implements StockService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean deleteProduct(final int stockId, final int productId, final int count) {
+        Stock stock = stockRepository.findOne(stockId);
+        Product product = productService.find(productId);
+        if (stock != null && product != null) {
+            for (ProductStock productStock : stock.getProductStocks()) {
+                if (productStock.getProduct().equals(product)) {
+                    if (productStock.productsCount - count > 0) {
+                        productStock.productsCount -= count;
+                        stockRepository.save(stock);
+                        return true;
+                    } else {
+                        stock.getProductStocks().remove(productStock);
+                        stockRepository.save(stock);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private void deleteWithCount(final ProductStock productStock, final int count) {
+
     }
 
     @Override

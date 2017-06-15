@@ -81,10 +81,21 @@ public class StockController {
     /**
      * Add product to the stock
      */
-    @RequestMapping(value = "/{id}/products/{product_id}", method = RequestMethod.PUT)
-    public ResponseEntity addProductToStock(@PathVariable("id") final int stockId, @PathVariable("product_id") final int productId) {
-        LOGGER.info("Start loadStockById: " + stockId);
+    @RequestMapping(value = "/{stock_id}/products/{product_id}", method = RequestMethod.PUT)
+    public ResponseEntity addProductToStock(@PathVariable("stock_id") final int stockId, @PathVariable("product_id") final int productId) {
+        LOGGER.info("Start addProductToStock: " + stockId);
         return stockService.addProduct(stockId, productId) ?
+                new ResponseEntity<>(HttpStatus.NO_CONTENT) :
+                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/{stock_id}/products/{product_id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteProductFromStock(
+            @PathVariable("stock_id") final int stockId,
+            @PathVariable("product_id") final int productId,
+            @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
+        LOGGER.info("Start delete Product{} from Stock{} with count{}", productId, stockId, count);
+        return stockService.deleteProduct(stockId, productId, count) ?
                 new ResponseEntity<>(HttpStatus.NO_CONTENT) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
