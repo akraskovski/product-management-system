@@ -48,6 +48,7 @@ public class User extends BaseEntity implements Authentication {
     private Cart cart;
 
     public User() {
+        super();
     }
 
     public User(final String username, final String password) {

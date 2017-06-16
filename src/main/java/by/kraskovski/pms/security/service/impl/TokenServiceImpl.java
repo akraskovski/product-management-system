@@ -24,9 +24,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Value("${secret.key:JKGuhygvuh2v}")
     private String secretKey;
+    @Value("${auth.header.name:x-auth-token}")
+    private String authHeaderName;
     private final UserService userService;
-    private final static String AUTH_HEADER_NAME = "x-auth-token";
-
 
     @Autowired
     public TokenServiceImpl(final UserService userService) {
@@ -51,7 +51,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Authentication authenticate(final HttpServletRequest request) {
-        final String token = request.getHeader(AUTH_HEADER_NAME);
+        final String token = request.getHeader(authHeaderName);
         if (token != null) {
             final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             final User user = getUserFromToken(tokenData);

@@ -30,8 +30,8 @@ public class Store extends BaseEntity {
     @ManyToMany(targetEntity = Stock.class)
     @JoinTable(
             name = "stock_store",
-            joinColumns = {@JoinColumn(name = "store_id")},
-            inverseJoinColumns = {@JoinColumn(name = "stock_id")}
+            joinColumns = @JoinColumn(name = "store_id"),
+            inverseJoinColumns = @JoinColumn(name = "stock_id")
     )
     private List<Stock> stockList;
 
