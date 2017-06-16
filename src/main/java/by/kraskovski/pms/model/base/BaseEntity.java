@@ -12,6 +12,8 @@ import javax.persistence.MappedSuperclass;
  * Contains field id with generated type
  */
 @MappedSuperclass
+// TODO: Change id from integer to String
+// TODO: Add custom sequence generator
 public abstract class BaseEntity {
 
     /**
