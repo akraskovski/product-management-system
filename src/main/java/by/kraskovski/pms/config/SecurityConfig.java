@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,8 +23,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public SecurityConfig(final TokenService tokenService) {
-        super();
         this.tokenService = tokenService;
+    }
+
+    @Override
+    public void configure(final WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/v2/api-docs", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**");
     }
 
     @Override
@@ -39,9 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/stock/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_STOCK_MANAGER")
                 .antMatchers(HttpMethod.PUT, "/stock/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_STOCK_MANAGER")
                 .antMatchers(HttpMethod.DELETE, "/stock/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_STOCK_MANAGER")
+                .antMatchers(HttpMethod.GET, "/store/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/store/").hasAnyAuthority("ROLE_ADMIN", "ROLE_STORE_MANAGER")
                 .antMatchers(HttpMethod.PUT, "/store/").hasAnyAuthority("ROLE_ADMIN", "ROLE_STORE_MANAGER")
                 .antMatchers(HttpMethod.DELETE, "/store/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_STORE_MANAGER")
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
