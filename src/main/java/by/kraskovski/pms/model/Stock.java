@@ -3,7 +3,11 @@ package by.kraskovski.pms.model;
 import by.kraskovski.pms.model.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,23 +60,23 @@ public class Stock extends BaseEntity {
         return productStocks;
     }
 
-    public void setSpecialize(String specialize) {
+    public void setSpecialize(final String specialize) {
         this.specialize = specialize;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(final String phone) {
         this.phone = phone;
     }
 
-    public void setSquare(double square) {
+    public void setSquare(final double square) {
         this.square = square;
     }
 
-    public void setProductStocks(Set<ProductStock> productStocks) {
+    public void setProductStocks(final Set<ProductStock> productStocks) {
         this.productStocks = productStocks;
     }
 }

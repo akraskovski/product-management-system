@@ -9,7 +9,6 @@ import by.kraskovski.pms.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Map<Integer, Integer> findProducts(final int id) {
-        Stock stock = stockRepository.findOne(id);
+        final Stock stock = stockRepository.findOne(id);
         final Map<Integer, Integer> products = new HashMap<>();
         stock.getProductStocks()
                 .forEach(productStock -> products.put(productStock.getProduct().getId(), productStock.productsCount));
@@ -47,8 +46,8 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public boolean addProduct(final int stockId, final int productId, final int count) {
-        Stock stock = find(stockId);
-        Product product = productService.find(productId);
+        final Stock stock = find(stockId);
+        final Product product = productService.find(productId);
         if (stock != null && product != null) {
             for (ProductStock productStock : stock.getProductStocks()) {
                 if (productStock.getProduct().equals(product)) {
@@ -57,7 +56,7 @@ public class StockServiceImpl implements StockService {
                     return true;
                 }
             }
-            ProductStock addingProduct = new ProductStock();
+            final ProductStock addingProduct = new ProductStock();
             addingProduct.setProduct(product);
             addingProduct.setStock(stock);
             addingProduct.productsCount = count;
@@ -70,8 +69,8 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public boolean deleteProduct(final int stockId, final int productId, final int count) {
-        Stock stock = find(stockId);
-        Product product = productService.find(productId);
+        final Stock stock = find(stockId);
+        final Product product = productService.find(productId);
         if (stock != null && product != null) {
             for (ProductStock productStock : stock.getProductStocks()) {
                 if (productStock.getProduct().equals(product)) {

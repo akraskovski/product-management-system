@@ -1,9 +1,6 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.model.Product;
-import by.kraskovski.pms.model.ProductStock;
 import by.kraskovski.pms.model.Stock;
-import by.kraskovski.pms.service.ProductService;
 import by.kraskovski.pms.service.StockService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +9,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Controller for the {@link StockService}.
@@ -26,12 +25,10 @@ public class StockController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StockController.class);
     private final StockService stockService;
-    private final ProductService productService;
 
     @Autowired
-    public StockController(final StockService stockService, ProductService productService) {
+    public StockController(final StockService stockService) {
         this.stockService = stockService;
-        this.productService = productService;
     }
 
     /**
@@ -87,9 +84,9 @@ public class StockController {
             @PathVariable("product_id") final int productId,
             @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
         LOGGER.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
-        return stockService.addProduct(stockId, productId, count) ?
-                new ResponseEntity<>(HttpStatus.NO_CONTENT) :
-                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return stockService.addProduct(stockId, productId, count)
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "/{stock_id}/products/{product_id}", method = RequestMethod.DELETE)
@@ -98,9 +95,9 @@ public class StockController {
             @PathVariable("product_id") final int productId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         LOGGER.info("Start delete Product: {} from Stock: {} with count: {}", productId, stockId, count);
-        return stockService.deleteProduct(stockId, productId, count) ?
-                new ResponseEntity<>(HttpStatus.NO_CONTENT) :
-                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return stockService.deleteProduct(stockId, productId, count)
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     /**

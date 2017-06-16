@@ -19,7 +19,7 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    public void setId(int id) {
+    public void setId(final int id) {
         if (id > 0) {
             this.id = id;
         }

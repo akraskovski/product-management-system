@@ -24,15 +24,15 @@ public class ProductStock extends BaseEntity implements Serializable {
         return product;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     public Stock getStock() {
         return stock;
     }
 
-    public void setStock(Stock stock) {
+    public void setProduct(final Product product) {
+        this.product = product;
+    }
+
+    public void setStock(final Stock stock) {
         this.stock = stock;
     }
 }

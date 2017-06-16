@@ -3,7 +3,12 @@ package by.kraskovski.pms.model;
 import by.kraskovski.pms.model.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,10 +35,6 @@ public class Product extends BaseEntity {
     @JsonIgnore
     public Set<ProductStock> getProductStocks() {
         return productStocks;
-    }
-
-    public void setProductStocks(Set<ProductStock> productStocks) {
-        this.productStocks = productStocks;
     }
 
     public String getName() {
@@ -68,35 +69,39 @@ public class Product extends BaseEntity {
         return weight;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public void setCost(double cost) {
+    public void setCost(final double cost) {
         this.cost = cost;
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
-    public void setDetails(String details) {
+    public void setDetails(final String details) {
         this.details = details;
     }
 
-    public void setImage(String image) {
+    public void setImage(final String image) {
         this.image = image;
     }
 
-    public void setWidth(double width) {
+    public void setWidth(final double width) {
         this.width = width;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(final double height) {
         this.height = height;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(final double weight) {
         this.weight = weight;
+    }
+
+    public void setProductStocks(final Set<ProductStock> productStocks) {
+        this.productStocks = productStocks;
     }
 }
