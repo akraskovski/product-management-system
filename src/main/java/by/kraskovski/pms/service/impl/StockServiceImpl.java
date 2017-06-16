@@ -46,9 +46,8 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    @Transactional
     public boolean addProduct(final int stockId, final int productId, final int count) {
-        Stock stock = stockRepository.findOne(stockId);
+        Stock stock = find(stockId);
         Product product = productService.find(productId);
         if (stock != null && product != null) {
             for (ProductStock productStock : stock.getProductStocks()) {
@@ -71,28 +70,28 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public boolean deleteProduct(final int stockId, final int productId, final int count) {
-        Stock stock = stockRepository.findOne(stockId);
+        Stock stock = find(stockId);
         Product product = productService.find(productId);
         if (stock != null && product != null) {
             for (ProductStock productStock : stock.getProductStocks()) {
                 if (productStock.getProduct().equals(product)) {
-                    if (productStock.productsCount - count > 0) {
-                        productStock.productsCount -= count;
-                        stockRepository.save(stock);
-                        return true;
-                    } else {
-                        stock.getProductStocks().remove(productStock);
-                        stockRepository.save(stock);
-                        return true;
-                    }
+                    return deleteProductFromProductStock(productStock, stock, count);
                 }
             }
         }
         return false;
     }
 
-    private void deleteWithCount(final ProductStock productStock, final int count) {
-
+    private boolean deleteProductFromProductStock(final ProductStock productStock, final Stock stock, final int count) {
+        if (productStock.productsCount - count > 0) {
+            productStock.productsCount -= count;
+            stockRepository.save(stock);
+            return true;
+        } else {
+            stock.getProductStocks().remove(productStock);
+            stockRepository.save(stock);
+            return true;
+        }
     }
 
     @Override

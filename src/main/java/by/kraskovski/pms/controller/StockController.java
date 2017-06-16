@@ -85,7 +85,7 @@ public class StockController {
     public ResponseEntity addProductToStock(
             @PathVariable("stock_id") final int stockId,
             @PathVariable("product_id") final int productId,
-            @RequestParam(value = "count") final int count) {
+            @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
         LOGGER.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
         return stockService.addProduct(stockId, productId, count) ?
                 new ResponseEntity<>(HttpStatus.NO_CONTENT) :
