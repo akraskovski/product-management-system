@@ -34,7 +34,7 @@ public class UserController {
     /**
      * Return json-information about all users in database.
      */
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllUsers() {
         LOGGER.info("Start loadAllUsers");
         try {

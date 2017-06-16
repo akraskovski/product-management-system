@@ -37,7 +37,7 @@ public class StockController {
     /**
      * Find all products in database.
      */
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllStocks() {
         LOGGER.info("Start loadAllStocks");
         try {

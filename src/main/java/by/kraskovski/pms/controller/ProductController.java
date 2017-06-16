@@ -31,7 +31,7 @@ public class ProductController {
     /**
      * Find all products in database.
      */
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllProducts() {
         LOGGER.info("Start loadAllProducts");
         try {

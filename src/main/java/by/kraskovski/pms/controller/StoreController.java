@@ -33,7 +33,7 @@ public class StoreController {
     /**
      * Find all stores in database.
      */
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllStores() {
         LOGGER.info("Start loadAllStores");
         try {
