@@ -2,12 +2,8 @@ package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinTable;
-import java.util.List;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Cart extends BaseEntity {
@@ -16,12 +12,8 @@ public class Cart extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(targetEntity = Product.class)
-    @JoinTable(
-            name = "cart_product",
-            joinColumns = {@JoinColumn(name = "cart_id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id")})
-    private List<Product> productList;
+    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
+    private Set<CartProductStock> cartProductStocks;
 
     private double totalCost;
 
@@ -29,8 +21,8 @@ public class Cart extends BaseEntity {
         return user;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public Set<CartProductStock> getCartProductStocks() {
+        return cartProductStocks;
     }
 
     public double getTotalCost() {
@@ -41,8 +33,8 @@ public class Cart extends BaseEntity {
         this.user = user;
     }
 
-    public void setProductList(final List<Product> productList) {
-        this.productList = productList;
+    public void setCartProductStocks(Set<CartProductStock> cartProductStocks) {
+        this.cartProductStocks = cartProductStocks;
     }
 
     public void setTotalCost(final double totalCost) {
