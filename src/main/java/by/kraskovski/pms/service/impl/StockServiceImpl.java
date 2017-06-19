@@ -50,7 +50,7 @@ public class StockServiceImpl implements StockService {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
 
-        if (stock.getProductStocks() == null && product == null) {
+        if (stock == null && product == null) {
             return false;
         }
 

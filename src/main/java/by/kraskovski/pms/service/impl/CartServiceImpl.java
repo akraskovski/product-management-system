@@ -1,13 +1,15 @@
 package by.kraskovski.pms.service.impl;
 
 import by.kraskovski.pms.model.Cart;
+import by.kraskovski.pms.model.CartProductStock;
+import by.kraskovski.pms.model.ProductStock;
 import by.kraskovski.pms.repository.CartRepository;
 import by.kraskovski.pms.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CartServiceImpl implements CartService{
+public class CartServiceImpl implements CartService {
 
     private CartRepository cartRepository;
 
@@ -22,7 +24,39 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public boolean addProduct(int cartId, int productId, int count) {
+    public boolean addProduct(final int cartId, final ProductStock productStock, final int count) {
+        final Cart cart = find(cartId);
+
+        if (cart == null && productStock == null) {
+            return false;
+        }
+
+        for (CartProductStock cartProductStock : cart.getCartProductStocks()) {
+            if (cartProductStock.getProductStock().equals(productStock)) {
+                return addExistingProductToCart(cartProductStock, cart, count);
+            }
+        }
+        return addNewProductToCart(cart, productStock, count);
+    }
+
+    private boolean addExistingProductToCart(final CartProductStock cartProductStock, final Cart cart, final int count) {
+        if (cartProductStock.getProductStock().productsCount - count > 0) {
+            cartProductStock.setProductCount(count);
+            cartRepository.save(cart);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean addNewProductToCart(final Cart cart, final ProductStock productStock, final int count) {
+        if (productStock.productsCount - count > 0) {
+            final CartProductStock cartProductStock = new CartProductStock();
+            cartProductStock.setCart(cart);
+            cartProductStock.setProductStock(productStock);
+            cartProductStock.setProductCount(count);
+            cart.getCartProductStocks().add(cartProductStock);
+            cartRepository.save(cart);
+        }
         return false;
     }
 

@@ -1,6 +1,7 @@
 package by.kraskovski.pms.service;
 
 import by.kraskovski.pms.model.Cart;
+import by.kraskovski.pms.model.ProductStock;
 
 /**
  * Service for {@link Cart}
@@ -15,7 +16,7 @@ public interface CartService {
     /**
      * Add product to cart.
      */
-    boolean addProduct(int cartId, int productId, int count);
+    boolean addProduct(int cartId, ProductStock productStock, int count);
 
     /**
      * Delete one (or more) product(s) from cart.
