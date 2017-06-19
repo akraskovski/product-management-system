@@ -5,14 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Transient;
-import javax.persistence.ManyToMany;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -43,7 +36,7 @@ public class User extends BaseEntity implements Authentication {
     )
     private List<Authority> authorities;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cart_id")
     private Cart cart;
 

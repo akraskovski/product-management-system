@@ -19,7 +19,7 @@ public class Cart extends BaseEntity {
             cascade = CascadeType.ALL)
     private Set<CartProductStock> cartProductStocks;
 
-    private double totalCost;
+    private double totalCost = 0.0;
 
     public User getUser() {
         return user;
