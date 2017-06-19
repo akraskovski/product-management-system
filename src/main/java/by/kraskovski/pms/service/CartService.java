@@ -13,6 +13,16 @@ public interface CartService {
     Cart create(Cart object);
 
     /**
+     * Add product to cart.
+     */
+    boolean addProduct(int cartId, int productId, int count);
+
+    /**
+     * Delete one (or more) product(s) from cart.
+     */
+    boolean deleteProduct(int cartId, int productId, int count);
+
+    /**
      * Find {@link Cart} in database by identifier
      */
     Cart find(int id);

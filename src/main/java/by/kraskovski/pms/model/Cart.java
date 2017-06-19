@@ -12,7 +12,11 @@ public class Cart extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "cart",
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
     private Set<CartProductStock> cartProductStocks;
 
     private double totalCost;

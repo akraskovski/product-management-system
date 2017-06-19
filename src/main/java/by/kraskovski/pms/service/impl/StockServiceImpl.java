@@ -7,6 +7,7 @@ import by.kraskovski.pms.repository.StockRepository;
 import by.kraskovski.pms.service.ProductService;
 import by.kraskovski.pms.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -48,14 +49,31 @@ public class StockServiceImpl implements StockService {
     public boolean addProduct(final int stockId, final int productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
-        if (stock != null && product != null) {
-            for (ProductStock productStock : stock.getProductStocks()) {
-                if (productStock.getProduct().equals(product)) {
-                    productStock.productsCount += count;
-                    stockRepository.save(stock);
-                    return true;
-                }
+
+        if (stock.getProductStocks() == null && product == null) {
+            return false;
+        }
+
+        for (ProductStock productStock : stock.getProductStocks()) {
+            if (productStock.getProduct().equals(product)) {
+                return addExistingProductToStock(productStock, stock, count);
             }
+        }
+        return addNewProductToStock(stock, product, count);
+    }
+
+    private boolean addExistingProductToStock(final ProductStock productStock, final Stock stock, final int count) {
+        try {
+            productStock.productsCount += count;
+            stockRepository.save(stock);
+            return true;
+        } catch (DataAccessException e) {
+            return false;
+        }
+    }
+
+    private boolean addNewProductToStock(final Stock stock, final Product product, final int count) {
+        try {
             final ProductStock addingProduct = new ProductStock();
             addingProduct.setProduct(product);
             addingProduct.setStock(stock);
@@ -63,33 +81,40 @@ public class StockServiceImpl implements StockService {
             stock.getProductStocks().add(addingProduct);
             stockRepository.save(stock);
             return true;
+        } catch (DataAccessException e) {
+            return false;
         }
-        return false;
     }
 
     @Override
     public boolean deleteProduct(final int stockId, final int productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
-        if (stock != null && product != null) {
-            for (ProductStock productStock : stock.getProductStocks()) {
-                if (productStock.getProduct().equals(product)) {
-                    return deleteProductFromProductStock(productStock, stock, count);
-                }
+
+        if (stock.getProductStocks() == null && product == null) {
+            return false;
+        }
+
+        for (ProductStock productStock : stock.getProductStocks()) {
+            if (productStock.getProduct().equals(product)) {
+                return deleteProductFromProductStock(productStock, stock, count);
             }
         }
         return false;
     }
 
     private boolean deleteProductFromProductStock(final ProductStock productStock, final Stock stock, final int count) {
-        if (productStock.productsCount - count > 0) {
-            productStock.productsCount -= count;
-            stockRepository.save(stock);
+        try {
+            if (productStock.productsCount - count > 0) {
+                productStock.productsCount -= count;
+                stockRepository.save(stock);
+            } else {
+                stock.getProductStocks().remove(productStock);
+                stockRepository.save(stock);
+            }
             return true;
-        } else {
-            stock.getProductStocks().remove(productStock);
-            stockRepository.save(stock);
-            return true;
+        } catch (DataAccessException e) {
+            return false;
         }
     }
 

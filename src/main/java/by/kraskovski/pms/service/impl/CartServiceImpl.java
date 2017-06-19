@@ -22,6 +22,16 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
+    public boolean addProduct(int cartId, int productId, int count) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteProduct(int cartId, int productId, int count) {
+        return false;
+    }
+
+    @Override
     public Cart find(final int id) {
         return cartRepository.findOne(id);
     }
