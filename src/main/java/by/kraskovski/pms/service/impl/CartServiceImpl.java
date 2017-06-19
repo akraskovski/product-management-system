@@ -44,8 +44,8 @@ public class CartServiceImpl implements CartService {
     }
 
     private boolean addExistingProductToCart(final CartProductStock cartProductStock, final Cart cart, final int count) {
-        if (cartProductStock.getProductStock().productsCount - count > 0) {
-            cartProductStock.setProductCount(count);
+        if (cartProductStock.getProductStock().productsCount - (cartProductStock.getProductCount() + count) > 0) {
+            cartProductStock.setProductCount(cartProductStock.getProductCount() + count);
             cartRepository.save(cart);
             return true;
         }
@@ -60,6 +60,7 @@ public class CartServiceImpl implements CartService {
             cartProductStock.setProductCount(count);
             cart.getCartProductStocks().add(cartProductStock);
             cartRepository.save(cart);
+            return true;
         }
         return false;
     }
