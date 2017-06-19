@@ -5,6 +5,7 @@ import by.kraskovski.pms.model.CartProductStock;
 import by.kraskovski.pms.model.ProductStock;
 import by.kraskovski.pms.repository.CartRepository;
 import by.kraskovski.pms.service.CartService;
+import by.kraskovski.pms.service.ProductStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Service;
 public class CartServiceImpl implements CartService {
 
     private CartRepository cartRepository;
+    private ProductStockService productStockService;
 
     @Autowired
-    public CartServiceImpl(final CartRepository cartRepository) {
+    public CartServiceImpl(final CartRepository cartRepository, final ProductStockService productStockService) {
         this.cartRepository = cartRepository;
+        this.productStockService = productStockService;
     }
 
     @Override
@@ -24,8 +27,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public boolean addProduct(final int cartId, final ProductStock productStock, final int count) {
+    public boolean addProduct(final int cartId, final int productStockId, final int count) {
         final Cart cart = find(cartId);
+        final ProductStock productStock = productStockService.find(productStockId);
 
         if (cart == null && productStock == null) {
             return false;
