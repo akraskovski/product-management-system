@@ -55,7 +55,7 @@ public class CartServiceImpl implements CartService {
     }
 
     private boolean addNewProductToCart(final Cart cart, final ProductStock productStock, final int count) {
-        if (productStock.getProductsCount() - count > 0) {
+        if (productStock.getProductsCount() - count >= 0) {
             final CartProductStock cartProductStock = new CartProductStock();
             cartProductStock.setCart(cart);
             cartProductStock.setProductStock(productStock);
