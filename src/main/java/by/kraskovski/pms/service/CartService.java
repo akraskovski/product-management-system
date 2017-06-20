@@ -20,7 +20,7 @@ public interface CartService {
     /**
      * Delete one (or more) product(s) from cart.
      */
-    boolean deleteProduct(int cartId, int productId, int count);
+    boolean deleteProduct(int cartId, int productStockId, int count);
 
     /**
      * Find {@link Cart} in database by identifier

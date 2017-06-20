@@ -7,6 +7,7 @@ import by.kraskovski.pms.repository.CartRepository;
 import by.kraskovski.pms.service.CartService;
 import by.kraskovski.pms.service.ProductStockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,7 +45,7 @@ public class CartServiceImpl implements CartService {
     }
 
     private boolean addExistingProductToCart(final CartProductStock cartProductStock, final Cart cart, final int count) {
-        if (cartProductStock.getProductStock().productsCount - (cartProductStock.getProductCount() + count) > 0) {
+        if (cartProductStock.getProductStock().productsCount - (cartProductStock.getProductCount() + count) >= 0) {
             cartProductStock.setProductCount(cartProductStock.getProductCount() + count);
             cart.setTotalCost(cart.getTotalCost() + cartProductStock.getProductStock().getProduct().getCost() * count);
             cartRepository.save(cart);
@@ -68,8 +69,38 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public boolean deleteProduct(int cartId, int productId, int count) {
+    public boolean deleteProduct(final int cartId, final int productStockId, final int count) {
+        final Cart cart = find(cartId);
+        final ProductStock productStock = productStockService.find(productStockId);
+
+        if (cart == null && productStock == null) {
+            return false;
+        }
+
+        for (CartProductStock cartProductStock : cart.getCartProductStocks()) {
+            if (cartProductStock.getProductStock().equals(productStock)) {
+                return deleteProductFromCartProductStock(cart, cartProductStock, count);
+            }
+        }
         return false;
+    }
+
+    private boolean deleteProductFromCartProductStock(
+            final Cart cart,
+            final CartProductStock cartProductStock,
+            final int count) {
+        try {
+            if (cartProductStock.getProductCount() - count > 0) {
+                cartProductStock.setProductCount(cartProductStock.getProductCount() - count);
+                cartRepository.save(cart);
+            } else {
+                cart.getCartProductStocks().remove(cartProductStock);
+                cartRepository.save(cart);
+            }
+            return true;
+        } catch (DataAccessException e) {
+            return false;
+        }
     }
 
     @Override
