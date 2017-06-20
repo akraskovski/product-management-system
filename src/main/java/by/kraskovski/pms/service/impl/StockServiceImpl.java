@@ -41,7 +41,7 @@ public class StockServiceImpl implements StockService {
         final Stock stock = stockRepository.findOne(id);
         final Map<Integer, Integer> products = new HashMap<>();
         stock.getProductStocks()
-                .forEach(productStock -> products.put(productStock.getProduct().getId(), productStock.productsCount));
+                .forEach(productStock -> products.put(productStock.getProduct().getId(), productStock.getProductsCount()));
         return products;
     }
 
@@ -64,7 +64,7 @@ public class StockServiceImpl implements StockService {
 
     private boolean addExistingProductToStock(final ProductStock productStock, final Stock stock, final int count) {
         try {
-            productStock.productsCount += count;
+            productStock.setProductsCount(productStock.getProductsCount() + count);
             stockRepository.save(stock);
             return true;
         } catch (DataAccessException e) {
@@ -77,7 +77,7 @@ public class StockServiceImpl implements StockService {
             final ProductStock addingProduct = new ProductStock();
             addingProduct.setProduct(product);
             addingProduct.setStock(stock);
-            addingProduct.productsCount = count;
+            addingProduct.setProductsCount(count);
             stock.getProductStocks().add(addingProduct);
             stockRepository.save(stock);
             return true;
@@ -105,8 +105,8 @@ public class StockServiceImpl implements StockService {
 
     private boolean deleteProductFromProductStock(final ProductStock productStock, final Stock stock, final int count) {
         try {
-            if (productStock.productsCount - count > 0) {
-                productStock.productsCount -= count;
+            if (productStock.getProductsCount() - count > 0) {
+                productStock.setProductsCount(productStock.getProductsCount() - count);
                 stockRepository.save(stock);
             } else {
                 stock.getProductStocks().remove(productStock);

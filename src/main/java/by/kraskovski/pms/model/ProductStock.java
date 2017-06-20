@@ -18,7 +18,7 @@ public class ProductStock extends BaseEntity implements Serializable {
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
-    public int productsCount;
+    private int productsCount;
 
     public Product getProduct() {
         return product;
@@ -34,5 +34,13 @@ public class ProductStock extends BaseEntity implements Serializable {
 
     public void setStock(final Stock stock) {
         this.stock = stock;
+    }
+
+    public int getProductsCount() {
+        return productsCount;
+    }
+
+    public void setProductsCount(int productsCount) {
+        this.productsCount = productsCount;
     }
 }

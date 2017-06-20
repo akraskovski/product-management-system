@@ -45,7 +45,7 @@ public class CartServiceImpl implements CartService {
     }
 
     private boolean addExistingProductToCart(final CartProductStock cartProductStock, final Cart cart, final int count) {
-        if (cartProductStock.getProductStock().productsCount - (cartProductStock.getProductCount() + count) >= 0) {
+        if (cartProductStock.getProductStock().getProductsCount() - (cartProductStock.getProductCount() + count) >= 0) {
             cartProductStock.setProductCount(cartProductStock.getProductCount() + count);
             cart.setTotalCost(cart.getTotalCost() + cartProductStock.getProductStock().getProduct().getCost() * count);
             cartRepository.save(cart);
@@ -55,7 +55,7 @@ public class CartServiceImpl implements CartService {
     }
 
     private boolean addNewProductToCart(final Cart cart, final ProductStock productStock, final int count) {
-        if (productStock.productsCount - count > 0) {
+        if (productStock.getProductsCount() - count > 0) {
             final CartProductStock cartProductStock = new CartProductStock();
             cartProductStock.setCart(cart);
             cartProductStock.setProductStock(productStock);
@@ -92,9 +92,11 @@ public class CartServiceImpl implements CartService {
         try {
             if (cartProductStock.getProductCount() - count > 0) {
                 cartProductStock.setProductCount(cartProductStock.getProductCount() - count);
+                cart.setTotalCost(cart.getTotalCost() - cartProductStock.getProductStock().getProduct().getCost() * count);
                 cartRepository.save(cart);
             } else {
                 cart.getCartProductStocks().remove(cartProductStock);
+                cart.setTotalCost(cart.getTotalCost() - cartProductStock.getProductStock().getProduct().getCost() * count);
                 cartRepository.save(cart);
             }
             return true;
