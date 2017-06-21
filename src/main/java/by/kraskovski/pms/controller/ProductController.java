@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     /**
-     * Find products in database with setting name in browser.
+     * Find products in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadProductById(@PathVariable("id") final int id) {
