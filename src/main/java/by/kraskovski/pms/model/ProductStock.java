@@ -2,7 +2,12 @@ package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -46,7 +51,7 @@ public class ProductStock extends BaseEntity implements Serializable {
         return productsCount;
     }
 
-    public void setProductsCount(int productsCount) {
+    public void setProductsCount(final int productsCount) {
         this.productsCount = productsCount;
     }
 }

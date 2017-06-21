@@ -12,12 +12,12 @@ public class ProductStockServiceImpl implements ProductStockService {
     private final ProductStockRepository productStockRepository;
 
     @Autowired
-    public ProductStockServiceImpl(ProductStockRepository productStockRepository) {
+    public ProductStockServiceImpl(final ProductStockRepository productStockRepository) {
         this.productStockRepository = productStockRepository;
     }
 
     @Override
-    public ProductStock find(int id) {
+    public ProductStock find(final int id) {
         return productStockRepository.findOne(id);
     }
 }

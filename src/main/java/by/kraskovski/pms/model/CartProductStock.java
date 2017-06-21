@@ -2,7 +2,10 @@ package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
@@ -23,7 +26,7 @@ public class CartProductStock extends BaseEntity implements Serializable {
         return cart;
     }
 
-    public void setCart(Cart cart) {
+    public void setCart(final Cart cart) {
         this.cart = cart;
     }
 
@@ -31,7 +34,7 @@ public class CartProductStock extends BaseEntity implements Serializable {
         return productStock;
     }
 
-    public void setProductStock(ProductStock productStock) {
+    public void setProductStock(final ProductStock productStock) {
         this.productStock = productStock;
     }
 
@@ -39,7 +42,7 @@ public class CartProductStock extends BaseEntity implements Serializable {
         return productCount;
     }
 
-    public void setProductCount(int productCount) {
+    public void setProductCount(final int productCount) {
         this.productCount = productCount;
     }
 }

@@ -26,6 +26,7 @@ public class Store extends BaseEntity {
     private boolean discounts;
     private String mail;
     private String logo;
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(targetEntity = Stock.class)
     @JoinTable(
