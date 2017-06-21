@@ -3,9 +3,12 @@ package by.kraskovski.pms.service.impl;
 import by.kraskovski.pms.model.Cart;
 import by.kraskovski.pms.model.CartProductStock;
 import by.kraskovski.pms.model.ProductStock;
+import by.kraskovski.pms.model.User;
 import by.kraskovski.pms.repository.CartRepository;
+import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.CartService;
 import by.kraskovski.pms.service.ProductStockService;
+import by.kraskovski.pms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -13,18 +16,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartServiceImpl implements CartService {
 
-    private CartRepository cartRepository;
-    private ProductStockService productStockService;
+    private final CartRepository cartRepository;
+    private final ProductStockService productStockService;
+    private final UserService userService;
 
     @Autowired
-    public CartServiceImpl(final CartRepository cartRepository, final ProductStockService productStockService) {
+    public CartServiceImpl(
+            final CartRepository cartRepository,
+            final ProductStockService productStockService,
+            final UserService userService) {
         this.cartRepository = cartRepository;
         this.productStockService = productStockService;
+        this.userService = userService;
     }
 
     @Override
-    public Cart create(final Cart object) {
-        return cartRepository.save(object);
+    public Cart create(final int userId) {
+        User user = userService.find(userId);
+        if (user != null) {
+            Cart cart = new Cart();
+            cart.setUser(user);
+            cart.setTotalCost(0.0);
+            return cartRepository.save(cart);
+        }
+        throw new UserNotFoundException("Can't create cart for user with id:" +  userId + ". Entity not found in database!");
     }
 
     @Override

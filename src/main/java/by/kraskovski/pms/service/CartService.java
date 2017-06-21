@@ -10,7 +10,7 @@ public interface CartService {
     /**
      * Save {@link Cart} entity to database table
      */
-    Cart create(Cart object);
+    Cart create(int userId);
 
     /**
      * Add product to cart.

@@ -1,6 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.model.Cart;
+import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.CartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,12 +52,12 @@ public class CartController {
     /**
      * Create empty cart.
      */
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Object> createCart(@RequestBody final Cart cart) {
-        LOGGER.info("Start createCart");
+    @RequestMapping(value = "/{user_id}", method = RequestMethod.POST)
+    public ResponseEntity<Object> createCart(@PathVariable("user_id") final int userId) {
+        LOGGER.info("Start createCart for user with id: {}", userId);
         try {
-            return new ResponseEntity<>(cartService.create(cart), HttpStatus.CREATED);
-        } catch (DataAccessException e) {
+            return new ResponseEntity<>(cartService.create(userId), HttpStatus.CREATED);
+        } catch (UserNotFoundException e) {
             LOGGER.info("Error in createCart. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
