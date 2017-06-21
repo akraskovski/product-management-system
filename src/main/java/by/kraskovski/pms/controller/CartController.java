@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -57,9 +58,9 @@ public class CartController {
         LOGGER.info("Start createCart for user with id: {}", userId);
         try {
             return new ResponseEntity<>(cartService.create(userId), HttpStatus.CREATED);
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | DataIntegrityViolationException e ) {
             LOGGER.info("Error in createCart. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

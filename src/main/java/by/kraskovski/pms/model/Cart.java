@@ -1,6 +1,7 @@
 package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,7 +10,8 @@ import java.util.Set;
 public class Cart extends BaseEntity {
 
     @OneToOne
-    @JoinColumn(name = "user_id", unique = true, nullable = false)
+    @JoinColumn(name = "id")
+    @MapsId
     private User user;
 
     @OneToMany(
@@ -21,6 +23,7 @@ public class Cart extends BaseEntity {
 
     private double totalCost = 0.0;
 
+    @JsonIgnore
     public User getUser() {
         return user;
     }

@@ -36,7 +36,6 @@ public class CartServiceImpl implements CartService {
         if (user != null) {
             Cart cart = new Cart();
             cart.setUser(user);
-            cart.setTotalCost(0.0);
             return cartRepository.save(cart);
         }
         throw new UserNotFoundException("Can't create cart for user with id:" +  userId + ". Entity not found in database!");
