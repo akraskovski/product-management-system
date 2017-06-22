@@ -28,7 +28,7 @@ public class User extends BaseEntity implements Authentication {
 
     private String lastName;
 
-    @ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id")},
@@ -109,7 +109,6 @@ public class User extends BaseEntity implements Authentication {
     }
 
     @Override
-    @JsonIgnore
     public void setAuthenticated(final boolean isAuthenticated) throws IllegalArgumentException {
         this.authenticated = isAuthenticated;
     }

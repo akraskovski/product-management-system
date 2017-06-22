@@ -42,7 +42,7 @@ public class ProductController {
             return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in loadAllProducts. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -58,7 +58,7 @@ public class ProductController {
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -74,7 +74,7 @@ public class ProductController {
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -90,7 +90,7 @@ public class ProductController {
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -104,7 +104,7 @@ public class ProductController {
             return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
         } catch (DataAccessException e) {
             LOGGER.info("Error in createProduct. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -118,7 +118,7 @@ public class ProductController {
             return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.info("Error in updateProduct. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -133,7 +133,7 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
             LOGGER.info("Error in deleteProduct. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

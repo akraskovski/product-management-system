@@ -47,12 +47,12 @@ public class AuthenticationController {
             final User user = userService.findByUsername(requestUser.getUsername());
             final String token = tokenService.generate(user, requestUser.getPassword());
             if (token != null) {
-                LOGGER.info("Authentication successful! user with username: " + requestUser.getUsername());
+                LOGGER.info("User authentication with username: {} successful!", requestUser.getUsername());
                 user.setPassword(EMPTY);
                 return new ResponseEntity<>(new TokenDTO(token, user), HttpStatus.OK);
             }
         }
-        LOGGER.error("Authentication failed user with username: " + requestUser.getUsername());
+        LOGGER.error("User authentication with username: {} failed!", requestUser.getUsername());
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

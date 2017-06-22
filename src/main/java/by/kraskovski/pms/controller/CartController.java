@@ -48,7 +48,7 @@ public class CartController {
             return new ResponseEntity<>(cart, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

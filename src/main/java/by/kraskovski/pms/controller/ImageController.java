@@ -45,7 +45,9 @@ public class ImageController {
             return new ResponseEntity<>(image, HttpStatus.CREATED);
         }
         LOGGER.error("Error during uploading image: \"" + uploadedFile.getOriginalFilename() + "\"");
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+                "Error during uploading image: \"" + uploadedFile.getOriginalFilename() + "\"",
+                HttpStatus.BAD_REQUEST);
     }
 
     /**

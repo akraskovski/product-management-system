@@ -36,7 +36,7 @@ public class AuthorityController {
             return new ResponseEntity<>(authorityService.findAll(), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in loadAuthorities. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
     }
 }

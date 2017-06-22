@@ -41,7 +41,7 @@ public class UserController {
             return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in loadAllUsers. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -57,7 +57,7 @@ public class UserController {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -73,7 +73,7 @@ public class UserController {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -87,7 +87,7 @@ public class UserController {
             return new ResponseEntity<>(userService.create(prepareUser(user)), HttpStatus.CREATED);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in createUser. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -101,7 +101,7 @@ public class UserController {
             return new ResponseEntity<>(userService.update(prepareUser(user)), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error("Exception while updating user with id" + user.getId() + ". " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -116,7 +116,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
             LOGGER.error("Exception while delete user with id: " + id + ". " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

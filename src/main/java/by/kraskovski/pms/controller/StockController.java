@@ -41,7 +41,7 @@ public class StockController {
             return new ResponseEntity<>(stockService.findAll(), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in loadAllStocks. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -57,7 +57,7 @@ public class StockController {
             return new ResponseEntity<>(stock, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -71,7 +71,7 @@ public class StockController {
             return new ResponseEntity<>(stockService.findProducts(id), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -110,7 +110,7 @@ public class StockController {
             return new ResponseEntity<>(stockService.create(stock), HttpStatus.CREATED);
         } catch (DataAccessException e) {
             LOGGER.info("Error in createStock. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -124,7 +124,7 @@ public class StockController {
             return new ResponseEntity<>(stockService.update(stock), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in updateStock. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -139,7 +139,7 @@ public class StockController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in deleteStock. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

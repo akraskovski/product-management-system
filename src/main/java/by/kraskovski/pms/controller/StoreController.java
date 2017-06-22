@@ -40,7 +40,7 @@ public class StoreController {
             return new ResponseEntity<>(storeService.findAll(), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in loadAllStores. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -56,7 +56,7 @@ public class StoreController {
             return new ResponseEntity<>(store, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -70,7 +70,7 @@ public class StoreController {
             return new ResponseEntity<>(storeService.create(store), HttpStatus.CREATED);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in createStore. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -84,7 +84,7 @@ public class StoreController {
             return new ResponseEntity<>(storeService.update(store), HttpStatus.OK);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in updateStore. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -99,7 +99,7 @@ public class StoreController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
             LOGGER.error("Exception in deleteStore. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
