@@ -3,11 +3,10 @@ package by.kraskovski.pms.model;
 import by.kraskovski.pms.model.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,8 +18,11 @@ public class Stock extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String specialize;
+
     private String address;
+
     private String phone;
+
     private double square;
 
     @OneToMany(mappedBy = "stock", fetch = FetchType.LAZY, orphanRemoval = true)

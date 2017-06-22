@@ -2,7 +2,12 @@ package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Set;
 
 @Entity

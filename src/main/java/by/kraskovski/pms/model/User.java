@@ -5,7 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,19 +22,6 @@ import java.util.List;
  */
 @Entity
 public class User extends BaseEntity implements Authentication {
-
-    @Transient
-    private boolean authenticated = true;
-
-    @Column(unique = true, nullable = false)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
-
-    private String firstName;
-
-    private String lastName;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -38,6 +33,19 @@ public class User extends BaseEntity implements Authentication {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;
+
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Transient
+    private boolean authenticated = true;
+
+    private String firstName;
+
+    private String lastName;
 
     public User() {
         super();
@@ -108,7 +116,6 @@ public class User extends BaseEntity implements Authentication {
         return cart;
     }
 
-    @Override
     public void setAuthenticated(final boolean isAuthenticated) throws IllegalArgumentException {
         this.authenticated = isAuthenticated;
     }
@@ -119,18 +126,6 @@ public class User extends BaseEntity implements Authentication {
 
     public void setPassword(final String password) {
         this.password = password;
-    }
-
-    public void setFirstName(final String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setAuthorities(final List<Authority> authorities) {
-        this.authorities = authorities;
     }
 
     public void addCart(final Cart cart) {

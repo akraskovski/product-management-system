@@ -2,9 +2,11 @@ package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,17 +17,24 @@ public class Product extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
+
     @Column(nullable = false)
     private double cost;
-    private String type;
-    private String details;
-    private String image;
-    private double width;
-    private double height;
-    private double weight;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<ProductStock> productStocks = new HashSet<>();
+
+    private String type;
+
+    private String details;
+
+    private String image;
+
+    private double width;
+
+    private double height;
+
+    private double weight;
 
     public String getName() {
         return name;

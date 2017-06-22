@@ -2,7 +2,11 @@ package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
@@ -18,10 +22,6 @@ public class CartProductStock extends BaseEntity implements Serializable {
     private ProductStock productStock;
 
     private int productCount;
-
-    public Cart getCart() {
-        return cart;
-    }
 
     public void setCart(final Cart cart) {
         this.cart = cart;
