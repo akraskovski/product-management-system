@@ -3,6 +3,7 @@ package by.kraskovski.pms.model;
 import by.kraskovski.pms.model.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +26,11 @@ public class Stock extends BaseEntity {
 
     private double square;
 
-    @OneToMany(mappedBy = "stock", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "stock",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            orphanRemoval = true)
     private Set<ProductStock> productStocks = new HashSet<>();
 
     /**

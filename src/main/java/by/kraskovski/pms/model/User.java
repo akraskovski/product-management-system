@@ -31,7 +31,7 @@ public class User extends BaseEntity implements Authentication {
     )
     private List<Authority> authorities;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
     private Cart cart;
 
     @Column(unique = true, nullable = false)

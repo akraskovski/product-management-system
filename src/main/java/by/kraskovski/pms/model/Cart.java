@@ -2,6 +2,7 @@ package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -21,7 +22,8 @@ public class Cart extends BaseEntity {
     @OneToMany(
             mappedBy = "cart",
             fetch = FetchType.LAZY,
-            orphanRemoval = true)
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            orphanRemoval= true)
     private Set<CartProductStock> cartProductStocks;
 
     private double totalCost;
