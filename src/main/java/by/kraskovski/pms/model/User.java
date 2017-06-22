@@ -5,15 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.CascadeType;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -61,6 +53,8 @@ public class User extends BaseEntity implements Authentication {
         this.username = username;
         this.password = password;
     }
+
+
 
     /**
      * Get username
@@ -166,11 +160,19 @@ public class User extends BaseEntity implements Authentication {
         this.lastName = lastName;
     }
 
-    public void setCart(final Cart cart) {
-        this.cart = cart;
-    }
-
     public void setAuthorities(final List<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public void addCart(final Cart cart) {
+        this.cart = cart;
+        cart.setUser(this);
+    }
+
+    public void removeCart() {
+        if (cart != null) {
+            cart.setUser(null);
+        }
+        this.cart = null;
     }
 }

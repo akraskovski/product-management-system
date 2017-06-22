@@ -101,7 +101,7 @@ public class CartController {
         try {
             cartService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (DataAccessException e) {
+        } catch (IllegalArgumentException e) {
             LOGGER.info("Error in deleteCart. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

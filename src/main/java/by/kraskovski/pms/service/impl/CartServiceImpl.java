@@ -35,8 +35,9 @@ public class CartServiceImpl implements CartService {
         User user = userService.find(userId);
         if (user != null) {
             Cart cart = new Cart();
-            cart.setUser(user);
-            return cartRepository.save(cart);
+            user.addCart(cart);
+            userService.update(user);
+            return cart;
         }
         throw new UserNotFoundException("Can't create cart for user with id:" +  userId + ". Entity not found in database!");
     }
@@ -131,6 +132,13 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void delete(final int id) {
-        cartRepository.delete(id);
+        final Cart cart = cartRepository.findOne(id);
+        final User user = userService.find(id);
+        if (user != null) {
+            user.removeCart();
+            userService.update(user);
+        } else {
+            throw new IllegalArgumentException("Cart with id: " + id + " not found in database!");
+        }
     }
 }
