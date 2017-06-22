@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 public class Cart extends BaseEntity {
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @MapsId
     private User user;

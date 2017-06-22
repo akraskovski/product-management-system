@@ -34,7 +34,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void create(final int id) throws InstanceAlreadyExistsException {
-        User user = userService.find(id);
+        final User user = userService.find(id);
         if (user != null) {
             if (user.getCart() == null) {
                 user.addCart(new Cart());
