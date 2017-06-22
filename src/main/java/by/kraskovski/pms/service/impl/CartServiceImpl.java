@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.management.InstanceAlreadyExistsException;
+
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -31,15 +33,18 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart create(final int userId) {
-        User user = userService.find(userId);
+    public void create(final int id) throws InstanceAlreadyExistsException {
+        User user = userService.find(id);
         if (user != null) {
-            Cart cart = new Cart();
-            user.addCart(cart);
-            userService.update(user);
-            return cart;
+            if (user.getCart() == null) {
+                user.addCart(new Cart());
+                userService.update(user);
+                return;
+            } else {
+                throw new InstanceAlreadyExistsException("Cart with id:" + id + " already exists!");
+            }
         }
-        throw new UserNotFoundException("Can't create cart for user with id:" +  userId + ". Entity not found in database!");
+        throw new UserNotFoundException("Can't create cart for user with id:" + id + ". Entity not found in database!");
     }
 
     @Override
@@ -47,7 +52,7 @@ public class CartServiceImpl implements CartService {
         final Cart cart = find(cartId);
         final ProductStock productStock = productStockService.find(productStockId);
 
-        if (cart == null && productStock == null) {
+        if (cart == null || productStock == null) {
             return false;
         }
 
@@ -132,13 +137,14 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void delete(final int id) {
-        final Cart cart = cartRepository.findOne(id);
         final User user = userService.find(id);
         if (user != null) {
-            user.removeCart();
-            userService.update(user);
-        } else {
-            throw new IllegalArgumentException("Cart with id: " + id + " not found in database!");
+            if (user.getCart() != null) {
+                user.removeCart();
+                userService.update(user);
+                return;
+            }
         }
+        throw new IllegalArgumentException("Cart with id: " + id + " not found in database!");
     }
 }

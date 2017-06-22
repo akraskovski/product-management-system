@@ -1,7 +1,6 @@
 package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,11 +21,6 @@ public class Cart extends BaseEntity {
     private Set<CartProductStock> cartProductStocks;
 
     private double totalCost = 0.0;
-
-    @JsonIgnore
-    public User getUser() {
-        return user;
-    }
 
     public Set<CartProductStock> getCartProductStocks() {
         return cartProductStocks;

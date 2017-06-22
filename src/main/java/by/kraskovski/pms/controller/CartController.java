@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.management.InstanceAlreadyExistsException;
+
 
 /**
  * Controller for the {@link by.kraskovski.pms.service.CartService}.
@@ -53,12 +55,13 @@ public class CartController {
     /**
      * Create empty cart.
      */
-    @RequestMapping(value = "/{user_id}", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCart(@PathVariable("user_id") final int userId) {
-        LOGGER.info("Start createCart for user with id: {}", userId);
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Object> createCart(@PathVariable("id") final int id) {
+        LOGGER.info("Start createCart for user with id: {}", id);
         try {
-            return new ResponseEntity<>(cartService.create(userId), HttpStatus.CREATED);
-        } catch (UserNotFoundException | DataIntegrityViolationException e ) {
+            cartService.create(id);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (UserNotFoundException | InstanceAlreadyExistsException | DataIntegrityViolationException e ) {
             LOGGER.info("Error in createCart. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -103,7 +106,7 @@ public class CartController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (IllegalArgumentException e) {
             LOGGER.info("Error in deleteCart. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

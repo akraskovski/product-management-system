@@ -54,63 +54,40 @@ public class User extends BaseEntity implements Authentication {
         this.password = password;
     }
 
-
-
-    /**
-     * Get username
-     */
     @Override
     @JsonIgnore
     public String getName() {
         return username;
     }
 
-    /**
-     * Get user credentials
-     */
     @Override
     @JsonIgnore
     public Object getCredentials() {
         return password;
     }
 
-    /**
-     * Get detail information about user
-     */
     @Override
     @JsonIgnore
     public Object getDetails() {
         return this;
     }
 
-    /**
-     * Get user principal
-     */
     @Override
     @JsonIgnore
     public Object getPrincipal() {
         return username;
     }
 
-    /**
-     * User authentication status
-     */
     @Override
     @JsonIgnore
     public boolean isAuthenticated() {
         return authenticated;
     }
 
-    /**
-     * User name
-     */
     public String getUsername() {
         return username;
     }
 
-    /**
-     * User password
-     */
     public String getPassword() {
         return password;
     }
@@ -123,10 +100,6 @@ public class User extends BaseEntity implements Authentication {
         return lastName;
     }
 
-    /**
-     * Get user authorities
-     * Works with security
-     */
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
@@ -135,9 +108,6 @@ public class User extends BaseEntity implements Authentication {
         return cart;
     }
 
-    /**
-     * Set for authentication
-     */
     @Override
     @JsonIgnore
     public void setAuthenticated(final boolean isAuthenticated) throws IllegalArgumentException {

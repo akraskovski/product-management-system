@@ -2,6 +2,8 @@ package by.kraskovski.pms.service;
 
 import by.kraskovski.pms.model.Cart;
 
+import javax.management.InstanceAlreadyExistsException;
+
 /**
  * Service for {@link Cart}
  */
@@ -10,7 +12,7 @@ public interface CartService {
     /**
      * Save {@link Cart} entity to database table
      */
-    Cart create(int userId);
+    void create(int id) throws InstanceAlreadyExistsException;
 
     /**
      * Add product to cart.
