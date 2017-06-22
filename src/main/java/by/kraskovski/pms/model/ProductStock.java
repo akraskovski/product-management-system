@@ -1,6 +1,7 @@
 package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -25,8 +26,7 @@ public class ProductStock extends BaseEntity implements Serializable {
     @OneToMany(
             mappedBy = "productStock",
             fetch = FetchType.LAZY,
-            orphanRemoval = true,
-            cascade = CascadeType.ALL)
+            orphanRemoval = true)
     private Set<CartProductStock> cartProductStocks;
 
     private int productsCount;

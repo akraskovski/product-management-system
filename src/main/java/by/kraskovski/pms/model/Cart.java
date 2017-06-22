@@ -15,9 +15,8 @@ public class Cart extends BaseEntity {
 
     @OneToMany(
             mappedBy = "cart",
-            fetch = FetchType.EAGER,
-            orphanRemoval = true,
-            cascade = CascadeType.ALL)
+            fetch = FetchType.LAZY,
+            orphanRemoval = true)
     private Set<CartProductStock> cartProductStocks;
 
     private double totalCost;

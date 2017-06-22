@@ -23,7 +23,7 @@ public class Stock extends BaseEntity {
     private String phone;
     private double square;
 
-    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "stock", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<ProductStock> productStocks = new HashSet<>();
 
     /**

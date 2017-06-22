@@ -24,7 +24,7 @@ public class Product extends BaseEntity {
     private double height;
     private double weight;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<ProductStock> productStocks = new HashSet<>();
 
     public String getName() {
@@ -59,11 +59,6 @@ public class Product extends BaseEntity {
         return weight;
     }
 
-    @Transient
-    public Set<ProductStock> getProductStocks() {
-        return productStocks;
-    }
-
     public void setName(final String name) {
         this.name = name;
     }
@@ -94,9 +89,5 @@ public class Product extends BaseEntity {
 
     public void setWeight(final double weight) {
         this.weight = weight;
-    }
-
-    public void setProductStocks(Set<ProductStock> productStocks) {
-        this.productStocks = productStocks;
     }
 }
