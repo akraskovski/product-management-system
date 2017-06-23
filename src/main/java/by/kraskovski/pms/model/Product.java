@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,8 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<ProductStock> productStocks = new HashSet<>();
+
+    private LocalDateTime manufactureDate;
 
     private String type;
 
@@ -42,6 +45,10 @@ public class Product extends BaseEntity {
 
     public double getCost() {
         return cost;
+    }
+
+    public LocalDateTime getManufactureDate() {
+        return manufactureDate;
     }
 
     public String getType() {
@@ -74,6 +81,10 @@ public class Product extends BaseEntity {
 
     public void setCost(final double cost) {
         this.cost = cost;
+    }
+
+    public void setManufactureDate(LocalDateTime manufactureDate) {
+        this.manufactureDate = manufactureDate;
     }
 
     public void setType(final String type) {

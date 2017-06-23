@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,6 +51,8 @@ public class User extends BaseEntity implements Authentication {
     private String firstName;
 
     private String lastName;
+
+    private LocalDateTime createDate;
 
     public User() {
         super();
@@ -112,6 +115,10 @@ public class User extends BaseEntity implements Authentication {
         return lastName;
     }
 
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
@@ -130,6 +137,10 @@ public class User extends BaseEntity implements Authentication {
 
     public void setPassword(final String password) {
         this.password = password;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
 
     public void addCart(final Cart cart) {

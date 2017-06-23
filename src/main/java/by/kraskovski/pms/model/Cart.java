@@ -1,7 +1,6 @@
 package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,11 +18,10 @@ public class Cart extends BaseEntity {
             mappedBy = "cart",
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
-            orphanRemoval= true)
+            orphanRemoval = true)
     private Set<CartProductStock> cartProductStocks;
 
-    @Type(type = "org.hibernate.type.LocalDateTimeType")
-    private LocalDateTime createdDate;
+    private LocalDateTime createDate;
 
     private double totalCost;
 
@@ -31,8 +29,8 @@ public class Cart extends BaseEntity {
         return cartProductStocks;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public LocalDateTime getCreateDate() {
+        return createDate;
     }
 
     public double getTotalCost() {
@@ -47,7 +45,7 @@ public class Cart extends BaseEntity {
         this.totalCost = totalCost;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
 }

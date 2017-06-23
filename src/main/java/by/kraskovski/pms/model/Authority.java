@@ -13,15 +13,9 @@ import javax.persistence.Entity;
 @Entity
 public class Authority extends BaseEntity implements GrantedAuthority {
 
-    /**
-     * Authority name
-     */
     @Column(unique = true, nullable = false)
     private String name;
 
-    /**
-     * Implemented method to get Authority name
-     */
     @Override
     @JsonIgnore
     public String getAuthority() {

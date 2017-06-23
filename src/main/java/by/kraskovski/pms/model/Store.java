@@ -40,65 +40,38 @@ public class Store extends BaseEntity {
     )
     private List<Stock> stockList;
 
-    /**
-     * Store name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Store details
-     */
     public String getDetails() {
         return details;
     }
 
-    /**
-     * Store address
-     */
     public String getAddress() {
         return address;
     }
 
-    /**
-     * Store contact phone
-     */
     public String getPhone() {
         return phone;
     }
 
-    /**
-     * Store contact skype
-     */
     public String getSkype() {
         return skype;
     }
 
-    /**
-     * Store discounts system (consist or not)
-     */
     public boolean getDiscounts() {
         return discounts;
     }
 
-    /**
-     * Store contant mail
-     */
     public String getMail() {
         return mail;
     }
 
-    /**
-     * ManyToMany relation to {@link Stock} entities
-     */
     public List<Stock> getStockList() {
         return stockList;
     }
 
-    /**
-     * Store logo image
-     */
     public String getLogo() {
         return logo;
     }

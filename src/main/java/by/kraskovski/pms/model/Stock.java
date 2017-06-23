@@ -3,11 +3,8 @@ package by.kraskovski.pms.model;
 import by.kraskovski.pms.model.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +13,13 @@ import java.util.Set;
  */
 @Entity
 public class Stock extends BaseEntity {
+
+    @OneToMany(
+            mappedBy = "stock",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            orphanRemoval = true)
+    private Set<ProductStock> productStocks = new HashSet<>();
 
     @Column(unique = true, nullable = false)
     private String specialize;
@@ -26,44 +30,41 @@ public class Stock extends BaseEntity {
 
     private double square;
 
-    @OneToMany(
-            mappedBy = "stock",
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
-            orphanRemoval = true)
-    private Set<ProductStock> productStocks = new HashSet<>();
+    private LocalTime openTime;
 
-    /**
-     * Stock specialize
-     */
-    public String getSpecialize() {
-        return specialize;
-    }
-
-    /**
-     * Stock address
-     */
-    public String getAddress() {
-        return address;
-    }
-
-    /**
-     * Stocks contact phone
-     */
-    public String getPhone() {
-        return phone;
-    }
-
-    /**
-     * Stock square
-     */
-    public double getSquare() {
-        return square;
-    }
+    private LocalTime closeTime;
 
     @JsonIgnore
     public Set<ProductStock> getProductStocks() {
         return productStocks;
+    }
+
+    public String getSpecialize() {
+        return specialize;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public double getSquare() {
+        return square;
+    }
+
+    public LocalTime getOpenTime() {
+        return openTime;
+    }
+
+    public LocalTime getCloseTime() {
+        return closeTime;
+    }
+
+    public void setProductStocks(final Set<ProductStock> productStocks) {
+        this.productStocks = productStocks;
     }
 
     public void setSpecialize(final String specialize) {
@@ -82,7 +83,11 @@ public class Stock extends BaseEntity {
         this.square = square;
     }
 
-    public void setProductStocks(final Set<ProductStock> productStocks) {
-        this.productStocks = productStocks;
+    public void setOpenTime(LocalTime openTime) {
+        this.openTime = openTime;
+    }
+
+    public void setCloseTime(LocalTime closeTime) {
+        this.closeTime = closeTime;
     }
 }
