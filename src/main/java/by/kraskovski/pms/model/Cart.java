@@ -1,14 +1,10 @@
 package by.kraskovski.pms.model;
 
 import by.kraskovski.pms.model.base.BaseEntity;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -26,10 +22,17 @@ public class Cart extends BaseEntity {
             orphanRemoval= true)
     private Set<CartProductStock> cartProductStocks;
 
+    @Type(type = "org.hibernate.type.LocalDateTimeType")
+    private LocalDateTime createdDate;
+
     private double totalCost;
 
     public Set<CartProductStock> getCartProductStocks() {
         return cartProductStocks;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
     public double getTotalCost() {
@@ -42,5 +45,9 @@ public class Cart extends BaseEntity {
 
     public void setTotalCost(final double totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 }
