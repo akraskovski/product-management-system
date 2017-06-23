@@ -21,6 +21,10 @@ public class Cart extends BaseEntity {
             orphanRemoval = true)
     private Set<CartProductStock> cartProductStocks;
 
+    public Cart() {
+        this.createDate = LocalDateTime.now();
+    }
+
     private LocalDateTime createDate;
 
     private double totalCost;

@@ -7,6 +7,7 @@ import by.kraskovski.pms.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -25,6 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(final Product object) {
+        object.setManufactureDate(LocalDateTime.now());
         return productRepository.save(object);
     }
 
