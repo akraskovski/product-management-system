@@ -83,7 +83,7 @@ public class Product extends BaseEntity {
         this.cost = cost;
     }
 
-    public void setManufactureDate(LocalDateTime manufactureDate) {
+    public void setManufactureDate(final LocalDateTime manufactureDate) {
         this.manufactureDate = manufactureDate;
     }
 

@@ -3,7 +3,11 @@ package by.kraskovski.pms.model;
 import by.kraskovski.pms.model.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -83,11 +87,11 @@ public class Stock extends BaseEntity {
         this.square = square;
     }
 
-    public void setOpenTime(LocalTime openTime) {
+    public void setOpenTime(final LocalTime openTime) {
         this.openTime = openTime;
     }
 
-    public void setCloseTime(LocalTime closeTime) {
+    public void setCloseTime(final LocalTime closeTime) {
         this.closeTime = closeTime;
     }
 }

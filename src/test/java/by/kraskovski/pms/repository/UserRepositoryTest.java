@@ -24,10 +24,10 @@ public class UserRepositoryTest {
 
     @Test
     public void findByUsernameTest() {
-        String username = "test";
-        String password = "test";
+        final String username = "test";
+        final String password = "test";
         entityManager.persist(new User(username, password));
-        User user = userRepository.findByUsername(username);
+        final User user = userRepository.findByUsername(username);
         assertEquals(username, user.getUsername());
     }
 }

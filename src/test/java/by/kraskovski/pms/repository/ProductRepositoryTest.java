@@ -24,18 +24,15 @@ public class ProductRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    @Autowired
-    private ProductRepository productRepository;
-
     @Test
     public void createProductTest() {
-        Product product = prepareProduct();
-        productRepository.save(product);
+        final Product product = prepareProduct();
+        entityManager.persist(product);
         assertNotNull(entityManager.find(Product.class, product.getId()));
     }
 
     private Product prepareProduct() {
-        Product product = new Product();
+        final Product product = new Product();
         product.setName("Product");
         product.setCost(420.5);
         product.setDetails("Description of product details");

@@ -1,8 +1,15 @@
 apply plugin: 'checkstyle'
 
+checkstyle {
+    ignoreFailures = false
+}
+
 checkstyleMain {
     configFile = file('quality/checkstyle/checkstyle.xml')
-    //ignoreFailures = false
+}
+
+checkstyleTest {
+    configFile = file('quality/checkstyle/checkstyle.xml')
 }
 
 ext.checkType = 'none'

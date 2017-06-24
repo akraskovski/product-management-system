@@ -23,24 +23,21 @@ public class StockRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    @Autowired
-    private StockRepository stockRepository;
-
     @Test
     public void createStockTest() {
-        Stock stock = prepareStock();
-        stockRepository.save(stock);
+        final Stock stock = prepareStock();
+        entityManager.persist(stock);
         Assert.assertNotNull(entityManager.find(Stock.class, stock.getId()));
     }
 
     private Stock prepareStock() {
-        Stock stock = new Stock();
+        final Stock stock = new Stock();
         stock.setSpecialize("Specialize");
         stock.setAddress("Grodno, ul. Ulica");
         stock.setSquare(20.2);
         stock.setPhone("80292929239");
         stock.setOpenTime(LocalTime.of(9, 30));
-        stock.setCloseTime(LocalTime.of(23,0));
+        stock.setCloseTime(LocalTime.of(23, 0));
         return stock;
     }
 }

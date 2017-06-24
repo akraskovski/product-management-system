@@ -1,7 +1,6 @@
 package by.kraskovski.pms.service;
 
 import by.kraskovski.pms.model.User;
-import by.kraskovski.pms.service.UserService;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,7 +26,7 @@ public class UserServiceImplTest {
     public void findUserTest() {
         final int id = 10;
         when(userService.find(id)).thenReturn(new User(id, "Test", "Test"));
-        User foundUser = userService.find(id);
+        final User foundUser = userService.find(id);
         Assert.assertNotNull(foundUser);
     }
 

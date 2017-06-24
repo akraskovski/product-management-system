@@ -5,7 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -132,7 +141,7 @@ public class User extends BaseEntity implements Authentication {
         this.password = password;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(final LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
