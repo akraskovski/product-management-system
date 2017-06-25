@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 /**
@@ -44,12 +43,10 @@ public class AuthenticationController {
     public ResponseEntity authenticate(@RequestBody final User requestUser) {
         LOGGER.info("Start authentication user with username: " + requestUser.getUsername());
         if (isNotEmpty(requestUser.getUsername()) && isNotEmpty(requestUser.getPassword())) {
-            final User user = userService.findByUsername(requestUser.getUsername());
-            final String token = tokenService.generate(user, requestUser.getPassword());
-            if (token != null) {
+            final TokenDTO tokenDTO = tokenService.generate(requestUser.getUsername(), requestUser.getPassword());
+            if (tokenDTO != null) {
                 LOGGER.info("User authentication with username: {} successful!", requestUser.getUsername());
-                user.setPassword(EMPTY);
-                return new ResponseEntity<>(new TokenDTO(token, user), HttpStatus.OK);
+                return new ResponseEntity<>(tokenDTO, HttpStatus.OK);
             }
         }
         LOGGER.error("User authentication with username: {} failed!", requestUser.getUsername());
