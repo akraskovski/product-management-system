@@ -30,15 +30,13 @@ public class User extends BaseEntity implements Authentication {
     @JoinTable(
             name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_id")}
-    )
+            inverseJoinColumns = {@JoinColumn(name = "authority_id")})
     private List<Authority> authorities;
 
     @OneToOne(
             mappedBy = "user",
             orphanRemoval = true,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}
-    )
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Cart cart;
 
     @Column(unique = true, nullable = false)
@@ -121,6 +119,7 @@ public class User extends BaseEntity implements Authentication {
         return createDate;
     }
 
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
