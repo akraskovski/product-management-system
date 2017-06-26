@@ -1,6 +1,8 @@
 package by.kraskovski.pms.service.impl;
 
+import by.kraskovski.pms.model.Authority;
 import by.kraskovski.pms.model.User;
+import by.kraskovski.pms.model.enums.AuthorityEnum;
 import by.kraskovski.pms.repository.UserRepository;
 import by.kraskovski.pms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(final User object) {
         object.setCreateDate(LocalDateTime.now());
+        if (object.getAuthorities().isEmpty()) {
+            object.getAuthorities().add();
+        }
         return userRepository.save(object);
     }
 

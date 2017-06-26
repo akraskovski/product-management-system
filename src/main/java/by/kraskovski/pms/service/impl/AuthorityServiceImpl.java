@@ -1,6 +1,7 @@
 package by.kraskovski.pms.service.impl;
 
 import by.kraskovski.pms.model.Authority;
+import by.kraskovski.pms.model.enums.AuthorityEnum;
 import by.kraskovski.pms.repository.AuthorityRepository;
 import by.kraskovski.pms.service.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Override
     public Authority find(final int id) {
         return authorityRepository.findOne(id);
+    }
+
+    @Override
+    public Authority findByName(AuthorityEnum name) {
+        return authorityRepository.findByAuthority(name);
     }
 
     @Override

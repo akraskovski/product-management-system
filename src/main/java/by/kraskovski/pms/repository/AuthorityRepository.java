@@ -1,6 +1,7 @@
 package by.kraskovski.pms.repository;
 
 import by.kraskovski.pms.model.Authority;
+import by.kraskovski.pms.model.enums.AuthorityEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
 
+    Authority findByAuthority(AuthorityEnum authority);
 }
