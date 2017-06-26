@@ -4,7 +4,16 @@ import by.kraskovski.pms.model.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.Authentication;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +52,15 @@ public class User extends BaseEntity implements Authentication {
     private String lastName;
 
     private LocalDateTime createDate;
+
+    @Column(unique = true)
+    private String email;
+
+    @Column(unique = true)
+    private String phone;
+
+    private String avatar;
+
 
     public User() {
         super();
@@ -109,6 +127,18 @@ public class User extends BaseEntity implements Authentication {
         return createDate;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
     @Override
     public List<Authority> getAuthorities() {
         return authorities;
@@ -132,6 +162,26 @@ public class User extends BaseEntity implements Authentication {
 
     public void setCreateDate(final LocalDateTime createDate) {
         this.createDate = createDate;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public void addCart(final Cart cart) {

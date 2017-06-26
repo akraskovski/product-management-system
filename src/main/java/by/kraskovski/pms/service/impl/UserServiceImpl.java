@@ -1,6 +1,5 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.model.Authority;
 import by.kraskovski.pms.model.User;
 import by.kraskovski.pms.model.enums.AuthorityEnum;
 import by.kraskovski.pms.repository.UserRepository;
@@ -28,8 +27,7 @@ public class UserServiceImpl implements UserService {
     public User create(final User object) {
         object.setCreateDate(LocalDateTime.now());
         if (object.getAuthorities().isEmpty()) {
-            Authority authority = authorityService.findByName(AuthorityEnum.ROLE_USER);
-            object.getAuthorities().add(authority);
+            object.getAuthorities().add(authorityService.findByName(AuthorityEnum.ROLE_USER));
         }
         return userRepository.save(object);
     }

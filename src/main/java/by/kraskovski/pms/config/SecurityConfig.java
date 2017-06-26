@@ -13,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static by.kraskovski.pms.model.enums.AuthorityEnum.*;
+
 /**
  * Spring Security configuration class.
  */
@@ -36,22 +38,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers("/user/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/user/**").hasAuthority(ROLE_ADMIN.name())
                 .antMatchers(HttpMethod.GET, "/product/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/product/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.PUT, "/product/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/product/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST, "/product/**").hasAuthority(ROLE_ADMIN.name())
+                .antMatchers(HttpMethod.PUT, "/product/**").hasAuthority(ROLE_ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, "/product/**").hasAuthority(ROLE_ADMIN.name())
                 .antMatchers(HttpMethod.GET, "/stock/").authenticated()
-                .antMatchers(HttpMethod.POST, "/stock/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_STOCK_MANAGER")
-                .antMatchers(HttpMethod.PUT, "/stock/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_STOCK_MANAGER")
-                .antMatchers(HttpMethod.DELETE, "/stock/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_STOCK_MANAGER")
+                .antMatchers(HttpMethod.POST, "/stock/**").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STOCK_MANAGER.name())
+                .antMatchers(HttpMethod.PUT, "/stock/**").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STOCK_MANAGER.name())
+                .antMatchers(HttpMethod.DELETE, "/stock/**").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STOCK_MANAGER.name())
                 .antMatchers(HttpMethod.GET, "/store/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/store/").hasAnyAuthority("ROLE_ADMIN", "ROLE_STORE_MANAGER")
-                .antMatchers(HttpMethod.PUT, "/store/").hasAnyAuthority("ROLE_ADMIN", "ROLE_STORE_MANAGER")
-                .antMatchers(HttpMethod.DELETE, "/store/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_STORE_MANAGER")
+                .antMatchers(HttpMethod.POST, "/store/").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STORE_MANAGER.name())
+                .antMatchers(HttpMethod.PUT, "/store/").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STORE_MANAGER.name())
+                .antMatchers(HttpMethod.DELETE, "/store/**").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STORE_MANAGER.name())
                 .antMatchers("/cart/**").authenticated()
                 .anyRequest().authenticated()
-                .antMatchers("/**").permitAll()
                 .and()
                 .addFilterBefore(new AuthenticationTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
