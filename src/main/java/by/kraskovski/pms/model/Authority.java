@@ -15,16 +15,12 @@ import javax.persistence.Enumerated;
 @Entity
 public class Authority extends BaseEntity implements GrantedAuthority{
 
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     @Enumerated(EnumType.STRING)
     private AuthorityEnum authority;
 
     @Override
     public String getAuthority() {
         return authority.name();
-    }
-
-    public void setAuthority(AuthorityEnum authority) {
-        this.authority = authority;
     }
 }

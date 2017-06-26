@@ -129,7 +129,7 @@ ALTER TABLE ONLY "user"
 CREATE UNIQUE INDEX authority_id_uindex
   ON authority USING BTREE (id);
 CREATE UNIQUE INDEX authority_name_uindex
-  ON authority USING BTREE (name);
+  ON authority USING BTREE (authority);
 CREATE UNIQUE INDEX product_name_uindex
   ON product USING BTREE (name);
 CREATE UNIQUE INDEX stock_specialize_uindex

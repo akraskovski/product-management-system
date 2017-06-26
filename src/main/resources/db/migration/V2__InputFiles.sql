@@ -4,9 +4,9 @@ INSERT INTO "user" (id, username, password) VALUES (18, 'store_manager', 'passwo
 INSERT INTO "user" (id, username, password) VALUES (19, 'managed_profile', 'user_stock_store');
 SELECT pg_catalog.setval('user_id_seq', 20, true);
 
-INSERT INTO authority (id, name) VALUES (1, 'ROLE_ADMIN');
-INSERT INTO authority (id, name) VALUES (2, 'ROLE_STOCK_MANAGER');
-INSERT INTO authority (id, name) VALUES (3, 'ROLE_STORE_MANAGER');
+INSERT INTO authority (id, authority) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO authority (id, authority) VALUES (2, 'ROLE_STOCK_MANAGER');
+INSERT INTO authority (id, authority) VALUES (3, 'ROLE_STORE_MANAGER');
 SELECT pg_catalog.setval('authority_id_seq', 4, false);
 
 INSERT INTO product (id, name, cost, type, details, image, width, height, weight) VALUES (29, 'Королевство Сна Rosemary 200x200 (орех серый)', 2830, 'Кровать', 'классическая, 200x200 см, изголовье дерево, основание ортопедическое', '7ad1f054-ad37-48ff-b841-8da1cff78f31', 200, 200, NULL);
