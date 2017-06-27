@@ -4,7 +4,11 @@ import by.kraskovski.pms.model.User;
 import by.kraskovski.pms.model.dto.TokenDTO;
 import by.kraskovski.pms.security.service.TokenService;
 import by.kraskovski.pms.service.UserService;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -15,8 +19,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @Service
 public class TokenServiceImpl implements TokenService {
@@ -50,10 +52,9 @@ public class TokenServiceImpl implements TokenService {
         return null;
     }
 
-    private TokenDTO createTokenDTO(final User user, String token) {
-        TokenDTO tokenDTO = new TokenDTO();
+    private TokenDTO createTokenDTO(final User user, final String token) {
+        final TokenDTO tokenDTO = new TokenDTO();
         tokenDTO.setUser(user);
-        tokenDTO.getUser().setPassword(EMPTY);
         tokenDTO.setToken(token);
         return tokenDTO;
     }

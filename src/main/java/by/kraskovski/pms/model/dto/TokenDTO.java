@@ -1,6 +1,7 @@
 package by.kraskovski.pms.model.dto;
 
 import by.kraskovski.pms.model.User;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
@@ -35,11 +36,12 @@ public class TokenDTO implements Serializable {
         return user;
     }
 
-    public void setToken(String token) {
+    public void setToken(final String token) {
         this.token = token;
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
+        user.setPassword(StringUtils.EMPTY);
         this.user = user;
     }
 }
