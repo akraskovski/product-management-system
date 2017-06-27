@@ -26,12 +26,10 @@ public class AuthenticationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
     private final TokenService tokenService;
-    private final UserService userService;
 
     @Autowired
-    public AuthenticationController(final TokenService tokenService, final UserService userService) {
+    public AuthenticationController(final TokenService tokenService) {
         this.tokenService = tokenService;
-        this.userService = userService;
     }
 
     /**
