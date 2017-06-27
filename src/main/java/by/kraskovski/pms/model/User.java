@@ -44,8 +44,7 @@ public class User extends BaseEntity implements Authentication {
     @Column(nullable = false)
     private String password;
 
-    @Transient
-    private boolean authenticated = true;
+    private boolean authenticated = false;
 
     private String firstName;
 
@@ -60,7 +59,6 @@ public class User extends BaseEntity implements Authentication {
     private String phone;
 
     private String avatar;
-
 
     public User() {
         super();
@@ -148,6 +146,7 @@ public class User extends BaseEntity implements Authentication {
         return cart;
     }
 
+    @Override
     public void setAuthenticated(final boolean isAuthenticated) throws IllegalArgumentException {
         this.authenticated = isAuthenticated;
     }

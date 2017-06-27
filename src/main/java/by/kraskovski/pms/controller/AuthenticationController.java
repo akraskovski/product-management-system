@@ -3,7 +3,6 @@ package by.kraskovski.pms.controller;
 import by.kraskovski.pms.model.User;
 import by.kraskovski.pms.model.dto.TokenDTO;
 import by.kraskovski.pms.security.service.TokenService;
-import by.kraskovski.pms.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

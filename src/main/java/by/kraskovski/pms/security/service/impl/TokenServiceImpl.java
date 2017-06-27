@@ -38,6 +38,7 @@ public class TokenServiceImpl implements TokenService {
     public TokenDTO generate(final String username, final String password) {
         final User user = userService.findByUsername(username);
         if (user != null) {
+            setUserAuthenticated(user);
             final Map<String, Object> tokenData = new HashMap<>();
             final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (passwordEncoder.matches(password, user.getPassword()) || password.equals(user.getPassword())) {
@@ -50,6 +51,11 @@ public class TokenServiceImpl implements TokenService {
             }
         }
         return null;
+    }
+
+    private void setUserAuthenticated(final User user) {
+        user.setAuthenticated(true);
+        userService.update(user);
     }
 
     private TokenDTO createTokenDTO(final User user, final String token) {
