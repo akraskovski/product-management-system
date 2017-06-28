@@ -9,8 +9,15 @@
     "noUnusedParameters": true,
     "lib": ["es2015", "dom"],
     "moduleResolution": "node",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
   "compileOnSave": false,
   "buildOnSave": false,
   "awesomeTypescriptLoaderOptions": {
