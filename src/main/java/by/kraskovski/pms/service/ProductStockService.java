@@ -1,8 +1,0 @@
-package by.kraskovski.pms.service;
-
-import by.kraskovski.pms.model.ProductStock;
-
-public interface ProductStockService {
-
-    ProductStock find(int id);
-}
