@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.util.Optional.ofNullable;
+
 @Service
 public class TokenServiceImpl implements TokenService {
 
@@ -45,7 +47,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public TokenDTO generate(final String username, final String password) {
         final User user = userService.findByUsername(username);
-        if (user != null) {
+        if (ofNullable(user).isPresent() && ofNullable(password).isPresent()) {
             final Map<String, Object> tokenData = new HashMap<>();
             final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (passwordEncoder.matches(password, user.getPassword()) || password.equals(user.getPassword())) {
