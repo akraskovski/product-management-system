@@ -34,7 +34,7 @@ public class TokenServiceImpl implements TokenService {
     @Value("${auth.header.name:x-auth-token}")
     private String authHeaderName;
 
-    @Value("{token.expiration.time:60}")
+    @Value("${token.expiration.time:60}")
     private int expirationTime;
 
     private final UserService userService;
