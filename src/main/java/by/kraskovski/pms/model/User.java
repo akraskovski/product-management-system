@@ -44,7 +44,8 @@ public class User extends BaseEntity implements Authentication {
     @Column(nullable = false)
     private String password;
 
-    private boolean authenticated = false;
+    @Transient
+    private boolean authenticated;
 
     private String firstName;
 
