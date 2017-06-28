@@ -27,7 +27,7 @@ module.exports = {
             },
             {
                 test: /\.(html|css)$/,
-                exclude: 'src/assets/styles',
+                // exclude: './src/assets/styles',
                 loader: 'raw-loader'
             },
             {
@@ -39,7 +39,7 @@ module.exports = {
 
     plugins: [
         new CommonsChunkPlugin({
-            names: ['vendor', 'polyfills'],
+            names: ['vendor', 'polyfills']
         }),
 
         new HtmlWebpackPlugin({
