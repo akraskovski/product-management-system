@@ -12,6 +12,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -63,7 +64,7 @@ public class TokenServiceImpl implements TokenService {
                 return createTokenDTO(user, token);
             }
         }
-        return null;
+        throw new BadCredentialsException("Invalid input data.");
     }
 
     private TokenDTO createTokenDTO(final User user, final String token) {

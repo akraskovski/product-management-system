@@ -8,10 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 /**
  * Handle requests for authentication operations.
@@ -37,12 +40,17 @@ public class AuthenticationController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity login(@RequestBody final User requestUser) {
         LOGGER.info("Start authentication user with username: " + requestUser.getUsername());
-        final TokenDTO tokenDTO = tokenService.generate(requestUser.getUsername(), requestUser.getPassword());
-        if (tokenDTO != null) {
-            LOGGER.info("User authentication with username: {} successful!", requestUser.getUsername());
-            return new ResponseEntity<>(tokenDTO, HttpStatus.ACCEPTED);
+        try {
+            final TokenDTO tokenDTO = tokenService.generate(requestUser.getUsername(), requestUser.getPassword());
+            Optional.ofNullable(tokenDTO).orElseThrow(() -> new IllegalArgumentException("Generated token is null."));
+                LOGGER.info("User authentication with username: {} successful!", requestUser.getUsername());
+                return new ResponseEntity<>(tokenDTO, HttpStatus.ACCEPTED);
+        } catch (IllegalArgumentException | BadCredentialsException e) {
+            LOGGER.error(
+                    "User authentication with username: {} failed! Cause: {}",
+                    requestUser.getUsername(),
+                    e.getLocalizedMessage());
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.UNAUTHORIZED);
         }
-        LOGGER.error("User authentication with username: {} failed!", requestUser.getUsername());
-        return new ResponseEntity<>("User authentication with username: " + requestUser.getUsername() + " failed!", HttpStatus.UNAUTHORIZED);
     }
 }
