@@ -67,11 +67,13 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public Authentication authenticate(final HttpServletRequest request) throws ExpiredJwtException, SignatureException {
         final String token = request.getHeader(authHeaderName);
-        final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-        final User user = getUserFromToken(tokenData);
-        if (validatePassword(tokenData, user)) {
-            user.setAuthenticated(true);
-            return user;
+        if (token != null) {
+            final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            final User user = getUserFromToken(tokenData);
+            if (validatePassword(tokenData, user.getPassword())) {
+                user.setAuthenticated(true);
+                return user;
+            }
         }
         return null;
     }
@@ -83,7 +85,8 @@ public class TokenServiceImpl implements TokenService {
         return Optional.ofNullable(user).orElseThrow(() -> new UserNotFoundException("User: " + username + " not found!"));
     }
 
-    private boolean validatePassword(final Jws<Claims> tokenData, final User user) {
-        return user != null && tokenData.getBody().get("password").toString().equals(user.getPassword());
+    private boolean validatePassword(final Jws<Claims> tokenData, final String userPassword) {
+        final String tokenPassword = tokenData.getBody().get("password").toString();
+        return tokenPassword.equals(userPassword);
     }
 }

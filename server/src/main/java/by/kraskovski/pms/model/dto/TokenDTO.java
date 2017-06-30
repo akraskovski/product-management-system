@@ -1,9 +1,10 @@
 package by.kraskovski.pms.model.dto;
 
 import by.kraskovski.pms.model.User;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
  * Token Data Transfer Object class
@@ -20,12 +21,10 @@ public class TokenDTO implements Serializable {
      */
     private User user;
 
-    public TokenDTO() {
-    }
-
     public TokenDTO(final String token, final User user) {
         this.token = token;
         this.user = user;
+        this.user.setPassword(EMPTY);
     }
 
     public String getToken() {
@@ -34,14 +33,5 @@ public class TokenDTO implements Serializable {
 
     public User getUser() {
         return user;
-    }
-
-    public void setToken(final String token) {
-        this.token = token;
-    }
-
-    public void setUser(final User user) {
-        user.setPassword(StringUtils.EMPTY);
-        this.user = user;
     }
 }
