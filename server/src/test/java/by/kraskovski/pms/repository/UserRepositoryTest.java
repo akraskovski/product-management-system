@@ -27,10 +27,8 @@ public class UserRepositoryTest {
 
     @Test
     public void findByUsernameTest() {
-        final String username = "test";
-        final String password = "test";
-        entityManager.persist(new User(username, password));
-        final User user = userRepository.findByUsername(username);
-        assertEquals(username, user.getUsername());
+        entityManager.persist(new User("pms_user", "Ij^8hs@4772"));
+        final User user = userRepository.findByUsername("pms_user");
+        assertEquals("pms_user", user.getUsername());
     }
 }

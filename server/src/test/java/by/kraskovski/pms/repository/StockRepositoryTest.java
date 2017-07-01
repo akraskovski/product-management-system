@@ -2,7 +2,6 @@ package by.kraskovski.pms.repository;
 
 import by.kraskovski.pms.Application;
 import by.kraskovski.pms.model.Stock;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,11 +26,6 @@ public class StockRepositoryTest {
 
     @Autowired
     private StockRepository stockRepository;
-
-    @After
-    public void after() {
-        stockRepository.deleteAll();
-    }
 
     @Test
     public void findBySpecializeTest() {
