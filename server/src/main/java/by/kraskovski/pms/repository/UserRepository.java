@@ -1,6 +1,6 @@
 package by.kraskovski.pms.repository;
 
-import by.kraskovski.pms.model.User;
+import by.kraskovski.pms.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

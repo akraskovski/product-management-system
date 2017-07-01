@@ -1,7 +1,7 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.model.User;
-import by.kraskovski.pms.model.enums.AuthorityEnum;
+import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.repository.UserRepository;
 import by.kraskovski.pms.service.AuthorityService;
 import by.kraskovski.pms.service.UserService;

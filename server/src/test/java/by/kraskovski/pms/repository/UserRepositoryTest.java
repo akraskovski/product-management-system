@@ -1,7 +1,7 @@
 package by.kraskovski.pms.repository;
 
 import by.kraskovski.pms.Application;
-import by.kraskovski.pms.model.User;
+import by.kraskovski.pms.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Integration test for {@link UserRepository}
+ */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ContextConfiguration(classes = Application.class)

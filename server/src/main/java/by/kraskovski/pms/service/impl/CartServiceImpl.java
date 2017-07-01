@@ -1,9 +1,9 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.model.Cart;
-import by.kraskovski.pms.model.CartProductStock;
-import by.kraskovski.pms.model.ProductStock;
-import by.kraskovski.pms.model.User;
+import by.kraskovski.pms.domain.Cart;
+import by.kraskovski.pms.domain.CartProductStock;
+import by.kraskovski.pms.domain.ProductStock;
+import by.kraskovski.pms.domain.User;
 import by.kraskovski.pms.repository.CartRepository;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.CartService;

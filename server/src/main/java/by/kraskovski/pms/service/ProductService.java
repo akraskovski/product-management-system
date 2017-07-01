@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.model.Product;
+import by.kraskovski.pms.domain.Product;
 
 import java.util.List;
 

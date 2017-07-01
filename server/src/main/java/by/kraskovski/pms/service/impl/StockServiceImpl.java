@@ -1,8 +1,8 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.model.Product;
-import by.kraskovski.pms.model.ProductStock;
-import by.kraskovski.pms.model.Stock;
+import by.kraskovski.pms.domain.Product;
+import by.kraskovski.pms.domain.ProductStock;
+import by.kraskovski.pms.domain.Stock;
 import by.kraskovski.pms.repository.StockRepository;
 import by.kraskovski.pms.service.ProductService;
 import by.kraskovski.pms.service.StockService;

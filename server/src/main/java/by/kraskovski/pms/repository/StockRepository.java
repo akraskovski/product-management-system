@@ -1,6 +1,6 @@
 package by.kraskovski.pms.repository;
 
-import by.kraskovski.pms.model.Stock;
+import by.kraskovski.pms.domain.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

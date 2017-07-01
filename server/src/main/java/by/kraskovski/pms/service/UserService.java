@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.model.User;
+import by.kraskovski.pms.domain.User;
 
 import java.util.List;
 

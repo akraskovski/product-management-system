@@ -1,7 +1,7 @@
-package by.kraskovski.pms.model;
+package by.kraskovski.pms.domain;
 
-import by.kraskovski.pms.model.base.BaseEntity;
-import by.kraskovski.pms.model.enums.AuthorityEnum;
+import by.kraskovski.pms.domain.base.BaseEntity;
+import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;

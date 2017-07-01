@@ -1,7 +1,7 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.model.Authority;
-import by.kraskovski.pms.model.enums.AuthorityEnum;
+import by.kraskovski.pms.domain.Authority;
+import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.repository.AuthorityRepository;
 import by.kraskovski.pms.service.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;

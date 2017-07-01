@@ -1,4 +1,4 @@
-package by.kraskovski.pms.model.enums;
+package by.kraskovski.pms.domain.enums;
 
 public enum AuthorityEnum {
 

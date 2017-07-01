@@ -1,6 +1,6 @@
-package by.kraskovski.pms.model.dto;
+package by.kraskovski.pms.domain.dto;
 
-import by.kraskovski.pms.model.User;
+import by.kraskovski.pms.domain.User;
 
 import java.io.Serializable;
 

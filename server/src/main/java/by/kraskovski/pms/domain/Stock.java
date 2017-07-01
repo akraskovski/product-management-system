@@ -1,6 +1,6 @@
-package by.kraskovski.pms.model;
+package by.kraskovski.pms.domain;
 
-import by.kraskovski.pms.model.base.BaseEntity;
+import by.kraskovski.pms.domain.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CascadeType;

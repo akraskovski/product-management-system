@@ -1,4 +1,4 @@
-package by.kraskovski.pms.model.base;
+package by.kraskovski.pms.domain.base;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 

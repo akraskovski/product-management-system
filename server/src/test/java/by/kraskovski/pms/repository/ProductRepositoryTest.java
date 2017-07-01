@@ -1,7 +1,7 @@
 package by.kraskovski.pms.repository;
 
 import by.kraskovski.pms.Application;
-import by.kraskovski.pms.model.Product;
+import by.kraskovski.pms.domain.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-
+/**
+ * Integration test for {@link ProductRepository}
+ */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = Application.class)
 @DataJpaTest

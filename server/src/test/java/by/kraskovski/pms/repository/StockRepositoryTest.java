@@ -1,7 +1,7 @@
 package by.kraskovski.pms.repository;
 
 import by.kraskovski.pms.Application;
-import by.kraskovski.pms.model.Stock;
+import by.kraskovski.pms.domain.Stock;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalTime;
 import java.util.List;
 
+/**
+ * Integration test for {@link StockRepository}
+ */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = Application.class)
 @DataJpaTest

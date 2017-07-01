@@ -1,6 +1,6 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.model.Cart;
+import by.kraskovski.pms.domain.Cart;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.CartService;
 import org.slf4j.Logger;

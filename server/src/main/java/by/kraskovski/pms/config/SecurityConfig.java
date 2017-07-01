@@ -13,7 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static by.kraskovski.pms.model.enums.AuthorityEnum.*;
+import static by.kraskovski.pms.domain.enums.AuthorityEnum.*;
 
 /**
  * Spring Security configuration class.

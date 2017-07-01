@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.model.Store;
+import by.kraskovski.pms.domain.Store;
 import by.kraskovski.pms.repository.StoreRepository;
 import by.kraskovski.pms.service.ImageService;
 import by.kraskovski.pms.service.StoreService;

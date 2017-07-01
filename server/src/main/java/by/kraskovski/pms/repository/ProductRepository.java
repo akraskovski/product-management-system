@@ -1,6 +1,6 @@
 package by.kraskovski.pms.repository;
 
-import by.kraskovski.pms.model.Product;
+import by.kraskovski.pms.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

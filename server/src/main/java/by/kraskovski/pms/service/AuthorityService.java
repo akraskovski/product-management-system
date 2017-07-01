@@ -1,7 +1,7 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.model.Authority;
-import by.kraskovski.pms.model.enums.AuthorityEnum;
+import by.kraskovski.pms.domain.Authority;
+import by.kraskovski.pms.domain.enums.AuthorityEnum;
 
 import java.util.List;
 
