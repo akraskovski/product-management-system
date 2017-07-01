@@ -38,7 +38,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void findProductByNameTest() {
+    public void findByNameTest() {
         entityManager.persist(prepareProduct());
         final Product foundProduct = productRepository.findByName("Sam").get(0);
         assertNotNull(foundProduct.getId());
@@ -46,7 +46,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void findProductsByType() {
+    public void findByTypeTest() {
         entityManager.persist(prepareProduct());
         final List<Product> foundProducts = productRepository.findByType("Phone");
         assertEquals(foundProducts.size(), 1);

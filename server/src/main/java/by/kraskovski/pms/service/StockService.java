@@ -21,9 +21,9 @@ public interface StockService {
     Stock find(int id);
 
     /**
-     * Find one first Stock by specialize.
+     * Find stocks by specialize.
      */
-    Stock findBySpecialize(String specialize);
+    List<Stock> findBySpecialize(String specialize);
 
     /**
      * Find all products contains in stock.

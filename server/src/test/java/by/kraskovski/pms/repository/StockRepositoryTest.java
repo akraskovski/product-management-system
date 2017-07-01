@@ -2,6 +2,7 @@ package by.kraskovski.pms.repository;
 
 import by.kraskovski.pms.Application;
 import by.kraskovski.pms.model.Stock;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = Application.class)
@@ -23,16 +25,25 @@ public class StockRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
+    @Autowired
+    private StockRepository stockRepository;
+
+    @After
+    public void after() {
+        stockRepository.deleteAll();
+    }
+
     @Test
-    public void createStockTest() {
-        final Stock stock = prepareStock();
-        entityManager.persist(stock);
-        Assert.assertNotNull(entityManager.find(Stock.class, stock.getId()));
+    public void findBySpecializeTest() {
+        entityManager.persist(prepareStock());
+        final List<Stock> stocks = stockRepository.findBySpecialize("Phones");
+        Assert.assertEquals(stocks.size(), 1);
+        Assert.assertEquals(stocks.get(0).getSpecialize(), "Phones");
     }
 
     private Stock prepareStock() {
         final Stock stock = new Stock();
-        stock.setSpecialize("Specialize");
+        stock.setSpecialize("Phones");
         stock.setAddress("Grodno, ul. Ulica");
         stock.setSquare(20.2);
         stock.setPhone("80292929239");
