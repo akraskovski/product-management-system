@@ -1,8 +1,7 @@
 package by.kraskovski.pms.repository;
 
 import by.kraskovski.pms.Application;
-import by.kraskovski.pms.model.Authority;
-import by.kraskovski.pms.model.enums.AuthorityEnum;
+import by.kraskovski.pms.model.Store;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,24 +18,37 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes = Application.class)
 @DataJpaTest
 @TestPropertySource("classpath:/application-test.properties")
-public class AuthorityRepositoryTest {
+public class StoreRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private AuthorityRepository authorityRepository;
+    private StoreRepository storeRepository;
 
     @After
     public void after() {
-        authorityRepository.deleteAll();
+        storeRepository.deleteAll();
     }
 
     @Test
-    public void findByAuthorityTest() {
-        entityManager.persist(new Authority(AuthorityEnum.ROLE_USER));
-        final Authority authority = authorityRepository.findByAuthority(AuthorityEnum.ROLE_USER);
-        assertNotNull(authority);
-        assertEquals(authority.getAuthority(), AuthorityEnum.ROLE_USER.name());
+    public void findByName() {
+        entityManager.persist(prepareStore());
+        final Store store = storeRepository.findByName("Ali");
+        assertNotNull(store);
+        assertTrue(store.getName().contains("Ali"));
+    }
+
+    private Store prepareStore() {
+        final Store store = new Store();
+        store.setName("Aliexpress");
+        store.setAddress("China");
+        store.setDetails("Online-shop");
+        store.setDiscounts(true);
+        store.setPhone("635245824450");
+        store.setSkype("skype");
+        store.setMail("aliexpress@grsu.by");
+        store.setLogo("--null--");
+        return store;
     }
 }

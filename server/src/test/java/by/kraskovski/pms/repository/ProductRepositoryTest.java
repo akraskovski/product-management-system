@@ -41,7 +41,7 @@ public class ProductRepositoryTest {
     public void findByNameTest() {
         entityManager.persist(prepareProduct());
         final Product foundProduct = productRepository.findByName("Sam").get(0);
-        assertNotNull(foundProduct.getId());
+        assertNotNull(foundProduct);
         assertTrue(foundProduct.getName().contains("Sam"));
     }
 
