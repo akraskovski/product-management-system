@@ -5,14 +5,17 @@ import org.apache.commons.lang3.RandomUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
 import static org.mockito.Mockito.*;
 
-public class UserServiceImplTest {
+@RunWith(MockitoJUnitRunner.class)
+public class UserServiceTest {
 
     @Mock
     private UserService userService;
@@ -33,14 +36,14 @@ public class UserServiceImplTest {
     @Test
     public void updateUserTest() {
         final User user = createUser();
-        when(userService.create(user)).thenReturn(user);
-        when(userService.update(user)).thenReturn(user);
+        when(userService.create(anyObject())).thenReturn(user);
+        when(userService.update(anyObject())).thenReturn(user);
         userService.create(user);
         user.setUsername("Updated user");
         user.setPassword("Updated password");
         userService.update(user);
-        verify(userService, times(1)).create(user);
-        verify(userService, times(1)).update(user);
+        verify(userService).create(user);
+        verify(userService).update(user);
     }
 
     private User createUser() {

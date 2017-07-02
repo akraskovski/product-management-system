@@ -39,6 +39,15 @@ public class Product extends BaseEntity {
 
     private double weight;
 
+    public Product() {
+        super();
+    }
+
+    public Product(final int id, final String name) {
+        this.setId(id);
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
