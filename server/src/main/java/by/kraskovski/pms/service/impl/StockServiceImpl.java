@@ -74,11 +74,7 @@ public class StockServiceImpl implements StockService {
 
     private boolean addNewProductToStock(final Stock stock, final Product product, final int count) {
         try {
-            final ProductStock addingProduct = new ProductStock();
-            addingProduct.setProduct(product);
-            addingProduct.setStock(stock);
-            addingProduct.setProductsCount(count);
-            stock.getProductStocks().add(addingProduct);
+            stock.getProductStocks().add(new ProductStock(product, stock, count));
             stockRepository.save(stock);
             return true;
         } catch (DataAccessException e) {

@@ -1,10 +1,9 @@
-package by.kraskovski.pms.service.impl;
+package by.kraskovski.pms.service;
 
 import by.kraskovski.pms.domain.Cart;
 import by.kraskovski.pms.domain.User;
 import by.kraskovski.pms.repository.CartRepository;
-import by.kraskovski.pms.service.ProductStockService;
-import by.kraskovski.pms.service.UserService;
+import by.kraskovski.pms.service.impl.CartServiceImpl;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
@@ -34,15 +33,18 @@ public class CartServiceTest {
     private CartServiceImpl cartService;
 
     private User prepareUser() {
-        final int id = RandomUtils.nextInt();
-        final String username = RandomStringUtils.random(20);
-        final String password = RandomStringUtils.random(20);
-        return new User(id, username, password);
+        final User user = new User();
+        user.setId(RandomUtils.nextInt());
+        user.setUsername(RandomStringUtils.random(20));
+        user.setPassword(RandomStringUtils.random(20));
+        user.addCart(new Cart());
+        return user;
     }
 
     @Test
     public void createPositiveTest() throws InstanceAlreadyExistsException {
         final User user = prepareUser();
+        user.removeCart();
         when(userService.find(anyInt())).thenReturn(user);
         when(userService.update(anyObject())).thenReturn(user);
 
@@ -55,7 +57,6 @@ public class CartServiceTest {
     @Test(expected = InstanceAlreadyExistsException.class)
     public void createNegativeTest() throws InstanceAlreadyExistsException {
         final User user = prepareUser();
-        user.addCart(new Cart());
         when(userService.find(anyInt())).thenReturn(user);
         when(userService.update(anyObject())).thenReturn(user);
 
