@@ -53,16 +53,16 @@ public class ProductRepositoryTest {
         final Product product = new Product();
         product.setName("Samsung s8");
         product.setCost(599.99);
-        product.setDetails("Components\n" +
-                "Galaxy S8 phone\n" +
-                "Earphones \n" +
-                "USB Type-C Cable\n" +
-                "Travel Adapter\n" +
-                "USB Connector (C to A)\n" +
-                "Micro USB Connector (C to B)\n" +
-                "Ejection Pin\n" +
-                "Ear Tips\n" +
-                "Quick Start Guide ");
+        product.setDetails("Components\n"
+                + "Galaxy S8 phone\n"
+                + "Earphones \n"
+                + "USB Type-C Cable\n"
+                + "Travel Adapter\n"
+                + "USB Connector (C to A)\n"
+                + "Micro USB Connector (C to B)\n"
+                + "Ejection Pin\n"
+                + "Ear Tips\n"
+                + "Quick Start Guide ");
         product.setHeight(391);
         product.setWidth(102);
         product.setWeight(10);

@@ -76,39 +76,39 @@ public class Store extends BaseEntity {
         return logo;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
-    public void setStockList(List<Stock> stockList) {
+    public void setStockList(final List<Stock> stockList) {
         this.stockList = stockList;
     }
 
-    public void setDetails(String details) {
+    public void setDetails(final String details) {
         this.details = details;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(final String phone) {
         this.phone = phone;
     }
 
-    public void setSkype(String skype) {
+    public void setSkype(final String skype) {
         this.skype = skype;
     }
 
-    public void setDiscounts(boolean discounts) {
+    public void setDiscounts(final boolean discounts) {
         this.discounts = discounts;
     }
 
-    public void setMail(String mail) {
+    public void setMail(final String mail) {
         this.mail = mail;
     }
 
-    public void setLogo(String logo) {
+    public void setLogo(final String logo) {
         this.logo = logo;
     }
 }

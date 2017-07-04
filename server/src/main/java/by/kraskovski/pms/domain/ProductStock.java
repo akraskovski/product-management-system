@@ -29,7 +29,7 @@ public class ProductStock extends BaseEntity implements Serializable {
 
     private int productsCount;
 
-    public ProductStock(Product product, Stock stock, int productsCount) {
+    public ProductStock(final Product product, final Stock stock, final int productsCount) {
         this.product = product;
         this.stock = stock;
         this.productsCount = productsCount;

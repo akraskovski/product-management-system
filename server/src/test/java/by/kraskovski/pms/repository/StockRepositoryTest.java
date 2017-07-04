@@ -2,7 +2,6 @@ package by.kraskovski.pms.repository;
 
 import by.kraskovski.pms.Application;
 import by.kraskovski.pms.domain.Stock;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalTime;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Integration test for {@link StockRepository}
@@ -34,8 +35,8 @@ public class StockRepositoryTest {
     public void findBySpecializeTest() {
         entityManager.persist(prepareStock());
         final List<Stock> stocks = stockRepository.findBySpecialize("Phones");
-        Assert.assertEquals(stocks.size(), 1);
-        Assert.assertEquals(stocks.get(0).getSpecialize(), "Phones");
+        assertEquals(stocks.size(), 1);
+        assertEquals(stocks.get(0).getSpecialize(), "Phones");
     }
 
     private Stock prepareStock() {
