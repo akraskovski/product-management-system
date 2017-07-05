@@ -1,8 +1,6 @@
 package by.kraskovski.pms.utils;
 
-import by.kraskovski.pms.domain.Product;
-import by.kraskovski.pms.domain.ProductStock;
-import by.kraskovski.pms.domain.Stock;
+import by.kraskovski.pms.domain.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
@@ -26,7 +24,16 @@ public interface TestUtils {
         stock.setOpenTime(LocalTime.of(9, 0));
         stock.setCloseTime(LocalTime.of(22, 30));
         stock.setSpecialize("Products");
-        stock.getProductStocks().add(new ProductStock(new Product(), stock, RandomUtils.nextInt()));
+        stock.getProductStocks().add(new ProductStock(new Product(), stock, 10));
         return stock;
+    }
+
+    static User prepareUser() {
+        final User user = new User();
+        user.setId(RandomUtils.nextInt());
+        user.setUsername(RandomStringUtils.random(20));
+        user.setPassword(RandomStringUtils.random(20));
+        user.addCart(new Cart());
+        return user;
     }
 }

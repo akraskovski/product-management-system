@@ -16,6 +16,7 @@ import java.util.*;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -67,7 +68,7 @@ public class StockServiceImplTest {
     }
 
     @Test
-    public void deleteProductTest() {
+    public void deleteProductPositiveTest() {
         final Product product = prepareProduct();
         final Stock stock = prepareStock();
         Set<ProductStock> productStocks = new HashSet<>();
@@ -79,5 +80,17 @@ public class StockServiceImplTest {
         assertTrue(stockService.deleteProduct(stock.getId(), product.getId(), 10));
         verify(productService).find(product.getId());
         verify(stockRepository).save(stock);
+    }
+
+    @Test
+    public void deleteProductNegativeTest() {
+        final Product product = prepareProduct();
+        final Stock stock = prepareStock();
+        when(stockRepository.findOne(anyInt())).thenReturn(stock);
+        when(productService.find(anyInt())).thenReturn(product);
+
+        assertFalse(stockService.deleteProduct(stock.getId(), product.getId(), 10));
+        verify(productService).find(product.getId());
+        verify(stockRepository, never()).save(stock);
     }
 }
