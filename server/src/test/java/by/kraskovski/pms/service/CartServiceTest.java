@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.*;
 import by.kraskovski.pms.repository.CartRepository;
 import by.kraskovski.pms.service.impl.CartServiceImpl;
 import org.apache.commons.lang3.RandomUtils;
@@ -12,7 +12,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.management.InstanceAlreadyExistsException;
 
+import static by.kraskovski.pms.utils.TestUtils.prepareCart;
+import static by.kraskovski.pms.utils.TestUtils.prepareProductStock;
 import static by.kraskovski.pms.utils.TestUtils.prepareUser;
+import static org.apache.commons.lang3.RandomUtils.*;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
@@ -38,7 +41,7 @@ public class CartServiceTest {
         when(userService.find(anyInt())).thenReturn(user);
         when(userService.update(anyObject())).thenReturn(user);
 
-        cartService.create(RandomUtils.nextInt());
+        cartService.create(nextInt());
 
         verify(userService).find(anyInt());
         verify(userService).update(anyObject());
@@ -50,9 +53,22 @@ public class CartServiceTest {
         when(userService.find(anyInt())).thenReturn(user);
         when(userService.update(anyObject())).thenReturn(user);
 
-        cartService.create(RandomUtils.nextInt());
+        cartService.create(nextInt());
 
         verify(userService).find(anyInt());
         verify(userService).update(anyObject());
+    }
+
+    @Test
+    public void addExistingProductToCartTest() {
+        final Cart cart = prepareCart();
+        final ProductStock productStock = prepareProductStock();
+        cart.getCartProductStocks().add(new CartProductStock(cart, productStock, 10));
+        when(cartRepository.findOne(anyInt())).thenReturn(cart);
+        when(productStockService.find(anyInt())).thenReturn(productStock);
+
+        cartService.addProduct(nextInt(), nextInt(), 5);
+
+
     }
 }

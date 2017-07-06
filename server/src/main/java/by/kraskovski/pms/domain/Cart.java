@@ -10,6 +10,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,7 +26,7 @@ public class Cart extends BaseEntity {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
             orphanRemoval = true)
-    private Set<CartProductStock> cartProductStocks;
+    private Set<CartProductStock> cartProductStocks = new HashSet<>();
 
     public Cart() {
         this.createDate = LocalDateTime.now();

@@ -36,4 +36,14 @@ public interface TestUtils {
         user.addCart(new Cart());
         return user;
     }
+
+    static Cart prepareCart() {
+        final Cart cart = new Cart();
+        cart.setUser(new User());
+        return cart;
+    }
+
+    static ProductStock prepareProductStock() {
+        return new ProductStock(prepareProduct(), prepareStock(), 10);
+    }
 }
