@@ -31,6 +31,12 @@ public class CartProductStock extends BaseEntity implements Serializable {
         this.productStock = productStock;
     }
 
+    public CartProductStock(final Cart cart, final ProductStock productStock, final int productCount) {
+        this.cart = cart;
+        this.productStock = productStock;
+        this.productCount = productCount;
+    }
+
     public void setCart(final Cart cart) {
         this.cart = cart;
     }
