@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class StockServiceImplTest {
+public class StockServiceTest {
 
     @Mock
     private StockRepository stockRepository;

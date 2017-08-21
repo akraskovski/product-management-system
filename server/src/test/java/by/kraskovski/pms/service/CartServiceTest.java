@@ -1,9 +1,10 @@
 package by.kraskovski.pms.service;
 
+import by.kraskovski.pms.domain.Cart;
+import by.kraskovski.pms.domain.ProductStock;
 import by.kraskovski.pms.domain.User;
 import by.kraskovski.pms.repository.CartRepository;
 import by.kraskovski.pms.service.impl.CartServiceImpl;
-import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,7 +13,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.management.InstanceAlreadyExistsException;
 
-import static by.kraskovski.pms.utils.TestUtils.prepareUser;
+import static by.kraskovski.pms.utils.TestUtils.*;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
@@ -38,7 +42,7 @@ public class CartServiceTest {
         when(userService.find(anyInt())).thenReturn(user);
         when(userService.update(anyObject())).thenReturn(user);
 
-        cartService.create(RandomUtils.nextInt());
+        cartService.create(nextInt());
 
         verify(userService).find(anyInt());
         verify(userService).update(anyObject());
@@ -50,9 +54,45 @@ public class CartServiceTest {
         when(userService.find(anyInt())).thenReturn(user);
         when(userService.update(anyObject())).thenReturn(user);
 
-        cartService.create(RandomUtils.nextInt());
+        cartService.create(nextInt());
 
         verify(userService).find(anyInt());
         verify(userService).update(anyObject());
+    }
+
+    @Test
+    public void addNewProductToCartPositiveTest() {
+        when(cartRepository.findOne(anyInt())).thenReturn(new Cart(prepareUser()));
+        when(productStockService.find(anyInt())).thenReturn(new ProductStock(prepareProduct(), prepareStock(), 20));
+
+        assertTrue(cartService.addProduct(nextInt(), nextInt(), 10));
+
+        verify(cartRepository).findOne(anyInt());
+        verify(productStockService).find(anyInt());
+        verify(cartRepository).save((Cart) anyObject());
+    }
+
+    @Test
+    public void addNewProductToCartNegativeTest() {
+        when(cartRepository.findOne(anyInt())).thenReturn(new Cart(prepareUser()));
+        when(productStockService.find(anyInt())).thenReturn(new ProductStock(prepareProduct(), prepareStock(), 10));
+
+        assertFalse(cartService.addProduct(nextInt(), nextInt(), 11));
+
+        verify(cartRepository).findOne(anyInt());
+        verify(productStockService, times(1)).find(anyInt());
+    }
+
+    @Test
+    public void addExistingProductToCartPositiveTest() {
+        final Cart cart = new Cart(prepareUser());
+        final ProductStock productStock = new ProductStock(prepareProduct(), prepareStock(), 20);
+
+        when(cartRepository.findOne(anyInt())).thenReturn(cart);
+        when(productStockService.find(anyInt())).thenReturn(productStock);
+
+        assertTrue(cartService.addProduct(nextInt(), nextInt(), 10));
+
+        verify(cartRepository).save((Cart) anyObject());
     }
 }
