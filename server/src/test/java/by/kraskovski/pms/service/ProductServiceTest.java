@@ -32,7 +32,7 @@ public class ProductServiceTest {
         final Product product = prepareProduct();
         when(productRepository.save((Product) anyObject())).thenReturn(product);
 
-        assertNotEquals(productService.create(new Product()).getId(), 0);
+        assertNotEquals(0, productService.create(new Product()).getId());
         verify(productRepository).save((Product) anyObject());
     }
 
