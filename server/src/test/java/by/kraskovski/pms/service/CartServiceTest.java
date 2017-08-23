@@ -80,7 +80,8 @@ public class CartServiceTest {
         assertFalse(cartService.addProduct(nextInt(), nextInt(), 11));
 
         verify(cartRepository).findOne(anyInt());
-        verify(productStockService, times(1)).find(anyInt());
+        verify(cartRepository, times(0)).save((Cart) anyObject());
+        verify(productStockService).find(anyInt());
     }
 
     @Test
@@ -94,5 +95,17 @@ public class CartServiceTest {
         assertTrue(cartService.addProduct(nextInt(), nextInt(), 10));
 
         verify(cartRepository).save((Cart) anyObject());
+    }
+
+    @Test
+    public void addExistingProductToCartNegativeTest() {
+        final Cart cart = new Cart(prepareUser());
+        final ProductStock productStock = new ProductStock(prepareProduct(), prepareStock(), 10);
+
+        when(cartRepository.findOne(anyInt())).thenReturn(cart);
+        when(productStockService.find(anyInt())).thenReturn(productStock);
+
+        assertFalse(cartService.addProduct(nextInt(), nextInt(), 11));
+        verify(cartRepository, times(0)).save((Cart) anyObject());
     }
 }
