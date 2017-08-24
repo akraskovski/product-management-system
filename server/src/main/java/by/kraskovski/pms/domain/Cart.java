@@ -21,6 +21,10 @@ public class Cart extends BaseEntity {
     @MapsId
     private User user;
 
+    private LocalDateTime createDate;
+
+    private double totalCost;
+
     @OneToMany(
             mappedBy = "cart",
             fetch = FetchType.LAZY,
@@ -36,10 +40,6 @@ public class Cart extends BaseEntity {
         this.createDate = LocalDateTime.now();
         this.user = user;
     }
-
-    private LocalDateTime createDate;
-
-    private double totalCost;
 
     public Set<CartProductStock> getCartProductStocks() {
         return cartProductStocks;

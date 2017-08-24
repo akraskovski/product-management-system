@@ -65,7 +65,7 @@ public class StoreServiceTest {
 
         verify(storeRepository).findOne(store.getId());
         verify(imageService).delete(store.getLogo());
-        verify(storeRepository).delete(store.getId());
+        verify(storeRepository).delete((Store) anyObject());
     }
 
     @Test
@@ -78,6 +78,6 @@ public class StoreServiceTest {
 
         verify(storeRepository).findOne(store.getId());
         verifyZeroInteractions(imageService);
-        verify(storeRepository).delete(store);
+        verify(storeRepository).delete((Store) anyObject());
     }
 }

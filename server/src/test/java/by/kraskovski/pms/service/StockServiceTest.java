@@ -11,7 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
@@ -96,7 +97,7 @@ public class StockServiceTest {
     public void deleteProductPositiveTest() {
         final Product product = prepareProduct();
         final Stock stock = prepareStock();
-        Set<ProductStock> productStocks = new HashSet<>();
+        final Set<ProductStock> productStocks = new HashSet<>();
         productStocks.add((new ProductStock(product, stock, 10)));
         stock.setProductStocks(productStocks);
         when(stockRepository.findOne(anyInt())).thenReturn(stock);
