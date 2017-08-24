@@ -1,35 +1,34 @@
 package by.kraskovski.pms.domain.base;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.util.Optional;
 
 /**
  * Base abstract entity
  * Contains field id with generated type
  */
 @MappedSuperclass
-// TODO: Change id from integer to String
-// TODO: Add custom sequence generator
 public abstract class BaseEntity {
 
     /**
      * General id field
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(generator = "pms-guid", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "pms-guid", strategy = "by.kraskovski.domain.base.IdGenerator")
+    private String id;
 
-    public void setId(final int id) {
-        if (id > 0) {
-            this.id = id;
-        }
+    public void setId(final String id) {
+        Optional.ofNullable(id).ifPresent(s -> this.id = s);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -48,6 +47,6 @@ public abstract class BaseEntity {
 
     @Override
     public int hashCode() {
-        return id;
+        return id != null ? id.hashCode() : 0;
     }
 }
