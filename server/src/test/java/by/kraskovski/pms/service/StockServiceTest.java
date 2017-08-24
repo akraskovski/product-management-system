@@ -43,7 +43,7 @@ public class StockServiceTest {
     }
 
     @Test
-    public void addNewProductTest() {
+    public void addNewProductPositiveTest() {
         when(stockRepository.findOne(anyInt())).thenReturn(prepareStock());
         when(productService.find(anyInt())).thenReturn(prepareProduct());
 
@@ -54,7 +54,18 @@ public class StockServiceTest {
     }
 
     @Test
-    public void addExistingProductTest() {
+    public void addNewProductNegativeTest() {
+        when(stockRepository.findOne(anyInt())).thenReturn(prepareStock());
+        when(productService.find(anyInt())).thenReturn(prepareProduct());
+
+        assertFalse(stockService.addProduct(nextInt(), nextInt(), -5));
+        verify(stockRepository).findOne(anyInt());
+        verify(productService).find(anyInt());
+        verify(stockRepository, times(0)).save((Stock) anyObject());
+    }
+
+    @Test
+    public void addExistingProductPositiveTest() {
         final Product product = prepareProduct();
         final Stock stock = prepareStock();
         stock.getProductStocks().add(new ProductStock(product, stock, nextInt()));
@@ -65,6 +76,20 @@ public class StockServiceTest {
         verify(stockRepository).findOne(anyInt());
         verify(productService).find(anyInt());
         verify(stockRepository).save((Stock) anyObject());
+    }
+
+    @Test
+    public void addExistingProductNegativeTest() {
+        final Product product = prepareProduct();
+        final Stock stock = prepareStock();
+        stock.getProductStocks().add(new ProductStock(product, stock, 10));
+        when(stockRepository.findOne(anyInt())).thenReturn(stock);
+        when(productService.find(anyInt())).thenReturn(product);
+
+        assertFalse(stockService.addProduct(nextInt(), nextInt(), -5));
+        verify(stockRepository).findOne(anyInt());
+        verify(productService).find(anyInt());
+        verify(stockRepository, times(0)).save((Stock) anyObject());
     }
 
     @Test

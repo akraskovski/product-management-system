@@ -63,23 +63,23 @@ public class StockServiceImpl implements StockService {
     }
 
     private boolean addExistingProductToStock(final ProductStock productStock, final Stock stock, final int count) {
-        try {
-            productStock.setProductsCount(productStock.getProductsCount() + count);
-            stockRepository.save(stock);
-            return true;
-        } catch (DataAccessException e) {
+        if (count < 1) {
             return false;
         }
+
+        productStock.setProductsCount(productStock.getProductsCount() + count);
+        stockRepository.save(stock);
+        return true;
     }
 
     private boolean addNewProductToStock(final Stock stock, final Product product, final int count) {
-        try {
-            stock.getProductStocks().add(new ProductStock(product, stock, count));
-            stockRepository.save(stock);
-            return true;
-        } catch (DataAccessException e) {
+        if (count < 1) {
             return false;
         }
+
+        stock.getProductStocks().add(new ProductStock(product, stock, count));
+        stockRepository.save(stock);
+        return true;
     }
 
     @Override
