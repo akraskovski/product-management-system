@@ -21,7 +21,7 @@ public abstract class BaseEntity {
      */
     @Id
     @GeneratedValue(generator = "pms-guid", strategy = GenerationType.SEQUENCE)
-    @GenericGenerator(name = "pms-guid", strategy = "by.kraskovski.domain.base.IdGenerator")
+    @GenericGenerator(name = "pms-guid", strategy = "by.kraskovski.pms.domain.base.IdGenerator")
     private String id;
 
     public void setId(final String id) {

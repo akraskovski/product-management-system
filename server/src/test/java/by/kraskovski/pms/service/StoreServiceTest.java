@@ -40,10 +40,10 @@ public class StoreServiceTest {
     @Test
     public void findByIdTest() {
         final Store store = prepareStore();
-        when(storeRepository.findOne(anyInt())).thenReturn(store);
+        when(storeRepository.findOne(anyString())).thenReturn(store);
 
         assertEquals(store, storeService.find(store.getId()));
-        verify(storeRepository).findOne(anyInt());
+        verify(storeRepository).findOne(anyString());
     }
 
     @Test
@@ -58,21 +58,21 @@ public class StoreServiceTest {
     @Test
     public void deleteStoreWithLogoTest() {
         final Store store = prepareStore();
-        when(storeRepository.findOne(anyInt())).thenReturn(store);
+        when(storeRepository.findOne(anyString())).thenReturn(store);
         when(imageService.delete(anyString())).thenReturn(true);
 
         storeService.delete(store.getId());
 
         verify(storeRepository).findOne(store.getId());
         verify(imageService).delete(store.getLogo());
-        verify(storeRepository).delete(store.getId());
+        verify(storeRepository).delete(store);
     }
 
     @Test
     public void deleteStoreWithoutLogoTest() {
         final Store store = prepareStore();
         store.setLogo(org.apache.commons.lang3.StringUtils.EMPTY);
-        when(storeRepository.findOne(anyInt())).thenReturn(store);
+        when(storeRepository.findOne(anyString())).thenReturn(store);
 
         storeService.delete(store.getId());
 

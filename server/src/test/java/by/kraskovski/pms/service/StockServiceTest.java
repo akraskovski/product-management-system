@@ -15,6 +15,7 @@ import java.util.*;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
+import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -44,12 +45,12 @@ public class StockServiceTest {
 
     @Test
     public void addNewProductTest() {
-        when(stockRepository.findOne(anyInt())).thenReturn(prepareStock());
-        when(productService.find(anyInt())).thenReturn(prepareProduct());
+        when(stockRepository.findOne(anyString())).thenReturn(prepareStock());
+        when(productService.find(anyString())).thenReturn(prepareProduct());
 
-        assertTrue(stockService.addProduct(nextInt(), nextInt(), nextInt()));
-        verify(stockRepository).findOne(anyInt());
-        verify(productService).find(anyInt());
+        assertTrue(stockService.addProduct(random(40), random(40), nextInt()));
+        verify(stockRepository).findOne(anyString());
+        verify(productService).find(anyString());
         verify(stockRepository).save((Stock) anyObject());
     }
 
@@ -58,12 +59,12 @@ public class StockServiceTest {
         final Product product = prepareProduct();
         final Stock stock = prepareStock();
         stock.getProductStocks().add(new ProductStock(product, stock, nextInt()));
-        when(stockRepository.findOne(anyInt())).thenReturn(stock);
-        when(productService.find(anyInt())).thenReturn(product);
+        when(stockRepository.findOne(anyString())).thenReturn(stock);
+        when(productService.find(anyString())).thenReturn(product);
 
-        assertTrue(stockService.addProduct(nextInt(), nextInt(), nextInt()));
-        verify(stockRepository).findOne(anyInt());
-        verify(productService).find(anyInt());
+        assertTrue(stockService.addProduct(random(40), random(40), nextInt()));
+        verify(stockRepository).findOne(anyString());
+        verify(productService).find(anyString());
         verify(stockRepository).save((Stock) anyObject());
     }
 
@@ -74,8 +75,8 @@ public class StockServiceTest {
         Set<ProductStock> productStocks = new HashSet<>();
         productStocks.add((new ProductStock(product, stock, 10)));
         stock.setProductStocks(productStocks);
-        when(stockRepository.findOne(anyInt())).thenReturn(stock);
-        when(productService.find(anyInt())).thenReturn(product);
+        when(stockRepository.findOne(anyString())).thenReturn(stock);
+        when(productService.find(anyString())).thenReturn(product);
 
         assertTrue(stockService.deleteProduct(stock.getId(), product.getId(), 10));
         verify(productService).find(product.getId());
@@ -86,8 +87,8 @@ public class StockServiceTest {
     public void deleteProductNegativeTest() {
         final Product product = prepareProduct();
         final Stock stock = prepareStock();
-        when(stockRepository.findOne(anyInt())).thenReturn(stock);
-        when(productService.find(anyInt())).thenReturn(product);
+        when(stockRepository.findOne(anyString())).thenReturn(stock);
+        when(productService.find(anyString())).thenReturn(product);
 
         assertFalse(stockService.deleteProduct(stock.getId(), product.getId(), 10));
         verify(productService).find(product.getId());
