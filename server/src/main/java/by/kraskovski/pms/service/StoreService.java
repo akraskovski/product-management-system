@@ -17,7 +17,7 @@ public interface StoreService {
     /**
      * Find {@link Store} in database by identifier
      */
-    Store find(int id);
+    Store find(String id);
 
     /**
      * Find one first store by name
@@ -37,5 +37,5 @@ public interface StoreService {
     /**
      * Delete {@link Store} from database by identifier
      */
-    void delete(int id);
+    void delete(String id);
 }

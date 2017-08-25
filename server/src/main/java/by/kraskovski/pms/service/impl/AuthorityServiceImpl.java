@@ -20,7 +20,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    public Authority find(final int id) {
+    public Authority find(final String id) {
         return authorityRepository.findOne(id);
     }
 

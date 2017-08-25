@@ -32,14 +32,14 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Stock find(final int id) {
+    public Stock find(final String id) {
         return stockRepository.findOne(id);
     }
 
     @Override
-    public Map<Integer, Integer> findProducts(final int id) {
+    public Map<String, Integer> findProducts(final String id) {
         final Stock stock = stockRepository.findOne(id);
-        final Map<Integer, Integer> products = new HashMap<>();
+        final Map<String, Integer> products = new HashMap<>();
         stock.getProductStocks()
                 .forEach(productStock -> products.put(productStock.getProduct().getId(), productStock.getProductsCount()));
         return products;

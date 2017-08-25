@@ -18,7 +18,7 @@ public interface StockService {
     /**
      * Find {@link Stock} in database by identifier.
      */
-    Stock find(int id);
+    Stock find(String id);
 
     /**
      * Find stocks by specialize.
@@ -28,17 +28,17 @@ public interface StockService {
     /**
      * Find all products contains in stock.
      */
-    Map<Integer, Integer> findProducts(int id);
+    Map<Integer, Integer> findProducts(String id);
 
     /**
      * Add product to stock.
      */
-    boolean addProduct(int stockId, int productId, int count);
+    boolean addProduct(String stockId, String productId, int count);
 
     /**
      * Delete one (or more) product(s) from stock.
      */
-    boolean deleteProduct(int stockId, int productId, int count);
+    boolean deleteProduct(String stockId, String productId, int count);
 
     /**
      * Find all {@link Stock}s in database.
@@ -53,6 +53,6 @@ public interface StockService {
     /**
      * Delete {@link Stock} from database by identifier.
      */
-    void delete(int id);
+    void delete(String id);
 }
 
