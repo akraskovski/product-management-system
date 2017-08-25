@@ -6,3 +6,5 @@
 /gradlew.bat
 /npm-debug.log
 /Dockerfile
+/.idea/
+/client.iml
