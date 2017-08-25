@@ -29,7 +29,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Store find(final int id) {
+    public Store find(final String id) {
         return storeRepository.findOne(id);
     }
 
@@ -49,7 +49,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public void delete(final int id) {
+    public void delete(final String id) {
         final Store storeToDelete = storeRepository.findOne(id);
         if (isNotEmpty(storeToDelete.getLogo())) {
             imageService.delete(storeToDelete.getLogo());

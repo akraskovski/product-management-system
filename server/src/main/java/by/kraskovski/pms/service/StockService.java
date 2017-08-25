@@ -28,7 +28,7 @@ public interface StockService {
     /**
      * Find all products contains in stock.
      */
-    Map<Integer, Integer> findProducts(String id);
+    Map<String, Integer> findProducts(String id);
 
     /**
      * Add product to stock.

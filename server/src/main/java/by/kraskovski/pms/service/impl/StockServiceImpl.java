@@ -46,7 +46,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public boolean addProduct(final int stockId, final int productId, final int count) {
+    public boolean addProduct(final String stockId, final String productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
 
@@ -83,7 +83,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public boolean deleteProduct(final int stockId, final int productId, final int count) {
+    public boolean deleteProduct(final String stockId, final String productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
 
@@ -130,7 +130,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public void delete(final int id) {
+    public void delete(final String id) {
         stockRepository.delete(id);
     }
 }

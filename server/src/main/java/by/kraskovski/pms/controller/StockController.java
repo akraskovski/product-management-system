@@ -49,7 +49,7 @@ public class StockController {
      * Find stock in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadStockById(@PathVariable("id") final int id) {
+    public ResponseEntity loadStockById(@PathVariable("id") final String id) {
         LOGGER.info("Start loadStockById: " + id);
         try {
             final Stock stock = stockService.find(id);
@@ -65,7 +65,7 @@ public class StockController {
      * Find stock products in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
-    public ResponseEntity loadStockProductsById(@PathVariable("id") final int id) {
+    public ResponseEntity loadStockProductsById(@PathVariable("id") final String id) {
         LOGGER.info("Start loadStockProductsById: " + id);
         try {
             return new ResponseEntity<>(stockService.findProducts(id), HttpStatus.OK);
@@ -80,8 +80,8 @@ public class StockController {
      */
     @RequestMapping(value = "/{stock_id}/products/{product_id}", method = RequestMethod.PUT)
     public ResponseEntity addProductToStock(
-            @PathVariable("stock_id") final int stockId,
-            @PathVariable("product_id") final int productId,
+            @PathVariable("stock_id") final String stockId,
+            @PathVariable("product_id") final String productId,
             @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
         LOGGER.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
         return stockService.addProduct(stockId, productId, count)
@@ -91,8 +91,8 @@ public class StockController {
 
     @RequestMapping(value = "/{stock_id}/products/{product_id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteProductFromStock(
-            @PathVariable("stock_id") final int stockId,
-            @PathVariable("product_id") final int productId,
+            @PathVariable("stock_id") final String stockId,
+            @PathVariable("product_id") final String productId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         LOGGER.info("Start delete Product: {} from Stock: {} with count: {}", productId, stockId, count);
         return stockService.deleteProduct(stockId, productId, count)
@@ -132,7 +132,7 @@ public class StockController {
      * Delete {@link Stock} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteStock(@PathVariable("id") final int id) {
+    public ResponseEntity deleteStock(@PathVariable("id") final String id) {
         LOGGER.info("Start deleteStock");
         try {
             stockService.delete(id);

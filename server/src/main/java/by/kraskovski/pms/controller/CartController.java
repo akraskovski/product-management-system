@@ -37,7 +37,7 @@ public class CartController {
      * Find cart by id.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadCartById(@PathVariable("id") final int id) {
+    public ResponseEntity loadCartById(@PathVariable("id") final String id) {
         LOGGER.info("Start loadCartById: " + id);
         try {
             final Cart cart = cartService.find(id);
@@ -53,7 +53,7 @@ public class CartController {
      * Create empty cart.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCart(@PathVariable("id") final int id) {
+    public ResponseEntity<Object> createCart(@PathVariable("id") final String id) {
         LOGGER.info("Start createCart for user with id: {}", id);
         try {
             cartService.create(id);
@@ -69,8 +69,8 @@ public class CartController {
      */
     @RequestMapping(value = "/{cart_id}/product_stock/{ps_id}", method = RequestMethod.PUT)
     public ResponseEntity addProductToCart(
-            @PathVariable("cart_id") final int cartId,
-            @PathVariable("ps_id") final int productStockId,
+            @PathVariable("cart_id") final String cartId,
+            @PathVariable("ps_id") final String productStockId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         LOGGER.info("start addProductStock: {} to cart: {} with count: {}", productStockId, cartId, count);
         return cartService.addProduct(cartId, productStockId, count)
@@ -83,8 +83,8 @@ public class CartController {
      */
     @RequestMapping(value = "/{cart_id}/product_stock/{ps_id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteProductFromCart(
-            @PathVariable("cart_id") final int cartId,
-            @PathVariable("ps_id") final int productStockId,
+            @PathVariable("cart_id") final String cartId,
+            @PathVariable("ps_id") final String productStockId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         LOGGER.info("start deleteProductFromCart: {} from cart: {} with count: {}", productStockId, cartId, count);
         return cartService.deleteProduct(cartId, productStockId, count)
@@ -96,7 +96,7 @@ public class CartController {
      * Delete cart by id.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteCart(@PathVariable("id") final int id) {
+    public ResponseEntity deleteCart(@PathVariable("id") final String id) {
         LOGGER.info("Start deleteCart");
         try {
             cartService.delete(id);
