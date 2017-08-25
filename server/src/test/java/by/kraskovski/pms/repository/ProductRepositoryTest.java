@@ -1,30 +1,23 @@
 package by.kraskovski.pms.repository;
 
-import by.kraskovski.pms.Application;
 import by.kraskovski.pms.domain.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Integration test for {@link ProductRepository}
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = Application.class)
 @DataJpaTest
-@TestPropertySource("classpath:/application-test.properties")
 public class ProductRepositoryTest {
 
     @Autowired
