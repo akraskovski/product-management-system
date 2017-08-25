@@ -13,7 +13,7 @@ public interface AuthorityService {
     /**
      * Find authority in database by id.
      */
-    Authority find(int id);
+    Authority find(String id);
 
     /**
      * Find authority in database by name.

@@ -34,7 +34,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void create(final int id) throws InstanceAlreadyExistsException {
+    public void create(final String id) throws InstanceAlreadyExistsException {
         final User user = Optional.ofNullable(userService.find(id))
                 .orElseThrow(() -> new UserNotFoundException(
                         "Can't create cart for user with id:" + id + ". Entity not found in database!"));
@@ -46,7 +46,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public boolean addProduct(final int cartId, final int productStockId, final int count) {
+    public boolean addProduct(final String cartId, final String productStockId, final int count) {
         final Cart cart = find(cartId);
         final ProductStock productStock = productStockService.find(productStockId);
 
@@ -84,7 +84,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public boolean deleteProduct(final int cartId, final int productStockId, final int count) {
+    public boolean deleteProduct(final String cartId, final String productStockId, final int count) {
         final Cart cart = find(cartId);
         final ProductStock productStock = productStockService.find(productStockId);
 
@@ -121,7 +121,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart find(final int id) {
+    public Cart find(final String id) {
         return cartRepository.findOne(id);
     }
 
@@ -131,7 +131,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void delete(final int id) {
+    public void delete(final String id) {
         final User user = userService.find(id);
         if (user != null) {
             if (user.getCart() != null) {

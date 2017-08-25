@@ -17,7 +17,7 @@ public interface UserService {
     /**
      * Find {@link User} in database by identifier
      */
-    User find(int id);
+    User find(String id);
 
     /**
      * Find one first user by username
@@ -37,7 +37,7 @@ public interface UserService {
     /**
      * Delete {@link User} from database by identifier
      */
-    void delete(int id);
+    void delete(String id);
 
     /**
      * Delete all {@link User}s from database

@@ -32,21 +32,21 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Stock find(final int id) {
+    public Stock find(final String id) {
         return stockRepository.findOne(id);
     }
 
     @Override
-    public Map<Integer, Integer> findProducts(final int id) {
+    public Map<String, Integer> findProducts(final String id) {
         final Stock stock = stockRepository.findOne(id);
-        final Map<Integer, Integer> products = new HashMap<>();
+        final Map<String, Integer> products = new HashMap<>();
         stock.getProductStocks()
                 .forEach(productStock -> products.put(productStock.getProduct().getId(), productStock.getProductsCount()));
         return products;
     }
 
     @Override
-    public boolean addProduct(final int stockId, final int productId, final int count) {
+    public boolean addProduct(final String stockId, final String productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
 
@@ -66,24 +66,30 @@ public class StockServiceImpl implements StockService {
         if (count < 1) {
             return false;
         }
-
-        productStock.setProductsCount(productStock.getProductsCount() + count);
-        stockRepository.save(stock);
-        return true;
+        try {
+            productStock.setProductsCount(productStock.getProductsCount() + count);
+            stockRepository.save(stock);
+            return true;
+        } catch (DataAccessException e) {
+            return false;
+        }
     }
 
     private boolean addNewProductToStock(final Stock stock, final Product product, final int count) {
         if (count < 1) {
             return false;
         }
-
-        stock.getProductStocks().add(new ProductStock(product, stock, count));
-        stockRepository.save(stock);
-        return true;
+        try {
+            stock.getProductStocks().add(new ProductStock(product, stock, count));
+            stockRepository.save(stock);
+            return true;
+        } catch (DataAccessException e) {
+            return false;
+        }
     }
 
     @Override
-    public boolean deleteProduct(final int stockId, final int productId, final int count) {
+    public boolean deleteProduct(final String stockId, final String productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
 
@@ -130,7 +136,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public void delete(final int id) {
+    public void delete(final String id) {
         stockRepository.delete(id);
     }
 }

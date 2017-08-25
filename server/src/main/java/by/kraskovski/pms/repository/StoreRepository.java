@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 /**
  * DAO repository for working with {@link Store}.
  */
-public interface StoreRepository extends JpaRepository<Store, Integer> {
+public interface StoreRepository extends JpaRepository<Store, String> {
 
     /**
      * find {@link Store} from database by name

@@ -12,22 +12,22 @@ public interface CartService {
     /**
      * Save {@link Cart} entity to database table
      */
-    void create(int id) throws InstanceAlreadyExistsException;
+    void create(String id) throws InstanceAlreadyExistsException;
 
     /**
      * Add product to cart.
      */
-    boolean addProduct(int cartId, int productStockId, int count);
+    boolean addProduct(String cartId, String productStockId, int count);
 
     /**
      * Delete one (or more) product(s) from cart.
      */
-    boolean deleteProduct(int cartId, int productStockId, int count);
+    boolean deleteProduct(String cartId, String productStockId, int count);
 
     /**
      * Find {@link Cart} in database by identifier
      */
-    Cart find(int id);
+    Cart find(String id);
 
     /**
      * Update information about {@link Cart} in database
@@ -37,6 +37,6 @@ public interface CartService {
     /**
      * Delete {@link Cart} from database by identifier
      */
-    void delete(int id);
+    void delete(String id);
 }
 

@@ -70,7 +70,7 @@ public class User extends BaseEntity implements Authentication {
         this.password = password;
     }
 
-    public User(final int id,  final String username, final String password) {
+    public User(final String id,  final String username, final String password) {
         this.setId(id);
         this.username = username;
         this.password = password;

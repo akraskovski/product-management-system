@@ -39,7 +39,7 @@ public class ProductServiceTest {
     @Test
     public void findByIdTest() {
         final Product product = prepareProduct();
-        when(productRepository.findOne(anyInt())).thenReturn(product);
+        when(productRepository.findOne(anyString())).thenReturn(product);
 
         assertEquals(product, productService.find(product.getId()));
         verify(productRepository).findOne(product.getId());
@@ -67,7 +67,7 @@ public class ProductServiceTest {
     public void deleteTest() {
         final Product product = prepareProduct();
         when(imageService.delete(anyString())).thenReturn(true);
-        when(productRepository.findOne(anyInt())).thenReturn(product);
+        when(productRepository.findOne(anyString())).thenReturn(product);
 
         productService.delete(product.getId());
 

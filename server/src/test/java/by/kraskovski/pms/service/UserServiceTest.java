@@ -5,14 +5,13 @@ import by.kraskovski.pms.domain.User;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.repository.UserRepository;
 import by.kraskovski.pms.service.impl.UserServiceImpl;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Matchers.*;
@@ -32,9 +31,9 @@ public class UserServiceTest {
     private UserServiceImpl userService;
 
     private User prepareUser() {
-        final int id = RandomUtils.nextInt();
-        final String username = RandomStringUtils.random(20);
-        final String password = RandomStringUtils.random(20);
+        final String id = random(40);
+        final String username = random(20);
+        final String password = random(20);
         return new User(id, username, password);
     }
 
@@ -52,10 +51,10 @@ public class UserServiceTest {
     @Test
     public void findByIdTest() {
         final User user = prepareUser();
-        when(userRepository.findOne(anyInt())).thenReturn(user);
+        when(userRepository.findOne(anyString())).thenReturn(user);
 
         assertEquals(user, userService.find(user.getId()));
-        verify(userRepository).findOne(anyInt());
+        verify(userRepository).findOne(anyString());
     }
 
     @Test

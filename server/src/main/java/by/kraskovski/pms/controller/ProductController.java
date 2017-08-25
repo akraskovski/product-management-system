@@ -50,7 +50,7 @@ public class ProductController {
      * Find products in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadProductById(@PathVariable("id") final int id) {
+    public ResponseEntity loadProductById(@PathVariable("id") final String id) {
         LOGGER.info("Start loadProductById: " + id);
         try {
             final Product product = productService.find(id);
@@ -126,7 +126,7 @@ public class ProductController {
      * Delete {@link Product} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteProduct(@PathVariable("id") final int id) {
+    public ResponseEntity deleteProduct(@PathVariable("id") final String id) {
         LOGGER.info("Start deleteProduct");
         try {
             productService.delete(id);

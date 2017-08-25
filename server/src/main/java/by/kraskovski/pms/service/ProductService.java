@@ -16,7 +16,7 @@ public interface ProductService {
     /**
      * Find {@link Product} in database by identifier
      */
-    Product find(int id);
+    Product find(String id);
 
     /**
      * Find {@link Product}s by name
@@ -41,5 +41,5 @@ public interface ProductService {
     /**
      * Delete {@link Product} from database by identifier
      */
-    void delete(int id);
+    void delete(String id);
 }

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * DAO repository for working with {@link Authority}.
  */
-public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
+public interface AuthorityRepository extends JpaRepository<Authority, String> {
 
     Authority findByAuthority(AuthorityEnum authority);
 }

@@ -4,5 +4,5 @@ import by.kraskovski.pms.domain.ProductStock;
 
 public interface ProductStockService {
 
-    ProductStock find(int id);
+    ProductStock find(String id);
 }

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * DAO repository for working with {@link Stock}.
  */
-public interface StockRepository extends JpaRepository<Stock, Integer> {
+public interface StockRepository extends JpaRepository<Stock, String> {
 
     /**
      * find {@link Stock} from database by specialize

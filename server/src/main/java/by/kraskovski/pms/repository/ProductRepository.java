@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * DAO repository for working with {@link Product}.
  */
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, String> {
 
     /**
      * find {@link Product}s from database by name

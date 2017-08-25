@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.management.InstanceAlreadyExistsException;
 
 import static by.kraskovski.pms.utils.TestUtils.*;
+import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -39,49 +40,49 @@ public class CartServiceTest {
     public void createPositiveTest() throws InstanceAlreadyExistsException {
         final User user = prepareUser();
         user.removeCart();
-        when(userService.find(anyInt())).thenReturn(user);
+        when(userService.find(anyString())).thenReturn(user);
         when(userService.update(anyObject())).thenReturn(user);
 
-        cartService.create(nextInt());
+        cartService.create(random(40));
 
-        verify(userService).find(anyInt());
+        verify(userService).find(anyString());
         verify(userService).update(anyObject());
     }
 
     @Test(expected = InstanceAlreadyExistsException.class)
     public void createNegativeTest() throws InstanceAlreadyExistsException {
         final User user = prepareUser();
-        when(userService.find(anyInt())).thenReturn(user);
+        when(userService.find(anyString())).thenReturn(user);
         when(userService.update(anyObject())).thenReturn(user);
 
-        cartService.create(nextInt());
+        cartService.create(random(40));
 
-        verify(userService).find(anyInt());
+        verify(userService).find(anyString());
         verify(userService).update(anyObject());
     }
 
     @Test
     public void addNewProductToCartPositiveTest() {
-        when(cartRepository.findOne(anyInt())).thenReturn(new Cart(prepareUser()));
-        when(productStockService.find(anyInt())).thenReturn(new ProductStock(prepareProduct(), prepareStock(), 20));
+        when(cartRepository.findOne(anyString())).thenReturn(new Cart(prepareUser()));
+        when(productStockService.find(anyString())).thenReturn(new ProductStock(prepareProduct(), prepareStock(), 20));
 
-        assertTrue(cartService.addProduct(nextInt(), nextInt(), 10));
+        assertTrue(cartService.addProduct(random(40), random(40), 10));
 
-        verify(cartRepository).findOne(anyInt());
-        verify(productStockService).find(anyInt());
+        verify(cartRepository).findOne(anyString());
+        verify(productStockService).find(anyString());
         verify(cartRepository).save((Cart) anyObject());
     }
 
     @Test
     public void addNewProductToCartNegativeTest() {
-        when(cartRepository.findOne(anyInt())).thenReturn(new Cart(prepareUser()));
-        when(productStockService.find(anyInt())).thenReturn(new ProductStock(prepareProduct(), prepareStock(), 10));
+        when(cartRepository.findOne(anyString())).thenReturn(new Cart(prepareUser()));
+        when(productStockService.find(anyString())).thenReturn(new ProductStock(prepareProduct(), prepareStock(), 10));
 
-        assertFalse(cartService.addProduct(nextInt(), nextInt(), 11));
+        assertFalse(cartService.addProduct(random(40), random(40), 11));
 
-        verify(cartRepository).findOne(anyInt());
+        verify(cartRepository).findOne(anyString());
         verify(cartRepository, times(0)).save((Cart) anyObject());
-        verify(productStockService).find(anyInt());
+        verify(productStockService).find(anyString());
     }
 
     @Test
@@ -89,10 +90,10 @@ public class CartServiceTest {
         final Cart cart = new Cart(prepareUser());
         final ProductStock productStock = new ProductStock(prepareProduct(), prepareStock(), 20);
 
-        when(cartRepository.findOne(anyInt())).thenReturn(cart);
-        when(productStockService.find(anyInt())).thenReturn(productStock);
+        when(cartRepository.findOne(anyString())).thenReturn(cart);
+        when(productStockService.find(anyString())).thenReturn(productStock);
 
-        assertTrue(cartService.addProduct(nextInt(), nextInt(), 10));
+        assertTrue(cartService.addProduct(random(40), random(40), 10));
 
         verify(cartRepository).save((Cart) anyObject());
     }
@@ -102,10 +103,10 @@ public class CartServiceTest {
         final Cart cart = new Cart(prepareUser());
         final ProductStock productStock = new ProductStock(prepareProduct(), prepareStock(), 10);
 
-        when(cartRepository.findOne(anyInt())).thenReturn(cart);
-        when(productStockService.find(anyInt())).thenReturn(productStock);
+        when(cartRepository.findOne(anyString())).thenReturn(cart);
+        when(productStockService.find(anyString())).thenReturn(productStock);
 
-        assertFalse(cartService.addProduct(nextInt(), nextInt(), 11));
+        assertFalse(cartService.addProduct(random(40), random(40), 11));
         verify(cartRepository, times(0)).save((Cart) anyObject());
     }
 }

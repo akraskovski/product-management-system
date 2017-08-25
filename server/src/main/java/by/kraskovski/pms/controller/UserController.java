@@ -49,7 +49,7 @@ public class UserController {
      * Return json-information about all users in database.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadUserById(@PathVariable("id") final int id) {
+    public ResponseEntity loadUserById(@PathVariable("id") final String id) {
         LOGGER.info("Start loadUserById");
         try {
             final User user = userService.find(id);
@@ -109,7 +109,7 @@ public class UserController {
      * Delete {@link User} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteUser(@PathVariable("id") final int id) {
+    public ResponseEntity deleteUser(@PathVariable("id") final String id) {
         LOGGER.info("Start deleteUser with id: " + id);
         try {
             userService.delete(id);

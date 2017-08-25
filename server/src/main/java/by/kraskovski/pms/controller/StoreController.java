@@ -48,7 +48,7 @@ public class StoreController {
      * Find stores in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadStoreById(@PathVariable("id") final int id) {
+    public ResponseEntity loadStoreById(@PathVariable("id") final String id) {
         LOGGER.info("Start loadStoreById: " + id);
         try {
             final Store store = storeService.find(id);
@@ -92,7 +92,7 @@ public class StoreController {
      * Delete {@link Store} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteStore(@PathVariable("id") final int id) {
+    public ResponseEntity deleteStore(@PathVariable("id") final String id) {
         LOGGER.info("Start deleteStore");
         try {
             storeService.delete(id);

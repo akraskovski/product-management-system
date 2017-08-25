@@ -17,7 +17,7 @@ public class ProductStockServiceImpl implements ProductStockService {
     }
 
     @Override
-    public ProductStock find(final int id) {
+    public ProductStock find(final String id) {
         return productStockRepository.findOne(id);
     }
 }

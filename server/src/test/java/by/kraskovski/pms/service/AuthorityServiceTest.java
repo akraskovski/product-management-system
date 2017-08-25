@@ -13,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -28,7 +29,7 @@ public class AuthorityServiceTest {
     @Test
     public void findByIdTest() {
         final Authority authority = new Authority(AuthorityEnum.ROLE_ADMIN);
-        when(authorityRepository.findOne(anyInt())).thenReturn(authority);
+        when(authorityRepository.findOne(anyString())).thenReturn(authority);
 
         assertEquals(authority, authorityService.find(authority.getId()));
         verify(authorityRepository).findOne(authority.getId());
