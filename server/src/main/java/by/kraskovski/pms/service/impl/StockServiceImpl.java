@@ -63,6 +63,9 @@ public class StockServiceImpl implements StockService {
     }
 
     private boolean addExistingProductToStock(final ProductStock productStock, final Stock stock, final int count) {
+        if (count < 1) {
+            return false;
+        }
         try {
             productStock.setProductsCount(productStock.getProductsCount() + count);
             stockRepository.save(stock);
@@ -73,6 +76,9 @@ public class StockServiceImpl implements StockService {
     }
 
     private boolean addNewProductToStock(final Stock stock, final Product product, final int count) {
+        if (count < 1) {
+            return false;
+        }
         try {
             stock.getProductStocks().add(new ProductStock(product, stock, count));
             stockRepository.save(stock);
