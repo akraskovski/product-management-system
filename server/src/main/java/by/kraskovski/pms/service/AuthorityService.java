@@ -11,6 +11,11 @@ import java.util.List;
 public interface AuthorityService {
 
     /**
+     * Save {@link Authority} entity to database table
+     */
+    Authority create(Authority object);
+
+    /**
      * Find authority in database by id.
      */
     Authority find(String id);

@@ -20,6 +20,11 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
+    public Authority create(Authority object) {
+        return authorityRepository.save(object);
+    }
+
+    @Override
     public Authority find(final String id) {
         return authorityRepository.findOne(id);
     }

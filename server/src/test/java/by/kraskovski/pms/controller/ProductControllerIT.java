@@ -6,15 +6,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
+import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ProductControllerIT extends ITConfiguration{
+public class ProductControllerIT extends ITConfiguration {
+
+    private static final String BASE_PRODUCTS_URL = "/product";
 
     @Before
-    public void setup() {
-        super.setup();
+    public void before() {
+        setup(ROLE_ADMIN);
     }
 
     @Test
@@ -22,8 +25,9 @@ public class ProductControllerIT extends ITConfiguration{
         final Product product = prepareProduct();
         product.setId(StringUtils.EMPTY);
 
-        mvc.perform(post("/product")
+        mvc.perform(post(BASE_PRODUCTS_URL)
                 .contentType(MediaType.APPLICATION_JSON)
+                .header(authHeaderName, token)
                 .content(objectMapper.writeValueAsString(product)))
                 .andExpect(status().isCreated());
     }
