@@ -39,6 +39,8 @@ public abstract class ITConfiguration {
     @Value("${auth.header.name:x-auth-token}")
     String authHeaderName;
 
+    User user;
+
     String token;
 
     ObjectMapper objectMapper;
@@ -46,8 +48,13 @@ public abstract class ITConfiguration {
     void setup(final AuthorityEnum authorityName) {
         objectMapper = new ObjectMapper();
         final Authority authority = authorityService.create(new Authority(authorityName));
-        User user = prepareUserWithRole(authority);
+        user = prepareUserWithRole(authority);
         userService.create(user);
         token = tokenService.generate(user.getUsername(), user.getPassword()).getToken();
+    }
+
+    void cleanup() {
+        userService.delete(user.getId());
+        authorityService.delete(user.getAuthorities().get(0).getId());
     }
 }

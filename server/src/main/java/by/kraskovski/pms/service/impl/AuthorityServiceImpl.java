@@ -38,4 +38,8 @@ public class AuthorityServiceImpl implements AuthorityService {
     public List<Authority> findAll() {
         return authorityRepository.findAll();
     }
+
+    public void delete(final String id) {
+        authorityRepository.delete(id);
+    }
 }

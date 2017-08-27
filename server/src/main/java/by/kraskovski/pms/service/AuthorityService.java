@@ -29,4 +29,9 @@ public interface AuthorityService {
      * Find all authoroties in database.
      */
     List<Authority> findAll();
+
+    /**
+     * Delete {@link Authority} by id from database.
+     */
+    void delete(String id);
 }

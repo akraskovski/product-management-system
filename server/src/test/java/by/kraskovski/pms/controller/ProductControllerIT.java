@@ -2,14 +2,19 @@ package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.domain.Product;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.http.MediaType;
 
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.hamcrest.Matchers.is;
 
 public class ProductControllerIT extends ITConfiguration {
 
@@ -20,15 +25,22 @@ public class ProductControllerIT extends ITConfiguration {
         setup(ROLE_ADMIN);
     }
 
+    //    @After
+    public void after() {
+        cleanup();
+    }
+
     @Test
     public void createProductTest() throws Exception {
         final Product product = prepareProduct();
         product.setId(StringUtils.EMPTY);
 
         mvc.perform(post(BASE_PRODUCTS_URL)
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(APPLICATION_JSON_UTF8)
                 .header(authHeaderName, token)
                 .content(objectMapper.writeValueAsString(product)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.name", is(product.getName())));
     }
 }
