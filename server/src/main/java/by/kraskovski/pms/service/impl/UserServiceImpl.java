@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User find(final int id) {
+    public User find(final String id) {
         return userRepository.findOne(id);
     }
 
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(final int id) {
+    public void delete(final String id) {
         userRepository.delete(id);
     }
 

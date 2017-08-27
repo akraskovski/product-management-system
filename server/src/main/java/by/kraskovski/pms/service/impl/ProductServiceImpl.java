@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product find(final int id) {
+    public Product find(final String id) {
         return productRepository.findOne(id);
     }
 
@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void delete(final int id) {
+    public void delete(final String id) {
         final Product productToDelete = productRepository.findOne(id);
         if (isNotEmpty(productToDelete.getImage())) {
             imageService.delete(productToDelete.getImage());

@@ -43,7 +43,7 @@ public class Product extends BaseEntity {
         super();
     }
 
-    public Product(final int id, final String name) {
+    public Product(final String id, final String name) {
         this.setId(id);
         this.name = name;
     }

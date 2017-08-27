@@ -1,14 +1,11 @@
 package by.kraskovski.pms.repository;
 
-import by.kraskovski.pms.Application;
 import by.kraskovski.pms.domain.Stock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalTime;
@@ -20,9 +17,7 @@ import static org.junit.Assert.assertEquals;
  * Integration test for {@link StockRepository}
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = Application.class)
 @DataJpaTest
-@TestPropertySource("classpath:/application-test.properties")
 public class StockRepositoryTest {
 
     @Autowired
