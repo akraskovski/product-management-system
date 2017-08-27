@@ -1,8 +1,6 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.domain.Product;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import static org.hamcrest.Matchers.is;
 
-public class ProductControllerIT extends ITConfiguration {
+public class ProductControllerIT extends ControllerConfig {
 
     private static final String BASE_PRODUCTS_URL = "/product";
 
@@ -33,7 +31,6 @@ public class ProductControllerIT extends ITConfiguration {
     @Test
     public void createProductTest() throws Exception {
         final Product product = prepareProduct();
-        product.setId(StringUtils.EMPTY);
 
         mvc.perform(post(BASE_PRODUCTS_URL)
                 .contentType(APPLICATION_JSON_UTF8)

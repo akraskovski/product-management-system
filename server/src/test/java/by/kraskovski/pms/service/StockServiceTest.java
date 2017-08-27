@@ -112,7 +112,9 @@ public class StockServiceTest {
     @Test
     public void deleteProductNegativeTest() {
         final Product product = prepareProduct();
+        product.setId(random(20));
         final Stock stock = prepareStock();
+        stock.setId(random(20));
         when(stockRepository.findOne(anyString())).thenReturn(stock);
         when(productService.find(anyString())).thenReturn(product);
 

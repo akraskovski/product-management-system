@@ -16,7 +16,6 @@ public interface TestUtils {
 
     static Product prepareProduct() {
         final Product product = new Product();
-        product.setId(random(40));
         product.setName(random(20));
         product.setType(random(20));
         product.setImage(random(40));
@@ -51,7 +50,6 @@ public interface TestUtils {
 
     static User prepareUser() {
         final User user = new User();
-        user.setId(random(40));
         user.setUsername(random(20));
         user.setPassword(random(20));
         user.addCart(new Cart());
