@@ -24,12 +24,10 @@ public interface TestUtils {
 
     static Stock prepareStock() {
         final Stock stock = new Stock();
-        stock.setId(random(40));
+        stock.setSpecialize("Products");
         stock.setAddress("Grodno, ul. Ulica");
         stock.setOpenTime(LocalTime.of(9, 0));
         stock.setCloseTime(LocalTime.of(22, 30));
-        stock.setSpecialize("Products");
-        stock.getProductStocks().add(new ProductStock(new Product(), stock, 10));
         return stock;
     }
 

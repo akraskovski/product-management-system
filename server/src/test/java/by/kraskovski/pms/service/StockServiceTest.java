@@ -38,6 +38,7 @@ public class StockServiceTest {
     @Test
     public void createTest() {
         final Stock stock = prepareStock();
+        stock.setId(random(20));
         when(stockRepository.save((Stock) anyObject())).thenReturn(stock);
 
         assertNotNull(stockService.create(new Stock()).getId());

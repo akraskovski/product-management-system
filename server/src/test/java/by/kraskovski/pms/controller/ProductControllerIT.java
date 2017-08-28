@@ -41,8 +41,8 @@ public class ProductControllerIT extends ControllerConfig {
         final Product product = prepareProduct();
 
         mvc.perform(post(BASE_PRODUCTS_URL)
-                .contentType(APPLICATION_JSON_UTF8)
                 .header(authHeaderName, token)
+                .contentType(APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(product)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))

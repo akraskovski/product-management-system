@@ -54,5 +54,10 @@ public interface StockService {
      * Delete {@link Stock} from database by identifier.
      */
     void delete(String id);
+
+    /**
+     * Delete all stocks from the database
+     */
+    void deleteAll();
 }
 
