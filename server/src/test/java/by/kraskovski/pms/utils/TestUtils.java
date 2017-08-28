@@ -59,7 +59,6 @@ public interface TestUtils {
     static User prepareUserWithRole(final Authority authority) {
         final User user = new User();
         user.getAuthorities().add(authority);
-        user.setId(random(40));
         user.setUsername(random(20));
         user.setPassword(random(20));
         user.addCart(new Cart());

@@ -63,4 +63,13 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.delete(productToDelete);
     }
+
+    @Override
+    public void deleteAll() {
+        final List<Product> products = findAll();
+        products.stream()
+                .filter(product -> isNotEmpty(product.getImage()))
+                .forEach(product -> imageService.delete(product.getImage()));
+        productRepository.deleteAll();
+    }
 }

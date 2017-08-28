@@ -1,8 +1,11 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.domain.Product;
+import by.kraskovski.pms.service.ProductService;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
@@ -18,14 +21,18 @@ public class ProductControllerIT extends ControllerConfig {
 
     private static final String BASE_PRODUCTS_URL = "/product";
 
+    @Autowired
+    private ProductService productService;
+
     @Before
     public void before() {
         setup(ROLE_ADMIN);
     }
 
-    //    @After
+    @After
     public void after() {
         cleanup();
+        productService.deleteAll();
     }
 
     @Test

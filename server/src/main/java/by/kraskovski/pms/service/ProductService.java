@@ -42,4 +42,9 @@ public interface ProductService {
      * Delete {@link Product} from database by identifier
      */
     void delete(String id);
+
+    /**
+     * Delete all products from database
+     */
+    void deleteAll();
 }
