@@ -20,7 +20,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    public Authority create(Authority object) {
+    public Authority create(final Authority object) {
         return authorityRepository.save(object);
     }
 

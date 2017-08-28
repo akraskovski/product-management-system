@@ -1,6 +1,5 @@
 package by.kraskovski.pms.service.integration;
 
-import by.kraskovski.pms.Application;
 import by.kraskovski.pms.domain.User;
 import by.kraskovski.pms.service.impl.UserServiceImpl;
 import org.junit.After;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
+@SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class UserServiceIT {
 

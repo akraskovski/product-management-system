@@ -37,13 +37,13 @@ public abstract class ControllerConfig {
     private TokenService tokenService;
 
     @Value("${auth.header.name:x-auth-token}")
-    String authHeaderName;
+    protected String authHeaderName;
 
-    User user;
+    private User user;
 
-    String token;
+    protected String token;
 
-    ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper;
 
     void setup(final AuthorityEnum authorityName) {
         objectMapper = new ObjectMapper();

@@ -15,7 +15,6 @@ import javax.management.InstanceAlreadyExistsException;
 
 import static by.kraskovski.pms.utils.TestUtils.*;
 import static org.apache.commons.lang3.RandomStringUtils.random;
-import static org.apache.commons.lang3.RandomUtils.nextInt;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyObject;
