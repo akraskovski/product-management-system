@@ -1,13 +1,22 @@
 package by.kraskovski.pms.utils;
 
-import by.kraskovski.pms.domain.*;
+import by.kraskovski.pms.domain.Authority;
+import by.kraskovski.pms.domain.Cart;
+import by.kraskovski.pms.domain.Product;
+import by.kraskovski.pms.domain.ProductStock;
+import by.kraskovski.pms.domain.Stock;
+import by.kraskovski.pms.domain.Store;
+import by.kraskovski.pms.domain.User;
 
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomUtils.nextDouble;
 
-public interface TestUtils {
+public final class TestUtils {
 
-    static Product prepareProduct() {
+    private TestUtils() {
+    }
+
+    public static Product prepareProduct() {
         final Product product = new Product();
         product.setName(random(20));
         product.setType(random(20));
@@ -20,7 +29,7 @@ public interface TestUtils {
         return product;
     }
 
-    static Stock prepareStock() {
+    public static Stock prepareStock() {
         final Stock stock = new Stock();
         stock.setSpecialize(random(20));
         stock.setAddress(random(20));
@@ -31,7 +40,7 @@ public interface TestUtils {
         return stock;
     }
 
-    static Store prepareStore() {
+    public static Store prepareStore() {
         final Store store = new Store();
         store.setName(random(20));
         store.setAddress(random(20));
@@ -44,14 +53,14 @@ public interface TestUtils {
         return store;
     }
 
-    static User prepareUser() {
+    public static User prepareUser() {
         final User user = new User();
         user.setUsername(random(20));
         user.setPassword(random(20));
         return user;
     }
 
-    static User prepareUserWithRole(final Authority authority) {
+    public static User prepareUserWithRole(final Authority authority) {
         final User user = new User();
         user.getAuthorities().add(authority);
         user.setUsername(random(20));
@@ -60,13 +69,13 @@ public interface TestUtils {
         return user;
     }
 
-    static Cart prepareCart(final User user) {
+    public static Cart prepareCart(final User user) {
         final Cart cart = new Cart();
         cart.setUser(user);
         return cart;
     }
 
-    static ProductStock prepareProductStock() {
+    public static ProductStock prepareProductStock() {
         return new ProductStock(prepareProduct(), prepareStock(), 10);
     }
 }

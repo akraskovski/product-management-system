@@ -51,10 +51,11 @@ public class CartServiceTest {
     @Test(expected = InstanceAlreadyExistsException.class)
     public void createNegativeTest() throws InstanceAlreadyExistsException {
         final User user = prepareUser();
+        user.addCart(new Cart());
         when(userService.find(anyString())).thenReturn(user);
         when(userService.update(anyObject())).thenReturn(user);
 
-        cartService.create(random(40));
+        cartService.create(user.getId());
 
         verify(userService).find(anyString());
         verify(userService).update(anyObject());
