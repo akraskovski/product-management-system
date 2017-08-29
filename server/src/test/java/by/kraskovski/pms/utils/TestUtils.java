@@ -1,16 +1,9 @@
 package by.kraskovski.pms.utils;
 
-import by.kraskovski.pms.domain.Authority;
-import by.kraskovski.pms.domain.Cart;
-import by.kraskovski.pms.domain.Product;
-import by.kraskovski.pms.domain.ProductStock;
-import by.kraskovski.pms.domain.Stock;
-import by.kraskovski.pms.domain.Store;
-import by.kraskovski.pms.domain.User;
-
-import java.time.LocalTime;
+import by.kraskovski.pms.domain.*;
 
 import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.apache.commons.lang3.RandomUtils.nextDouble;
 
 public interface TestUtils {
 
@@ -24,10 +17,12 @@ public interface TestUtils {
 
     static Stock prepareStock() {
         final Stock stock = new Stock();
-        stock.setSpecialize("Products");
-        stock.setAddress("Grodno, ul. Ulica");
-        stock.setOpenTime(LocalTime.of(9, 0));
-        stock.setCloseTime(LocalTime.of(22, 30));
+        stock.setSpecialize(random(20));
+        stock.setAddress(random(20));
+        stock.setPhone(random(20));
+        stock.setSquare(nextDouble());
+//        stock.setOpenTime(LocalTime.of(9, 30));
+//        stock.setCloseTime(LocalTime.of(22, 0));
         return stock;
     }
 
