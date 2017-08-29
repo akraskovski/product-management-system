@@ -24,6 +24,9 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Integration test for {@link StockController}
+ */
 public class StockControllerIT extends ControllerConfig {
 
     private static final String BASE_STOCK_URL = "/stock";

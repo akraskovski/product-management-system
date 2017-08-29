@@ -7,6 +7,9 @@ import org.hibernate.id.IdentifierGenerator;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ *  Entities {@link String} identifier generator
+ */
 public class IdGenerator implements IdentifierGenerator {
 
     @Override

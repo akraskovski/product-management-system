@@ -6,6 +6,7 @@ import by.kraskovski.pms.repository.UserRepository;
 import by.kraskovski.pms.service.AuthorityService;
 import by.kraskovski.pms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,11 +17,15 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final AuthorityService authorityService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository, final AuthorityService authorityService) {
+    public UserServiceImpl(
+            final UserRepository userRepository,
+            final AuthorityService authorityService) {
         this.userRepository = userRepository;
         this.authorityService = authorityService;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
@@ -49,6 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(final User object) {
+        object.setPassword(passwordEncoder.encode(object.getPassword()));
         return userRepository.save(object);
     }
 

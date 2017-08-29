@@ -17,6 +17,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Integration test for {@link ProductController}
+ */
 public class ProductControllerIT extends ControllerConfig {
 
     private static final String BASE_PRODUCTS_URL = "/product";

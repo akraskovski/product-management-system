@@ -18,6 +18,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareUserWithRole;
 
+/**
+ * Abstract configuration class for all controllers integration tests
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc

@@ -9,6 +9,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+/**
+ * Description database table "cart_product_stock"
+ */
 @Entity
 @Table(name = "cart_product_stock")
 public class CartProductStock extends BaseEntity implements Serializable {

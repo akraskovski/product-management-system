@@ -10,6 +10,9 @@ import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * Description database table "product_stock"
+ */
 @Entity
 public class ProductStock extends BaseEntity implements Serializable {
 

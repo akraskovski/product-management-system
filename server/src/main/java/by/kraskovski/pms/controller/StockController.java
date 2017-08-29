@@ -89,6 +89,9 @@ public class StockController {
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Delete product from the stock
+     */
     @RequestMapping(value = "/product", method = RequestMethod.DELETE)
     public ResponseEntity deleteProductFromStock(
             @RequestParam("stock_id") final String stockId,
