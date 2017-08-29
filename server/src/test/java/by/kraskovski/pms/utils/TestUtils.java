@@ -12,6 +12,11 @@ public interface TestUtils {
         product.setName(random(20));
         product.setType(random(20));
         product.setImage(random(40));
+        product.setCost(nextDouble());
+        product.setDetails(random(50));
+        product.setHeight(nextDouble());
+        product.setWidth(nextDouble());
+        product.setWeight(nextDouble());
         return product;
     }
 
@@ -28,7 +33,6 @@ public interface TestUtils {
 
     static Store prepareStore() {
         final Store store = new Store();
-        store.setId(random(40));
         store.setName(random(20));
         store.setAddress(random(20));
         store.setDetails(random(20));
@@ -37,7 +41,6 @@ public interface TestUtils {
         store.setMail(random(20));
         store.setPhone(random(20));
         store.setSkype(random(20));
-        store.getStockList().add(prepareStock());
         return store;
     }
 
@@ -45,7 +48,6 @@ public interface TestUtils {
         final User user = new User();
         user.setUsername(random(20));
         user.setPassword(random(20));
-        user.addCart(new Cart());
         return user;
     }
 
@@ -58,9 +60,9 @@ public interface TestUtils {
         return user;
     }
 
-    static Cart prepareCart() {
+    static Cart prepareCart(final User user) {
         final Cart cart = new Cart();
-        cart.setUser(new User());
+        cart.setUser(user);
         return cart;
     }
 

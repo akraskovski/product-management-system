@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static by.kraskovski.pms.utils.TestUtils.prepareUser;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -25,8 +27,9 @@ public class UserRepositoryTest {
 
     @Test
     public void findByUsernameTest() {
-        entityManager.persist(new User("pms_user", "Ij^8hs@4772"));
-        final User user = userRepository.findByUsername("pms_user");
-        assertNotNull(user);
+        final User user = entityManager.persist(prepareUser());
+        final User foundUser = userRepository.findByUsername(user.getUsername());
+        assertNotNull(foundUser);
+        assertEquals(user.getId(), foundUser.getId());
     }
 }

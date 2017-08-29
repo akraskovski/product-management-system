@@ -8,8 +8,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static by.kraskovski.pms.utils.TestUtils.prepareStore;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Integration test for {@link StoreRepository}
@@ -25,23 +26,10 @@ public class StoreRepositoryTest {
     private StoreRepository storeRepository;
 
     @Test
-    public void findByName() {
-        entityManager.persist(prepareStore());
-        final Store store = storeRepository.findByName("Ali");
-        assertNotNull(store);
-        assertTrue(store.getName().contains("Ali"));
-    }
-
-    private Store prepareStore() {
-        final Store store = new Store();
-        store.setName("Aliexpress");
-        store.setAddress("China");
-        store.setDetails("Online-shop");
-        store.setDiscounts(true);
-        store.setPhone("635245824450");
-        store.setSkype("skype");
-        store.setMail("aliexpress@grsu.by");
-        store.setLogo("--null--");
-        return store;
+    public void findByNameTest() {
+        final Store store = entityManager.persist(prepareStore());
+        final Store foundStore = storeRepository.findByName(store.getName().substring(0, 3));
+        assertNotNull(foundStore);
+        assertEquals(store.getName(), foundStore.getName());
     }
 }
