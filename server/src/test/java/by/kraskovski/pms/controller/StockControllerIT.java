@@ -1,20 +1,26 @@
 package by.kraskovski.pms.controller;
 
+import by.kraskovski.pms.domain.Product;
 import by.kraskovski.pms.domain.Stock;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
+import by.kraskovski.pms.service.ProductService;
 import by.kraskovski.pms.service.StockService;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.util.Map;
+
+import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class StockControllerIT extends ControllerConfig {
@@ -23,6 +29,9 @@ public class StockControllerIT extends ControllerConfig {
 
     @Autowired
     private StockService stockService;
+
+    @Autowired
+    private ProductService productService;
 
     @Before
     public void before() {
@@ -52,6 +61,46 @@ public class StockControllerIT extends ControllerConfig {
     }
 
     @Test
+    public void findStockByIdTest() throws Exception {
+        final Stock stock = prepareStock();
+        stockService.create(stock);
+
+        mvc.perform(get(BASE_STOCK_URL + "/" + stock.getId())
+                .header(authHeaderName, token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.id", notNullValue()))
+                .andExpect(jsonPath("$.specialize", is(stock.getSpecialize())))
+                .andExpect(jsonPath("$.phone", is(stock.getPhone())))
+                .andExpect(jsonPath("$.address", is(stock.getAddress())));
+    }
+
+    @Test
+    public void addNewProductToStockTest() throws Exception {
+        final Product product = prepareProduct();
+        final Stock stock = prepareStock();
+        productService.create(product);
+        stockService.create(stock);
+
+        mvc.perform(put(BASE_STOCK_URL + "/product")
+                .header(authHeaderName, token)
+                .param("stock_id", stock.getId())
+                .param("product_id", product.getId())
+                .param("count", "10"))
+                .andExpect(status().isNoContent());
+
+        final String result = mvc.perform(get(BASE_STOCK_URL + "/" + stock.getId() + "/products")
+                .header(authHeaderName, token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andReturn().getResponse().getContentAsString();
+        final Map<String, Integer> productsInStock = objectMapper.readValue(result, new TypeReference<Map<String, Integer>>() {
+        });
+
+        Assert.assertTrue(productsInStock.containsKey(product.getId()));
+    }
+
+    @Test
     public void updateStockTest() throws Exception {
         final Stock stock = prepareStock();
         stockService.create(stock);
@@ -70,5 +119,15 @@ public class StockControllerIT extends ControllerConfig {
                 .andExpect(jsonPath("$.specialize", is(stock.getSpecialize())))
                 .andExpect(jsonPath("$.phone", is(stock.getPhone())))
                 .andExpect(jsonPath("$.address", is(stock.getAddress())));
+    }
+
+    @Test
+    public void deleteStockTest() throws Exception {
+        final Stock stock = prepareStock();
+        stockService.create(stock);
+
+        mvc.perform(delete(BASE_STOCK_URL + "/" + stock.getId())
+                .header(authHeaderName, token))
+                .andExpect(status().isNoContent());
     }
 }

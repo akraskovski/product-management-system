@@ -78,10 +78,10 @@ public class StockController {
     /**
      * Add product to the stock
      */
-    @RequestMapping(value = "/{stock_id}/products/{product_id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/product", method = RequestMethod.PUT)
     public ResponseEntity addProductToStock(
-            @PathVariable("stock_id") final String stockId,
-            @PathVariable("product_id") final String productId,
+            @RequestParam("stock_id") final String stockId,
+            @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
         LOGGER.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
         return stockService.addProduct(stockId, productId, count)
