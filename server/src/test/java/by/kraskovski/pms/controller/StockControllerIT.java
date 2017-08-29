@@ -1,6 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.domain.Product;
+import by.kraskovski.pms.domain.ProductStock;
 import by.kraskovski.pms.domain.Stock;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.service.ProductService;
@@ -98,6 +99,35 @@ public class StockControllerIT extends ControllerConfig {
         });
 
         Assert.assertTrue(productsInStock.containsKey(product.getId()));
+    }
+
+    @Test
+    public void deleteProductFromStockTest() throws Exception {
+        final int productsInStockCount = 10,
+                productsToDeleteCount = 2;
+        final Product product = prepareProduct();
+        productService.create(product);
+        final Stock stock = prepareStock();
+        stock.getProductStocks().add(new ProductStock(product, stock, productsInStockCount));
+        stockService.create(stock);
+
+        mvc.perform(delete(BASE_STOCK_URL + "/product")
+                .header(authHeaderName, token)
+                .param("stock_id", stock.getId())
+                .param("product_id", product.getId())
+                .param("count", String.valueOf(productsToDeleteCount)))
+                .andExpect(status().isNoContent());
+
+        final String result = mvc.perform(get(BASE_STOCK_URL + "/" + stock.getId() + "/products")
+                .header(authHeaderName, token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andReturn().getResponse().getContentAsString();
+        final Map<String, Integer> productsInStock = objectMapper.readValue(result, new TypeReference<Map<String, Integer>>() {
+        });
+
+        Assert.assertTrue(productsInStock.containsKey(product.getId()));
+        Assert.assertTrue(productsInStock.get(product.getId()).equals(productsInStockCount - productsToDeleteCount));
     }
 
     @Test

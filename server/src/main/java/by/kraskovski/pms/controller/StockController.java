@@ -89,10 +89,10 @@ public class StockController {
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/{stock_id}/products/{product_id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/product", method = RequestMethod.DELETE)
     public ResponseEntity deleteProductFromStock(
-            @PathVariable("stock_id") final String stockId,
-            @PathVariable("product_id") final String productId,
+            @RequestParam("stock_id") final String stockId,
+            @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         LOGGER.info("Start delete Product: {} from Stock: {} with count: {}", productId, stockId, count);
         return stockService.deleteProduct(stockId, productId, count)
