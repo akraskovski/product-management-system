@@ -30,7 +30,7 @@ public class ProductControllerIT extends ControllerConfig {
     @Before
     public void before() {
         productService.deleteAll();
-        setup(ROLE_ADMIN);
+        authenticateUserWithAuthority(ROLE_ADMIN);
     }
 
     @After
