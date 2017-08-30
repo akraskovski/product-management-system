@@ -40,7 +40,7 @@ public class StockControllerIT extends ControllerConfig {
     @Before
     public void before() {
         stockService.deleteAll();
-        setup(AuthorityEnum.ROLE_ADMIN);
+        authenticateUserWithAuthority(AuthorityEnum.ROLE_ADMIN);
     }
 
     @After
@@ -105,7 +105,7 @@ public class StockControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void deleteProductFromStockTest() throws Exception {
+    public void deleteProductFromStockPositiveTest() throws Exception {
         final int productsInStockCount = 10,
                 productsToDeleteCount = 2;
         final Product product = prepareProduct();
@@ -131,6 +131,20 @@ public class StockControllerIT extends ControllerConfig {
 
         Assert.assertTrue(productsInStock.containsKey(product.getId()));
         Assert.assertTrue(productsInStock.get(product.getId()).equals(productsInStockCount - productsToDeleteCount));
+    }
+
+    @Test
+    public void deleteProductFromStockNegativeTest() throws Exception {
+        final int productsToDeleteCount = 10;
+        final Stock stock = prepareStock();
+        stockService.create(stock);
+
+        mvc.perform(delete(BASE_STOCK_URL + "/product")
+                .header(authHeaderName, token)
+                .param("stock_id", stock.getId())
+                .param("product_id", "INVALID ID")
+                .param("count", String.valueOf(productsToDeleteCount)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

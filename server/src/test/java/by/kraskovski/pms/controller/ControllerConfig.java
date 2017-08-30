@@ -46,10 +46,10 @@ public abstract class ControllerConfig {
 
     protected String token;
 
+    @Autowired
     protected ObjectMapper objectMapper;
 
-    void setup(final AuthorityEnum authorityName) {
-        objectMapper = new ObjectMapper();
+    void authenticateUserWithAuthority(final AuthorityEnum authorityName) {
         final Authority authority = authorityService.create(new Authority(authorityName));
         user = prepareUserWithRole(authority);
         userService.create(user);
