@@ -34,7 +34,7 @@ public abstract class ControllerConfig {
     private AuthorityService authorityService;
 
     @Autowired
-    private UserService userService;
+    protected UserService userService;
 
     @Autowired
     private TokenService tokenService;
