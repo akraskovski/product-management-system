@@ -39,7 +39,13 @@ public class AuthorityServiceImpl implements AuthorityService {
         return authorityRepository.findAll();
     }
 
+    @Override
     public void delete(final String id) {
         authorityRepository.delete(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        authorityRepository.deleteAll();
     }
 }

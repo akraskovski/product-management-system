@@ -1,5 +1,6 @@
 package by.kraskovski.pms.controller;
 
+import by.kraskovski.pms.controller.config.ControllerConfig;
 import by.kraskovski.pms.domain.Product;
 import by.kraskovski.pms.domain.ProductStock;
 import by.kraskovski.pms.domain.Stock;

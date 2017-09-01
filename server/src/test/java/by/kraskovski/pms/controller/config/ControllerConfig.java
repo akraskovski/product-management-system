@@ -1,4 +1,4 @@
-package by.kraskovski.pms.controller;
+package by.kraskovski.pms.controller.config;
 
 import by.kraskovski.pms.domain.Authority;
 import by.kraskovski.pms.domain.User;
@@ -49,14 +49,14 @@ public abstract class ControllerConfig {
     @Autowired
     protected ObjectMapper objectMapper;
 
-    void authenticateUserWithAuthority(final AuthorityEnum authorityName) {
+    protected void authenticateUserWithAuthority(final AuthorityEnum authorityName) {
         final Authority authority = authorityService.create(new Authority(authorityName));
         user = prepareUserWithRole(authority);
         userService.create(user);
         token = tokenService.generate(user.getUsername(), user.getPassword()).getToken();
     }
 
-    void cleanup() {
+    protected void cleanup() {
         userService.delete(user.getId());
         authorityService.delete(user.getAuthorities().get(0).getId());
     }

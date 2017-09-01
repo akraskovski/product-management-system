@@ -34,4 +34,9 @@ public interface AuthorityService {
      * Delete {@link Authority} by id from database.
      */
     void delete(String id);
+
+    /**
+     * Delete all {@link Authority} from database
+     */
+    void deleteAll();
 }
