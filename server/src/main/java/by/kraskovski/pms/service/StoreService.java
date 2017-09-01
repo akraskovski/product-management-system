@@ -38,4 +38,9 @@ public interface StoreService {
      * Delete {@link Store} from database by identifier
      */
     void delete(String id);
+
+    /**
+     * Delete all {@link Store} from database
+     */
+    void deleteAll();
 }

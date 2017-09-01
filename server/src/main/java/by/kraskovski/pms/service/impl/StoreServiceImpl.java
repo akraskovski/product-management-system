@@ -56,4 +56,9 @@ public class StoreServiceImpl implements StoreService {
         }
         storeRepository.delete(storeToDelete);
     }
+
+    @Override
+    public void deleteAll() {
+        storeRepository.deleteAll();
+    }
 }
