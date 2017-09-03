@@ -20,4 +20,9 @@ public class ProductStockServiceImpl implements ProductStockService {
     public ProductStock find(final String id) {
         return productStockRepository.findOne(id);
     }
+
+    @Override
+    public ProductStock findByStockIdAndProductId(String stockId, String productId) {
+        return productStockRepository.findByStockIdAndProductId(stockId, productId);
+    }
 }

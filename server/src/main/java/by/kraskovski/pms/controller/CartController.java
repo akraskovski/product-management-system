@@ -67,10 +67,10 @@ public class CartController {
     /**
      * Add productStock to user cart.
      */
-    @RequestMapping(value = "/{cart_id}/product_stock/{ps_id}", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity addProductToCart(
-            @PathVariable("cart_id") final String cartId,
-            @PathVariable("ps_id") final String productStockId,
+            @RequestParam("cart_id") final String cartId,
+            @RequestParam("ps_id") final String productStockId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         LOGGER.info("start addProductStock: {} to cart: {} with count: {}", productStockId, cartId, count);
         return cartService.addProduct(cartId, productStockId, count)

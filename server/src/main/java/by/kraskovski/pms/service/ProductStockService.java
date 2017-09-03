@@ -11,4 +11,9 @@ public interface ProductStockService {
      * Find {@link ProductStock} by id
      */
     ProductStock find(String id);
+
+    /**
+     * Find {@link ProductStock} by stock and products ids
+     */
+    ProductStock findByStockIdAndProductId(String stockId, String productId);
 }

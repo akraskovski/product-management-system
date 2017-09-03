@@ -39,15 +39,15 @@ public abstract class ControllerConfig {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    protected ObjectMapper objectMapper;
+
     @Value("${auth.header.name:x-auth-token}")
     protected String authHeaderName;
 
     private User user;
 
     protected String token;
-
-    @Autowired
-    protected ObjectMapper objectMapper;
 
     protected void authenticateUserWithAuthority(final AuthorityEnum authorityName) {
         final Authority authority = authorityService.create(new Authority(authorityName));

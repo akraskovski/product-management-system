@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductStockRepository extends JpaRepository<ProductStock, String> {
+
+    ProductStock findByStockIdAndProductId(String stockId, String productId);
 }

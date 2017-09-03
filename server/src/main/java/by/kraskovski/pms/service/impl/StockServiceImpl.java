@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Transactional
     public boolean addProduct(final String stockId, final String productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
@@ -89,6 +91,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Transactional
     public boolean deleteProduct(final String stockId, final String productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);

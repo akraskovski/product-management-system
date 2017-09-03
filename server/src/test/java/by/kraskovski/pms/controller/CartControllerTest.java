@@ -1,21 +1,21 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
+import by.kraskovski.pms.domain.Product;
+import by.kraskovski.pms.domain.ProductStock;
+import by.kraskovski.pms.domain.Stock;
 import by.kraskovski.pms.domain.User;
-import by.kraskovski.pms.service.CartService;
-import by.kraskovski.pms.service.UserService;
+import by.kraskovski.pms.service.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
-import static by.kraskovski.pms.utils.TestUtils.prepareUser;
+import static by.kraskovski.pms.utils.TestUtils.*;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class CartControllerTest extends ControllerConfig {
@@ -28,9 +28,21 @@ public class CartControllerTest extends ControllerConfig {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private StockService stockService;
+
+    @Autowired
+    private ProductStockService productStockService;
+
     @Before
     public void before() {
         cartService.deleteAll();
+        userService.deleteAll();
+        productService.deleteAll();
+        stockService.deleteAll();
         authenticateUserWithAuthority(ROLE_ADMIN);
     }
 
@@ -38,6 +50,9 @@ public class CartControllerTest extends ControllerConfig {
     public void after() {
         cleanup();
         cartService.deleteAll();
+        userService.deleteAll();
+        productService.deleteAll();
+        stockService.deleteAll();
     }
 
     @Test
@@ -65,6 +80,25 @@ public class CartControllerTest extends ControllerConfig {
 
     @Test
     public void addProductToCart() throws Exception {
+        final User user = prepareUser();
+        userService.create(user);
+        cartService.create(user.getId());
+
+        final Product product = prepareProduct();
+        productService.create(product);
+
+        final Stock stock = prepareStock();
+        stockService.create(stock);
+        stockService.addProduct(stock.getId(), product.getId(), 10);
+
+        final ProductStock productStock = productStockService.findByStockIdAndProductId(stock.getId(), product.getId());
+
+        mvc.perform(put(BASE_CART_URL)
+                .header(authHeaderName, token)
+                .param("cart_id", user.getId())
+                .param("ps_id", productStock.getId())
+                .param("count", "10"))
+                .andExpect(status().isNoContent());
     }
 
     @Test
