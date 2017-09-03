@@ -13,7 +13,9 @@ import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareUser;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class CartControllerTest extends ControllerConfig {
@@ -53,6 +55,12 @@ public class CartControllerTest extends ControllerConfig {
 
     @Test
     public void createCart() throws Exception {
+        final User user = prepareUser();
+        userService.create(user);
+
+        mvc.perform(post(BASE_CART_URL + "/" + user.getId())
+                .header(authHeaderName, token))
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -65,6 +73,13 @@ public class CartControllerTest extends ControllerConfig {
 
     @Test
     public void deleteCart() throws Exception {
+        final User user = prepareUser();
+        userService.create(user);
+        cartService.create(user.getId());
+
+        mvc.perform(delete(BASE_CART_URL + "/" + user.getId())
+                .header(authHeaderName, token))
+                .andExpect(status().isNoContent());
     }
 
 }
