@@ -14,7 +14,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
-import java.util.Optional;
+
+import static java.util.Optional.*;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -35,7 +36,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void create(final String id) throws InstanceAlreadyExistsException {
-        final User user = Optional.ofNullable(userService.find(id))
+        final User user = ofNullable(userService.find(id))
                 .orElseThrow(() -> new UserNotFoundException(
                         "Can't create cart for user with id:" + id + ". Entity not found in database!"));
         if (user.getCart() != null) {
@@ -141,5 +142,10 @@ public class CartServiceImpl implements CartService {
             }
         }
         throw new IllegalArgumentException("Cart with id: " + id + " not found in database!");
+    }
+
+    @Override
+    public void deleteAll() {
+        cartRepository.deleteAll();
     }
 }

@@ -38,5 +38,10 @@ public interface CartService {
      * Delete {@link Cart} from database by identifier
      */
     void delete(String id);
+
+    /**
+     * Delete all {@link Cart}s from database
+     */
+    void deleteAll();
 }
 
