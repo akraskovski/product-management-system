@@ -21,7 +21,7 @@ public final class TestUtils {
         product.setName(random(20));
         product.setType(random(20));
         product.setImage(random(40));
-        product.setCost(nextDouble());
+        product.setCost(10.90);
         product.setDetails(random(50));
         product.setHeight(nextDouble());
         product.setWidth(nextDouble());

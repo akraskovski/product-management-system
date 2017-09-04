@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
+
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.*;
 import static org.hamcrest.Matchers.is;
@@ -102,7 +104,29 @@ public class CartControllerTest extends ControllerConfig {
     }
 
     @Test
+    @Transactional
     public void deleteProductFromCart() throws Exception {
+        final User user = prepareUser();
+        userService.create(user);
+        cartService.create(user.getId());
+
+        final Product product = prepareProduct();
+        productService.create(product);
+
+        final Stock stock = prepareStock();
+        stockService.create(stock);
+        stockService.addProduct(stock.getId(), product.getId(), 10);
+
+        final ProductStock productStock = productStockService.findByStockIdAndProductId(stock.getId(), product.getId());
+
+        cartService.addProduct(user.getId(), productStock.getId(), 10);
+
+        mvc.perform(delete(BASE_CART_URL)
+                .header(authHeaderName, token)
+                .param("cart_id", user.getId())
+                .param("ps_id", productStock.getId())
+                .param("count", "5"))
+                .andExpect(status().isNoContent());
     }
 
     @Test

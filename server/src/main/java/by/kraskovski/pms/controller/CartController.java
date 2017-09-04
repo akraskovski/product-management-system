@@ -81,10 +81,10 @@ public class CartController {
     /**
      * Delete product from cart by id.
      */
-    @RequestMapping(value = "/{cart_id}/product_stock/{ps_id}", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity deleteProductFromCart(
-            @PathVariable("cart_id") final String cartId,
-            @PathVariable("ps_id") final String productStockId,
+            @RequestParam("cart_id") final String cartId,
+            @RequestParam("ps_id") final String productStockId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         LOGGER.info("start deleteProductFromCart: {} from cart: {} with count: {}", productStockId, cartId, count);
         return cartService.deleteProduct(cartId, productStockId, count)
