@@ -1,6 +1,6 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.dto.TokenDTO;
 import by.kraskovski.pms.security.service.TokenService;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class AuthenticationController {
 
     /**
      * Login method
-     * Find {@link by.kraskovski.pms.domain.User} in database by username
+     * Find {@link User} in database by username
      * Generate token from {@link TokenService}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)

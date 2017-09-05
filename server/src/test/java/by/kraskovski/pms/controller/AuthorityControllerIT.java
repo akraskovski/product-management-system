@@ -1,7 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.Authority;
+import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.service.AuthorityService;
 import org.junit.After;

@@ -1,12 +1,12 @@
 package by.kraskovski.pms.utils;
 
-import by.kraskovski.pms.domain.Authority;
-import by.kraskovski.pms.domain.Cart;
-import by.kraskovski.pms.domain.Product;
-import by.kraskovski.pms.domain.ProductStock;
-import by.kraskovski.pms.domain.Stock;
-import by.kraskovski.pms.domain.Store;
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.Authority;
+import by.kraskovski.pms.domain.model.Cart;
+import by.kraskovski.pms.domain.model.Product;
+import by.kraskovski.pms.domain.model.ProductStock;
+import by.kraskovski.pms.domain.model.Stock;
+import by.kraskovski.pms.domain.model.Store;
+import by.kraskovski.pms.domain.model.User;
 
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAscii;

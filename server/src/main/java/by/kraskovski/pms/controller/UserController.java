@@ -1,6 +1,6 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

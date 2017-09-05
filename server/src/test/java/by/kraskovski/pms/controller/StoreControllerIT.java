@@ -1,7 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.Store;
+import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.service.StoreService;
 import org.apache.commons.lang3.StringUtils;

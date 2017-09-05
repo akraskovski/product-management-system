@@ -1,5 +1,6 @@
 package by.kraskovski.pms.domain.base;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
  * Contains field id with generated type
  */
 @MappedSuperclass
+@EqualsAndHashCode
 public abstract class BaseEntity {
 
     /**
@@ -27,20 +29,5 @@ public abstract class BaseEntity {
 
     public void setId(final String id) {
         Optional.ofNullable(id).ifPresent(s -> this.id = s);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        BaseEntity that = (BaseEntity) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }

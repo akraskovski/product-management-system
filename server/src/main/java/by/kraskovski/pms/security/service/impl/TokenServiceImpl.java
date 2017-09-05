@@ -1,6 +1,6 @@
 package by.kraskovski.pms.security.service.impl;
 
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.dto.TokenDTO;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.security.service.TokenService;

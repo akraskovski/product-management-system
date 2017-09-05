@@ -1,6 +1,7 @@
 package by.kraskovski.pms.domain.dto;
 
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -23,7 +24,7 @@ public class TokenDTO implements Serializable {
      */
     private User user;
 
-    public TokenDTO(final String token, final User user) {
+    public TokenDTO(String token, User user) {
         this.token = token;
         this.user = user;
         this.user.setPassword(EMPTY);

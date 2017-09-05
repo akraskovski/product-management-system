@@ -1,4 +1,4 @@
-package by.kraskovski.pms.domain;
+package by.kraskovski.pms.domain.model;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,8 +24,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "\"user\"")
-@Getter
-@Setter
 @NoArgsConstructor
 public class User extends BaseEntity implements Authentication {
 
@@ -43,26 +41,42 @@ public class User extends BaseEntity implements Authentication {
     private Cart cart;
 
     @Column(unique = true, nullable = false)
+    @Getter
+    @Setter
     private String username;
 
     @Column(nullable = false)
+    @Getter
+    @Setter
     private String password;
 
     @Transient
     private boolean authenticated;
 
+    @Getter
+    @Setter
     private String firstName;
 
+    @Getter
+    @Setter
     private String lastName;
 
+    @Getter
+    @Setter
     private LocalDateTime createDate;
 
     @Column(unique = true)
+    @Getter
+    @Setter
     private String email;
 
     @Column(unique = true)
+    @Getter
+    @Setter
     private String phone;
 
+    @Getter
+    @Setter
     private String avatar;
 
     public User(final String username, final String password) {

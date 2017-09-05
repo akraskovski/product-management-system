@@ -1,10 +1,10 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.Product;
-import by.kraskovski.pms.domain.ProductStock;
-import by.kraskovski.pms.domain.Stock;
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.Product;
+import by.kraskovski.pms.domain.model.ProductStock;
+import by.kraskovski.pms.domain.model.Stock;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.service.*;
 import org.junit.After;
 import org.junit.Before;
@@ -104,7 +104,6 @@ public class CartControllerTest extends ControllerConfig {
     }
 
     @Test
-    @Transactional
     public void deleteProductFromCart() throws Exception {
         final User user = prepareUser();
         userService.create(user);

@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.domain.Product;
+import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.repository.ProductRepository;
 import by.kraskovski.pms.service.impl.ProductServiceImpl;
 import org.junit.Test;

@@ -1,8 +1,8 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.domain.Cart;
-import by.kraskovski.pms.domain.ProductStock;
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.Cart;
+import by.kraskovski.pms.domain.model.ProductStock;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.repository.CartRepository;
 import by.kraskovski.pms.service.impl.CartServiceImpl;
 import org.junit.Test;

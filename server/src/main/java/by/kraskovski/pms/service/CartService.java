@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.domain.Cart;
+import by.kraskovski.pms.domain.model.Cart;
 
 import javax.management.InstanceAlreadyExistsException;
 

@@ -1,6 +1,6 @@
 package by.kraskovski.pms.repository;
 
-import by.kraskovski.pms.domain.Product;
+import by.kraskovski.pms.domain.model.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

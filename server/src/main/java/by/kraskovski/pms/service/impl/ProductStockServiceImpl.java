@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.domain.ProductStock;
+import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.repository.ProductStockRepository;
 import by.kraskovski.pms.service.ProductStockService;
 import org.springframework.beans.factory.annotation.Autowired;

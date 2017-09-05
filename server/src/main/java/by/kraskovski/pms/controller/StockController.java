@@ -1,6 +1,6 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.domain.Stock;
+import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.service.StockService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

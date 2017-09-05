@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.repository.UserRepository;
 import by.kraskovski.pms.service.AuthorityService;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service

@@ -1,4 +1,4 @@
-package by.kraskovski.pms.domain;
+package by.kraskovski.pms.domain.model;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
 import lombok.AllArgsConstructor;
