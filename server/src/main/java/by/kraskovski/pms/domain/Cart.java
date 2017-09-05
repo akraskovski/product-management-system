@@ -1,6 +1,8 @@
 package by.kraskovski.pms.domain;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,6 +19,8 @@ import java.util.Set;
  * Description database table "cart"
  */
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Cart extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -42,29 +46,5 @@ public class Cart extends BaseEntity {
     public Cart(final User user) {
         this.createDate = LocalDateTime.now();
         this.user = user;
-    }
-
-    public Set<CartProductStock> getCartProductStocks() {
-        return cartProductStocks;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public double getTotalCost() {
-        return totalCost;
-    }
-
-    public void setUser(final User user) {
-        this.user = user;
-    }
-
-    public void setTotalCost(final double totalCost) {
-        this.totalCost = totalCost;
-    }
-
-    public void setCreateDate(final LocalDateTime createDate) {
-        this.createDate = createDate;
     }
 }

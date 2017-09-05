@@ -1,6 +1,8 @@
 package by.kraskovski.pms.domain;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,8 @@ import java.util.Set;
  * Description database table "user"
  */
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Product extends BaseEntity {
 
     @Column(nullable = false, unique = true)
@@ -38,85 +42,4 @@ public class Product extends BaseEntity {
     private double height;
 
     private double weight;
-
-    public Product() {
-        super();
-    }
-
-    public Product(final String id, final String name) {
-        this.setId(id);
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public LocalDateTime getManufactureDate() {
-        return manufactureDate;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public void setCost(final double cost) {
-        this.cost = cost;
-    }
-
-    public void setManufactureDate(final LocalDateTime manufactureDate) {
-        this.manufactureDate = manufactureDate;
-    }
-
-    public void setType(final String type) {
-        this.type = type;
-    }
-
-    public void setDetails(final String details) {
-        this.details = details;
-    }
-
-    public void setImage(final String image) {
-        this.image = image;
-    }
-
-    public void setWidth(final double width) {
-        this.width = width;
-    }
-
-    public void setHeight(final double height) {
-        this.height = height;
-    }
-
-    public void setWeight(final double weight) {
-        this.weight = weight;
-    }
 }

@@ -1,6 +1,6 @@
 package by.kraskovski.pms.domain.base;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.GeneratedValue;
@@ -14,6 +14,7 @@ import java.util.Optional;
  * Contains field id with generated type
  */
 @MappedSuperclass
+@EqualsAndHashCode
 public abstract class BaseEntity {
 
     /**
@@ -30,23 +31,5 @@ public abstract class BaseEntity {
 
     public String getId() {
         return id;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final BaseEntity that = (BaseEntity) o;
-        return EqualsBuilder.reflectionEquals(this.id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }

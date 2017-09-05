@@ -1,6 +1,7 @@
 package by.kraskovski.pms.domain;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,9 @@ import java.util.Set;
  * Description database table "product_stock"
  */
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class ProductStock extends BaseEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,37 +36,9 @@ public class ProductStock extends BaseEntity implements Serializable {
 
     private int productsCount;
 
-    public ProductStock() {
-        super();
-    }
-
     public ProductStock(final Product product, final Stock stock, final int productsCount) {
         this.product = product;
         this.stock = stock;
-        this.productsCount = productsCount;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public Stock getStock() {
-        return stock;
-    }
-
-    public void setProduct(final Product product) {
-        this.product = product;
-    }
-
-    public void setStock(final Stock stock) {
-        this.stock = stock;
-    }
-
-    public int getProductsCount() {
-        return productsCount;
-    }
-
-    public void setProductsCount(final int productsCount) {
         this.productsCount = productsCount;
     }
 }
