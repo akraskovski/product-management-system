@@ -1,16 +1,10 @@
 package by.kraskovski.pms.domain;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,17 +13,20 @@ import java.util.Set;
  * Description database table "cart"
  */
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
 public class Cart extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @MapsId
+    @Setter
     private User user;
 
+    @Getter
+    @Setter
     private LocalDateTime createDate;
 
+    @Getter
+    @Setter
     private double totalCost;
 
     @OneToMany(
@@ -37,6 +34,7 @@ public class Cart extends BaseEntity {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
             orphanRemoval = true)
+    @Getter
     private Set<CartProductStock> cartProductStocks = new HashSet<>();
 
     public Cart() {

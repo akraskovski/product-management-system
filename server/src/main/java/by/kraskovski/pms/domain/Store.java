@@ -1,8 +1,7 @@
 package by.kraskovski.pms.domain;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +15,9 @@ import java.util.List;
  * Description database table "store"
  */
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
+@NoArgsConstructor
 public class Store extends BaseEntity {
 
     @Column(unique = true, nullable = false)

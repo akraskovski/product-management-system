@@ -53,7 +53,7 @@ public abstract class ControllerConfig {
         final Authority authority = authorityService.create(new Authority(authorityName));
         user = prepareUserWithRole(authority);
         userService.create(user);
-        token = tokenService.generate(user.getUsername(), user.getPassword()).getToken();
+        token = tokenService.generate(user.getUsername(), user.getCredentials().toString()).getToken();
     }
 
     protected void cleanup() {

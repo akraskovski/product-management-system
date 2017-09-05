@@ -10,18 +10,17 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 /**
  * Token Data Transfer Object class
  */
+@Getter
 public class TokenDTO implements Serializable {
 
     /**
      * {@link User}'s token
      */
-    @Getter
     private String token;
 
     /**
      * Current logged {@link User}
      */
-    @Getter
     private User user;
 
     public TokenDTO(final String token, final User user) {

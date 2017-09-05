@@ -15,8 +15,8 @@ import java.util.Set;
  * Description database table "product_stock"
  */
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @NoArgsConstructor
 public class ProductStock extends BaseEntity implements Serializable {
 

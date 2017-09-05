@@ -9,6 +9,7 @@ import by.kraskovski.pms.domain.Store;
 import by.kraskovski.pms.domain.User;
 
 import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.apache.commons.lang3.RandomStringUtils.randomAscii;
 import static org.apache.commons.lang3.RandomUtils.nextDouble;
 
 public final class TestUtils {
@@ -63,8 +64,8 @@ public final class TestUtils {
     public static User prepareUserWithRole(final Authority authority) {
         final User user = new User();
         user.getAuthorities().add(authority);
-        user.setUsername(random(20));
-        user.setPassword(random(20));
+        user.setUsername(randomAscii(10));
+        user.setPassword(randomAscii(10));
         user.addCart(new Cart());
         return user;
     }

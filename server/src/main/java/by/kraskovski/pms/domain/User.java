@@ -2,9 +2,7 @@ package by.kraskovski.pms.domain;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.Authentication;
 
 import javax.persistence.CascadeType;
@@ -26,8 +24,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "\"user\"")
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @NoArgsConstructor
 public class User extends BaseEntity implements Authentication {
 
@@ -116,6 +114,11 @@ public class User extends BaseEntity implements Authentication {
     @Override
     public void setAuthenticated(final boolean isAuthenticated) throws IllegalArgumentException {
         this.authenticated = isAuthenticated;
+    }
+
+    @JsonIgnore
+    public Cart getCart() {
+        return this.cart;
     }
 
     public void addCart(final Cart cart) {

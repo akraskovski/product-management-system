@@ -2,14 +2,10 @@ package by.kraskovski.pms.domain;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,8 +14,8 @@ import java.util.Set;
  * Description database table "stock"
  */
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Stock extends BaseEntity {
 
     @OneToMany(
