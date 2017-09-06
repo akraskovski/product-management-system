@@ -22,7 +22,7 @@ public class ProductStockServiceImpl implements ProductStockService {
     }
 
     @Override
-    public ProductStock findByStockIdAndProductId(String stockId, String productId) {
+    public ProductStock findByStockIdAndProductId(final String stockId, final String productId) {
         return productStockRepository.findByStockIdAndProductId(stockId, productId);
     }
 }

@@ -3,8 +3,7 @@ package by.kraskovski.pms.controller;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.dto.TokenDTO;
 import by.kraskovski.pms.security.service.TokenService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +21,9 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthenticationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
     private final TokenService tokenService;
 
     @Autowired
@@ -39,14 +38,14 @@ public class AuthenticationController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity login(@RequestBody final User requestUser) {
-        LOGGER.info("Start authentication user with username: " + requestUser.getUsername());
+        log.info("Start authentication user with username: " + requestUser.getUsername());
         try {
             final TokenDTO tokenDTO = tokenService.generate(requestUser.getUsername(), requestUser.getPassword());
             Optional.ofNullable(tokenDTO).orElseThrow(() -> new IllegalArgumentException("Generated token is null."));
-                LOGGER.info("User authentication with username: {} successful!", requestUser.getUsername());
+                log.info("User authentication with username: {} successful!", requestUser.getUsername());
                 return new ResponseEntity<>(tokenDTO, HttpStatus.ACCEPTED);
         } catch (IllegalArgumentException | BadCredentialsException e) {
-            LOGGER.error(
+            log.error(
                     "User authentication with username: {} failed! Cause: {}",
                     requestUser.getUsername(),
                     e.getLocalizedMessage());

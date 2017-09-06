@@ -2,8 +2,7 @@ package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -20,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     @Autowired
@@ -35,11 +34,11 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllUsers() {
-        LOGGER.info("Start loadAllUsers");
+        log.info("Start loadAllUsers");
         try {
             return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception in loadAllUsers. " + e.getLocalizedMessage());
+            log.error("Exception in loadAllUsers. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -49,13 +48,13 @@ public class UserController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadUserById(@PathVariable("id") final String id) {
-        LOGGER.info("Start loadUserById");
+        log.info("Start loadUserById");
         try {
             final User user = userService.find(id);
             Assert.notNull(user, "Unable to find user with id: " + id);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -65,13 +64,13 @@ public class UserController {
      */
     @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
     public ResponseEntity loadUserByUsername(@PathVariable final String username) {
-        LOGGER.info("Start loadUserByUsername: " + username);
+        log.info("Start loadUserByUsername: " + username);
         try {
             final User user = userService.findByUsername(username);
             Assert.notNull(user, "Unable to find user with username: " + username);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -81,11 +80,11 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createUser(@RequestBody final User user) {
-        LOGGER.info("Start createUser: " + user.getUsername());
+        log.info("Start createUser: " + user.getUsername());
         try {
             return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception in createUser. " + e.getLocalizedMessage());
+            log.error("Exception in createUser. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -95,11 +94,11 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateUser(@RequestBody final User user) {
-        LOGGER.info("Start updateUser: " + user.getUsername());
+        log.info("Start updateUser: " + user.getUsername());
         try {
             return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception while updating user with id" + user.getId() + ". " + e.getLocalizedMessage());
+            log.error("Exception while updating user with id" + user.getId() + ". " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -109,12 +108,12 @@ public class UserController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteUser(@PathVariable("id") final String id) {
-        LOGGER.info("Start deleteUser with id: " + id);
+        log.info("Start deleteUser with id: " + id);
         try {
             userService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception while delete user with id: " + id + ". " + e.getLocalizedMessage());
+            log.error("Exception while delete user with id: " + id + ". " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }

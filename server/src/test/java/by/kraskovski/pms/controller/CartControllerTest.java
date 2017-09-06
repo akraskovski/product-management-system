@@ -5,13 +5,15 @@ import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.User;
-import by.kraskovski.pms.service.*;
+import by.kraskovski.pms.service.CartService;
+import by.kraskovski.pms.service.ProductService;
+import by.kraskovski.pms.service.ProductStockService;
+import by.kraskovski.pms.service.StockService;
+import by.kraskovski.pms.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.transaction.Transactional;
 
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.*;
