@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.domain.ProductStock;
+import by.kraskovski.pms.domain.model.ProductStock;
 
 /**
  * Service for {@link ProductStock}

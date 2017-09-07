@@ -1,6 +1,6 @@
 package by.kraskovski.pms.security.service.impl;
 
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.dto.TokenDTO;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.security.service.TokenService;
@@ -73,13 +73,15 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public Authentication authenticate(final HttpServletRequest request) throws ExpiredJwtException, SignatureException {
         final String token = request.getHeader(authHeaderName);
-        if (token != null) {
-            final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            final User user = getUserFromToken(tokenData);
-            if (validatePassword(tokenData, user.getPassword())) {
-                user.setAuthenticated(true);
-                return user;
-            }
+        return token != null ? parseToken(token) : null;
+    }
+
+    private User parseToken(final String token) {
+        final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        final User user = getUserFromToken(tokenData);
+        if (validatePassword(tokenData, user.getPassword())) {
+            user.setAuthenticated(true);
+            return user;
         }
         return null;
     }
@@ -87,8 +89,8 @@ public class TokenServiceImpl implements TokenService {
 
     private User getUserFromToken(final Jws<Claims> tokenData) throws UsernameNotFoundException {
         final String username = tokenData.getBody().get("username").toString();
-        final User user = userService.findByUsername(username);
-        return Optional.ofNullable(user).orElseThrow(() -> new UserNotFoundException("User: " + username + " not found!"));
+        final Optional<User> user = ofNullable(userService.findByUsername(username));
+        return user.orElseThrow(() -> new UserNotFoundException("User: " + username + " not found!"));
     }
 
     private boolean validatePassword(final Jws<Claims> tokenData, final String userPassword) {

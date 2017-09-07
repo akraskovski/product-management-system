@@ -1,7 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.Product;
+import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.service.ProductService;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.After;

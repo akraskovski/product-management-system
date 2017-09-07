@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.domain.Stock;
+import by.kraskovski.pms.domain.model.Stock;
 
 import java.util.List;
 import java.util.Map;

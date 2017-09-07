@@ -1,7 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.Store;
+import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.service.StoreService;
 import org.apache.commons.lang3.StringUtils;
@@ -53,7 +53,7 @@ public class StoreControllerIT extends ControllerConfig {
                 .andExpect(jsonPath("$.name", is(store.getName())))
                 .andExpect(jsonPath("$.address", is(store.getAddress())))
                 .andExpect(jsonPath("$.details", is(store.getDetails())))
-                .andExpect(jsonPath("$.discounts", is(store.getDiscounts())))
+                .andExpect(jsonPath("$.discounts", is(store.isDiscounts())))
                 .andExpect(jsonPath("$.logo", is(store.getLogo())))
                 .andExpect(jsonPath("$.mail", is(store.getMail())))
                 .andExpect(jsonPath("$.phone", is(store.getPhone())))
@@ -73,7 +73,7 @@ public class StoreControllerIT extends ControllerConfig {
                 .andExpect(jsonPath("$.name", is(store.getName())))
                 .andExpect(jsonPath("$.address", is(store.getAddress())))
                 .andExpect(jsonPath("$.details", is(store.getDetails())))
-                .andExpect(jsonPath("$.discounts", is(store.getDiscounts())))
+                .andExpect(jsonPath("$.discounts", is(store.isDiscounts())))
                 .andExpect(jsonPath("$.logo", is(store.getLogo())))
                 .andExpect(jsonPath("$.mail", is(store.getMail())))
                 .andExpect(jsonPath("$.phone", is(store.getPhone())))
@@ -104,7 +104,7 @@ public class StoreControllerIT extends ControllerConfig {
                 .andExpect(jsonPath("$.name", is(store.getName())))
                 .andExpect(jsonPath("$.address", is(store.getAddress())))
                 .andExpect(jsonPath("$.details", is(store.getDetails())))
-                .andExpect(jsonPath("$.discounts", is(store.getDiscounts())))
+                .andExpect(jsonPath("$.discounts", is(store.isDiscounts())))
                 .andExpect(jsonPath("$.logo", is(store.getLogo())))
                 .andExpect(jsonPath("$.mail", is(store.getMail())))
                 .andExpect(jsonPath("$.phone", is(store.getPhone())))

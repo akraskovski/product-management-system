@@ -1,6 +1,7 @@
 package by.kraskovski.pms.domain.dto;
 
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.User;
+import lombok.Getter;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 /**
  * Token Data Transfer Object class
  */
+@Getter
 public class TokenDTO implements Serializable {
 
     /**
@@ -25,13 +27,5 @@ public class TokenDTO implements Serializable {
         this.token = token;
         this.user = user;
         this.user.setPassword(EMPTY);
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public User getUser() {
-        return user;
     }
 }

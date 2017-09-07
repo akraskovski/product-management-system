@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.domain.ProductStock;
+import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.repository.ProductStockRepository;
 import by.kraskovski.pms.service.ProductStockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class ProductStockServiceImpl implements ProductStockService {
     }
 
     @Override
-    public ProductStock findByStockIdAndProductId(String stockId, String productId) {
+    public ProductStock findByStockIdAndProductId(final String stockId, final String productId) {
         return productStockRepository.findByStockIdAndProductId(stockId, productId);
     }
 }

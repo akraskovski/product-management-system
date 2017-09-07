@@ -1,8 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.service.AuthorityService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/authority")
+@Slf4j
 public class AuthorityController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorityController.class);
     private final AuthorityService authorityService;
 
     @Autowired
@@ -31,11 +30,11 @@ public class AuthorityController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAuthorities() {
-        LOGGER.info("Start loadAuthorities");
+        log.info("Start loadAuthorities");
         try {
             return new ResponseEntity<>(authorityService.findAll(), HttpStatus.OK);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception in loadAuthorities. " + e.getLocalizedMessage());
+            log.error("Exception in loadAuthorities. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
         }
     }

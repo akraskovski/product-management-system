@@ -1,7 +1,10 @@
-package by.kraskovski.pms.domain;
+package by.kraskovski.pms.domain.model;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.Authentication;
 
 import javax.persistence.CascadeType;
@@ -23,6 +26,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "\"user\"")
+@NoArgsConstructor
 public class User extends BaseEntity implements Authentication {
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -39,31 +43,43 @@ public class User extends BaseEntity implements Authentication {
     private Cart cart;
 
     @Column(unique = true, nullable = false)
+    @Getter
+    @Setter
     private String username;
 
     @Column(nullable = false)
+    @Getter
+    @Setter
     private String password;
 
     @Transient
     private boolean authenticated;
 
+    @Getter
+    @Setter
     private String firstName;
 
+    @Getter
+    @Setter
     private String lastName;
 
+    @Getter
+    @Setter
     private LocalDateTime createDate;
 
     @Column(unique = true)
+    @Getter
+    @Setter
     private String email;
 
     @Column(unique = true)
+    @Getter
+    @Setter
     private String phone;
 
+    @Getter
+    @Setter
     private String avatar;
-
-    public User() {
-        super();
-    }
 
     public User(final String username, final String password) {
         this.username = username;
@@ -106,45 +122,9 @@ public class User extends BaseEntity implements Authentication {
         return authenticated;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
     @Override
     public List<Authority> getAuthorities() {
         return authorities;
-    }
-
-    public Cart getCart() {
-        return cart;
     }
 
     @Override
@@ -152,36 +132,9 @@ public class User extends BaseEntity implements Authentication {
         this.authenticated = isAuthenticated;
     }
 
-    public void setUsername(final String username) {
-        this.username = username;
-    }
-
-    public void setPassword(final String password) {
-        this.password = password;
-    }
-
-    public void setCreateDate(final LocalDateTime createDate) {
-        this.createDate = createDate;
-    }
-
-    public void setFirstName(final String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmail(final String email) {
-        this.email = email;
-    }
-
-    public void setPhone(final String phone) {
-        this.phone = phone;
-    }
-
-    public void setAvatar(final String avatar) {
-        this.avatar = avatar;
+    @JsonIgnore
+    public Cart getCart() {
+        return this.cart;
     }
 
     public void addCart(final Cart cart) {

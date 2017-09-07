@@ -1,9 +1,8 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.domain.Product;
+import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.service.ProductService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -22,9 +21,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/product")
+@Slf4j
 public class ProductController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
     private final ProductService productService;
 
     @Autowired
@@ -37,11 +36,11 @@ public class ProductController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllProducts() {
-        LOGGER.info("Start loadAllProducts");
+        log.info("Start loadAllProducts");
         try {
             return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception in loadAllProducts. " + e.getLocalizedMessage());
+            log.error("Exception in loadAllProducts. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -51,13 +50,13 @@ public class ProductController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadProductById(@PathVariable("id") final String id) {
-        LOGGER.info("Start loadProductById: " + id);
+        log.info("Start loadProductById: " + id);
         try {
             final Product product = productService.find(id);
             Assert.notNull(product, "Unable to find product with id: " + id);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -67,13 +66,13 @@ public class ProductController {
      */
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
     public ResponseEntity loadProductsByName(@PathVariable("name") final String name) {
-        LOGGER.info("Start loadProductsByName: " + name);
+        log.info("Start loadProductsByName: " + name);
         try {
             final List<Product> product = productService.findByName(name);
             Assert.notNull(product, "Unable to find products with name: " + name);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -83,13 +82,13 @@ public class ProductController {
      */
     @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
     public ResponseEntity loadProductsByType(@PathVariable("type") final String type) {
-        LOGGER.info("Start loadProductsByType: " + type);
+        log.info("Start loadProductsByType: " + type);
         try {
             final List<Product> product = productService.findByType(type);
             Assert.notNull(product, "Unable to find products with type: " + type);
             return new ResponseEntity<>(product, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -99,11 +98,11 @@ public class ProductController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createProduct(@RequestBody final Product product) {
-        LOGGER.info("Start createProduct");
+        log.info("Start createProduct");
         try {
             return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
         } catch (DataAccessException e) {
-            LOGGER.info("Error in createProduct. " + e.getLocalizedMessage());
+            log.info("Error in createProduct. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -113,11 +112,11 @@ public class ProductController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateProduct(@RequestBody final Product product) {
-        LOGGER.info("start updateProduct");
+        log.info("start updateProduct");
         try {
             return new ResponseEntity<>(productService.update(product), HttpStatus.OK);
         } catch (DataAccessException e) {
-            LOGGER.info("Error in updateProduct. " + e.getLocalizedMessage());
+            log.info("Error in updateProduct. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -127,12 +126,12 @@ public class ProductController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteProduct(@PathVariable("id") final String id) {
-        LOGGER.info("Start deleteProduct");
+        log.info("Start deleteProduct");
         try {
             productService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
-            LOGGER.info("Error in deleteProduct. " + e.getLocalizedMessage());
+            log.info("Error in deleteProduct. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }

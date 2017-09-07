@@ -1,7 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.utils.TestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;

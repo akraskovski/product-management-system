@@ -1,7 +1,7 @@
 package by.kraskovski.pms.controller.config;
 
-import by.kraskovski.pms.domain.Authority;
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.Authority;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.security.service.TokenService;
 import by.kraskovski.pms.service.AuthorityService;
@@ -53,7 +53,7 @@ public abstract class ControllerConfig {
         final Authority authority = authorityService.create(new Authority(authorityName));
         user = prepareUserWithRole(authority);
         userService.create(user);
-        token = tokenService.generate(user.getUsername(), user.getPassword()).getToken();
+        token = tokenService.generate(user.getUsername(), user.getCredentials().toString()).getToken();
     }
 
     protected void cleanup() {

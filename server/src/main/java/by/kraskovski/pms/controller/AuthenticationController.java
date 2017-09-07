@@ -1,10 +1,8 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.domain.User;
-import by.kraskovski.pms.domain.dto.TokenDTO;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.security.service.TokenService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import static java.util.Optional.ofNullable;
 
 /**
  * Handle requests for authentication operations.
@@ -22,9 +20,9 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthenticationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
     private final TokenService tokenService;
 
     @Autowired
@@ -34,19 +32,21 @@ public class AuthenticationController {
 
     /**
      * Login method
-     * Find {@link by.kraskovski.pms.domain.User} in database by username
+     * Find {@link User} in database by username
      * Generate token from {@link TokenService}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity login(@RequestBody final User requestUser) {
-        LOGGER.info("Start authentication user with username: " + requestUser.getUsername());
+        log.info("Start authentication user with username: " + requestUser.getUsername());
         try {
-            final TokenDTO tokenDTO = tokenService.generate(requestUser.getUsername(), requestUser.getPassword());
-            Optional.ofNullable(tokenDTO).orElseThrow(() -> new IllegalArgumentException("Generated token is null."));
-                LOGGER.info("User authentication with username: {} successful!", requestUser.getUsername());
-                return new ResponseEntity<>(tokenDTO, HttpStatus.ACCEPTED);
+            return ofNullable(tokenService.generate(requestUser.getUsername(), requestUser.getPassword()))
+                    .map(tokenDTO -> {
+                        log.info("User authentication with username: {} successful!", requestUser.getUsername());
+                        return new ResponseEntity<>(tokenDTO, HttpStatus.ACCEPTED);
+                    })
+                    .orElseThrow(() -> new IllegalArgumentException("Generated token is null."));
         } catch (IllegalArgumentException | BadCredentialsException e) {
-            LOGGER.error(
+            log.error(
                     "User authentication with username: {} failed! Cause: {}",
                     requestUser.getUsername(),
                     e.getLocalizedMessage());

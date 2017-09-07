@@ -1,6 +1,6 @@
 package by.kraskovski.pms.service.integration;
 
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.service.impl.UserServiceImpl;
 import org.junit.After;
 import org.junit.Before;

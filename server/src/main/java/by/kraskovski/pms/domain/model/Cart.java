@@ -1,6 +1,8 @@
-package by.kraskovski.pms.domain;
+package by.kraskovski.pms.domain.model;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,10 +24,15 @@ public class Cart extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @MapsId
+    @Setter
     private User user;
 
+    @Getter
+    @Setter
     private LocalDateTime createDate;
 
+    @Getter
+    @Setter
     private double totalCost;
 
     @OneToMany(
@@ -33,6 +40,7 @@ public class Cart extends BaseEntity {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
             orphanRemoval = true)
+    @Getter
     private Set<CartProductStock> cartProductStocks = new HashSet<>();
 
     public Cart() {
@@ -42,29 +50,5 @@ public class Cart extends BaseEntity {
     public Cart(final User user) {
         this.createDate = LocalDateTime.now();
         this.user = user;
-    }
-
-    public Set<CartProductStock> getCartProductStocks() {
-        return cartProductStocks;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public double getTotalCost() {
-        return totalCost;
-    }
-
-    public void setUser(final User user) {
-        this.user = user;
-    }
-
-    public void setTotalCost(final double totalCost) {
-        this.totalCost = totalCost;
-    }
-
-    public void setCreateDate(final LocalDateTime createDate) {
-        this.createDate = createDate;
     }
 }

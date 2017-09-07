@@ -1,9 +1,9 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.domain.Cart;
-import by.kraskovski.pms.domain.CartProductStock;
-import by.kraskovski.pms.domain.ProductStock;
-import by.kraskovski.pms.domain.User;
+import by.kraskovski.pms.domain.model.Cart;
+import by.kraskovski.pms.domain.model.CartProductStock;
+import by.kraskovski.pms.domain.model.ProductStock;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.repository.CartRepository;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.CartService;
@@ -14,6 +14,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
+import javax.transaction.Transactional;
 
 import static java.util.Optional.*;
 
@@ -47,6 +48,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public boolean addProduct(final String cartId, final String productStockId, final int count) {
         final Cart cart = find(cartId);
         final ProductStock productStock = productStockService.find(productStockId);
@@ -85,6 +87,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public boolean deleteProduct(final String cartId, final String productStockId, final int count) {
         final Cart cart = find(cartId);
         final ProductStock productStock = productStockService.find(productStockId);

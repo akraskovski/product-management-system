@@ -1,9 +1,8 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.domain.Stock;
+import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.service.StockService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -21,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 @RestController
 @RequestMapping("/stock")
+@Slf4j
 public class StockController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StockController.class);
     private final StockService stockService;
 
     @Autowired
@@ -36,11 +35,11 @@ public class StockController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllStocks() {
-        LOGGER.info("Start loadAllStocks");
+        log.info("Start loadAllStocks");
         try {
             return new ResponseEntity<>(stockService.findAll(), HttpStatus.OK);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception in loadAllStocks. " + e.getLocalizedMessage());
+            log.error("Exception in loadAllStocks. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -50,13 +49,13 @@ public class StockController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadStockById(@PathVariable("id") final String id) {
-        LOGGER.info("Start loadStockById: " + id);
+        log.info("Start loadStockById: " + id);
         try {
             final Stock stock = stockService.find(id);
             Assert.notNull(stock, "Unable to find stock with id: " + id);
             return new ResponseEntity<>(stock, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -66,11 +65,11 @@ public class StockController {
      */
     @RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
     public ResponseEntity loadStockProductsById(@PathVariable("id") final String id) {
-        LOGGER.info("Start loadStockProductsById: " + id);
+        log.info("Start loadStockProductsById: " + id);
         try {
             return new ResponseEntity<>(stockService.findProducts(id), HttpStatus.OK);
         } catch (DataAccessException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -83,7 +82,7 @@ public class StockController {
             @RequestParam("stock_id") final String stockId,
             @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
-        LOGGER.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
+        log.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
         return stockService.addProduct(stockId, productId, count)
                 ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -97,7 +96,7 @@ public class StockController {
             @RequestParam("stock_id") final String stockId,
             @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
-        LOGGER.info("Start delete Product: {} from Stock: {} with count: {}", productId, stockId, count);
+        log.info("Start delete Product: {} from Stock: {} with count: {}", productId, stockId, count);
         return stockService.deleteProduct(stockId, productId, count)
                 ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -108,11 +107,11 @@ public class StockController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createStock(@RequestBody final Stock stock) {
-        LOGGER.info("Start createStock");
+        log.info("Start createStock");
         try {
             return new ResponseEntity<>(stockService.create(stock), HttpStatus.CREATED);
         } catch (DataAccessException e) {
-            LOGGER.info("Error in createStock. " + e.getLocalizedMessage());
+            log.info("Error in createStock. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -122,11 +121,11 @@ public class StockController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateStock(@RequestBody final Stock stock) {
-        LOGGER.info("Start updateStock");
+        log.info("Start updateStock");
         try {
             return new ResponseEntity<>(stockService.update(stock), HttpStatus.OK);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception in updateStock. " + e.getLocalizedMessage());
+            log.error("Exception in updateStock. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }
@@ -136,12 +135,12 @@ public class StockController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStock(@PathVariable("id") final String id) {
-        LOGGER.info("Start deleteStock");
+        log.info("Start deleteStock");
         try {
             stockService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
-            LOGGER.error("Exception in deleteStock. " + e.getLocalizedMessage());
+            log.error("Exception in deleteStock. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }

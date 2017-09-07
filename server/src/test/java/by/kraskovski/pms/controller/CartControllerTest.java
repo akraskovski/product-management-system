@@ -1,17 +1,19 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.Product;
-import by.kraskovski.pms.domain.ProductStock;
-import by.kraskovski.pms.domain.Stock;
-import by.kraskovski.pms.domain.User;
-import by.kraskovski.pms.service.*;
+import by.kraskovski.pms.domain.model.Product;
+import by.kraskovski.pms.domain.model.ProductStock;
+import by.kraskovski.pms.domain.model.Stock;
+import by.kraskovski.pms.domain.model.User;
+import by.kraskovski.pms.service.CartService;
+import by.kraskovski.pms.service.ProductService;
+import by.kraskovski.pms.service.ProductStockService;
+import by.kraskovski.pms.service.StockService;
+import by.kraskovski.pms.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.transaction.Transactional;
 
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.*;
@@ -104,7 +106,6 @@ public class CartControllerTest extends ControllerConfig {
     }
 
     @Test
-    @Transactional
     public void deleteProductFromCart() throws Exception {
         final User user = prepareUser();
         userService.create(user);
