@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+import static java.util.Optional.ofNullable;
+
 /**
  * Handle requests for authentication operations.
  * Works with {@link TokenService}.
@@ -40,10 +42,12 @@ public class AuthenticationController {
     public ResponseEntity login(@RequestBody final User requestUser) {
         log.info("Start authentication user with username: " + requestUser.getUsername());
         try {
-            final TokenDTO tokenDTO = tokenService.generate(requestUser.getUsername(), requestUser.getPassword());
-            Optional.ofNullable(tokenDTO).orElseThrow(() -> new IllegalArgumentException("Generated token is null."));
-                log.info("User authentication with username: {} successful!", requestUser.getUsername());
-                return new ResponseEntity<>(tokenDTO, HttpStatus.ACCEPTED);
+            return ofNullable(tokenService.generate(requestUser.getUsername(), requestUser.getPassword()))
+                    .map(tokenDTO -> {
+                        log.info("User authentication with username: {} successful!", requestUser.getUsername());
+                        return new ResponseEntity<>(tokenDTO, HttpStatus.ACCEPTED);
+                    })
+                    .orElseThrow(() -> new IllegalArgumentException("Generated token is null."));
         } catch (IllegalArgumentException | BadCredentialsException e) {
             log.error(
                     "User authentication with username: {} failed! Cause: {}",
