@@ -1,29 +1,37 @@
+import java.beans.Introspector
+
+import static java.awt.Desktop.getDesktop
+
 apply plugin: 'checkstyle'
 
 checkstyle {
     ignoreFailures = false
-}
-
-checkstyleMain {
-    configFile = file('quality/checkstyle/checkstyle.xml')
-}
-
-checkstyleTest {
     configFile = file('quality/checkstyle/checkstyle.xml')
 }
 
 ext.checkType = 'none'
 
-task checkstyleHtml << {
-    def xmlReport = file("$buildDir/reports/checkstyle/${checkType}.xml")
-    if (xmlReport.exists()) {
-        ant.xslt(
-                in: xmlReport,
-                style: file('quality/checkstyle/checkstyle-noframes-sorted.xsl'),
+task checkstyleReport << {
+    if (file("$buildDir/reports/checkstyle/${checkType}.xml").exists()) {
+        ant.xslt(in: "$buildDir/reports/checkstyle/${checkType}.xml",
+                style:"quality/checkstyle/checkstyle.xsl",
                 out: "$buildDir/reports/checkstyle/${checkType}.html")
     }
 }
 
-tasks.withType(Checkstyle) {
-    finalizedBy checkstyleHtml
+gradle.taskGraph.afterTask { Task task, TaskState state ->
+    if (task.name.startsWith('checkstyle') && state.failure && task.hasProperty('reports')) {
+        checkType = Introspector.decapitalize(task.name.replace('checkstyle', ''))
+        checkstyleReport.execute()
+
+        def reportPath = task.reports.find { it.getName() == 'xml' }
+                .getDestination()
+                .getPath()
+                .replace('xml', 'html')
+
+        desktop?.browse file(reportPath).toURI()
+    }
 }
+
+test.dependsOn checkstyleMain
+test.dependsOn checkstyleTest
