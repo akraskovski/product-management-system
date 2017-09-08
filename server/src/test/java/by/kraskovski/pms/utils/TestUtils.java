@@ -8,8 +8,7 @@ import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.model.User;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
-import static org.apache.commons.lang3.RandomStringUtils.randomAscii;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomUtils.nextDouble;
 
 public final class TestUtils {
@@ -19,11 +18,11 @@ public final class TestUtils {
 
     public static Product prepareProduct() {
         final Product product = new Product();
-        product.setName(random(20));
-        product.setType(random(20));
-        product.setImage(random(40));
+        product.setName(randomAlphabetic(20));
+        product.setType(randomAlphabetic(20));
+        product.setImage(randomAlphabetic(40));
         product.setCost(10.90);
-        product.setDetails(random(50));
+        product.setDetails(randomAlphabetic(50));
         product.setHeight(nextDouble());
         product.setWidth(nextDouble());
         product.setWeight(nextDouble());
@@ -32,9 +31,9 @@ public final class TestUtils {
 
     public static Stock prepareStock() {
         final Stock stock = new Stock();
-        stock.setSpecialize(random(20));
-        stock.setAddress(random(20));
-        stock.setPhone(random(20));
+        stock.setSpecialize(randomAlphabetic(20));
+        stock.setAddress(randomAlphabetic(20));
+        stock.setPhone(randomAlphabetic(20));
         stock.setSquare(nextDouble());
 //        stock.setOpenTime(LocalTime.of(9, 30));
 //        stock.setCloseTime(LocalTime.of(22, 0));
@@ -43,29 +42,31 @@ public final class TestUtils {
 
     public static Store prepareStore() {
         final Store store = new Store();
-        store.setName(random(20));
-        store.setAddress(random(20));
-        store.setDetails(random(20));
+        store.setName(randomAlphabetic(20));
+        store.setAddress(randomAlphabetic(20));
+        store.setDetails(randomAlphabetic(20));
         store.setDiscounts(true);
-        store.setLogo(random(20));
-        store.setMail(random(20));
-        store.setPhone(random(20));
-        store.setSkype(random(20));
+        store.setLogo(randomAlphabetic(20));
+        store.setMail(randomAlphabetic(20));
+        store.setPhone(randomAlphabetic(20));
+        store.setSkype(randomAlphabetic(20));
         return store;
     }
 
     public static User prepareUser() {
         final User user = new User();
-        user.setUsername(random(20));
-        user.setPassword(random(20));
+        user.setUsername(randomAlphabetic(20));
+        user.setPassword(randomAlphabetic(20));
+        user.setEmail(randomAlphabetic(20));
+        user.setFirstName(randomAlphabetic(20));
+        user.setLastName(randomAlphabetic(20));
+        user.setPhone(randomAlphabetic(20));
         return user;
     }
 
     public static User prepareUserWithRole(final Authority authority) {
-        final User user = new User();
+        final User user = prepareUser();
         user.getAuthorities().add(authority);
-        user.setUsername(randomAscii(10));
-        user.setPassword(randomAscii(10));
         user.addCart(new Cart());
         return user;
     }

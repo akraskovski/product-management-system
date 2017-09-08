@@ -35,10 +35,11 @@ public class ImageServiceImpl implements ImageService {
         final String os = System.getProperty("os.name");
         final String defaultDir = System.getProperty("user.home") + "/pms";
 
-        if (os.contains("nix") || os.contains("nux") || os.indexOf("aix") > 0)
+        if (os.contains("nix") || os.contains("nux") || os.indexOf("aix") > 0) {
             root = ofNullable(unixDir).orElse(defaultDir);
-        else if (os.toLowerCase().contains("win"))
+        } else if (os.toLowerCase().contains("win")) {
             root = ofNullable(winDir).orElse(defaultDir);
+        }
 
         try {
             Files.createDirectory(Paths.get(root));
