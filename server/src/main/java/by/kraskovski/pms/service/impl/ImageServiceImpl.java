@@ -16,28 +16,34 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import static java.util.Optional.ofNullable;
+
 @Service
 @Slf4j
 public class ImageServiceImpl implements ImageService {
 
-    @Value("${unix.dir:/home/akraskovski/pms}")
+    @Value("${unix.dir:#{null}}")
     private String unixDir;
-    @Value("${win.dir:D:/pms}")
+
+    @Value("${win.dir:#{null}}")
     private String winDir;
+
     private static String root;
 
     @PostConstruct
     public void init() {
+        final String os = System.getProperty("os.name");
+        final String defaultDir = System.getProperty("user.home") + "/pms";
+
+        if (os.contains("nix") || os.contains("nux") || os.indexOf("aix") > 0)
+            root = ofNullable(unixDir).orElse(defaultDir);
+        else if (os.toLowerCase().contains("win"))
+            root = ofNullable(winDir).orElse(defaultDir);
+
         try {
-            final String os = System.getProperty("os.name");
-            if (os.contains("nix") || os.contains("nux") || os.indexOf("aix") > 0) {
-                root = unixDir;
-            } else if (os.toLowerCase().contains("win")) {
-                root = winDir;
-            }
             Files.createDirectory(Paths.get(root));
         } catch (IOException e) {
-            log.error("directory: \"" + root + "\" already exists!");
+            log.warn("directory: \"" + root + "\" already exists!");
         }
     }
 
