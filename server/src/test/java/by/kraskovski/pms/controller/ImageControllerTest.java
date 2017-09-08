@@ -2,15 +2,16 @@ package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
 import by.kraskovski.pms.service.ImageService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,7 +38,7 @@ public class ImageControllerTest extends ControllerConfig {
     public void uploadImagePositiveTest() throws Exception {
         final MockMultipartFile image = new MockMultipartFile("file", "content".getBytes());
 
-        mvc.perform(MockMvcRequestBuilders.fileUpload(BASE_IMAGE_URL + "/upload")
+        mvc.perform(fileUpload(BASE_IMAGE_URL + "/upload")
                 .file(image)
                 .header(authHeaderName, token)
                 .contentType(MediaType.MULTIPART_FORM_DATA))
@@ -48,18 +49,38 @@ public class ImageControllerTest extends ControllerConfig {
 
     @Test
     public void uploadImageNegativeTest() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.fileUpload(BASE_IMAGE_URL + "/upload")
+        mvc.perform(fileUpload(BASE_IMAGE_URL + "/upload")
                 .header(authHeaderName, token)
                 .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void loadImageAsResource() throws Exception {
+    public void loadImageAsResourcePostitiveTest() throws Exception {
+        final MockMultipartFile image = new MockMultipartFile("file", "image.jpg", null, "content".getBytes());
+        final String imageId = imageService.upload(image);
+
+        mvc.perform(get(BASE_IMAGE_URL + "/" + imageId)
+                .header(authHeaderName, token))
+                .andExpect(status().isOk())
+                .andExpect(content().bytes(image.getBytes()))
+                .andExpect(content().contentType(MediaType.IMAGE_JPEG));
+    }
+
+    @Test
+    public void loadImageAsResourceNegativeTest() throws Exception {
+        mvc.perform(get(BASE_IMAGE_URL + "/" + RandomStringUtils.randomAlphabetic(20))
+                .header(authHeaderName, token))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     public void deleteImage() throws Exception {
-    }
+        final MockMultipartFile image = new MockMultipartFile("file", "content".getBytes());
+        final String imageId = imageService.upload(image);
 
+        mvc.perform(delete(BASE_IMAGE_URL + "/" + imageId)
+                .header(authHeaderName, token))
+                .andExpect(status().isNoContent());
+    }
 }

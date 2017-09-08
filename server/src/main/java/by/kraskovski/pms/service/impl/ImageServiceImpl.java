@@ -1,9 +1,8 @@
 package by.kraskovski.pms.service.impl;
 
 import by.kraskovski.pms.service.ImageService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -18,13 +17,13 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class ImageServiceImpl implements ImageService {
 
     @Value("${unix.dir:/home/akraskovski/pms}")
     private String unixDir;
     @Value("${win.dir:D:/pms}")
     private String winDir;
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImageServiceImpl.class);
     private static String root;
 
     @PostConstruct
@@ -38,7 +37,7 @@ public class ImageServiceImpl implements ImageService {
             }
             Files.createDirectory(Paths.get(root));
         } catch (IOException e) {
-            LOGGER.error("directory: \"" + root + "\" already exists!");
+            log.error("directory: \"" + root + "\" already exists!");
         }
     }
 
@@ -52,7 +51,7 @@ public class ImageServiceImpl implements ImageService {
             uploadedFile.transferTo(file);
             return file.getName();
         } catch (IOException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             return null;
         }
     }
@@ -65,11 +64,11 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public boolean delete(final String id) {
-        final File file = new File(root + id);
+        final File file = new File(root + "/" + id);
         try {
             return Files.deleteIfExists(file.toPath());
         } catch (IOException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
             return false;
         }
     }
@@ -79,7 +78,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             FileUtils.cleanDirectory(new File(root));
         } catch (IOException e) {
-            LOGGER.error(e.getLocalizedMessage());
+            log.error(e.getLocalizedMessage());
         }
     }
 }
