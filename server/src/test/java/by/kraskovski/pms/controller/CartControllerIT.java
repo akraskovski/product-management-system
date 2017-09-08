@@ -22,7 +22,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class CartControllerTest extends ControllerConfig {
+public class CartControllerIT extends ControllerConfig {
 
     private static final String BASE_CART_URL = "/cart";
 
