@@ -1,6 +1,6 @@
 package by.kraskovski.pms.security.service;
 
-import by.kraskovski.pms.domain.dto.TokenDTO;
+import by.kraskovski.pms.controller.dto.TokenDTO;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;

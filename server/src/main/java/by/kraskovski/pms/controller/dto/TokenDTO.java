@@ -1,4 +1,4 @@
-package by.kraskovski.pms.domain.dto;
+package by.kraskovski.pms.controller.dto;
 
 import by.kraskovski.pms.domain.model.User;
 import lombok.Getter;

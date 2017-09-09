@@ -1,12 +1,13 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
+import by.kraskovski.pms.controller.dto.LoginDTO;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.utils.TestUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
+import static org.apache.commons.lang3.RandomStringUtils.*;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -24,7 +25,7 @@ public class AuthenticationControllerIT extends ControllerConfig {
 
         mvc.perform(post(BASE_AUTH_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(user)))
+                .content(objectMapper.writeValueAsString(new LoginDTO(user.getUsername(), user.getPassword()))))
                 .andExpect(status().isAccepted())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.token", notNullValue(String.class)))
@@ -37,11 +38,14 @@ public class AuthenticationControllerIT extends ControllerConfig {
         final User user = TestUtils.prepareUser();
         userService.create(user);
 
-        user.setUsername(RandomStringUtils.random(20));
+        final LoginDTO loginDTO = LoginDTO.builder()
+                .username(randomAlphabetic(20))
+                .password(user.getPassword())
+                .build();
 
         mvc.perform(post(BASE_AUTH_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(user)))
+                .content(objectMapper.writeValueAsString(loginDTO)))
                 .andExpect(status().isUnauthorized());
     }
 }

@@ -1,6 +1,7 @@
 package by.kraskovski.pms.domain.model;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,7 @@ public class Product extends BaseEntity {
     private double cost;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private Set<ProductStock> productStocks = new HashSet<>();
 
     private LocalDateTime manufactureDate;

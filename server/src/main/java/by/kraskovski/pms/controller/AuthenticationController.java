@@ -1,5 +1,6 @@
 package by.kraskovski.pms.controller;
 
+import by.kraskovski.pms.controller.dto.LoginDTO;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.security.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,19 +37,19 @@ public class AuthenticationController {
      * Generate token from {@link TokenService}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody final User requestUser) {
-        log.info("Start authentication user with username: " + requestUser.getUsername());
+    public ResponseEntity login(@RequestBody final LoginDTO loginDto) {
+        log.info("Start authentication user with username: " + loginDto.getUsername());
         try {
-            return ofNullable(tokenService.generate(requestUser.getUsername(), requestUser.getPassword()))
+            return ofNullable(tokenService.generate(loginDto.getUsername(), loginDto.getPassword()))
                     .map(tokenDTO -> {
-                        log.info("User authentication with username: {} successful!", requestUser.getUsername());
+                        log.info("User authentication with username: {} successful!", loginDto.getUsername());
                         return new ResponseEntity<>(tokenDTO, HttpStatus.ACCEPTED);
                     })
                     .orElseThrow(() -> new IllegalArgumentException("Generated token is null."));
         } catch (IllegalArgumentException | BadCredentialsException e) {
             log.error(
                     "User authentication with username: {} failed! Cause: {}",
-                    requestUser.getUsername(),
+                    loginDto.getUsername(),
                     e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.UNAUTHORIZED);
         }
