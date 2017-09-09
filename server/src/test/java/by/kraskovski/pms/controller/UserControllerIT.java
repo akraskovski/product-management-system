@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareUser;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class UserControllerIT extends ControllerConfig {
 
@@ -34,6 +32,7 @@ public class UserControllerIT extends ControllerConfig {
 
     @After
     public void after() {
+        cleanup();
         userService.deleteAll();
     }
 
@@ -92,10 +91,35 @@ public class UserControllerIT extends ControllerConfig {
 
     @Test
     public void updateUserTest() throws Exception {
+        final User user = userService.create(prepareUser());
+        user.setUsername(randomAlphabetic(20));
+        user.setPassword(randomAlphabetic(20));
+        user.setFirstName(randomAlphabetic(20));
+        user.setLastName(randomAlphabetic(20));
+        user.setEmail(randomAlphabetic(20));
+        user.setPhone(randomAlphabetic(20));
+
+        mvc.perform(put(BASE_USER_URL)
+                .header(authHeaderName, token)
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.id", is(user.getId())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.password", notNullValue()))
+                .andExpect(jsonPath("$.firstName", is(user.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(user.getLastName())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())))
+                .andExpect(jsonPath("$.phone", is(user.getPhone())));
     }
 
     @Test
     public void deleteUserTest() throws Exception {
-    }
+        final User user = userService.create(prepareUser());
 
+        mvc.perform(delete(BASE_USER_URL + "/" + user.getId())
+                .header(authHeaderName, token))
+                .andExpect(status().isNoContent());
+    }
 }
