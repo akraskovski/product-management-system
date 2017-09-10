@@ -26,6 +26,7 @@
                 </li>
                 <li class="nav-item" *ngIf="canWorkWithStock()"><a class="nav-link" routerLink="/stock">{{'Stock' | translate}}</a></li>
                 <li class="nav-item"><a class="nav-link" routerLink="/store">{{'Store' | translate}}</a></li>
+                <li class="nav-item" *ngIf="canWorkWithUser()"><a class="nav-link" href="/swagger-ui.html">Swagger</a></li>
             </ul>
         </div>
     </nav>
