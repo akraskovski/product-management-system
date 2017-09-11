@@ -124,11 +124,6 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public List<Stock> findBySpecialize(final String specialize) {
-        return stockRepository.findBySpecialize(specialize);
-    }
-
-    @Override
     public List<Stock> findAll() {
         return stockRepository.findAll();
     }
