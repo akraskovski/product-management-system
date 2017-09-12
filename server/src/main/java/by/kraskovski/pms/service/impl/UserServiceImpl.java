@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(final User object) {
 //        object.setCreateDate(LocalDateTime.now());
+        object.setPassword(passwordEncoder.encode(object.getPassword()));
         if (object.getAuthorities().isEmpty()) {
             object.getAuthorities().add(authorityService.findByName(AuthorityEnum.ROLE_USER));
         }

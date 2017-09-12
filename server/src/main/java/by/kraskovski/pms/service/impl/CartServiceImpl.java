@@ -36,15 +36,14 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void create(final String id) throws InstanceAlreadyExistsException {
+    public Cart create(final String id) throws InstanceAlreadyExistsException {
         final User user = ofNullable(userService.find(id))
                 .orElseThrow(() -> new UserNotFoundException(
                         "Can't create cart for user with id:" + id + ". Entity not found in database!"));
         if (user.getCart() != null) {
             throw new InstanceAlreadyExistsException("Cart with id:" + id + " already exists!");
         }
-        user.addCart(new Cart());
-        userService.update(user);
+        return cartRepository.save(new Cart(user));
     }
 
     @Override

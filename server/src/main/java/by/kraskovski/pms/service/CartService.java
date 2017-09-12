@@ -12,7 +12,7 @@ public interface CartService {
     /**
      * Save {@link Cart} entity to database table
      */
-    void create(String id) throws InstanceAlreadyExistsException;
+    Cart create(String id) throws InstanceAlreadyExistsException;
 
     /**
      * Add product to cart.
