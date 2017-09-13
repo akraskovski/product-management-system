@@ -1,6 +1,6 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.controller.dto.LoginDTO;
+import by.kraskovski.pms.controller.dto.LoginDto;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.security.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class AuthenticationController {
      * Generate token from {@link TokenService}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody final LoginDTO loginDto) {
+    public ResponseEntity login(@RequestBody final LoginDto loginDto) {
         log.info("Start authentication user with username: " + loginDto.getUsername());
         try {
             return ofNullable(tokenService.generate(loginDto.getUsername(), loginDto.getPassword()))

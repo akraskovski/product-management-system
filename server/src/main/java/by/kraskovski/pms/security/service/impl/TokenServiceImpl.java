@@ -1,7 +1,7 @@
 package by.kraskovski.pms.security.service.impl;
 
 import by.kraskovski.pms.domain.model.User;
-import by.kraskovski.pms.controller.dto.TokenDTO;
+import by.kraskovski.pms.controller.dto.TokenDto;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.security.service.TokenService;
 import by.kraskovski.pms.service.UserService;
@@ -49,7 +49,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public TokenDTO generate(final String username, final String password) {
+    public TokenDto generate(final String username, final String password) {
         final User user = userService.findByUsername(username);
         if (ofNullable(user).isPresent() && ofNullable(password).isPresent()) {
             final Map<String, Object> tokenData = new HashMap<>();
@@ -64,7 +64,7 @@ public class TokenServiceImpl implements TokenService {
                 calendar.add(Calendar.MINUTE, expirationTime);
                 jwtBuilder.setExpiration(calendar.getTime());
                 final String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact();
-                return new TokenDTO(token, user);
+                return new TokenDto(token, user);
             }
         }
         throw new BadCredentialsException("Invalid input data.");

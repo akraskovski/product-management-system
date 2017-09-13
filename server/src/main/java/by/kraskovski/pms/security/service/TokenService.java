@@ -1,6 +1,6 @@
 package by.kraskovski.pms.security.service;
 
-import by.kraskovski.pms.controller.dto.TokenDTO;
+import by.kraskovski.pms.controller.dto.TokenDto;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +13,7 @@ public interface TokenService {
     /**
      * Generate and return token
      */
-    TokenDTO generate(String username, String password);
+    TokenDto generate(String username, String password);
 
     /**
      * Authenticate method
