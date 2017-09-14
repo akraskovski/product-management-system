@@ -1,8 +1,10 @@
 package by.kraskovski.pms.controller;
 
+import by.kraskovski.pms.controller.dto.UserDto;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -23,10 +25,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserController {
 
     private final UserService userService;
+    private final Mapper mapper;
 
     @Autowired
-    public UserController(final UserService userService) {
+    public UserController(final UserService userService, Mapper mapper) {
         this.userService = userService;
+        this.mapper = mapper;
     }
 
     /**
@@ -52,7 +56,7 @@ public class UserController {
         try {
             final User user = userService.find(id);
             Assert.notNull(user, "Unable to find user with id: " + id);
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            return new ResponseEntity<>(mapper.map(user, UserDto.class), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
@@ -68,7 +72,7 @@ public class UserController {
         try {
             final User user = userService.findByUsername(username);
             Assert.notNull(user, "Unable to find user with username: " + username);
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            return new ResponseEntity<>(mapper.map(user, UserDto.class), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
@@ -79,10 +83,11 @@ public class UserController {
      * Creating {@link User} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createUser(@RequestBody final User user) {
-        log.info("Start createUser: " + user.getUsername());
+    public ResponseEntity createUser(@RequestBody final UserDto userDto) {
+        log.info("Start createUser: " + userDto.getUsername());
         try {
-            return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
+            final User user = mapper.map(userDto, User.class);
+            return new ResponseEntity<>(mapper.map(userService.create(user), UserDto.class), HttpStatus.CREATED);
         } catch (DataAccessException e) {
             log.error("Exception in createUser. " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
@@ -93,12 +98,13 @@ public class UserController {
      * Update {@link User} entity in database.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateUser(@RequestBody final User user) {
-        log.info("Start updateUser: " + user.getUsername());
+    public ResponseEntity updateUser(@RequestBody final UserDto userDto) {
+        log.info("Start updateUser: " + userDto.getUsername());
         try {
-            return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
+            final User user = mapper.map(userDto, User.class);
+            return new ResponseEntity<>(mapper.map(userService.update(user), UserDto.class), HttpStatus.OK);
         } catch (DataAccessException e) {
-            log.error("Exception while updating user with id" + user.getId() + ". " + e.getLocalizedMessage());
+            log.error("Exception while updating user with id" + userDto.getId() + ". " + e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
         }
     }

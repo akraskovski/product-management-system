@@ -1,10 +1,14 @@
 package by.kraskovski.pms.controller.dto;
 
+import by.kraskovski.pms.domain.model.Authority;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class UserDto {
 
+    private String id;
     private String username;
     private String password;
     private String firstName;
@@ -12,4 +16,6 @@ public class UserDto {
     private String email;
     private String phone;
     private String avatar;
+    private List<Authority> authorities;
+//    private LocalDateTime createDate;
 }
