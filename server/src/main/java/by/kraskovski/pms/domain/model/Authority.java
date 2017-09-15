@@ -27,4 +27,8 @@ public class Authority extends BaseEntity implements GrantedAuthority{
     public String getAuthority() {
         return authority.name();
     }
+
+    public void setAuthority(final String authority) {
+        this.authority = AuthorityEnum.valueOf(authority);
+    }
 }

@@ -1,7 +1,6 @@
 package by.kraskovski.pms.domain.model;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +34,7 @@ public class User extends BaseEntity implements Authentication {
             name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_id")})
-    private List<Authority> authorities = new ArrayList<>();
+    private List<Authority> authorities;
 
     @OneToOne(
             mappedBy = "user",
@@ -45,20 +43,10 @@ public class User extends BaseEntity implements Authentication {
     private Cart cart;
 
     @Column(unique = true, nullable = false)
-
     private String username;
 
     @Column(nullable = false)
     private String password;
-
-    @Transient
-    private boolean authenticated;
-
-    private String firstName;
-
-    private String lastName;
-
-    private LocalDateTime createDate;
 
     @Column(unique = true)
     private String email;
@@ -66,6 +54,12 @@ public class User extends BaseEntity implements Authentication {
     @Column(unique = true)
     private String phone;
 
+    @Transient
+    private boolean authenticated;
+
+    private String firstName;
+    private String lastName;
+    private LocalDateTime createDate;
     private String avatar;
 
     public User(final String username, final String password) {
