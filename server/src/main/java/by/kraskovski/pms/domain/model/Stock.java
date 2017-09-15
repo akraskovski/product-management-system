@@ -1,7 +1,6 @@
 package by.kraskovski.pms.domain.model;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,17 +32,8 @@ public class Stock extends BaseEntity {
     private String specialize;
 
     private String address;
-
     private String phone;
-
     private double square;
-
     private LocalTime openTime;
-
     private LocalTime closeTime;
-
-    @JsonIgnore
-    public Set<ProductStock> getProductStocks() {
-        return productStocks;
-    }
 }

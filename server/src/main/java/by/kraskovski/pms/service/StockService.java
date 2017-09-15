@@ -1,9 +1,9 @@
 package by.kraskovski.pms.service;
 
+import by.kraskovski.pms.controller.dto.ProductStockDto;
 import by.kraskovski.pms.domain.model.Stock;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Service for {@link Stock}
@@ -23,7 +23,7 @@ public interface StockService {
     /**
      * Find all products contains in stock.
      */
-    Map<String, Integer> findProducts(String id);
+    List<ProductStockDto> findProducts(String id);
 
     /**
      * Add product to stock.

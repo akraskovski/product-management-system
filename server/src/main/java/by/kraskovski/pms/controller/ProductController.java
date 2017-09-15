@@ -41,14 +41,9 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllProducts() {
         log.info("Start loadAllProducts");
-        try {
-            return ResponseEntity.ok(productService.findAll().stream()
-                    .map(product -> mapper.map(product, ProductDto.class))
-                    .collect(toList()));
-        } catch (DataAccessException e) {
-            log.error("Exception in loadAllProducts. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.ok(productService.findAll().stream()
+                .map(product -> mapper.map(product, ProductDto.class))
+                .collect(toList()));
     }
 
     /**

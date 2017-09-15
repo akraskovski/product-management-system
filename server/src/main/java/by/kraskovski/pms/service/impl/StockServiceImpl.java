@@ -1,30 +1,38 @@
 package by.kraskovski.pms.service.impl;
 
+import by.kraskovski.pms.controller.dto.ProductStockDto;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.repository.StockRepository;
 import by.kraskovski.pms.service.ProductService;
 import by.kraskovski.pms.service.StockService;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
     private final ProductService productService;
+    private final Mapper mapper;
 
     @Autowired
-    public StockServiceImpl(final StockRepository stockRepository, final ProductService productService) {
+    public StockServiceImpl(final StockRepository stockRepository,
+                            final ProductService productService,
+                            final Mapper mapper) {
         this.stockRepository = stockRepository;
         this.productService = productService;
+        this.mapper = mapper;
     }
 
     @Override
@@ -38,12 +46,14 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Map<String, Integer> findProducts(final String id) {
+    public List<ProductStockDto> findProducts(final String id) {
         final Stock stock = stockRepository.findOne(id);
-        final Map<String, Integer> products = new HashMap<>();
-        stock.getProductStocks()
-                .forEach(productStock -> products.put(productStock.getProduct().getId(), productStock.getProductsCount()));
-        return products;
+        if (CollectionUtils.isEmpty(stock.getProductStocks())) {
+            return Collections.emptyList();
+        }
+        return stock.getProductStocks().stream()
+                .map(productStock -> mapper.map(productStock, ProductStockDto.class))
+                .collect(toList());
     }
 
     @Override
