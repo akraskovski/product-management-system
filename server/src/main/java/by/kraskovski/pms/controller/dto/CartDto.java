@@ -2,12 +2,14 @@ package by.kraskovski.pms.controller.dto;
 
 import by.kraskovski.pms.domain.model.CartProductStock;
 import by.kraskovski.pms.domain.model.User;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 public class CartDto {
 
     private User user;

@@ -45,7 +45,7 @@ public class CartController {
         try {
             final Cart cart = cartService.find(id);
             Assert.notNull(cart, "Unable to find cart with id: " + id);
-            return new ResponseEntity<>(mapper.map(cart, CartDto.class), HttpStatus.OK);
+            return ResponseEntity.ok(mapper.map(cart, CartDto.class));
         } catch (IllegalArgumentException e) {
             log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
