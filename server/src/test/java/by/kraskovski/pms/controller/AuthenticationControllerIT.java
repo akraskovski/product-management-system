@@ -22,30 +22,23 @@ public class AuthenticationControllerIT extends ControllerConfig {
     public void loginPositiveTest() throws Exception {
         final User user = TestUtils.prepareUser();
         userService.create(user);
-
         mvc.perform(post(BASE_AUTH_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(new LoginDto(user.getUsername(), user.getPassword()))))
                 .andExpect(status().isAccepted())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.token", notNullValue(String.class)))
-                .andExpect(jsonPath("$.user.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.user.password", isEmptyString()));
+                .andExpect(jsonPath("$.userDto.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.userDto.password", isEmptyString()));
     }
 
     @Test
     public void loginNegativeTest() throws Exception {
         final User user = TestUtils.prepareUser();
         userService.create(user);
-
-        final LoginDto loginDto = LoginDto.builder()
-                .username(randomAlphabetic(20))
-                .password(user.getPassword())
-                .build();
-
         mvc.perform(post(BASE_AUTH_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(loginDto)))
+                .content(objectMapper.writeValueAsString(new LoginDto(randomAlphabetic(10), user.getPassword()))))
                 .andExpect(status().isUnauthorized());
     }
 }

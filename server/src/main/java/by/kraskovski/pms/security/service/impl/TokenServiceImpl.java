@@ -1,5 +1,6 @@
 package by.kraskovski.pms.security.service.impl;
 
+import by.kraskovski.pms.controller.dto.UserDto;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.controller.dto.TokenDto;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
@@ -12,6 +13,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -42,10 +44,12 @@ public class TokenServiceImpl implements TokenService {
     private int expirationTime;
 
     private final UserService userService;
+    private final Mapper mapper;
 
     @Autowired
-    public TokenServiceImpl(final UserService userService) {
+    public TokenServiceImpl(final UserService userService, final Mapper mapper) {
         this.userService = userService;
+        this.mapper = mapper;
     }
 
     @Override
@@ -64,7 +68,7 @@ public class TokenServiceImpl implements TokenService {
                 calendar.add(Calendar.MINUTE, expirationTime);
                 jwtBuilder.setExpiration(calendar.getTime());
                 final String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact();
-                return new TokenDto(token, user);
+                return new TokenDto(token, mapper.map(user, UserDto.class));
             }
         }
         throw new BadCredentialsException("Invalid input data.");

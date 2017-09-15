@@ -31,7 +31,7 @@ public class CartController {
     private final Mapper mapper;
 
     @Autowired
-    public CartController(final CartService cartService, Mapper mapper) {
+    public CartController(final CartService cartService, final Mapper mapper) {
         this.cartService = cartService;
         this.mapper = mapper;
     }

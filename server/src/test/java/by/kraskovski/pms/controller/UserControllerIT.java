@@ -1,8 +1,10 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
+import by.kraskovski.pms.controller.dto.UserDto;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.service.UserService;
+import org.dozer.Mapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +30,9 @@ public class UserControllerIT extends ControllerConfig {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private Mapper mapper;
 
     @Before
     public void before() {
@@ -77,21 +82,21 @@ public class UserControllerIT extends ControllerConfig {
 
     @Test
     public void createUserTest() throws Exception {
-        final User user = prepareUser();
+        final UserDto userDto = mapper.map(prepareUser(), UserDto.class);
 
         mvc.perform(post(BASE_USER_URL)
                 .header(authHeaderName, token)
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(user)))
+                .content(objectMapper.writeValueAsString(userDto)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", notNullValue()))
-                .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.password", is(user.getPassword())))
-                .andExpect(jsonPath("$.firstName", is(user.getFirstName())))
-                .andExpect(jsonPath("$.lastName", is(user.getLastName())))
-                .andExpect(jsonPath("$.email", is(user.getEmail())))
-                .andExpect(jsonPath("$.phone", is(user.getPhone())));
+                .andExpect(jsonPath("$.username", is(userDto.getUsername())))
+                .andExpect(jsonPath("$.password", notNullValue(String.class)))
+                .andExpect(jsonPath("$.firstName", is(userDto.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(userDto.getLastName())))
+                .andExpect(jsonPath("$.email", is(userDto.getEmail())))
+                .andExpect(jsonPath("$.phone", is(userDto.getPhone())));
     }
 
     @Test
@@ -107,7 +112,7 @@ public class UserControllerIT extends ControllerConfig {
         mvc.perform(put(BASE_USER_URL)
                 .header(authHeaderName, token)
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(user)))
+                .content(objectMapper.writeValueAsString(mapper.map(user, UserDto.class))))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", is(user.getId())))

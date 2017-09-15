@@ -57,7 +57,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(final User object) {
         final User oldUser = userRepository.findOne(object.getId());
-        if (!passwordEncoder.matches(object.getPassword(), oldUser.getPassword()) && !oldUser.getPassword().equals(object.getPassword())) {
+        if (!passwordEncoder.matches(object.getPassword(), oldUser.getPassword())
+                && !oldUser.getPassword().equals(object.getPassword())) {
             object.setPassword(passwordEncoder.encode(object.getPassword()));
             return userRepository.save(object);
         }

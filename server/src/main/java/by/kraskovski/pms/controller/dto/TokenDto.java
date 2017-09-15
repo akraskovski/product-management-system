@@ -21,11 +21,11 @@ public class TokenDto implements Serializable {
     /**
      * Current logged {@link User}
      */
-    private User user;
+    private UserDto userDto;
 
-    public TokenDto(final String token, final User user) {
+    public TokenDto(final String token, final UserDto userDto) {
         this.token = token;
-        this.user = user;
-        this.user.setPassword(EMPTY);
+        this.userDto = userDto;
+        this.userDto.setPassword(EMPTY);
     }
 }

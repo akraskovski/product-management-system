@@ -30,7 +30,7 @@ public class UserController {
     private final Mapper mapper;
 
     @Autowired
-    public UserController(final UserService userService, Mapper mapper) {
+    public UserController(final UserService userService, final Mapper mapper) {
         this.userService = userService;
         this.mapper = mapper;
     }

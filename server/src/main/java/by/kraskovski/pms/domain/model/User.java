@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public class User extends BaseEntity implements Authentication {
             name = "user_authority",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_id")})
-    private List<Authority> authorities;
+    private List<Authority> authorities = new ArrayList<>();
 
     @OneToOne(
             mappedBy = "user",
@@ -91,21 +92,6 @@ public class User extends BaseEntity implements Authentication {
     @Override
     public Object getPrincipal() {
         return username;
-    }
-
-    @Override
-    public boolean isAuthenticated() {
-        return authenticated;
-    }
-
-    @Override
-    public List<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public void setAuthenticated(final boolean isAuthenticated) throws IllegalArgumentException {
-        this.authenticated = isAuthenticated;
     }
 
     public Cart getCart() {
