@@ -1,9 +1,10 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
+import by.kraskovski.pms.controller.dto.ProductDto;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.service.ProductService;
-import org.apache.commons.lang3.RandomUtils;
+import org.dozer.Mapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,9 @@ public class ProductControllerIT extends ControllerConfig {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private Mapper mapper;
+
     @Before
     public void before() {
         productService.deleteAll();
@@ -42,18 +46,13 @@ public class ProductControllerIT extends ControllerConfig {
 
     @Test
     public void createProductTest() throws Exception {
-        final Product product = prepareProduct();
-
         mvc.perform(post(BASE_PRODUCTS_URL)
                 .header(authHeaderName, token)
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(product)))
+                .content(objectMapper.writeValueAsString(mapper.map(prepareProduct(), ProductDto.class))))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.id", notNullValue()))
-                .andExpect(jsonPath("$.name", is(product.getName())))
-                .andExpect(jsonPath("$.type", is(product.getType())))
-                .andExpect(jsonPath("$.image", is(product.getImage())));
+                .andExpect(jsonPath("$.id", notNullValue()));
     }
 
     @Test
@@ -65,10 +64,7 @@ public class ProductControllerIT extends ControllerConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.id", is(product.getId())))
-                .andExpect(jsonPath("$.name", is(product.getName())))
-                .andExpect(jsonPath("$.type", is(product.getType())))
-                .andExpect(jsonPath("$.image", is(product.getImage())));
+                .andExpect(jsonPath("$.id", is(product.getId())));
     }
 
     @Test
@@ -80,10 +76,7 @@ public class ProductControllerIT extends ControllerConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$[0].id", is(product.getId())))
-                .andExpect(jsonPath("$[0].name", is(product.getName())))
-                .andExpect(jsonPath("$[0].type", is(product.getType())))
-                .andExpect(jsonPath("$[0].image", is(product.getImage())));
+                .andExpect(jsonPath("$[0].id", is(product.getId())));
     }
 
     @Test
@@ -95,28 +88,20 @@ public class ProductControllerIT extends ControllerConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$[0].id", is(product.getId())))
-                .andExpect(jsonPath("$[0].name", is(product.getName())))
-                .andExpect(jsonPath("$[0].type", is(product.getType())))
-                .andExpect(jsonPath("$[0].image", is(product.getImage())));
+                .andExpect(jsonPath("$[0].id", is(product.getId())));
     }
 
     @Test
     public void updateProductTest() throws Exception {
         final Product product = prepareProduct();
         productService.create(product);
-
         product.setName(random(20));
         product.setImage(random(20));
         product.setType(random(20));
-        product.setCost(RandomUtils.nextDouble());
-        product.setDetails(random(50));
-        product.setManufactureDate(null);
-
         mvc.perform(put(BASE_PRODUCTS_URL)
                 .header(authHeaderName, token)
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(product)))
+                .content(objectMapper.writeValueAsString(mapper.map(product, ProductDto.class))))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", is(product.getId())))

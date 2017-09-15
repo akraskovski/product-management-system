@@ -11,7 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Integration test for {@link ProductRepository}

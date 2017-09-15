@@ -13,7 +13,10 @@ import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceTest {
@@ -30,16 +33,16 @@ public class ProductServiceTest {
     @Test
     public void createTest() {
         final Product product = prepareProduct();
-        when(productRepository.save((Product) anyObject())).thenReturn(product);
+        when(productRepository.save(product)).thenReturn(product);
 
         assertNotEquals(0, productService.create(new Product()).getId());
-        verify(productRepository).save((Product) anyObject());
+        verify(productRepository).save(product);
     }
 
     @Test
     public void findByIdTest() {
         final Product product = prepareProduct();
-        when(productRepository.findOne(anyString())).thenReturn(product);
+        when(productRepository.findOne(product.getId())).thenReturn(product);
 
         assertEquals(product, productService.find(product.getId()));
         verify(productRepository).findOne(product.getId());
