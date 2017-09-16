@@ -12,8 +12,8 @@ import java.util.Set;
 @Setter
 public class CartDto {
 
-    private User user;
-    private LocalDateTime createDate;
+    private String id;
     private double totalCost;
     private Set<CartProductStock> cartProductStocks;
+//    private LocalDateTime createDate;
 }

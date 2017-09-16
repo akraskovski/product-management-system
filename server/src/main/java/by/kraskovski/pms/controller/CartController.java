@@ -41,7 +41,7 @@ public class CartController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadCartById(@PathVariable("id") final String id) {
-        log.info("Start loadCartById: " + id);
+        log.info("Start loadCartById: {}", id);
         try {
             final Cart cart = cartService.find(id);
             Assert.notNull(cart, "Unable to find cart with id: " + id);
