@@ -5,7 +5,11 @@ import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.User;
-import by.kraskovski.pms.service.*;
+import by.kraskovski.pms.service.CartService;
+import by.kraskovski.pms.service.ProductService;
+import by.kraskovski.pms.service.ProductStockService;
+import by.kraskovski.pms.service.StockService;
+import by.kraskovski.pms.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -87,15 +91,15 @@ public class CartControllerIT extends ControllerConfig {
     public void createCartWithoutUserTest() throws Exception {
         mvc.perform(post(BASE_CART_URL + "/" + randomAlphabetic(20))
                 .header(authHeaderName, token))
-                .andExpect(status().isCreated());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void addProductToCartTest() throws Exception {
+    public void addProductToCartPositiveTest() throws Exception {
         final User user = userService.create(prepareUser());
-        cartService.create(user.getId());
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
+        cartService.create(user.getId());
         stockService.addProduct(stock.getId(), product.getId(), 10);
         final ProductStock productStock = productStockService.findByStockIdAndProductId(stock.getId(), product.getId());
         mvc.perform(put(BASE_CART_URL)
@@ -107,7 +111,23 @@ public class CartControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void deleteProductFromCartTest() throws Exception {
+    public void addProductToCartNegativeTest() throws Exception {
+        final User user = userService.create(prepareUser());
+        final Product product = productService.create(prepareProduct());
+        final Stock stock = stockService.create(prepareStock());
+        cartService.create(user.getId());
+        stockService.addProduct(stock.getId(), product.getId(), 10);
+        final ProductStock productStock = productStockService.findByStockIdAndProductId(stock.getId(), product.getId());
+        mvc.perform(put(BASE_CART_URL)
+                .header(authHeaderName, token)
+                .param("cart_id", user.getId())
+                .param("ps_id", productStock.getId())
+                .param("count", "15"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void deleteProductFromCartPositiveTest() throws Exception {
         final User user = userService.create(prepareUser());
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
@@ -124,6 +144,23 @@ public class CartControllerIT extends ControllerConfig {
     }
 
     @Test
+    public void deleteProductFromCartNegativeTest() throws Exception {
+        final User user = userService.create(prepareUser());
+        final Product product = productService.create(prepareProduct());
+        final Stock stock = stockService.create(prepareStock());
+        cartService.create(user.getId());
+        stockService.addProduct(stock.getId(), product.getId(), 10);
+        final ProductStock productStock = productStockService.findByStockIdAndProductId(stock.getId(), product.getId());
+        cartService.addProduct(user.getId(), productStock.getId(), 10);
+        mvc.perform(delete(BASE_CART_URL)
+                .header(authHeaderName, token)
+                .param("cart_id", user.getId())
+                .param("ps_id", productStock.getId())
+                .param("count", "11"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void deleteCartTest() throws Exception {
         final User user = prepareUser();
         userService.create(user);
@@ -133,5 +170,4 @@ public class CartControllerIT extends ControllerConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());
     }
-
 }

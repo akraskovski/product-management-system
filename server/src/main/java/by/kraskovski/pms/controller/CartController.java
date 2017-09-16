@@ -100,7 +100,7 @@ public class CartController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteCart(@PathVariable("id") final String id) {
-        log.info("Start deleteCart");
+        log.info("Start deleteCart: {}", id);
         try {
             cartService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
