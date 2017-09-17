@@ -55,9 +55,7 @@ public class StoreController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadStoreById(@PathVariable("id") final String id) {
         log.info("Start loadStoreById: {}", id);
-        final Store store = storeService.find(id);
-        Assert.notNull(store, "Unable to find store with id: " + id);
-        return ResponseEntity.ok(mapper.map(store, StoreDto.class));
+        return ResponseEntity.ok(mapper.map(storeService.find(id), StoreDto.class));
     }
 
     /**
@@ -66,9 +64,7 @@ public class StoreController {
     @RequestMapping(value = "/{id}/stock-manage", method = RequestMethod.GET)
     public ResponseEntity loadStoreStocksById(@PathVariable("id") final String id) {
         log.info("Start loadStoreStocksById: {}", id);
-        final Store store = storeService.find(id);
-        Assert.notNull(store, "Unable to find store with id: " + id);
-        final List<StockDto> stockDtos = store.getStockList().stream()
+        final List<StockDto> stockDtos = storeService.find(id).getStockList().stream()
                 .map(stock -> mapper.map(stock, StockDto.class)).collect(toList());
         return ResponseEntity.ok(stockDtos);
     }
@@ -90,10 +86,8 @@ public class StoreController {
     public ResponseEntity addStock(@RequestParam("store_id") final String storeId,
                                    @RequestParam("stock_id") final String stockId) {
         log.info("Start add stock: {} to store: {}", stockId, storeId);
-        //TODO: one response
-        return storeService.addStock(storeId, stockId)
-                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        storeService.addStock(storeId, stockId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -103,9 +97,8 @@ public class StoreController {
     public ResponseEntity deleteStock(@RequestParam("store_id") final String storeId,
                                       @RequestParam("stock_id") final String stockId) {
         log.info("Start delete stock: {} from store: {}", stockId, storeId);
-        return storeService.deleteStock(storeId, stockId)
-                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        storeService.deleteStock(storeId, stockId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**

@@ -23,6 +23,7 @@ import javax.management.InstanceAlreadyExistsException;
 @RestController
 @RequestMapping("/cart")
 @Slf4j
+//TODO: refactor class
 public class CartController {
 
     private final CartService cartService;
