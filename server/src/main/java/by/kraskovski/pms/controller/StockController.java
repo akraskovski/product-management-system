@@ -1,5 +1,6 @@
 package by.kraskovski.pms.controller;
 
+import by.kraskovski.pms.controller.dto.ProductStockDto;
 import by.kraskovski.pms.controller.dto.StockDto;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.service.StockService;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -53,9 +57,7 @@ public class StockController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadStockById(@PathVariable("id") final String id) {
         log.info("Start loadStockById: {}", id);
-        final Stock stock = stockService.find(id);
-        Assert.notNull(stock, "Unable to find stock with id: " + id);
-        return ResponseEntity.ok(mapper.map(stock, StockDto.class));
+        return ResponseEntity.ok(mapper.map(stockService.find(id), StockDto.class));
     }
 
     /**
@@ -64,7 +66,10 @@ public class StockController {
     @RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
     public ResponseEntity loadStockProductsById(@PathVariable("id") final String id) {
         log.info("Start loadStockProductsById: {}", id);
-        return ResponseEntity.ok(stockService.findProducts(id));
+        final List<ProductStockDto> result = stockService.findProducts(id).stream()
+                .map(productStock -> mapper.map(productStock, ProductStockDto.class))
+                .collect(toList());
+        return ResponseEntity.ok(result);
     }
 
     /**
@@ -76,7 +81,6 @@ public class StockController {
             @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
         log.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
-        //TODO: one response
         return stockService.addProduct(stockId, productId, count)
                 ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);

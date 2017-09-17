@@ -1,6 +1,5 @@
 package by.kraskovski.pms.service.impl;
 
-import by.kraskovski.pms.controller.dto.ProductStockDto;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
@@ -13,11 +12,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class StockServiceImpl implements StockService {
@@ -42,80 +42,65 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Stock find(final String id) {
-        return stockRepository.findOne(id);
+        return Optional.ofNullable(stockRepository.findOne(id))
+                .orElseThrow(() -> new EntityNotFoundException("Stock with id: " + id + " not found in db!"));
     }
 
     @Override
-    public List<ProductStockDto> findProducts(final String id) {
+    public Set<ProductStock> findProducts(final String id) {
         final Stock stock = stockRepository.findOne(id);
         if (CollectionUtils.isEmpty(stock.getProductStocks())) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
-        return stock.getProductStocks().stream()
-                .map(productStock -> mapper.map(productStock, ProductStockDto.class))
-                .collect(toList());
+        return stock.getProductStocks();
     }
 
     @Override
     @Transactional
-    public boolean addProduct(final String stockId, final String productId, final int count) {
+    //TODO: refactor add and delete methods
+    public void addProduct(final String stockId, final String productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
 
-        if (stock == null || product == null) {
-            return false;
-        }
-
         for (ProductStock productStock : stock.getProductStocks()) {
             if (productStock.getProduct().equals(product)) {
-                return addExistingProductToStock(productStock, stock, count);
+                addExistingProductToStock(productStock, stock, count);
+                return;
             }
         }
-        return addNewProductToStock(stock, product, count);
+        addNewProductToStock(stock, product, count);
     }
 
-    private boolean addExistingProductToStock(final ProductStock productStock, final Stock stock, final int count) {
+    private void addExistingProductToStock(final ProductStock productStock, final Stock stock, final int count) {
         if (count < 1) {
-            return false;
+            return;
+            //throw exception
         }
-        try {
-            productStock.setProductsCount(productStock.getProductsCount() + count);
-            stockRepository.save(stock);
-            return true;
-        } catch (DataAccessException e) {
-            return false;
-        }
+        productStock.setProductsCount(productStock.getProductsCount() + count);
+        stockRepository.save(stock);
     }
 
-    private boolean addNewProductToStock(final Stock stock, final Product product, final int count) {
+    private void addNewProductToStock(final Stock stock, final Product product, final int count) {
         if (count < 1) {
-            return false;
+            return;
+            //throw exception
         }
-        try {
-            stock.getProductStocks().add(new ProductStock(product, stock, count));
-            stockRepository.save(stock);
-            return true;
-        } catch (DataAccessException e) {
-            return false;
-        }
+        stock.getProductStocks().add(new ProductStock(product, stock, count));
+        stockRepository.save(stock);
     }
 
     @Override
     @Transactional
-    public boolean deleteProduct(final String stockId, final String productId, final int count) {
+    public void deleteProduct(final String stockId, final String productId, final int count) {
         final Stock stock = find(stockId);
         final Product product = productService.find(productId);
 
-        if (stock.getProductStocks() == null && product == null) {
-            return false;
-        }
-
         for (ProductStock productStock : stock.getProductStocks()) {
             if (productStock.getProduct().equals(product)) {
-                return deleteProductFromProductStock(productStock, stock, count);
+                deleteProductFromProductStock(productStock, stock, count);
+                return;
             }
         }
-        return false;
     }
 
     private boolean deleteProductFromProductStock(final ProductStock productStock, final Stock stock, final int count) {
