@@ -2,7 +2,6 @@ package by.kraskovski.pms.domain.model;
 
 import by.kraskovski.pms.domain.base.BaseEntity;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
