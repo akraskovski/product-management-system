@@ -54,9 +54,7 @@ public class ProductController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadProductById(@PathVariable("id") final String id) {
         log.info("Start loadProductById: {}", id);
-        final Product product = productService.find(id);
-        Assert.notNull(product, "Unable to find product with id: " + id);
-        return ResponseEntity.ok(mapper.map(product, ProductDto.class));
+        return ResponseEntity.ok(mapper.map(productService.find(id), ProductDto.class));
     }
 
     /**

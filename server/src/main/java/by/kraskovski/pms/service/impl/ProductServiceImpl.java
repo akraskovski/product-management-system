@@ -9,8 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
@@ -35,17 +37,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product find(final String id) {
-        return productRepository.findOne(id);
+        return Optional.ofNullable(productRepository.findOne(id))
+                .orElseThrow(() -> new EntityNotFoundException("Product with id: " + id + " not found in db!"));
     }
 
     @Override
     public List<Product> findByName(final String name) {
-        return productRepository.findByName(name);
+        return Optional.ofNullable(productRepository.findByName(name))
+                .orElseThrow(() -> new EntityNotFoundException("Products with name: " + name + " not found in db!"));
     }
 
     @Override
     public List<Product> findByType(final String type) {
-        return productRepository.findByType(type);
+        return Optional.ofNullable(productRepository.findByType(type))
+                .orElseThrow(() -> new EntityNotFoundException("Products with type: " + type + " not found in db!"));
     }
 
     @Override

@@ -5,6 +5,7 @@ import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.exception.FileNotFoundException;
 import by.kraskovski.pms.service.exception.FileUploadException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.management.InstanceAlreadyExistsException;
+import javax.persistence.EntityNotFoundException;
 
 /**
  * General exception handler
@@ -49,15 +51,6 @@ public class ExceptionControllerAdvice {
     }
 
     /**
-     * Handle user not found exception
-     */
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity handleUserNotFoundException(final UserNotFoundException e) {
-        log.warn("User not found: {}", e.getMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
-    }
-
-    /**
      * Handle InstanceAlreadyExistsException if cart already created
      */
     @ExceptionHandler(InstanceAlreadyExistsException.class)
@@ -82,5 +75,23 @@ public class ExceptionControllerAdvice {
     public ResponseEntity handleFileNotFoundException(final FileNotFoundException e) {
         log.warn("FileNotFound excpetion: ", e.getMessage());
         return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Handle user not found exception
+     */
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity handleUserNotFoundException(final UserNotFoundException e) {
+        log.warn("User not found: {}", e.getMessage());
+        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Handle entity not found exception
+     */
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity handleEntityNotFoundException(final EntityNotFoundException e) {
+        log.warn("Resource not found: {}", e.getLocalizedMessage());
+        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
     }
 }
