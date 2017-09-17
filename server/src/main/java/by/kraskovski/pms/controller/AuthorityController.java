@@ -30,12 +30,7 @@ public class AuthorityController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAuthorities() {
-        log.info("Start loadAuthorities");
-        try {
-            return ResponseEntity.ok(authorityService.findAll());
-        } catch (DataAccessException e) {
-            log.error("Exception in loadAuthorities. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.NOT_FOUND);
-        }
+        log.info("Start loading all authorities");
+        return ResponseEntity.ok(authorityService.findAll());
     }
 }

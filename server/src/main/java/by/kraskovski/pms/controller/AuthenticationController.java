@@ -38,15 +38,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity login(@RequestBody final LoginDto loginDto) {
         log.info("Start authentication user with username: " + loginDto.getUsername());
-        try {
-            final TokenDto tokenDto = tokenService.generate(loginDto.getUsername(), loginDto.getPassword());
-            return new ResponseEntity<>(tokenDto, HttpStatus.ACCEPTED);
-        } catch (BadCredentialsException e) {
-            log.error(
-                    "User authentication with username: {} failed! Cause: {}",
-                    loginDto.getUsername(),
-                    e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.UNAUTHORIZED);
-        }
+        final TokenDto tokenDto = tokenService.generate(loginDto.getUsername(), loginDto.getPassword());
+        return ResponseEntity.ok(tokenDto);
     }
 }

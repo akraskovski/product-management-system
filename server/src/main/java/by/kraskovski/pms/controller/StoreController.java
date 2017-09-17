@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -56,14 +57,9 @@ public class StoreController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadStoreById(@PathVariable("id") final String id) {
         log.info("Start loadStoreById: {}", id);
-        try {
-            final Store store = storeService.find(id);
-            Assert.notNull(store, "Unable to find store with id: " + id);
-            return ResponseEntity.ok(mapper.map(store, StoreDto.class));
-        } catch (IllegalArgumentException e) {
-            log.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        final Store store = storeService.find(id);
+        Assert.notNull(store, "Unable to find store with id: " + id);
+        return ResponseEntity.ok(mapper.map(store, StoreDto.class));
     }
 
     /**
@@ -72,16 +68,11 @@ public class StoreController {
     @RequestMapping(value = "/{id}/stock-manage", method = RequestMethod.GET)
     public ResponseEntity loadStoreStocksById(@PathVariable("id") final String id) {
         log.info("Start loadStoreStocksById: {}", id);
-        try {
-            final Store store = storeService.find(id);
-            Assert.notNull(store, "Unable to find store with id: " + id);
-            final List<StockDto> stockDtos = store.getStockList().stream()
-                    .map(stock -> mapper.map(stock, StockDto.class)).collect(toList());
-            return ResponseEntity.ok(stockDtos);
-        } catch (IllegalArgumentException e) {
-            log.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        final Store store = storeService.find(id);
+        Assert.notNull(store, "Unable to find store with id: " + id);
+        final List<StockDto> stockDtos = store.getStockList().stream()
+                .map(stock -> mapper.map(stock, StockDto.class)).collect(toList());
+        return ResponseEntity.ok(stockDtos);
     }
 
     /**
@@ -91,12 +82,7 @@ public class StoreController {
     public ResponseEntity createStore(@RequestBody final StoreDto storeDto) {
         log.info("Start createStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
-        try {
-            return new ResponseEntity<>(mapper.map(storeService.create(store), StoreDto.class), HttpStatus.CREATED);
-        } catch (DataAccessException e) {
-            log.error("Exception in createStore. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(mapper.map(storeService.create(store), StoreDto.class), HttpStatus.CREATED);
     }
 
     /**
@@ -106,6 +92,7 @@ public class StoreController {
     public ResponseEntity addStock(@RequestParam("store_id") final String storeId,
                                    @RequestParam("stock_id") final String stockId) {
         log.info("Start add stock: {} to store: {}", stockId, storeId);
+        //TODO: one response
         return storeService.addStock(storeId, stockId)
                 ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -130,12 +117,7 @@ public class StoreController {
     public ResponseEntity updateStore(@RequestBody final StoreDto storeDto) {
         log.info("Start updateStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
-        try {
-            return ResponseEntity.ok(mapper.map(storeService.update(store), StoreDto.class));
-        } catch (DataAccessException e) {
-            log.error("Exception in updateStore. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.ok(mapper.map(storeService.update(store), StoreDto.class));
     }
 
     /**
@@ -144,12 +126,7 @@ public class StoreController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStore(@PathVariable("id") final String id) {
         log.info("Start deleteStore: {}", id);
-        try {
-            storeService.delete(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (DataAccessException e) {
-            log.error("Exception in deleteStore. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        storeService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

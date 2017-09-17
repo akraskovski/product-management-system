@@ -70,7 +70,7 @@ public class StoreControllerIT extends ControllerConfig {
                 .header(authHeaderName, token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(mapper.map(store, StoreDto.class))))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -195,7 +195,7 @@ public class StoreControllerIT extends ControllerConfig {
                 .header(authHeaderName, token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(mapper.map(store, StoreDto.class))))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isInternalServerError());
     }
 
     @Test

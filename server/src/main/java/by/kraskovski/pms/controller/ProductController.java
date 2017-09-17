@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileNotFoundException;
+
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -52,14 +54,9 @@ public class ProductController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadProductById(@PathVariable("id") final String id) {
         log.info("Start loadProductById: {}", id);
-        try {
-            final Product product = productService.find(id);
-            Assert.notNull(product, "Unable to find product with id: " + id);
-            return ResponseEntity.ok(mapper.map(product, ProductDto.class));
-        } catch (IllegalArgumentException e) {
-            log.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        final Product product = productService.find(id);
+        Assert.notNull(product, "Unable to find product with id: " + id);
+        return ResponseEntity.ok(mapper.map(product, ProductDto.class));
     }
 
     /**
@@ -110,13 +107,7 @@ public class ProductController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteProduct(@PathVariable("id") final String id) {
         log.info("Start deleteProduct: {}", id);
-        try {
-            productService.delete(id);
-            log.info("Product with id: {}, was deleted successful", id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (DataAccessException e) {
-            log.info("Error in deleteProduct. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        productService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

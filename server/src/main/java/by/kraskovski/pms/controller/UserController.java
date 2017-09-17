@@ -41,14 +41,9 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllUsers() {
         log.info("Start loadAllUsers");
-        try {
-            return ResponseEntity.ok(userService.findAll().stream()
-                    .map(user -> mapper.map(user, UserDto.class))
-                    .collect(toList()));
-        } catch (DataAccessException e) {
-            log.error("Exception in loadAllUsers. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.ok(userService.findAll().stream()
+                .map(user -> mapper.map(user, UserDto.class))
+                .collect(toList()));
     }
 
     /**
@@ -57,14 +52,9 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadUserById(@PathVariable("id") final String id) {
         log.info("Start loadUserById: {}", id);
-        try {
-            final User user = userService.find(id);
-            Assert.notNull(user, "Unable to find user with id: " + id);
-            return ResponseEntity.ok(mapper.map(user, UserDto.class));
-        } catch (IllegalArgumentException e) {
-            log.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        final User user = userService.find(id);
+        Assert.notNull(user, "Unable to find user with id: " + id);
+        return ResponseEntity.ok(mapper.map(user, UserDto.class));
     }
 
     /**
@@ -73,14 +63,9 @@ public class UserController {
     @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
     public ResponseEntity loadUserByUsername(@PathVariable final String username) {
         log.info("Start loadUserByUsername: {}", username);
-        try {
-            final User user = userService.findByUsername(username);
-            Assert.notNull(user, "Unable to find user with username: " + username);
-            return ResponseEntity.ok(mapper.map(user, UserDto.class));
-        } catch (IllegalArgumentException e) {
-            log.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        final User user = userService.findByUsername(username);
+        Assert.notNull(user, "Unable to find user with username: " + username);
+        return ResponseEntity.ok(mapper.map(user, UserDto.class));
     }
 
     /**
@@ -89,13 +74,8 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createUser(@RequestBody final UserDto userDto) {
         log.info("Start createUser: {}", userDto.getUsername());
-        try {
-            final User user = mapper.map(userDto, User.class);
-            return new ResponseEntity<>(mapper.map(userService.create(user), UserDto.class), HttpStatus.CREATED);
-        } catch (DataAccessException e) {
-            log.error("Exception in createUser. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        final User user = mapper.map(userDto, User.class);
+        return new ResponseEntity<>(mapper.map(userService.create(user), UserDto.class), HttpStatus.CREATED);
     }
 
     /**
@@ -104,13 +84,8 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateUser(@RequestBody final UserDto userDto) {
         log.info("Start updateUser: {}", userDto.getUsername());
-        try {
-            final User user = mapper.map(userDto, User.class);
-            return ResponseEntity.ok(mapper.map(userService.update(user), UserDto.class));
-        } catch (DataAccessException e) {
-            log.error("Exception while updating user with id" + userDto.getId() + ". " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        final User user = mapper.map(userDto, User.class);
+        return ResponseEntity.ok(mapper.map(userService.update(user), UserDto.class));
     }
 
     /**
@@ -119,12 +94,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteUser(@PathVariable("id") final String id) {
         log.info("Start deleteUser with id: {}", id);
-        try {
-            userService.delete(id);
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
-        } catch (DataAccessException e) {
-            log.error("Exception while delete user with id: " + id + ". " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        userService.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

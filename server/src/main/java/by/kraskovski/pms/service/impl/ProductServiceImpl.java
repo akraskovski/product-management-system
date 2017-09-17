@@ -4,6 +4,8 @@ import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.repository.ProductRepository;
 import by.kraskovski.pms.service.ImageService;
 import by.kraskovski.pms.service.ProductService;
+import by.kraskovski.pms.service.exception.FileNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.List;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -59,17 +62,18 @@ public class ProductServiceImpl implements ProductService {
     public void delete(final String id) {
         final Product productToDelete = productRepository.findOne(id);
         if (isNotEmpty(productToDelete.getImage())) {
-            imageService.delete(productToDelete.getImage());
+            try {
+                imageService.delete(productToDelete.getImage());
+            } catch (FileNotFoundException e) {
+                log.warn("Product: {} doesn't have image. This image id is: {} is not correct!", productToDelete.getId(), productToDelete.getImage());
+            }
         }
         productRepository.delete(productToDelete);
+
     }
 
     @Override
     public void deleteAll() {
-        final List<Product> products = findAll();
-        products.stream()
-                .filter(product -> isNotEmpty(product.getImage()))
-                .forEach(product -> imageService.delete(product.getImage()));
         productRepository.deleteAll();
     }
 }

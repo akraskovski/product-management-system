@@ -1,0 +1,86 @@
+package by.kraskovski.pms.controller.exception;
+
+import by.kraskovski.pms.controller.dto.exception.ErrorDto;
+import by.kraskovski.pms.security.exception.UserNotFoundException;
+import by.kraskovski.pms.service.exception.FileNotFoundException;
+import by.kraskovski.pms.service.exception.FileUploadException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.management.InstanceAlreadyExistsException;
+
+/**
+ * General exception handler
+ */
+@ControllerAdvice
+@Slf4j
+public class ExceptionControllerAdvice {
+
+    /**
+     * Handle Errors during authentication
+     */
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity handleBadCredentialsException(final BadCredentialsException e) {
+        log.warn("User authentication failed! Cause: {}", e.getMessage());
+        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    /**
+     * Handle database exceptions
+     */
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity handleDataAccessException(final DataAccessException e) {
+        log.warn("Database exception: {}", e.getMessage());
+        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Handle illegal argument exception
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity handleIllegalArgumentException(final IllegalArgumentException e) {
+        log.warn("Illegal argument: ", e.getMessage());
+        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle user not found exception
+     */
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity handleUserNotFoundException(final UserNotFoundException e) {
+        log.warn("User not found: {}", e.getMessage());
+        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Handle InstanceAlreadyExistsException if cart already created
+     */
+    @ExceptionHandler(InstanceAlreadyExistsException.class)
+    public ResponseEntity handleInstanceAlreadyExistsException(final InstanceAlreadyExistsException e) {
+        log.info("Error in createCart: ", e.getLocalizedMessage());
+        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle FileUploadException while uploading images
+     */
+    @ExceptionHandler(FileUploadException.class)
+    public ResponseEntity handleFileUploadException(final FileUploadException e) {
+        log.warn("Error during uploading file: {}", e.getMessage());
+        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle file not found exception
+     */
+    @ExceptionHandler(FileNotFoundException.class)
+    public ResponseEntity handleFileNotFoundException(final FileNotFoundException e) {
+        log.warn("FileNotFound excpetion: ", e.getMessage());
+        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
+    }
+}

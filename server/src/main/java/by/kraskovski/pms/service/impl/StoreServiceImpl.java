@@ -6,6 +6,8 @@ import by.kraskovski.pms.repository.StoreRepository;
 import by.kraskovski.pms.service.ImageService;
 import by.kraskovski.pms.service.StockService;
 import by.kraskovski.pms.service.StoreService;
+import by.kraskovski.pms.service.exception.FileNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.List;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
+@Slf4j
 public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
@@ -88,7 +91,11 @@ public class StoreServiceImpl implements StoreService {
     public void delete(final String id) {
         final Store storeToDelete = storeRepository.findOne(id);
         if (isNotEmpty(storeToDelete.getLogo())) {
-            imageService.delete(storeToDelete.getLogo());
+            try {
+                imageService.delete(storeToDelete.getLogo());
+            } catch (FileNotFoundException e) {
+                log.warn("Store: {} doesn't have logo. This image id is: {} is not correct!", storeToDelete.getId(), storeToDelete.getLogo());
+            }
         }
         storeRepository.delete(storeToDelete);
     }

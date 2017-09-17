@@ -91,7 +91,7 @@ public class CartControllerIT extends ControllerConfig {
     public void createCartWithoutUserTest() throws Exception {
         mvc.perform(post(BASE_CART_URL + "/" + randomAlphabetic(20))
                 .header(authHeaderName, token))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test

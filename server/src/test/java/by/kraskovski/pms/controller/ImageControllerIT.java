@@ -5,6 +5,7 @@ import by.kraskovski.pms.service.ImageService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ImageControllerTest extends ControllerConfig {
+public class ImageControllerIT extends ControllerConfig {
 
     private static final String BASE_IMAGE_URL = "/image";
 
@@ -68,19 +69,28 @@ public class ImageControllerTest extends ControllerConfig {
     }
 
     @Test
+    @Ignore
     public void loadImageAsResourceNegativeTest() throws Exception {
         mvc.perform(get(BASE_IMAGE_URL + "/" + RandomStringUtils.randomAlphabetic(20))
                 .header(authHeaderName, token))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    public void deleteImageTest() throws Exception {
+    public void deleteImagePositiveTest() throws Exception {
         final MockMultipartFile image = new MockMultipartFile("file", "content".getBytes());
         final String imageId = imageService.upload(image);
 
         mvc.perform(delete(BASE_IMAGE_URL + "/" + imageId)
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());
+    }
+
+
+    @Test
+    public void deleteImageNegativeTest() throws Exception {
+        mvc.perform(delete(BASE_IMAGE_URL + "/" + RandomStringUtils.randomAlphabetic(20))
+                .header(authHeaderName, token))
+                .andExpect(status().isNotFound());
     }
 }

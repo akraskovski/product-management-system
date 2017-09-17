@@ -53,14 +53,9 @@ public class StockController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadStockById(@PathVariable("id") final String id) {
         log.info("Start loadStockById: {}", id);
-        try {
-            final Stock stock = stockService.find(id);
-            Assert.notNull(stock, "Unable to find stock with id: " + id);
-            return ResponseEntity.ok(mapper.map(stock, StockDto.class));
-        } catch (IllegalArgumentException e) {
-            log.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        final Stock stock = stockService.find(id);
+        Assert.notNull(stock, "Unable to find stock with id: " + id);
+        return ResponseEntity.ok(mapper.map(stock, StockDto.class));
     }
 
     /**
@@ -81,6 +76,7 @@ public class StockController {
             @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
         log.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
+        //TODO: one response
         return stockService.addProduct(stockId, productId, count)
                 ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -126,12 +122,7 @@ public class StockController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStock(@PathVariable("id") final String id) {
         log.info("Start deleteStock: {}", id);
-        try {
-            stockService.delete(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (DataAccessException e) {
-            log.error("Exception in deleteStock. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        stockService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
