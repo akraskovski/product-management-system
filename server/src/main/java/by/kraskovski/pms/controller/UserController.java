@@ -52,9 +52,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadUserById(@PathVariable("id") final String id) {
         log.info("Start loadUserById: {}", id);
-        final User user = userService.find(id);
-        Assert.notNull(user, "Unable to find user with id: " + id);
-        return ResponseEntity.ok(mapper.map(user, UserDto.class));
+        return ResponseEntity.ok(mapper.map(userService.find(id), UserDto.class));
     }
 
     /**
@@ -63,9 +61,7 @@ public class UserController {
     @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
     public ResponseEntity loadUserByUsername(@PathVariable final String username) {
         log.info("Start loadUserByUsername: {}", username);
-        final User user = userService.findByUsername(username);
-        Assert.notNull(user, "Unable to find user with username: " + username);
-        return ResponseEntity.ok(mapper.map(user, UserDto.class));
+        return ResponseEntity.ok(mapper.map(userService.findByUsername(username), UserDto.class));
     }
 
     /**

@@ -13,6 +13,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
+import org.apache.commons.lang3.StringUtils;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,8 +55,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public TokenDto generate(final String username, final String password) {
-        final User user = userService.findByUsername(username);
-        if (ofNullable(user).isPresent() && ofNullable(password).isPresent()) {
+        final User user = ofNullable(userService.findByUsername(username))
+                .orElseThrow(() -> new UserNotFoundException("User with username" + username + " not found!"));
+        if (StringUtils.isNotEmpty(password)) {
             final Map<String, Object> tokenData = new HashMap<>();
             final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (passwordEncoder.matches(password, user.getPassword()) || password.equals(user.getPassword())) {
