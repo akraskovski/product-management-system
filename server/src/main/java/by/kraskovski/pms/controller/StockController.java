@@ -7,10 +7,8 @@ import by.kraskovski.pms.service.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -81,9 +78,8 @@ public class StockController {
             @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
         log.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
-        return stockService.addProduct(stockId, productId, count)
-                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        stockService.addProduct(stockId, productId, count);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -95,9 +91,8 @@ public class StockController {
             @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         log.info("Start delete Product: {} from Stock: {} with count: {}", productId, stockId, count);
-        return stockService.deleteProduct(stockId, productId, count)
-                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        stockService.deleteProduct(stockId, productId, count);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**

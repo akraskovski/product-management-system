@@ -70,7 +70,8 @@ public class ProductServiceImpl implements ProductService {
             try {
                 imageService.delete(productToDelete.getImage());
             } catch (FileNotFoundException e) {
-                log.warn("Product: {} doesn't have image. This image id is: {} is not correct!", productToDelete.getId(), productToDelete.getImage());
+                log.warn("Product: {} doesn't have image. This image id is: {} is not correct!",
+                        productToDelete.getId(), productToDelete.getImage());
             }
         }
         productRepository.delete(productToDelete);

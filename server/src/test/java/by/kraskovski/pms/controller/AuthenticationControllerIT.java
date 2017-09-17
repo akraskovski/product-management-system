@@ -34,11 +34,9 @@ public class AuthenticationControllerIT extends ControllerConfig {
 
     @Test
     public void loginNegativeTest() throws Exception {
-        final User user = TestUtils.prepareUser();
-        userService.create(user);
         mvc.perform(post(BASE_AUTH_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(new LoginDto(randomAlphabetic(10), user.getPassword()))))
-                .andExpect(status().isUnauthorized());
+                .content(objectMapper.writeValueAsString(new LoginDto(randomAlphabetic(10), randomAlphabetic(10)))))
+                .andExpect(status().isNotFound());
     }
 }

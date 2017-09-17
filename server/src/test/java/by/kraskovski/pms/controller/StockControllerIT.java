@@ -132,7 +132,7 @@ public class StockControllerIT extends ControllerConfig {
                 .param("stock_id", stock.getId())
                 .param("product_id", "INVALID ID")
                 .param("count", String.valueOf(productsToDeleteCount)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test

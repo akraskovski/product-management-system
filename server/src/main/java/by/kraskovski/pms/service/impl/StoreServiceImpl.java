@@ -94,7 +94,8 @@ public class StoreServiceImpl implements StoreService {
             try {
                 imageService.delete(storeToDelete.getLogo());
             } catch (FileNotFoundException e) {
-                log.warn("Store: {} doesn't have logo. This image id is: {} is not correct!", storeToDelete.getId(), storeToDelete.getLogo());
+                log.warn("Store: {} doesn't have logo. This image id is: {} is not correct!",
+                        storeToDelete.getId(), storeToDelete.getLogo());
             }
         }
         storeRepository.delete(storeToDelete);

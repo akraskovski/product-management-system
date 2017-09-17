@@ -5,7 +5,6 @@ import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.exception.FileNotFoundException;
 import by.kraskovski.pms.service.exception.FileUploadException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +72,7 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(FileNotFoundException.class)
     public ResponseEntity handleFileNotFoundException(final FileNotFoundException e) {
-        log.warn("FileNotFound excpetion: ", e.getMessage());
+        log.warn("FileNotFound exception: ", e.getMessage());
         return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
     }
 

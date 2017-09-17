@@ -156,7 +156,7 @@ public class StoreControllerIT extends ControllerConfig {
                 .header(authHeaderName, token)
                 .param("store_id", store.getId())
                 .param("stock_id", randomAlphabetic(20)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test

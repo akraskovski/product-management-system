@@ -50,18 +50,20 @@ public class StockServiceTest {
         when(stockRepository.findOne(anyString())).thenReturn(prepareStock());
         when(productService.find(anyString())).thenReturn(prepareProduct());
 
-        assertTrue(stockService.addProduct(random(40), random(40), nextInt()));
+        stockService.addProduct(random(40), random(40), nextInt());
+
         verify(stockRepository).findOne(anyString());
         verify(productService).find(anyString());
         verify(stockRepository).save((Stock) anyObject());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void addNewProductNegativeTest() {
         when(stockRepository.findOne(anyString())).thenReturn(prepareStock());
         when(productService.find(anyString())).thenReturn(prepareProduct());
 
-        assertFalse(stockService.addProduct(random(40), random(40), -5));
+        stockService.addProduct(random(40), random(40), -5);
+
         verify(stockRepository).findOne(anyString());
         verify(productService).find(anyString());
         verify(stockRepository, times(0)).save((Stock) anyObject());
@@ -75,13 +77,14 @@ public class StockServiceTest {
         when(stockRepository.findOne(anyString())).thenReturn(stock);
         when(productService.find(anyString())).thenReturn(product);
 
-        assertTrue(stockService.addProduct(random(40), random(40), nextInt()));
+        stockService.addProduct(random(40), random(40), nextInt());
+
         verify(stockRepository).findOne(anyString());
         verify(productService).find(anyString());
         verify(stockRepository).save((Stock) anyObject());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void addExistingProductNegativeTest() {
         final Product product = prepareProduct();
         final Stock stock = prepareStock();
@@ -89,7 +92,8 @@ public class StockServiceTest {
         when(stockRepository.findOne(anyString())).thenReturn(stock);
         when(productService.find(anyString())).thenReturn(product);
 
-        assertFalse(stockService.addProduct(random(40), random(40), -5));
+        stockService.addProduct(random(40), random(40), -5);
+
         verify(stockRepository).findOne(anyString());
         verify(productService).find(anyString());
         verify(stockRepository, times(0)).save((Stock) anyObject());
@@ -105,7 +109,7 @@ public class StockServiceTest {
         when(stockRepository.findOne(anyString())).thenReturn(stock);
         when(productService.find(anyString())).thenReturn(product);
 
-        assertTrue(stockService.deleteProduct(stock.getId(), product.getId(), 10));
+        stockService.deleteProduct(stock.getId(), product.getId(), 10);
         verify(productService).find(product.getId());
         verify(stockRepository).save(stock);
     }
@@ -119,7 +123,7 @@ public class StockServiceTest {
         when(stockRepository.findOne(anyString())).thenReturn(stock);
         when(productService.find(anyString())).thenReturn(product);
 
-        assertFalse(stockService.deleteProduct(stock.getId(), product.getId(), 10));
+        stockService.deleteProduct(stock.getId(), product.getId(), 10);
         verify(productService).find(product.getId());
         verify(stockRepository, never()).save(stock);
     }

@@ -44,13 +44,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User find(final String id) {
         return Optional.ofNullable(userRepository.findOne(id))
-                .orElseThrow(() -> new UserNotFoundException("User with id:" + id + " doest not exists in db!"));
+                .orElseThrow(() -> new UserNotFoundException("User with id: " + id + " doesn't not exists in db!"));
     }
 
     @Override
     public User findByUsername(final String username) {
         return Optional.ofNullable(userRepository.findByUsername(username))
-                .orElseThrow(() -> new UserNotFoundException("User with username:" + username + " doest not exists in db!"));
+                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " doesn't not exists in db!"));
     }
 
     @Override
