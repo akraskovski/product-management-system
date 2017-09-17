@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class StoreDto {
 
+    private String id;
     private String name;
     private String details;
     private String address;

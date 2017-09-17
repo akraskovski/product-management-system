@@ -1,5 +1,6 @@
 package by.kraskovski.pms.controller;
 
+import by.kraskovski.pms.controller.dto.StockDto;
 import by.kraskovski.pms.controller.dto.StoreDto;
 import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.service.StoreService;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -32,7 +35,7 @@ public class StoreController {
     }
 
     /**
-     * Find all stores in database.
+     * Find all stores in database
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity loadAllStores() {
@@ -43,7 +46,7 @@ public class StoreController {
     }
 
     /**
-     * Find stores in database with setting id in browser.
+     * Find stores in database with setting id in browser
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadStoreById(@PathVariable("id") final String id) {
@@ -59,13 +62,36 @@ public class StoreController {
     }
 
     /**
+     * Find stocks related to store
+     */
+    @RequestMapping(value = "/{id}/stock-manage", method = RequestMethod.GET)
+    public ResponseEntity loadStoreStocksById(@PathVariable("id") final String id) {
+        log.info("Start loadStoreStocksById: {}", id);
+        try {
+            final Store store = storeService.find(id);
+            Assert.notNull(store, "Unable to find store with id: " + id);
+            final List<StockDto> stockDtos = store.getStockList().stream()
+                    .map(stock -> mapper.map(stock, StockDto.class)).collect(toList());
+            return ResponseEntity.ok(stockDtos);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getLocalizedMessage());
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
      * Creating {@link Store} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createStore(@RequestBody final StoreDto storeDto) {
         log.info("Start createStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
-        return new ResponseEntity<>(mapper.map(storeService.create(store), StoreDto.class), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(mapper.map(storeService.create(store), StoreDto.class), HttpStatus.CREATED);
+        } catch (DataAccessException e) {
+            log.error("Exception in createStore. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -99,7 +125,12 @@ public class StoreController {
     public ResponseEntity updateStore(@RequestBody final StoreDto storeDto) {
         log.info("Start updateStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
-        return ResponseEntity.ok(mapper.map(storeService.update(store), StoreDto.class));
+        try {
+            return ResponseEntity.ok(mapper.map(storeService.update(store), StoreDto.class));
+        } catch (DataAccessException e) {
+            log.error("Exception in updateStore. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
