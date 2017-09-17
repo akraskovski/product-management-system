@@ -10,13 +10,12 @@ import by.kraskovski.pms.service.CartService;
 import by.kraskovski.pms.service.ProductStockService;
 import by.kraskovski.pms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
 import javax.transaction.Transactional;
 
-import static java.util.Optional.*;
+import static java.util.Optional.ofNullable;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -36,14 +35,15 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart create(final String id) throws InstanceAlreadyExistsException {
+    public void create(final String id) throws InstanceAlreadyExistsException {
         final User user = ofNullable(userService.find(id))
                 .orElseThrow(() -> new UserNotFoundException(
                         "Can't create cart for user with id:" + id + ". Entity not found in database!"));
         if (user.getCart() != null) {
             throw new InstanceAlreadyExistsException("Cart with id:" + id + " already exists!");
         }
-        return cartRepository.save(new Cart(user));
+        user.addCart(new Cart());
+        userService.update(user);
     }
 
     @Override
@@ -95,32 +95,29 @@ public class CartServiceImpl implements CartService {
             return false;
         }
 
-        for (CartProductStock cartProductStock : cart.getCartProductStocks()) {
-            if (cartProductStock.getProductStock().equals(productStock)) {
-                return deleteProductFromCartProductStock(cart, cartProductStock, count);
-            }
-        }
-        return false;
+        return cart.getCartProductStocks().stream()
+                .filter(cartProductStock -> cartProductStock.getProductStock().equals(productStock))
+                .findFirst()
+                .map(cartProductStock -> deleteProductFromCartProductStock(cart, cartProductStock, count))
+                .orElse(false);
     }
 
     private boolean deleteProductFromCartProductStock(
             final Cart cart,
             final CartProductStock cartProductStock,
             final int count) {
-        try {
-            if (cartProductStock.getProductCount() - count > 0) {
-                cartProductStock.setProductCount(cartProductStock.getProductCount() - count);
-                cart.setTotalCost(cart.getTotalCost() - cartProductStock.getProductStock().getProduct().getCost() * count);
-                cartRepository.save(cart);
-            } else {
-                cart.getCartProductStocks().remove(cartProductStock);
-                cart.setTotalCost(cart.getTotalCost() - cartProductStock.getProductStock().getProduct().getCost() * count);
-                cartRepository.save(cart);
-            }
+        if (cartProductStock.getProductCount() - count > 0) {
+            cartProductStock.setProductCount(cartProductStock.getProductCount() - count);
+            cart.setTotalCost(cart.getTotalCost() - cartProductStock.getProductStock().getProduct().getCost() * count);
+            cartRepository.save(cart);
             return true;
-        } catch (DataAccessException e) {
-            return false;
+        } else if (cartProductStock.getProductCount() - count == 0) {
+            cart.getCartProductStocks().remove(cartProductStock);
+            cart.setTotalCost(cart.getTotalCost() - cartProductStock.getProductStock().getProduct().getCost() * count);
+            cartRepository.save(cart);
+            return true;
         }
+        return false;
     }
 
     @Override

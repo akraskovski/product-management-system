@@ -11,7 +11,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
  * Token Data Transfer Object class
  */
 @Getter
-public class TokenDTO implements Serializable {
+public class TokenDto implements Serializable {
 
     /**
      * {@link User}'s token
@@ -21,11 +21,11 @@ public class TokenDTO implements Serializable {
     /**
      * Current logged {@link User}
      */
-    private User user;
+    private UserDto userDto;
 
-    public TokenDTO(final String token, final User user) {
+    public TokenDto(final String token, final UserDto userDto) {
         this.token = token;
-        this.user = user;
-        this.user.setPassword(EMPTY);
+        this.userDto = userDto;
+        this.userDto.setPassword(EMPTY);
     }
 }

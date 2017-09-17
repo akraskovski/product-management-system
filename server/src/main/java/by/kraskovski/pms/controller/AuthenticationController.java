@@ -1,6 +1,7 @@
 package by.kraskovski.pms.controller;
 
-import by.kraskovski.pms.controller.dto.LoginDTO;
+import by.kraskovski.pms.controller.dto.LoginDto;
+import by.kraskovski.pms.controller.dto.TokenDto;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.security.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import static java.util.Optional.ofNullable;
 
 /**
  * Handle requests for authentication operations.
@@ -37,16 +36,12 @@ public class AuthenticationController {
      * Generate token from {@link TokenService}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody final LoginDTO loginDto) {
+    public ResponseEntity login(@RequestBody final LoginDto loginDto) {
         log.info("Start authentication user with username: " + loginDto.getUsername());
         try {
-            return ofNullable(tokenService.generate(loginDto.getUsername(), loginDto.getPassword()))
-                    .map(tokenDTO -> {
-                        log.info("User authentication with username: {} successful!", loginDto.getUsername());
-                        return new ResponseEntity<>(tokenDTO, HttpStatus.ACCEPTED);
-                    })
-                    .orElseThrow(() -> new IllegalArgumentException("Generated token is null."));
-        } catch (IllegalArgumentException | BadCredentialsException e) {
+            final TokenDto tokenDto = tokenService.generate(loginDto.getUsername(), loginDto.getPassword());
+            return new ResponseEntity<>(tokenDto, HttpStatus.ACCEPTED);
+        } catch (BadCredentialsException e) {
             log.error(
                     "User authentication with username: {} failed! Cause: {}",
                     loginDto.getUsername(),

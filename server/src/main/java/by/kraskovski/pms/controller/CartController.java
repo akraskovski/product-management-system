@@ -1,9 +1,11 @@
 package by.kraskovski.pms.controller;
 
+import by.kraskovski.pms.controller.dto.CartDto;
 import by.kraskovski.pms.domain.model.Cart;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.CartService;
 import lombok.extern.slf4j.Slf4j;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -26,10 +28,12 @@ import javax.management.InstanceAlreadyExistsException;
 public class CartController {
 
     private final CartService cartService;
+    private final Mapper mapper;
 
     @Autowired
-    public CartController(final CartService cartService) {
+    public CartController(final CartService cartService, final Mapper mapper) {
         this.cartService = cartService;
+        this.mapper = mapper;
     }
 
     /**
@@ -37,11 +41,11 @@ public class CartController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadCartById(@PathVariable("id") final String id) {
-        log.info("Start loadCartById: " + id);
+        log.info("Start loadCartById: {}", id);
         try {
             final Cart cart = cartService.find(id);
             Assert.notNull(cart, "Unable to find cart with id: " + id);
-            return new ResponseEntity<>(cart, HttpStatus.OK);
+            return ResponseEntity.ok(mapper.map(cart, CartDto.class));
         } catch (IllegalArgumentException e) {
             log.error(e.getLocalizedMessage());
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
@@ -96,7 +100,7 @@ public class CartController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteCart(@PathVariable("id") final String id) {
-        log.info("Start deleteCart");
+        log.info("Start deleteCart: {}", id);
         try {
             cartService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

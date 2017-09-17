@@ -45,19 +45,19 @@ public abstract class ControllerConfig {
     @Value("${auth.header.name:x-auth-token}")
     protected String authHeaderName;
 
-    private User user;
+    private User userDto;
 
     protected String token;
 
     protected void authenticateUserWithAuthority(final AuthorityEnum authorityName) {
         final Authority authority = authorityService.create(new Authority(authorityName));
-        user = prepareUserWithRole(authority);
-        userService.create(user);
-        token = tokenService.generate(user.getUsername(), user.getCredentials().toString()).getToken();
+        userDto = prepareUserWithRole(authority);
+        userService.create(userDto);
+        token = tokenService.generate(userDto.getUsername(), userDto.getCredentials().toString()).getToken();
     }
 
     protected void cleanup() {
-        userService.delete(user.getId());
-        authorityService.delete(user.getAuthorities().get(0).getId());
+        userService.delete(userDto.getId());
+        authorityService.delete(userDto.getAuthorities().get(0).getId());
     }
 }

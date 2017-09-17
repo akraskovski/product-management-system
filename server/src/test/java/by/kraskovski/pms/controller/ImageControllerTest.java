@@ -75,7 +75,7 @@ public class ImageControllerTest extends ControllerConfig {
     }
 
     @Test
-    public void deleteImage() throws Exception {
+    public void deleteImageTest() throws Exception {
         final MockMultipartFile image = new MockMultipartFile("file", "content".getBytes());
         final String imageId = imageService.upload(image);
 

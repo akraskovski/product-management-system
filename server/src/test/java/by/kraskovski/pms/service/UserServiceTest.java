@@ -11,10 +11,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.apache.commons.lang3.RandomStringUtils.random;
+import static by.kraskovski.pms.utils.TestUtils.prepareUser;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -30,39 +29,33 @@ public class UserServiceTest {
     @InjectMocks
     private UserServiceImpl userService;
 
-    private User prepareUser() {
-        final String id = random(40);
-        final String username = random(20);
-        final String password = random(20);
-        return new User(id, username, password);
-    }
-
     @Test
     public void createTest() {
         final User user = prepareUser();
         when(authorityService.findByName(AuthorityEnum.ROLE_USER)).thenReturn(new Authority(AuthorityEnum.ROLE_USER));
-        when(userRepository.save((User) anyObject())).thenReturn(user);
+        when(userRepository.save(user)).thenReturn(user);
 
-        assertNotEquals(userService.create(new User()).getId(), 0);
-        verify(authorityService).findByName(anyObject());
-        verify(userRepository).save((User) anyObject());
+        userService.create(user);
+
+        verify(authorityService).findByName(AuthorityEnum.ROLE_USER);
+        verify(userRepository).save(eq(user));
     }
 
     @Test
     public void findByIdTest() {
         final User user = prepareUser();
-        when(userRepository.findOne(anyString())).thenReturn(user);
+        when(userRepository.findOne(eq(user.getId()))).thenReturn(user);
 
         assertEquals(user, userService.find(user.getId()));
-        verify(userRepository).findOne(anyString());
+        verify(userRepository).findOne(eq(user.getId()));
     }
 
     @Test
     public void findByUsernameTest() {
         final User user = prepareUser();
-        when(userRepository.findByUsername(anyString())).thenReturn(user);
+        when(userRepository.findByUsername(eq(user.getUsername()))).thenReturn(user);
 
         assertEquals(user, userService.findByUsername(user.getUsername()));
-        verify(userRepository).findByUsername(anyString());
+        verify(userRepository).findByUsername(user.getUsername());
     }
 }
