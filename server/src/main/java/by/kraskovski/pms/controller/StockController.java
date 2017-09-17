@@ -104,9 +104,10 @@ public class StockController {
      * Creating {@link Stock} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createStock(@RequestBody final Stock stock) {
-        log.info("Start createStock: {}", stock.getSpecialize());
-        return new ResponseEntity<>(stockService.create(stock), HttpStatus.CREATED);
+    public ResponseEntity createStock(@RequestBody final StockDto stockDto) {
+        log.info("Start createStock: {}", stockDto.getSpecialize());
+        final Stock stock = mapper.map(stockDto, Stock.class);
+        return new ResponseEntity<>(mapper.map(stockService.create(stock), StockDto.class), HttpStatus.CREATED);
     }
 
     /**

@@ -19,7 +19,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class Store extends BaseEntity {
 
     @Column(unique = true, nullable = false)
@@ -32,18 +31,11 @@ public class Store extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "stock_id")
     )
     private List<Stock> stockList = new ArrayList<>();
-
     private String details;
-
     private String address;
-
     private String phone;
-
     private String skype;
-
     private boolean discounts;
-
     private String mail;
-
     private String logo;
 }

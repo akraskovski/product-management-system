@@ -30,6 +30,16 @@ public interface StoreService {
     List<Store> findAll();
 
     /**
+     * Add relation between stock and store
+     */
+    boolean addStock(String storeId, String stockId);
+
+    /**
+     * Delete relation between stock and store
+     */
+    boolean deleteStock(String storeId, String stockId);
+
+    /**
      * Update information about {@link Store} in database
      */
     Store update(Store object);
