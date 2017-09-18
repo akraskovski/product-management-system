@@ -1,6 +1,6 @@
 package by.kraskovski.pms.controller.exception;
 
-import by.kraskovski.pms.controller.dto.exception.ErrorDto;
+import by.kraskovski.pms.controller.dto.ErrorDto;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.exception.FileNotFoundException;
 import by.kraskovski.pms.service.exception.FileUploadException;

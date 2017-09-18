@@ -75,7 +75,7 @@ public class CartControllerIT extends ControllerConfig {
     public void loadCartByIdIfNotExistsTest() throws Exception {
         mvc.perform(get(BASE_CART_URL + "/" + randomAlphabetic(20))
                 .header(authHeaderName, token))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test

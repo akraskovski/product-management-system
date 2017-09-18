@@ -1,4 +1,4 @@
-package by.kraskovski.pms.controller.dto.exception;
+package by.kraskovski.pms.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

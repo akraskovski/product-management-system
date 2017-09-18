@@ -17,12 +17,12 @@ public interface CartService {
     /**
      * Add product to cart.
      */
-    boolean addProduct(String cartId, String productStockId, int count);
+    void addProduct(String cartId, String productStockId, int count);
 
     /**
      * Delete one (or more) product(s) from cart.
      */
-    boolean deleteProduct(String cartId, String productStockId, int count);
+    void deleteProduct(String cartId, String productStockId, int count);
 
     /**
      * Find {@link Cart} in database by identifier

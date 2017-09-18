@@ -66,19 +66,19 @@ public class CartServiceTest {
         when(cartRepository.findOne(anyString())).thenReturn(new Cart(prepareUser()));
         when(productStockService.find(anyString())).thenReturn(new ProductStock(prepareProduct(), prepareStock(), 20));
 
-        assertTrue(cartService.addProduct(random(40), random(40), 10));
+        cartService.addProduct(random(40), random(40), 10);
 
         verify(cartRepository).findOne(anyString());
         verify(productStockService).find(anyString());
         verify(cartRepository).save((Cart) anyObject());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void addNewProductToCartNegativeTest() {
         when(cartRepository.findOne(anyString())).thenReturn(new Cart(prepareUser()));
         when(productStockService.find(anyString())).thenReturn(new ProductStock(prepareProduct(), prepareStock(), 10));
 
-        assertFalse(cartService.addProduct(random(40), random(40), 11));
+        cartService.addProduct(random(40), random(40), 11);
 
         verify(cartRepository).findOne(anyString());
         verify(cartRepository, times(0)).save((Cart) anyObject());
@@ -93,12 +93,12 @@ public class CartServiceTest {
         when(cartRepository.findOne(anyString())).thenReturn(cart);
         when(productStockService.find(anyString())).thenReturn(productStock);
 
-        assertTrue(cartService.addProduct(random(40), random(40), 10));
+        cartService.addProduct(random(40), random(40), 10);
 
         verify(cartRepository).save((Cart) anyObject());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void addExistingProductToCartNegativeTest() {
         final Cart cart = new Cart(prepareUser());
         final ProductStock productStock = new ProductStock(prepareProduct(), prepareStock(), 10);
@@ -106,7 +106,7 @@ public class CartServiceTest {
         when(cartRepository.findOne(anyString())).thenReturn(cart);
         when(productStockService.find(anyString())).thenReturn(productStock);
 
-        assertFalse(cartService.addProduct(random(40), random(40), 11));
+        cartService.addProduct(random(40), random(40), 11);
         verify(cartRepository, times(0)).save((Cart) anyObject());
     }
 }

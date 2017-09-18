@@ -69,7 +69,6 @@ public class ImageControllerIT extends ControllerConfig {
     }
 
     @Test
-    @Ignore
     public void loadImageAsResourceNegativeTest() throws Exception {
         mvc.perform(get(BASE_IMAGE_URL + "/" + RandomStringUtils.randomAlphabetic(20))
                 .header(authHeaderName, token))
