@@ -25,7 +25,7 @@ public class AuthenticationControllerIT extends ControllerConfig {
         mvc.perform(post(BASE_AUTH_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(new LoginDto(user.getUsername(), user.getPassword()))))
-                .andExpect(status().isAccepted())
+                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.token", notNullValue(String.class)))
                 .andExpect(jsonPath("$.userDto.username", is(user.getUsername())))
@@ -34,11 +34,9 @@ public class AuthenticationControllerIT extends ControllerConfig {
 
     @Test
     public void loginNegativeTest() throws Exception {
-        final User user = TestUtils.prepareUser();
-        userService.create(user);
         mvc.perform(post(BASE_AUTH_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(objectMapper.writeValueAsString(new LoginDto(randomAlphabetic(10), user.getPassword()))))
-                .andExpect(status().isUnauthorized());
+                .content(objectMapper.writeValueAsString(new LoginDto(randomAlphabetic(10), randomAlphabetic(10)))))
+                .andExpect(status().isNotFound());
     }
 }

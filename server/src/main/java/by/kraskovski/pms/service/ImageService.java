@@ -21,7 +21,7 @@ public interface ImageService {
     /**
      * Delete image from system
      */
-    boolean delete(String id);
+    void delete(String id);
 
     /**
      * Clean images directory

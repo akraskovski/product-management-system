@@ -85,11 +85,26 @@ public class StockControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void addNewProductToStockTest() throws Exception {
-        final Product product = prepareProduct();
+    public void addExistingProductToStockTest() throws Exception {
+        final Product product = productService.create(prepareProduct());
         final Stock stock = prepareStock();
-        productService.create(product);
+        stock.getProductStocks().add(new ProductStock(product, stock, 10));
         stockService.create(stock);
+        mvc.perform(put(BASE_STOCK_URL + "/product")
+                .header(authHeaderName, token)
+                .param("stock_id", stock.getId())
+                .param("product_id", product.getId())
+                .param("count", "10"))
+                .andExpect(status().isNoContent());
+        final ProductStockDto productStockDto = loadStockProducts(stock.getId()).get(0);
+        assertEquals(product.getId(), productStockDto.getProduct().getId());
+        assertEquals(20, productStockDto.getProductsCount());
+    }
+
+    @Test
+    public void addNewProductToStockTest() throws Exception {
+        final Product product = productService.create(prepareProduct());
+        final Stock stock = stockService.create(prepareStock());
         mvc.perform(put(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
                 .param("stock_id", stock.getId())
@@ -124,15 +139,13 @@ public class StockControllerIT extends ControllerConfig {
     @Test
     public void deleteProductFromStockNegativeTest() throws Exception {
         final int productsToDeleteCount = 10;
-        final Stock stock = prepareStock();
-        stockService.create(stock);
-
+        final Stock stock = stockService.create(prepareStock());
         mvc.perform(delete(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
                 .param("stock_id", stock.getId())
                 .param("product_id", "INVALID ID")
                 .param("count", String.valueOf(productsToDeleteCount)))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test

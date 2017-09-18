@@ -1,6 +1,8 @@
 package by.kraskovski.pms.service.impl;
 
 import by.kraskovski.pms.service.ImageService;
+import by.kraskovski.pms.service.exception.FileNotFoundException;
+import by.kraskovski.pms.service.exception.FileUploadException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +15,7 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.UUID;
 
@@ -51,32 +54,35 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public String upload(final MultipartFile uploadedFile) {
         if (uploadedFile.isEmpty()) {
-            return null;
+            throw new FileUploadException("Error during upload image. Uploading file is empty!");
         }
         final File file = new File(root + "/" + UUID.randomUUID().toString());
         try {
             uploadedFile.transferTo(file);
             return file.getName();
         } catch (IOException e) {
-            log.error(e.getMessage());
-            return null;
+            throw new FileUploadException(e.getLocalizedMessage());
         }
     }
 
     @Override
     public Resource load(final String id) {
         final Resource resource = new FileSystemResource(root + "/" + id);
-        return resource.exists() ? resource : null;
+        if (!resource.exists()) {
+            throw new FileNotFoundException("File: " + id + " not found in system!");
+        }
+        return resource;
     }
 
     @Override
-    public boolean delete(final String id) {
+    public void delete(final String id) {
         final File file = new File(root + "/" + id);
         try {
-            return Files.deleteIfExists(file.toPath());
+            if (!Files.deleteIfExists(file.toPath())) {
+                throw new NoSuchFileException("File: " + id + " not found in system!");
+            }
         } catch (IOException e) {
-            log.error(e.getLocalizedMessage());
-            return false;
+            throw new FileNotFoundException(e.getLocalizedMessage());
         }
     }
 

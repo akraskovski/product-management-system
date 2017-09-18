@@ -6,14 +6,19 @@ import by.kraskovski.pms.repository.StoreRepository;
 import by.kraskovski.pms.service.ImageService;
 import by.kraskovski.pms.service.StockService;
 import by.kraskovski.pms.service.StoreService;
+import by.kraskovski.pms.service.exception.FileNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
+@Slf4j
 public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
@@ -36,12 +41,14 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store find(final String id) {
-        return storeRepository.findOne(id);
+        return Optional.ofNullable(storeRepository.findOne(id))
+                .orElseThrow(() -> new EntityNotFoundException("Store with id: " + id + " not found in db!"));
     }
 
     @Override
     public Store findByName(final String name) {
-        return storeRepository.findByName(name);
+        return Optional.ofNullable(storeRepository.findByName(name))
+                .orElseThrow(() -> new EntityNotFoundException("Store with name: " + name + " not found in db!"));
     }
 
     @Override
@@ -50,33 +57,25 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public boolean addStock(final String storeId, final String stockId) {
-        final Store store = storeRepository.findOne(storeId);
+    public void addStock(final String storeId, final String stockId) {
+        final Store store = find(storeId);
         final Stock stock = stockService.find(stockId);
-        if (store == null || stock == null) {
-            return false;
-        }
         if (store.getStockList().contains(stock)) {
-            return false;
+            throw new IllegalArgumentException("Store:" + storeId + " already have relation with stock: " + stockId);
         }
         store.getStockList().add(stock);
         storeRepository.save(store);
-        return true;
     }
 
     @Override
-    public boolean deleteStock(final String storeId, final String stockId) {
-        final Store store = storeRepository.findOne(storeId);
+    public void deleteStock(final String storeId, final String stockId) {
+        final Store store = find(storeId);
         final Stock stock = stockService.find(stockId);
-        if (store == null || stock == null) {
-            return false;
+        if (!store.getStockList().contains(stock)) {
+            throw new IllegalArgumentException("Store:" + storeId + " doesn't have relation with stock: " + stockId);
         }
-        if (store.getStockList().contains(stock)) {
-            store.getStockList().remove(stock);
-            storeRepository.save(store);
-            return true;
-        }
-        return false;
+        store.getStockList().remove(stock);
+        storeRepository.save(store);
     }
 
     @Override
@@ -88,7 +87,12 @@ public class StoreServiceImpl implements StoreService {
     public void delete(final String id) {
         final Store storeToDelete = storeRepository.findOne(id);
         if (isNotEmpty(storeToDelete.getLogo())) {
-            imageService.delete(storeToDelete.getLogo());
+            try {
+                imageService.delete(storeToDelete.getLogo());
+            } catch (FileNotFoundException e) {
+                log.warn("Store: {} doesn't have logo. This image id is: {} is not correct!",
+                        storeToDelete.getId(), storeToDelete.getLogo());
+            }
         }
         storeRepository.delete(storeToDelete);
     }
