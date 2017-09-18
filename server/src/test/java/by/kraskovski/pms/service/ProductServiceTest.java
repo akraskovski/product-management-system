@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.FileNotFoundException;
+
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
@@ -67,9 +69,8 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void deleteTest() {
+    public void deleteTest() throws FileNotFoundException {
         final Product product = prepareProduct();
-        when(imageService.delete(anyString())).thenReturn(true);
         when(productRepository.findOne(anyString())).thenReturn(product);
 
         productService.delete(product.getId());

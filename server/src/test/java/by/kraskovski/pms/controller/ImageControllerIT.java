@@ -11,11 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ImageControllerTest extends ControllerConfig {
+public class ImageControllerIT extends ControllerConfig {
 
     private static final String BASE_IMAGE_URL = "/image";
 
@@ -56,7 +58,7 @@ public class ImageControllerTest extends ControllerConfig {
     }
 
     @Test
-    public void loadImageAsResourcePostitiveTest() throws Exception {
+    public void loadImageAsResourcePositiveTest() throws Exception {
         final MockMultipartFile image = new MockMultipartFile("file", "image.jpg", null, "content".getBytes());
         final String imageId = imageService.upload(image);
 
@@ -71,16 +73,24 @@ public class ImageControllerTest extends ControllerConfig {
     public void loadImageAsResourceNegativeTest() throws Exception {
         mvc.perform(get(BASE_IMAGE_URL + "/" + RandomStringUtils.randomAlphabetic(20))
                 .header(authHeaderName, token))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    public void deleteImageTest() throws Exception {
+    public void deleteImagePositiveTest() throws Exception {
         final MockMultipartFile image = new MockMultipartFile("file", "content".getBytes());
         final String imageId = imageService.upload(image);
 
         mvc.perform(delete(BASE_IMAGE_URL + "/" + imageId)
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());
+    }
+
+
+    @Test
+    public void deleteImageNegativeTest() throws Exception {
+        mvc.perform(delete(BASE_IMAGE_URL + "/" + RandomStringUtils.randomAlphabetic(20))
+                .header(authHeaderName, token))
+                .andExpect(status().isNotFound());
     }
 }

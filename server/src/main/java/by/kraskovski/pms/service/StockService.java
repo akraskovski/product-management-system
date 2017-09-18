@@ -1,9 +1,10 @@
 package by.kraskovski.pms.service;
 
-import by.kraskovski.pms.controller.dto.ProductStockDto;
+import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Service for {@link Stock}
@@ -23,17 +24,17 @@ public interface StockService {
     /**
      * Find all products contains in stock.
      */
-    List<ProductStockDto> findProducts(String id);
+    Set<ProductStock> findProducts(String id);
 
     /**
      * Add product to stock.
      */
-    boolean addProduct(String stockId, String productId, int count);
+    void addProduct(String stockId, String productId, int count);
 
     /**
      * Delete one (or more) product(s) from stock.
      */
-    boolean deleteProduct(String stockId, String productId, int count);
+    void deleteProduct(String stockId, String productId, int count);
 
     /**
      * Find all {@link Stock}s in database.
@@ -55,4 +56,3 @@ public interface StockService {
      */
     void deleteAll();
 }
-

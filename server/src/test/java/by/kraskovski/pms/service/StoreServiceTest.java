@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.FileNotFoundException;
+
 import static by.kraskovski.pms.utils.TestUtils.prepareStore;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -55,10 +57,9 @@ public class StoreServiceTest {
     }
 
     @Test
-    public void deleteStoreWithLogoTest() {
+    public void deleteStoreWithLogoTest() throws FileNotFoundException {
         final Store store = prepareStore();
         when(storeRepository.findOne(anyString())).thenReturn(store);
-        when(imageService.delete(anyString())).thenReturn(true);
 
         storeService.delete(store.getId());
 

@@ -3,6 +3,7 @@ package by.kraskovski.pms.service.impl;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.repository.UserRepository;
+import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.AuthorityService;
 import by.kraskovski.pms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,12 +43,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User find(final String id) {
-        return userRepository.findOne(id);
+        return Optional.ofNullable(userRepository.findOne(id))
+                .orElseThrow(() -> new UserNotFoundException("User with id: " + id + " doesn't not exists in db!"));
     }
 
     @Override
     public User findByUsername(final String username) {
-        return userRepository.findByUsername(username);
+        return Optional.ofNullable(userRepository.findByUsername(username))
+                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " doesn't not exists in db!"));
     }
 
     @Override

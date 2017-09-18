@@ -59,7 +59,6 @@ public class ProductControllerIT extends ControllerConfig {
     public void findProductByIdTest() throws Exception {
         final Product product = prepareProduct();
         productService.create(product);
-
         mvc.perform(get(BASE_PRODUCTS_URL + "/" + product.getId())
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
@@ -71,7 +70,6 @@ public class ProductControllerIT extends ControllerConfig {
     public void findProductByNameTest() throws Exception {
         final Product product = prepareProduct();
         productService.create(product);
-
         mvc.perform(get(BASE_PRODUCTS_URL + "/name/" + product.getName())
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
@@ -83,7 +81,6 @@ public class ProductControllerIT extends ControllerConfig {
     public void findProductByTypeTest() throws Exception {
         final Product product = prepareProduct();
         productService.create(product);
-
         mvc.perform(get(BASE_PRODUCTS_URL + "/type/" + product.getType())
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
@@ -112,9 +109,7 @@ public class ProductControllerIT extends ControllerConfig {
 
     @Test
     public void deleteProductTest() throws Exception {
-        final Product product = prepareProduct();
-        productService.create(product);
-
+        final Product product = productService.create(prepareProduct());
         mvc.perform(delete(BASE_PRODUCTS_URL + "/" + product.getId())
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());

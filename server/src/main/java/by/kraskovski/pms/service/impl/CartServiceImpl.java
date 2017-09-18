@@ -5,7 +5,6 @@ import by.kraskovski.pms.domain.model.CartProductStock;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.repository.CartRepository;
-import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.CartService;
 import by.kraskovski.pms.service.ProductStockService;
 import by.kraskovski.pms.service.UserService;
@@ -13,9 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceAlreadyExistsException;
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
-import static java.util.Optional.ofNullable;
+import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -36,9 +36,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void create(final String id) throws InstanceAlreadyExistsException {
-        final User user = ofNullable(userService.find(id))
-                .orElseThrow(() -> new UserNotFoundException(
-                        "Can't create cart for user with id:" + id + ". Entity not found in database!"));
+        final User user = userService.find(id);
         if (user.getCart() != null) {
             throw new InstanceAlreadyExistsException("Cart with id:" + id + " already exists!");
         }
@@ -48,61 +46,52 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public boolean addProduct(final String cartId, final String productStockId, final int count) {
+    public void addProduct(final String cartId, final String productStockId, final int count) {
         final Cart cart = find(cartId);
         final ProductStock productStock = productStockService.find(productStockId);
 
-        if (cart == null || productStock == null) {
-            return false;
-        }
-
+        //TODO: change to stream
         for (CartProductStock cartProductStock : cart.getCartProductStocks()) {
             if (cartProductStock.getProductStock().equals(productStock)) {
-                return addExistingProductToCart(cartProductStock, cart, count);
+                addExistingProductToCart(cartProductStock, cart, count);
+                return;
             }
         }
-        return addNewProductToCart(cart, productStock, count);
+        addNewProductToCart(cart, productStock, count);
     }
 
-    private boolean addExistingProductToCart(final CartProductStock cartProductStock, final Cart cart, final int count) {
-        if (cartProductStock.getProductStock().getProductsCount() - (cartProductStock.getProductCount() + count) >= 0) {
-            cartProductStock.setProductCount(cartProductStock.getProductCount() + count);
-            cart.setTotalCost(cart.getTotalCost() + cartProductStock.getProductStock().getProduct().getCost() * count);
-            cartRepository.save(cart);
-            return true;
+    private void addExistingProductToCart(final CartProductStock cartProductStock, final Cart cart, final int count) {
+        if (cartProductStock.getProductStock().getProductsCount() - (cartProductStock.getProductCount() + count) < 0) {
+            throw new IllegalArgumentException("The number of products in stock less than in request!");
         }
-        return false;
+        cartProductStock.setProductCount(cartProductStock.getProductCount() + count);
+        cart.setTotalCost(cart.getTotalCost() + cartProductStock.getProductStock().getProduct().getCost() * count);
+        cartRepository.save(cart);
     }
 
-    private boolean addNewProductToCart(final Cart cart, final ProductStock productStock, final int count) {
-        if (productStock.getProductsCount() - count >= 0) {
-            final CartProductStock cartProductStock = new CartProductStock(cart, productStock, count);
-            cart.getCartProductStocks().add(cartProductStock);
-            cart.setTotalCost(cart.getTotalCost() + productStock.getProduct().getCost() * count);
-            cartRepository.save(cart);
-            return true;
+    private void addNewProductToCart(final Cart cart, final ProductStock productStock, final int count) {
+        if (productStock.getProductsCount() - count < 0) {
+            throw new IllegalArgumentException("The number of products in stock less than in request!");
         }
-        return false;
+        final CartProductStock cartProductStock = new CartProductStock(cart, productStock, count);
+        cart.getCartProductStocks().add(cartProductStock);
+        cart.setTotalCost(cart.getTotalCost() + productStock.getProduct().getCost() * count);
+        cartRepository.save(cart);
     }
 
     @Override
     @Transactional
-    public boolean deleteProduct(final String cartId, final String productStockId, final int count) {
+    public void deleteProduct(final String cartId, final String productStockId, final int count) {
         final Cart cart = find(cartId);
         final ProductStock productStock = productStockService.find(productStockId);
 
-        if (cart == null && productStock == null) {
-            return false;
-        }
-
-        return cart.getCartProductStocks().stream()
+        cart.getCartProductStocks().stream()
                 .filter(cartProductStock -> cartProductStock.getProductStock().equals(productStock))
                 .findFirst()
-                .map(cartProductStock -> deleteProductFromCartProductStock(cart, cartProductStock, count))
-                .orElse(false);
+                .ifPresent(cartProductStock -> deleteProductFromCartProductStock(cart, cartProductStock, count));
     }
 
-    private boolean deleteProductFromCartProductStock(
+    private void deleteProductFromCartProductStock(
             final Cart cart,
             final CartProductStock cartProductStock,
             final int count) {
@@ -110,19 +99,19 @@ public class CartServiceImpl implements CartService {
             cartProductStock.setProductCount(cartProductStock.getProductCount() - count);
             cart.setTotalCost(cart.getTotalCost() - cartProductStock.getProductStock().getProduct().getCost() * count);
             cartRepository.save(cart);
-            return true;
         } else if (cartProductStock.getProductCount() - count == 0) {
             cart.getCartProductStocks().remove(cartProductStock);
             cart.setTotalCost(cart.getTotalCost() - cartProductStock.getProductStock().getProduct().getCost() * count);
             cartRepository.save(cart);
-            return true;
+        } else {
+            throw new IllegalArgumentException("The number of products in stock less than in request!");
         }
-        return false;
     }
 
     @Override
     public Cart find(final String id) {
-        return cartRepository.findOne(id);
+        return Optional.ofNullable(cartRepository.findOne(id))
+                .orElseThrow(() -> new EntityNotFoundException("Cart with id: " + id + " not found in db!"));
     }
 
     @Override
@@ -133,14 +122,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public void delete(final String id) {
         final User user = userService.find(id);
-        if (user != null) {
-            if (user.getCart() != null) {
-                user.removeCart();
-                userService.update(user);
-                return;
-            }
+        if (user.getCart() != null) {
+            user.removeCart();
+            userService.update(user);
         }
-        throw new IllegalArgumentException("Cart with id: " + id + " not found in database!");
     }
 
     @Override

@@ -1,16 +1,12 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.dto.CartDto;
-import by.kraskovski.pms.domain.model.Cart;
-import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,29 +38,17 @@ public class CartController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity loadCartById(@PathVariable("id") final String id) {
         log.info("Start loadCartById: {}", id);
-        try {
-            final Cart cart = cartService.find(id);
-            Assert.notNull(cart, "Unable to find cart with id: " + id);
-            return ResponseEntity.ok(mapper.map(cart, CartDto.class));
-        } catch (IllegalArgumentException e) {
-            log.error(e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.ok(mapper.map(cartService.find(id), CartDto.class));
     }
 
     /**
      * Create empty cart.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCart(@PathVariable("id") final String id) {
+    public ResponseEntity<Object> createCart(@PathVariable("id") final String id) throws InstanceAlreadyExistsException {
         log.info("Start createCart for user with id: {}", id);
-        try {
-            cartService.create(id);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (UserNotFoundException | InstanceAlreadyExistsException | DataIntegrityViolationException e) {
-            log.info("Error in createCart. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        cartService.create(id);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
@@ -76,9 +60,8 @@ public class CartController {
             @RequestParam("ps_id") final String productStockId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         log.info("start addProductStock: {} to cart: {} with count: {}", productStockId, cartId, count);
-        return cartService.addProduct(cartId, productStockId, count)
-                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        cartService.addProduct(cartId, productStockId, count);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -90,9 +73,8 @@ public class CartController {
             @RequestParam("ps_id") final String productStockId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         log.info("start deleteProductFromCart: {} from cart: {} with count: {}", productStockId, cartId, count);
-        return cartService.deleteProduct(cartId, productStockId, count)
-                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        cartService.deleteProduct(cartId, productStockId, count);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -101,12 +83,7 @@ public class CartController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteCart(@PathVariable("id") final String id) {
         log.info("Start deleteCart: {}", id);
-        try {
-            cartService.delete(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (IllegalArgumentException e) {
-            log.info("Error in deleteCart. " + e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
-        }
+        cartService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

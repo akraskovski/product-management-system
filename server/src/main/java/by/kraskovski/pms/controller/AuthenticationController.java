@@ -6,9 +6,7 @@ import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.security.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,15 +36,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity login(@RequestBody final LoginDto loginDto) {
         log.info("Start authentication user with username: " + loginDto.getUsername());
-        try {
-            final TokenDto tokenDto = tokenService.generate(loginDto.getUsername(), loginDto.getPassword());
-            return new ResponseEntity<>(tokenDto, HttpStatus.ACCEPTED);
-        } catch (BadCredentialsException e) {
-            log.error(
-                    "User authentication with username: {} failed! Cause: {}",
-                    loginDto.getUsername(),
-                    e.getLocalizedMessage());
-            return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.UNAUTHORIZED);
-        }
+        final TokenDto tokenDto = tokenService.generate(loginDto.getUsername(), loginDto.getPassword());
+        return ResponseEntity.ok(tokenDto);
     }
 }
