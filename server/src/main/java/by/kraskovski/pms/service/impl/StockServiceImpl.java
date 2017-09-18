@@ -5,6 +5,7 @@ import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.repository.StockRepository;
 import by.kraskovski.pms.service.ProductService;
+import by.kraskovski.pms.service.ProductStockService;
 import by.kraskovski.pms.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,15 @@ public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
     private final ProductService productService;
+    private final ProductStockService productStockService;
 
     @Autowired
-    public StockServiceImpl(final StockRepository stockRepository, final ProductService productService) {
+    public StockServiceImpl(final StockRepository stockRepository,
+                            final ProductService productService,
+                            final ProductStockService productStockService) {
         this.stockRepository = stockRepository;
         this.productService = productService;
+        this.productStockService = productStockService;
     }
 
     @Override
@@ -53,16 +58,12 @@ public class StockServiceImpl implements StockService {
     @Transactional
     public void addProduct(final String stockId, final String productId, final int count) {
         final Stock stock = find(stockId);
-        final Product product = productService.find(productId);
-
-        //TODO: change to stream
-        for (ProductStock productStock : stock.getProductStocks()) {
-            if (productStock.getProduct().equals(product)) {
-                addExistingProductToStock(productStock, stock, count);
-                return;
-            }
+        try {
+            final ProductStock productStock = productStockService.findByStockIdAndProductId(stockId, productId);
+            addExistingProductToStock(productStock, stock, count);
+        } catch (EntityNotFoundException e) {
+            addNewProductToStock(stock, productService.find(productId), count);
         }
-        addNewProductToStock(stock, product, count);
     }
 
     private void addExistingProductToStock(final ProductStock productStock, final Stock stock, final int count) {
@@ -84,12 +85,8 @@ public class StockServiceImpl implements StockService {
     @Override
     @Transactional
     public void deleteProduct(final String stockId, final String productId, final int count) {
-        final Stock stock = find(stockId);
-        final Product product = productService.find(productId);
-        stock.getProductStocks().stream()
-                .filter(productStock -> productStock.getProduct().equals(product))
-                .findFirst()
-                .ifPresent(productStock -> deleteProductFromProductStock(productStock, stock, count));
+        final ProductStock productStock = productStockService.findByStockIdAndProductId(stockId, productId);
+        deleteProductFromProductStock(productStock, find(stockId), count);
     }
 
     private void deleteProductFromProductStock(final ProductStock productStock, final Stock stock, final int count) {

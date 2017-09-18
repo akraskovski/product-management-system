@@ -11,8 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.EntityNotFoundException;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
@@ -21,7 +20,6 @@ import static org.apache.commons.lang3.RandomUtils.nextInt;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.anyObject;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,6 +32,9 @@ public class StockServiceTest {
 
     @Mock
     private ProductService productService;
+
+    @Mock
+    private ProductStockService productStockService;
 
     @InjectMocks
     private StockServiceImpl stockService;
@@ -52,6 +53,8 @@ public class StockServiceTest {
     public void addNewProductPositiveTest() {
         when(stockRepository.findOne(anyString())).thenReturn(prepareStock());
         when(productService.find(anyString())).thenReturn(prepareProduct());
+        when(productStockService.findByStockIdAndProductId(anyString(), anyString()))
+                .thenThrow(new EntityNotFoundException());
 
         stockService.addProduct(random(40), random(40), nextInt());
 
@@ -64,6 +67,8 @@ public class StockServiceTest {
     public void addNewProductNegativeTest() {
         when(stockRepository.findOne(anyString())).thenReturn(prepareStock());
         when(productService.find(anyString())).thenReturn(prepareProduct());
+        when(productStockService.findByStockIdAndProductId(anyString(), anyString()))
+                .thenThrow(new EntityNotFoundException());
 
         stockService.addProduct(random(40), random(40), -5);
 
@@ -76,14 +81,14 @@ public class StockServiceTest {
     public void addExistingProductPositiveTest() {
         final Product product = prepareProduct();
         final Stock stock = prepareStock();
-        stock.getProductStocks().add(new ProductStock(product, stock, nextInt()));
+        final ProductStock productStock = new ProductStock(product, stock, nextInt());
+        stock.getProductStocks().add(productStock);
         when(stockRepository.findOne(anyString())).thenReturn(stock);
-        when(productService.find(anyString())).thenReturn(product);
+        when(productStockService.findByStockIdAndProductId(anyString(), anyString())).thenReturn(productStock);
 
         stockService.addProduct(random(40), random(40), nextInt());
 
         verify(stockRepository).findOne(anyString());
-        verify(productService).find(anyString());
         verify(stockRepository).save((Stock) anyObject());
     }
 
@@ -91,14 +96,14 @@ public class StockServiceTest {
     public void addExistingProductNegativeTest() {
         final Product product = prepareProduct();
         final Stock stock = prepareStock();
-        stock.getProductStocks().add(new ProductStock(product, stock, 10));
+        final ProductStock productStock = new ProductStock(product, stock, nextInt());
+        stock.getProductStocks().add(productStock);
         when(stockRepository.findOne(anyString())).thenReturn(stock);
-        when(productService.find(anyString())).thenReturn(product);
+        when(productStockService.findByStockIdAndProductId(anyString(), anyString())).thenReturn(productStock);
 
         stockService.addProduct(random(40), random(40), -5);
 
         verify(stockRepository).findOne(anyString());
-        verify(productService).find(anyString());
         verify(stockRepository, times(0)).save((Stock) anyObject());
     }
 
@@ -106,28 +111,24 @@ public class StockServiceTest {
     public void deleteProductPositiveTest() {
         final Product product = prepareProduct();
         final Stock stock = prepareStock();
-        final Set<ProductStock> productStocks = new HashSet<>();
-        productStocks.add((new ProductStock(product, stock, 10)));
-        stock.setProductStocks(productStocks);
+        final ProductStock productStock = new ProductStock(product, stock, nextInt());
+        stock.getProductStocks().add(productStock);
         when(stockRepository.findOne(anyString())).thenReturn(stock);
-        when(productService.find(anyString())).thenReturn(product);
+        when(productStockService.findByStockIdAndProductId(anyString(), anyString())).thenReturn(productStock);
 
         stockService.deleteProduct(stock.getId(), product.getId(), 10);
-        verify(productService).find(product.getId());
         verify(stockRepository).save(stock);
     }
 
-    @Test
+    @Test(expected = EntityNotFoundException.class)
     public void deleteProductNegativeTest() {
         final Product product = prepareProduct();
         product.setId(random(20));
         final Stock stock = prepareStock();
         stock.setId(random(20));
-        when(stockRepository.findOne(anyString())).thenReturn(stock);
-        when(productService.find(anyString())).thenReturn(product);
+        when(productStockService.findByStockIdAndProductId(anyString(), anyString()))
+                .thenThrow(new EntityNotFoundException());
 
         stockService.deleteProduct(stock.getId(), product.getId(), 10);
-        verify(productService).find(product.getId());
-        verify(stockRepository, never()).save(stock);
     }
 }
