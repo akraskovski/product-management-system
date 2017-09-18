@@ -58,7 +58,7 @@ public class ImageControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void loadImageAsResourcePostitiveTest() throws Exception {
+    public void loadImageAsResourcePositiveTest() throws Exception {
         final MockMultipartFile image = new MockMultipartFile("file", "image.jpg", null, "content".getBytes());
         final String imageId = imageService.upload(image);
 
