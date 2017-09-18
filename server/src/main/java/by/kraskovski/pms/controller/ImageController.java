@@ -41,7 +41,8 @@ public class ImageController {
     /**
      * Get image from the system.
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = {"image/jpeg", "image/jpg", "image/png", "image/gif"})
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET,
+            produces = {"application/json", "image/jpeg", "image/jpg", "image/png", "image/gif"})
     @ResponseBody
     public ResponseEntity loadImageAsResource(@PathVariable final String id) {
         log.info("loading image with id: \"{}\"", id);

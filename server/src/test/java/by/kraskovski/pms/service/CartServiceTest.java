@@ -13,12 +13,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.management.InstanceAlreadyExistsException;
 
-import static by.kraskovski.pms.utils.TestUtils.*;
+import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
+import static by.kraskovski.pms.utils.TestUtils.prepareStock;
+import static by.kraskovski.pms.utils.TestUtils.prepareUser;
 import static org.apache.commons.lang3.RandomStringUtils.random;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CartServiceTest {

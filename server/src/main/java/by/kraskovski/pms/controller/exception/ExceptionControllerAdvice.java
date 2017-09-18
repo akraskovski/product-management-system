@@ -45,7 +45,7 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity handleIllegalArgumentException(final IllegalArgumentException e) {
-        log.warn("Illegal argument: ", e.getMessage());
+        log.warn("Illegal argument: {}", e.getMessage());
         return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 
@@ -54,7 +54,7 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(InstanceAlreadyExistsException.class)
     public ResponseEntity handleInstanceAlreadyExistsException(final InstanceAlreadyExistsException e) {
-        log.info("Error in createCart: ", e.getLocalizedMessage());
+        log.info("Error in createCart: {}", e.getLocalizedMessage());
         return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 
@@ -72,7 +72,7 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(FileNotFoundException.class)
     public ResponseEntity handleFileNotFoundException(final FileNotFoundException e) {
-        log.warn("FileNotFound exception: ", e.getMessage());
+        log.warn("FileNotFound exception: {}", e.getMessage());
         return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
     }
 
