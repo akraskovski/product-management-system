@@ -4,6 +4,7 @@ import by.kraskovski.pms.controller.dto.StockDto;
 import by.kraskovski.pms.controller.dto.StoreDto;
 import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.service.StoreService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +27,11 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/store")
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class StoreController {
 
     private final StoreService storeService;
     private final Mapper mapper;
-
-    @Autowired
-    public StoreController(final StoreService storeService, final Mapper mapper) {
-        this.storeService = storeService;
-        this.mapper = mapper;
-    }
 
     /**
      * Find all stores in database

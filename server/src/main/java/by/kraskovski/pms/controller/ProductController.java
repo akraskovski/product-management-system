@@ -3,6 +3,7 @@ package by.kraskovski.pms.controller;
 import by.kraskovski.pms.controller.dto.ProductDto;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.service.ProductService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,11 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/product")
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class ProductController {
 
     private final ProductService productService;
     private final Mapper mapper;
-
-    @Autowired
-    public ProductController(final ProductService productService, final Mapper mapper) {
-        this.productService = productService;
-        this.mapper = mapper;
-    }
 
     /**
      * Find all products in database.

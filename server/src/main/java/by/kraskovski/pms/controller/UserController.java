@@ -3,6 +3,7 @@ package by.kraskovski.pms.controller;
 import by.kraskovski.pms.controller.dto.UserDto;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,11 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/user")
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class UserController {
 
     private final UserService userService;
     private final Mapper mapper;
-
-    @Autowired
-    public UserController(final UserService userService, final Mapper mapper) {
-        this.userService = userService;
-        this.mapper = mapper;
-    }
 
     /**
      * Return json-information about all users in database.

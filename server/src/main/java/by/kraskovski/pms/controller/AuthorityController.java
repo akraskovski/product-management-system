@@ -1,6 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.service.AuthorityService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/authority")
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class AuthorityController {
 
     private final AuthorityService authorityService;
-
-    @Autowired
-    public AuthorityController(final AuthorityService authorityService) {
-        this.authorityService = authorityService;
-    }
 
     /**
      * Return json-information about all authorities in database.

@@ -2,6 +2,7 @@ package by.kraskovski.pms.config;
 
 import by.kraskovski.pms.security.filter.AuthenticationTokenFilter;
 import by.kraskovski.pms.security.service.TokenService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,14 +20,10 @@ import static by.kraskovski.pms.domain.enums.AuthorityEnum.*;
  * Spring Security configuration class.
  */
 @EnableWebSecurity
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final TokenService tokenService;
-
-    @Autowired
-    public SecurityConfig(final TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
 
     @Override
     public void configure(final WebSecurity web) throws Exception {

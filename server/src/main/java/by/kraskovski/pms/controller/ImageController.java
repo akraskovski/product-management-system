@@ -1,6 +1,7 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.service.ImageService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,14 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/image")
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class ImageController {
 
     private final ImageService imageService;
-
-    @Autowired
-    public ImageController(final ImageService imageService) {
-        this.imageService = imageService;
-    }
 
     /**
      * Uploading image to the system.

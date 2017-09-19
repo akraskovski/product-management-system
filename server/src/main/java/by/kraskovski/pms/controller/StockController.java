@@ -4,6 +4,7 @@ import by.kraskovski.pms.controller.dto.ProductStockDto;
 import by.kraskovski.pms.controller.dto.StockDto;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.service.StockService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +27,11 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/stock")
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class StockController {
 
     private final StockService stockService;
     private final Mapper mapper;
-
-    @Autowired
-    public StockController(final StockService stockService, final Mapper mapper) {
-        this.stockService = stockService;
-        this.mapper = mapper;
-    }
 
     /**
      * Find all products in database.

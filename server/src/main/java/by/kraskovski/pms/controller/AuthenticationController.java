@@ -4,6 +4,7 @@ import by.kraskovski.pms.controller.dto.LoginDto;
 import by.kraskovski.pms.controller.dto.TokenDto;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.security.service.TokenService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class AuthenticationController {
 
     private final TokenService tokenService;
-
-    @Autowired
-    public AuthenticationController(final TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
 
     /**
      * Login method

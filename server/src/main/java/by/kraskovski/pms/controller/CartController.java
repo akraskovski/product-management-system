@@ -2,6 +2,7 @@ package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.dto.CartDto;
 import by.kraskovski.pms.service.CartService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,11 @@ import javax.management.InstanceAlreadyExistsException;
 @RestController
 @RequestMapping("/cart")
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class CartController {
 
     private final CartService cartService;
     private final Mapper mapper;
-
-    @Autowired
-    public CartController(final CartService cartService, final Mapper mapper) {
-        this.cartService = cartService;
-        this.mapper = mapper;
-    }
 
     /**
      * Find cart by id.
