@@ -1,6 +1,7 @@
 package by.kraskovski.pms.security.filter;
 
 import by.kraskovski.pms.security.service.TokenService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -15,13 +16,10 @@ import java.io.IOException;
 /**
  * Main validation filter
  */
+@AllArgsConstructor
 public class AuthenticationTokenFilter extends GenericFilterBean {
 
     private final TokenService tokenService;
-
-    public AuthenticationTokenFilter(final TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
 
     /**
      * Validate income user with token

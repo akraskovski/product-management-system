@@ -8,6 +8,7 @@ import by.kraskovski.pms.repository.CartRepository;
 import by.kraskovski.pms.service.CartService;
 import by.kraskovski.pms.service.ProductStockService;
 import by.kraskovski.pms.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,21 +19,12 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final ProductStockService productStockService;
     private final UserService userService;
-
-    @Autowired
-    public CartServiceImpl(
-            final CartRepository cartRepository,
-            final ProductStockService productStockService,
-            final UserService userService) {
-        this.cartRepository = cartRepository;
-        this.productStockService = productStockService;
-        this.userService = userService;
-    }
 
     @Override
     public void create(final String id) throws InstanceAlreadyExistsException {

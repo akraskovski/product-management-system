@@ -7,6 +7,7 @@ import by.kraskovski.pms.service.ImageService;
 import by.kraskovski.pms.service.StockService;
 import by.kraskovski.pms.service.StoreService;
 import by.kraskovski.pms.service.exception.FileNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,20 +20,12 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
     private final StockService stockService;
     private final ImageService imageService;
-
-    @Autowired
-    public StoreServiceImpl(final StoreRepository storeRepository,
-                            final ImageService imageService,
-                            final StockService stockService) {
-        this.storeRepository = storeRepository;
-        this.imageService = imageService;
-        this.stockService = stockService;
-    }
 
     @Override
     public Store create(final Store object) {

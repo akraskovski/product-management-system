@@ -7,6 +7,7 @@ import by.kraskovski.pms.repository.StockRepository;
 import by.kraskovski.pms.service.ProductService;
 import by.kraskovski.pms.service.ProductStockService;
 import by.kraskovski.pms.service.StockService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -19,20 +20,12 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
     private final ProductService productService;
     private final ProductStockService productStockService;
-
-    @Autowired
-    public StockServiceImpl(final StockRepository stockRepository,
-                            final ProductService productService,
-                            final ProductStockService productStockService) {
-        this.stockRepository = stockRepository;
-        this.productService = productService;
-        this.productStockService = productStockService;
-    }
 
     @Override
     public Stock create(final Stock object) {

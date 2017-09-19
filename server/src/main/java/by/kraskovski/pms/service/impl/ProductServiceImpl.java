@@ -5,6 +5,7 @@ import by.kraskovski.pms.repository.ProductRepository;
 import by.kraskovski.pms.service.ImageService;
 import by.kraskovski.pms.service.ProductService;
 import by.kraskovski.pms.service.exception.FileNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,11 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
 @Slf4j
+@AllArgsConstructor(onConstructor=@__(@Autowired))
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ImageService imageService;
-
-    @Autowired
-    public ProductServiceImpl(final ProductRepository productRepository, final ImageService imageService) {
-        this.productRepository = productRepository;
-        this.imageService = imageService;
-    }
 
     @Override
     public Product create(final Product object) {

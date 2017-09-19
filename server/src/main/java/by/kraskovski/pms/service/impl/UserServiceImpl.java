@@ -6,6 +6,7 @@ import by.kraskovski.pms.repository.UserRepository;
 import by.kraskovski.pms.security.exception.UserNotFoundException;
 import by.kraskovski.pms.service.AuthorityService;
 import by.kraskovski.pms.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,26 +16,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor(onConstructor=@__(@Autowired))
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final AuthorityService authorityService;
-    private final BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserServiceImpl(
-            final UserRepository userRepository,
-            final AuthorityService authorityService) {
-        this.userRepository = userRepository;
-        this.authorityService = authorityService;
-        this.passwordEncoder = new BCryptPasswordEncoder();
-    }
+    private static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     @Override
     public User create(final User object) {
         object.setId(null);
         object.setCreateDate(LocalDateTime.now());
-        object.setPassword(passwordEncoder.encode(object.getPassword()));
+        object.setPassword(PASSWORD_ENCODER.encode(object.getPassword()));
         if (object.getAuthorities().isEmpty()) {
             object.getAuthorities().add(authorityService.findByName(AuthorityEnum.ROLE_USER));
         }
@@ -61,9 +54,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(final User object) {
         final User oldUser = userRepository.findOne(object.getId());
-        if (!passwordEncoder.matches(object.getPassword(), oldUser.getPassword())
+        if (!PASSWORD_ENCODER.matches(object.getPassword(), oldUser.getPassword())
                 && !oldUser.getPassword().equals(object.getPassword())) {
-            object.setPassword(passwordEncoder.encode(object.getPassword()));
+            object.setPassword(PASSWORD_ENCODER.encode(object.getPassword()));
             return userRepository.save(object);
         }
         object.setPassword(oldUser.getPassword());
