@@ -31,6 +31,7 @@ dependencies {
     compile 'io.springfox:springfox-swagger-ui:2.7.0'
     compile 'net.sf.dozer:dozer:5.5.1'
     compile 'io.craftsman:dozer-jdk8-support:1.0.3'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.1'
     compileOnly 'org.projectlombok:lombok:1.16.18'
     testCompile 'junit:junit:4.12'
     testCompile 'com.h2database:h2:1.4.195'

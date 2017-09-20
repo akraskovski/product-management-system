@@ -57,8 +57,7 @@ public class ProductControllerIT extends ControllerConfig {
 
     @Test
     public void findProductByIdTest() throws Exception {
-        final Product product = prepareProduct();
-        productService.create(product);
+        final Product product = productService.create(prepareProduct());
         mvc.perform(get(BASE_PRODUCTS_URL + "/" + product.getId())
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
@@ -68,7 +67,7 @@ public class ProductControllerIT extends ControllerConfig {
 
     @Test
     public void findProductByNameTest() throws Exception {
-        final Product product = prepareProduct();
+        final Product product = productService.create(prepareProduct());
         productService.create(product);
         mvc.perform(get(BASE_PRODUCTS_URL + "/name/" + product.getName())
                 .header(authHeaderName, token))
@@ -79,8 +78,7 @@ public class ProductControllerIT extends ControllerConfig {
 
     @Test
     public void findProductByTypeTest() throws Exception {
-        final Product product = prepareProduct();
-        productService.create(product);
+        final Product product = productService.create(prepareProduct());
         mvc.perform(get(BASE_PRODUCTS_URL + "/type/" + product.getType())
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
@@ -90,8 +88,7 @@ public class ProductControllerIT extends ControllerConfig {
 
     @Test
     public void updateProductTest() throws Exception {
-        final Product product = prepareProduct();
-        productService.create(product);
+        final Product product = productService.create(prepareProduct());
         product.setName(random(20));
         product.setImage(random(20));
         product.setType(random(20));
