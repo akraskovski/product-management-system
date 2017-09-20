@@ -3,6 +3,7 @@ package by.kraskovski.pms.controller.dto;
 import by.kraskovski.pms.domain.model.Authority;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,5 +18,5 @@ public class UserDto {
     private String phone;
     private String avatar;
     private List<Authority> authorities;
-//    private LocalDateTime createDate;
+    private LocalDateTime createDate;
 }

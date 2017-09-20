@@ -8,6 +8,9 @@ import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.model.User;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomUtils.nextDouble;
 
@@ -26,6 +29,7 @@ public final class TestUtils {
         product.setHeight(nextDouble());
         product.setWidth(nextDouble());
         product.setWeight(nextDouble());
+        product.setManufactureDate(LocalDateTime.now());
         return product;
     }
 
@@ -35,8 +39,8 @@ public final class TestUtils {
         stock.setAddress(randomAlphabetic(20));
         stock.setPhone(randomAlphabetic(20));
         stock.setSquare(nextDouble());
-//        stock.setOpenTime(LocalTime.of(9, 30));
-//        stock.setCloseTime(LocalTime.of(22, 0));
+        stock.setOpenTime(LocalTime.of(9, 30));
+        stock.setCloseTime(LocalTime.of(22, 0));
         return stock;
     }
 
@@ -69,15 +73,5 @@ public final class TestUtils {
         user.getAuthorities().add(authority);
         user.addCart(new Cart());
         return user;
-    }
-
-    public static Cart prepareCart(final User user) {
-        final Cart cart = new Cart();
-        cart.setUser(user);
-        return cart;
-    }
-
-    public static ProductStock prepareProductStock() {
-        return new ProductStock(prepareProduct(), prepareStock(), 10);
     }
 }
