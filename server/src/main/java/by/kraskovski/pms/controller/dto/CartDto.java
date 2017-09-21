@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+/**
+ * {@link by.kraskovski.pms.domain.model.Cart} data transfer object
+ */
 @Getter
 @Setter
 public class CartDto {

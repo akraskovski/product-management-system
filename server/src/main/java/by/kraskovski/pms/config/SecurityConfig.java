@@ -13,7 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static by.kraskovski.pms.domain.enums.AuthorityEnum.*;
+import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
+import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
+import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_STORE_MANAGER;
 
 /**
  * Spring Security configuration class.

@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.time.LocalTime;
 
+/**
+ * Data transfer object for {@link by.kraskovski.pms.domain.model.Stock}
+ */
 @Getter
 @Setter
 public class StockDto {

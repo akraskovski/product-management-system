@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Collections;
 
+/**
+ * Configuration class for Dozer.
+ */
 @Configuration
 public class DozerConfig {
 

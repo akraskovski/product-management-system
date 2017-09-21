@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+/**
+ * Data transfer object for login
+ */
 @Getter
 @Setter
 @AllArgsConstructor

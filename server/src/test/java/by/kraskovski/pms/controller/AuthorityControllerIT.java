@@ -1,8 +1,8 @@
 package by.kraskovski.pms.controller;
 
 import by.kraskovski.pms.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.enums.AuthorityEnum;
+import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.service.AuthorityService;
 import org.junit.After;
 import org.junit.Before;
@@ -13,7 +13,9 @@ import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class AuthorityControllerIT extends ControllerConfig {
 

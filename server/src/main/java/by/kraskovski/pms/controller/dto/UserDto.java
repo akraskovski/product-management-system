@@ -6,6 +6,9 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Data transfer object for {@link by.kraskovski.pms.domain.model.User}
+ */
 @Data
 public class UserDto {
 
