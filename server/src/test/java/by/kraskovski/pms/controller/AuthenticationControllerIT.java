@@ -7,8 +7,10 @@ import by.kraskovski.pms.utils.TestUtils;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
-import static org.apache.commons.lang3.RandomStringUtils.*;
-import static org.hamcrest.Matchers.*;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;

@@ -3,6 +3,9 @@ package by.kraskovski.pms.controller.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Data transfer object for {@link by.kraskovski.pms.domain.model.Store}
+ */
 @Getter
 @Setter
 public class StoreDto {

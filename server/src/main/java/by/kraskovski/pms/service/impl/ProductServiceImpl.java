@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -27,7 +28,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(final Product object) {
-        object.setManufactureDate(LocalDateTime.now());
+        if (Objects.isNull(object.getManufactureDate())) {
+            object.setManufactureDate(LocalDateTime.now());
+        }
         return productRepository.save(object);
     }
 
