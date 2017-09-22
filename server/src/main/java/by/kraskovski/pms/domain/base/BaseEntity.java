@@ -19,7 +19,8 @@ import javax.persistence.MappedSuperclass;
 public abstract class BaseEntity {
 
     /**
-     * General id field
+     * General Id field
+     * Uses custom Id generator
      */
     @Id
     @GeneratedValue(generator = "pms-guid", strategy = GenerationType.SEQUENCE)

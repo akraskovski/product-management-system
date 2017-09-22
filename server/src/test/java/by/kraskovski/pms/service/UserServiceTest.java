@@ -1,8 +1,8 @@
 package by.kraskovski.pms.service;
 
+import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.User;
-import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.repository.UserRepository;
 import by.kraskovski.pms.service.impl.UserServiceImpl;
 import org.junit.Test;

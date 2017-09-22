@@ -17,7 +17,7 @@ import javax.persistence.Enumerated;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Authority extends BaseEntity implements GrantedAuthority{
+public class Authority extends BaseEntity implements GrantedAuthority {
 
     @Column(unique = true, nullable = false)
     @Enumerated(EnumType.STRING)

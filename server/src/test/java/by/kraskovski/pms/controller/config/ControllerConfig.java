@@ -1,8 +1,8 @@
 package by.kraskovski.pms.controller.config;
 
+import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.User;
-import by.kraskovski.pms.domain.enums.AuthorityEnum;
 import by.kraskovski.pms.security.service.TokenService;
 import by.kraskovski.pms.service.AuthorityService;
 import by.kraskovski.pms.service.UserService;

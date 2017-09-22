@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
+
 import static by.kraskovski.pms.domain.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareUser;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
@@ -96,7 +98,8 @@ public class UserControllerIT extends ControllerConfig {
                 .andExpect(jsonPath("$.firstName", is(userDto.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(userDto.getLastName())))
                 .andExpect(jsonPath("$.email", is(userDto.getEmail())))
-                .andExpect(jsonPath("$.phone", is(userDto.getPhone())));
+                .andExpect(jsonPath("$.phone", is(userDto.getPhone())))
+                .andExpect(jsonPath("$.createDate", notNullValue(LocalDateTime.class)));
     }
 
     @Test

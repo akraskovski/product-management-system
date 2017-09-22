@@ -3,6 +3,11 @@ package by.kraskovski.pms.controller.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+/**
+ * Data transfer object for {@link by.kraskovski.pms.domain.model.Product}
+ */
 @Getter
 @Setter
 public class ProductDto {
@@ -16,5 +21,5 @@ public class ProductDto {
     private double width;
     private double height;
     private double weight;
-//    private LocalDateTime manufactureDate;
+    private LocalDateTime manufactureDate;
 }
