@@ -22,7 +22,7 @@ import javax.management.InstanceAlreadyExistsException;
 @RestController
 @RequestMapping("/cart")
 @Slf4j
-@AllArgsConstructor(onConstructor=@__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CartController {
 
     private final CartService cartService;

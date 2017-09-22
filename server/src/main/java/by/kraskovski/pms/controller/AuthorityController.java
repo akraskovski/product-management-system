@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/authority")
 @Slf4j
-@AllArgsConstructor(onConstructor=@__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthorityController {
 
     private final AuthorityService authorityService;

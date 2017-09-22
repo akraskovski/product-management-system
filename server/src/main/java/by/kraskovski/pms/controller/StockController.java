@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -27,7 +25,7 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/stock")
 @Slf4j
-@AllArgsConstructor(onConstructor=@__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class StockController {
 
     private final StockService stockService;
@@ -59,10 +57,9 @@ public class StockController {
     @RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
     public ResponseEntity loadStockProductsById(@PathVariable("id") final String id) {
         log.info("Start loadStockProductsById: {}", id);
-        final List<ProductStockDto> result = stockService.findProducts(id).stream()
+        return ResponseEntity.ok(stockService.findProducts(id).stream()
                 .map(productStock -> mapper.map(productStock, ProductStockDto.class))
-                .collect(toList());
-        return ResponseEntity.ok(result);
+                .collect(toList()));
     }
 
     /**

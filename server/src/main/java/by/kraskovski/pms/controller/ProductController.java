@@ -23,7 +23,7 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/product")
 @Slf4j
-@AllArgsConstructor(onConstructor=@__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductController {
 
     private final ProductService productService;

@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/image")
 @Slf4j
-@AllArgsConstructor(onConstructor=@__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ImageController {
 
     private final ImageService imageService;
@@ -33,8 +33,7 @@ public class ImageController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity uploadImage(@RequestParam("file") final MultipartFile uploadedFile) {
         log.info("uploading image: \"" + uploadedFile.getOriginalFilename() + "\"");
-        final String image = imageService.upload(uploadedFile);
-        return new ResponseEntity<>(image, HttpStatus.CREATED);
+        return new ResponseEntity<>(imageService.upload(uploadedFile), HttpStatus.CREATED);
     }
 
     /**

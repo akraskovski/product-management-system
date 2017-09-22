@@ -23,7 +23,7 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("/user")
 @Slf4j
-@AllArgsConstructor(onConstructor=@__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
     private final UserService userService;
