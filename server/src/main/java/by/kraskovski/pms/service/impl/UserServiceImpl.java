@@ -8,15 +8,19 @@ import by.kraskovski.pms.service.AuthorityService;
 import by.kraskovski.pms.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.singletonList;
+
 @Service
-@RequiredArgsConstructor(onConstructor=@__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -28,8 +32,8 @@ public class UserServiceImpl implements UserService {
         object.setId(null);
         object.setCreateDate(LocalDateTime.now());
         object.setPassword(PASSWORD_ENCODER.encode(object.getPassword()));
-        if (object.getAuthorities().isEmpty()) {
-            object.getAuthorities().add(authorityService.findByName(AuthorityEnum.ROLE_USER));
+        if (CollectionUtils.isEmpty(object.getAuthorities())) {
+            object.setAuthorities(singletonList(authorityService.findByName(AuthorityEnum.ROLE_USER)));
         }
         return userRepository.save(object);
     }
@@ -37,13 +41,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User find(final String id) {
         return Optional.ofNullable(userRepository.findOne(id))
-                .orElseThrow(() -> new UserNotFoundException("User with id: " + id + " doesn't not exists in db!"));
+                .orElseThrow(() -> new UserNotFoundException("User with id: \"" + id + "\" doesn't exists in db!"));
     }
 
     @Override
     public User findByUsername(final String username) {
         return Optional.ofNullable(userRepository.findByUsername(username))
-                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " doesn't not exists in db!"));
+                .orElseThrow(() -> new UserNotFoundException("User with username: \"" + username + "\" doesn't exists in db!"));
     }
 
     @Override
@@ -65,7 +69,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(final String id) {
-        userRepository.delete(id);
+        try {
+            userRepository.delete(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new UserNotFoundException("User with id: \"" + id + "\" doesn't exists in db!");
+        }
     }
 
     @Override

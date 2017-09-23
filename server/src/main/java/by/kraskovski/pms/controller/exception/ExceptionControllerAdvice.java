@@ -81,7 +81,7 @@ public class ExceptionControllerAdvice {
      */
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity handleUserNotFoundException(final UserNotFoundException e) {
-        log.warn("User not found: {}", e.getMessage());
+        log.warn(e.getMessage());
         return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
     }
 
