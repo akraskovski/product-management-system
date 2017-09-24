@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -32,9 +33,7 @@ public class UserServiceImpl implements UserService {
         object.setId(null);
         object.setCreateDate(LocalDateTime.now());
         object.setPassword(PASSWORD_ENCODER.encode(object.getPassword()));
-        if (CollectionUtils.isEmpty(object.getAuthorities())) {
-            object.setAuthorities(singletonList(authorityService.findByName(AuthorityEnum.ROLE_USER)));
-        }
+        verifyUserAuthorities(object);
         return userRepository.save(object);
     }
 
@@ -57,13 +56,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(final User object) {
-        final User oldUser = userRepository.findOne(object.getId());
+        final User oldUser = find(object.getId());
         if (!PASSWORD_ENCODER.matches(object.getPassword(), oldUser.getPassword())
                 && !oldUser.getPassword().equals(object.getPassword())) {
             object.setPassword(PASSWORD_ENCODER.encode(object.getPassword()));
             return userRepository.save(object);
         }
         object.setPassword(oldUser.getPassword());
+        verifyUserAuthorities(object);
         return userRepository.save(object);
     }
 
@@ -79,5 +79,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteAll() {
         userRepository.deleteAll();
+    }
+
+    private void verifyUserAuthorities(final User object) {
+        if (object == null) {
+            throw new IllegalArgumentException("Can't verify user authorities, because user is null!");
+        }
+        if (CollectionUtils.isEmpty(object.getAuthorities())) {
+            object.setAuthorities(singletonList(authorityService.findByName(AuthorityEnum.ROLE_USER)));
+        } else {
+            object.setAuthorities(object.getAuthorities().stream()
+                    .map(authority -> authorityService.find(authority.getId()))
+                    .collect(toList()));
+        }
     }
 }
