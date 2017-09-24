@@ -7,16 +7,7 @@ import java.util.List;
 /**
  * Service for {@link Product}
  */
-public interface ProductService {
-    /**
-     * Save {@link Product} entity to database table
-     */
-    Product create(Product object);
-
-    /**
-     * Find {@link Product} in database by identifier
-     */
-    Product find(String id);
+public interface ProductService extends AbstractService<Product> {
 
     /**
      * Find {@link Product}s by name
@@ -29,22 +20,7 @@ public interface ProductService {
     List<Product> findByType(String type);
 
     /**
-     * Find all {@link Product}s in database
-     */
-    List<Product> findAll();
-
-    /**
      * Update information about {@link Product} in database
      */
     Product update(Product object);
-
-    /**
-     * Delete {@link Product} from database by identifier
-     */
-    void delete(String id);
-
-    /**
-     * Delete all products from database
-     */
-    void deleteAll();
 }

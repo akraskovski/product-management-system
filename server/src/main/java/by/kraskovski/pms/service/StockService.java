@@ -9,17 +9,7 @@ import java.util.Set;
 /**
  * Service for {@link Stock}
  */
-public interface StockService {
-
-    /**
-     * Save {@link Stock} entity to database table.
-     */
-    Stock create(Stock object);
-
-    /**
-     * Find {@link Stock} in database by identifier.
-     */
-    Stock find(String id);
+public interface StockService extends AbstractService<Stock> {
 
     /**
      * Find all products contains in stock.
@@ -35,24 +25,8 @@ public interface StockService {
      * Delete one (or more) product(s) from stock.
      */
     void deleteProduct(String stockId, String productId, int count);
-
-    /**
-     * Find all {@link Stock}s in database.
-     */
-    List<Stock> findAll();
-
     /**
      * Update information about {@link Stock} in database.
      */
     Stock update(Stock object);
-
-    /**
-     * Delete {@link Stock} from database by identifier.
-     */
-    void delete(String id);
-
-    /**
-     * Delete all stocks from the database
-     */
-    void deleteAll();
 }

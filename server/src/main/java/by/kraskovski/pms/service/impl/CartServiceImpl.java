@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.management.InstanceAlreadyExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -103,6 +104,11 @@ public class CartServiceImpl implements CartService {
     public Cart find(final String id) {
         return Optional.ofNullable(cartRepository.findOne(id))
                 .orElseThrow(() -> new EntityNotFoundException("Cart with id: " + id + " not found in db!"));
+    }
+
+    @Override
+    public List<Cart> findAll() {
+        return cartRepository.findAll();
     }
 
     @Override

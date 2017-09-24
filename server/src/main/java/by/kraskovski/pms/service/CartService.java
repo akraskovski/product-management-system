@@ -7,7 +7,7 @@ import javax.management.InstanceAlreadyExistsException;
 /**
  * Service for {@link Cart}
  */
-public interface CartService {
+public interface CartService extends AbstractService<Cart> {
 
     /**
      * Save {@link Cart} entity to database table
@@ -25,23 +25,13 @@ public interface CartService {
     void deleteProduct(String cartId, String productStockId, int count);
 
     /**
-     * Find {@link Cart} in database by identifier
-     */
-    Cart find(String id);
-
-    /**
      * Update information about {@link Cart} in database
      */
     Cart update(Cart object);
 
-    /**
-     * Delete {@link Cart} from database by identifier
-     */
-    void delete(String id);
-
-    /**
-     * Delete all {@link Cart}s from database
-     */
-    void deleteAll();
+    @Override
+    default Cart create(Cart object) {
+        return new Cart();
+    }
 }
 
