@@ -8,35 +8,10 @@ import java.util.List;
 /**
  * Service for {@link Authority}
  */
-public interface AuthorityService {
-
-    /**
-     * Save {@link Authority} entity to database table
-     */
-    Authority create(Authority object);
-
-    /**
-     * Find authority in database by id.
-     */
-    Authority find(String id);
+public interface AuthorityService extends AbstractService<Authority> {
 
     /**
      * Find authority in database by name.
      */
     Authority findByName(AuthorityEnum name);
-
-    /**
-     * Find all authoroties in database.
-     */
-    List<Authority> findAll();
-
-    /**
-     * Delete {@link Authority} by id from database.
-     */
-    void delete(String id);
-
-    /**
-     * Delete all {@link Authority} from database
-     */
-    void deleteAll();
 }
