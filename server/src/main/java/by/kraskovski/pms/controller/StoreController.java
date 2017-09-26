@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -63,9 +62,8 @@ public class StoreController {
     @RequestMapping(value = "/{id}/stock-manage", method = RequestMethod.GET)
     public ResponseEntity loadStoreStocksById(@PathVariable("id") final String id) {
         log.info("Start loadStoreStocksById: {}", id);
-        final List<StockDto> stockDtos = storeService.find(id).getStockList().stream()
-                .map(stock -> mapper.map(stock, StockDto.class)).collect(toList());
-        return ResponseEntity.ok(stockDtos);
+        return ResponseEntity.ok(storeService.find(id).getStockList().stream()
+                .map(stock -> mapper.map(stock, StockDto.class)).collect(toList()));
     }
 
     /**
@@ -82,22 +80,22 @@ public class StoreController {
      * Create relation between {@link by.kraskovski.pms.domain.model.Stock} and {@link Store}
      */
     @RequestMapping(value = "/stock-manage", method = RequestMethod.PUT)
-    public ResponseEntity addStock(@RequestParam("store_id") final String storeId,
-                                   @RequestParam("stock_id") final String stockId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addStock(@RequestParam("store_id") final String storeId,
+                         @RequestParam("stock_id") final String stockId) {
         log.info("Start add stock: {} to store: {}", stockId, storeId);
         storeService.addStock(storeId, stockId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
      * Delete relation between {@link by.kraskovski.pms.domain.model.Stock} and {@link Store}
      */
     @RequestMapping(value = "/stock-manage", method = RequestMethod.DELETE)
-    public ResponseEntity deleteStock(@RequestParam("store_id") final String storeId,
-                                      @RequestParam("stock_id") final String stockId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteStock(@RequestParam("store_id") final String storeId,
+                            @RequestParam("stock_id") final String stockId) {
         log.info("Start delete stock: {} from store: {}", stockId, storeId);
         storeService.deleteStock(storeId, stockId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -114,9 +112,9 @@ public class StoreController {
      * Delete {@link Store} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteStore(@PathVariable("id") final String id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteStore(@PathVariable("id") final String id) {
         log.info("Start deleteStore: {}", id);
         storeService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

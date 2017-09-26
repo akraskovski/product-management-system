@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -45,45 +46,45 @@ public class CartController {
      * Create empty cart.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCart(@PathVariable("id") final String id) throws InstanceAlreadyExistsException {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createCart(@PathVariable("id") final String id) throws InstanceAlreadyExistsException {
         log.info("Start createCart for user with id: {}", id);
         cartService.create(id);
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
      * Add productStock to user cart.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity addProductToCart(
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addProductToCart(
             @RequestParam("cart_id") final String cartId,
             @RequestParam("ps_id") final String productStockId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         log.info("start addProductStock: {} to cart: {} with count: {}", productStockId, cartId, count);
         cartService.addProduct(cartId, productStockId, count);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
      * Delete product from cart by id.
      */
     @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity deleteProductFromCart(
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProductFromCart(
             @RequestParam("cart_id") final String cartId,
             @RequestParam("ps_id") final String productStockId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         log.info("start deleteProductFromCart: {} from cart: {} with count: {}", productStockId, cartId, count);
         cartService.deleteProduct(cartId, productStockId, count);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
      * Delete cart by id.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteCart(@PathVariable("id") final String id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCart(@PathVariable("id") final String id) {
         log.info("Start deleteCart: {}", id);
         cartService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

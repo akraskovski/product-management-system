@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -63,36 +62,35 @@ public class StockController {
     @RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
     public ResponseEntity loadStockProductsById(@PathVariable("id") final String id) {
         log.info("Start loadStockProductsById: {}", id);
-        final List<ProductStockDto> result = stockService.findProducts(id).stream()
+        return ResponseEntity.ok(stockService.findProducts(id).stream()
                 .map(productStock -> mapper.map(productStock, ProductStockDto.class))
-                .collect(toList());
-        return ResponseEntity.ok(result);
+                .collect(toList()));
     }
 
     /**
      * Add product to the stock
      */
     @RequestMapping(value = "/product", method = RequestMethod.PUT)
-    public ResponseEntity addProductToStock(
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addProductToStock(
             @RequestParam("stock_id") final String stockId,
             @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
         log.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
         stockService.addProduct(stockId, productId, count);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
      * Delete product from the stock
      */
     @RequestMapping(value = "/product", method = RequestMethod.DELETE)
-    public ResponseEntity deleteProductFromStock(
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProductFromStock(
             @RequestParam("stock_id") final String stockId,
             @RequestParam("product_id") final String productId,
             @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
         log.info("Start delete Product: {} from Stock: {} with count: {}", productId, stockId, count);
         stockService.deleteProduct(stockId, productId, count);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -119,9 +117,9 @@ public class StockController {
      * Delete {@link Stock} from database by identifier.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteStock(@PathVariable("id") final String id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteStock(@PathVariable("id") final String id) {
         log.info("Start deleteStock: {}", id);
         stockService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
