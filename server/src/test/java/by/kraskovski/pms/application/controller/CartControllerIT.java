@@ -1,8 +1,17 @@
 package by.kraskovski.pms.application.controller;
 
 import by.kraskovski.pms.application.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.model.*;
-import by.kraskovski.pms.domain.service.*;
+import by.kraskovski.pms.domain.model.Authority;
+import by.kraskovski.pms.domain.model.Product;
+import by.kraskovski.pms.domain.model.ProductStock;
+import by.kraskovski.pms.domain.model.Stock;
+import by.kraskovski.pms.domain.model.User;
+import by.kraskovski.pms.domain.service.AuthorityService;
+import by.kraskovski.pms.domain.service.CartService;
+import by.kraskovski.pms.domain.service.ProductService;
+import by.kraskovski.pms.domain.service.ProductStockService;
+import by.kraskovski.pms.domain.service.StockService;
+import by.kraskovski.pms.domain.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

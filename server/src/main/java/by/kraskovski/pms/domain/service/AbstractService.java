@@ -2,7 +2,7 @@ package by.kraskovski.pms.domain.service;
 
 import java.util.List;
 
-public interface AbstractService <T> {
+public interface AbstractService<T> {
 
     /**
      * Save {@link T} entity to database table.
