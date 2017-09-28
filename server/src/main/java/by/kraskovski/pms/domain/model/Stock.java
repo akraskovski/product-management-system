@@ -1,6 +1,6 @@
 package by.kraskovski.pms.domain.model;
 
-import by.kraskovski.pms.domain.base.BaseEntity;
+import by.kraskovski.pms.domain.model.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
