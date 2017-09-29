@@ -1,6 +1,6 @@
 package by.kraskovski.pms.application.controller;
 
-import by.kraskovski.pms.application.controller.config.ControllerConfig;
+import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.application.controller.dto.ProductStockDto;
 import by.kraskovski.pms.application.controller.dto.StockDto;
 import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration test for {@link StockController}
  */
-public class StockControllerIT extends ControllerConfig {
+public class StockControllerIT extends ControllerTestConfig {
 
     private static final String BASE_STOCK_URL = "/stock";
 

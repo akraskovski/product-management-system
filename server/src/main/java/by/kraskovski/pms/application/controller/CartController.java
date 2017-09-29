@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.management.InstanceAlreadyExistsException;
-
 /**
  * Controller for the {@link by.kraskovski.pms.domain.service.CartService}.
  */
@@ -43,7 +41,7 @@ public class CartController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCart(@PathVariable("id") final String id) throws InstanceAlreadyExistsException {
+    public void createCart(@PathVariable("id") final String id) {
         log.info("Start createCart for user with id: {}", id);
         cartService.create(id);
     }

@@ -12,14 +12,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.InstanceAlreadyExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor(onConstructor=@__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
@@ -27,10 +27,10 @@ public class CartServiceImpl implements CartService {
     private final UserService userService;
 
     @Override
-    public void create(final String id) throws InstanceAlreadyExistsException {
+    public void create(final String id) {
         final User user = userService.find(id);
-        if (user.getCart() != null) {
-            throw new InstanceAlreadyExistsException("Cart with id:" + id + " already exists!");
+        if (Objects.nonNull(user.getCart())) {
+            throw new IllegalArgumentException("Cart with id:" + id + " already exists!");
         }
         user.addCart(new Cart());
         userService.update(user);

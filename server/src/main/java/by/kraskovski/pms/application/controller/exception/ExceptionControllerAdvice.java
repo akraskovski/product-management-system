@@ -50,15 +50,6 @@ public class ExceptionControllerAdvice {
     }
 
     /**
-     * Handle InstanceAlreadyExistsException if cart already created
-     */
-    @ExceptionHandler(InstanceAlreadyExistsException.class)
-    public ResponseEntity handleInstanceAlreadyExistsException(final InstanceAlreadyExistsException e) {
-        log.warn("Error in createCart: {}", e.getLocalizedMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
-    }
-
-    /**
      * Handle FileUploadException while uploading images
      */
     @ExceptionHandler(FileUploadException.class)

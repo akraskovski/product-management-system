@@ -1,6 +1,6 @@
 package by.kraskovski.pms.application.controller;
 
-import by.kraskovski.pms.application.controller.config.ControllerConfig;
+import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.application.controller.dto.ProductDto;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.service.ProductService;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration test for {@link ProductController}
  */
-public class ProductControllerIT extends ControllerConfig {
+public class ProductControllerIT extends ControllerTestConfig {
 
     private static final String BASE_PRODUCTS_URL = "/product";
 
