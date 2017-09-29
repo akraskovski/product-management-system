@@ -1,7 +1,7 @@
 package by.kraskovski.pms.domain.model;
 
-import by.kraskovski.pms.domain.base.BaseEntity;
-import by.kraskovski.pms.domain.enums.AuthorityEnum;
+import by.kraskovski.pms.domain.model.base.BaseEntity;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
