@@ -133,7 +133,7 @@ public class CartControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void addProductToCartNegativeTest() throws Exception {
+    public void addProductToCartWithInvalidCountTest() throws Exception {
         final User user = userService.create(prepareUser());
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
@@ -149,7 +149,7 @@ public class CartControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void deleteProductFromCartPositiveTest() throws Exception {
+    public void deleteProductFromCartIfExistsTest() throws Exception {
         final User user = userService.create(prepareUser());
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
@@ -166,7 +166,7 @@ public class CartControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void deleteProductFromCartNegativeTest() throws Exception {
+    public void deleteProductFromCartWithInvalidCountTest() throws Exception {
         final User user = userService.create(prepareUser());
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());

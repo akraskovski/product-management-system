@@ -48,7 +48,6 @@ public class ImageControllerIT extends ControllerTestConfig {
                 .andExpect(content().contentType("text/plain;charset=UTF-8"));
     }
 
-
     @Test
     public void uploadImageNegativeTest() throws Exception {
         mvc.perform(fileUpload(BASE_IMAGE_URL + "/upload")
@@ -85,7 +84,6 @@ public class ImageControllerIT extends ControllerTestConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());
     }
-
 
     @Test
     public void deleteImageNegativeTest() throws Exception {

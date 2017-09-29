@@ -42,14 +42,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findByName(final String name) {
-        return Optional.ofNullable(productRepository.findByName(name))
-                .orElseThrow(() -> new EntityNotFoundException("Products with name: " + name + " not found in db!"));
+        return productRepository.findByName(name);
     }
 
     @Override
     public List<Product> findByType(final String type) {
-        return Optional.ofNullable(productRepository.findByType(type))
-                .orElseThrow(() -> new EntityNotFoundException("Products with type: " + type + " not found in db!"));
+        return productRepository.findByType(type);
     }
 
     @Override

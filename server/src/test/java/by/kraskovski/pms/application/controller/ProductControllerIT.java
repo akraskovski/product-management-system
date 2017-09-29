@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
@@ -50,7 +51,7 @@ public class ProductControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void createProductTest() throws Exception {
+    public void createValidProductTest() throws Exception {
         mvc.perform(post(BASE_PRODUCTS_URL)
                 .header(authHeaderName, token)
                 .contentType(APPLICATION_JSON_UTF8)
@@ -61,7 +62,18 @@ public class ProductControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void findProductByIdTest() throws Exception {
+    public void createInvalidProductTest() throws Exception {
+        final Product product = prepareProduct();
+        product.setName(null);
+        mvc.perform(post(BASE_PRODUCTS_URL)
+                .header(authHeaderName, token)
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(mapper.map(product, ProductDto.class))))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    public void findProductByIdIfExistsTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         mvc.perform(get(BASE_PRODUCTS_URL + "/" + product.getId())
                 .header(authHeaderName, token))
@@ -71,7 +83,14 @@ public class ProductControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void findProductByNameTest() throws Exception {
+    public void findProductByIdIfNotExistsTest() throws Exception {
+        mvc.perform(get(BASE_PRODUCTS_URL + "/" + randomAlphabetic(10))
+                .header(authHeaderName, token))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void findProductsByNameIfExistsTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         productService.create(product);
         mvc.perform(get(BASE_PRODUCTS_URL + "/name/" + product.getName())
@@ -82,13 +101,31 @@ public class ProductControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void findProductByTypeTest() throws Exception {
+    public void findProductsByNameIfNotExistsTest() throws Exception {
+        mvc.perform(get(BASE_PRODUCTS_URL + "/name/" + randomAlphabetic(10))
+                .header(authHeaderName, token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().string("[]"));
+    }
+
+    @Test
+    public void findProductsByTypeIfExistsTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         mvc.perform(get(BASE_PRODUCTS_URL + "/type/" + product.getType())
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[0].id", is(product.getId())));
+    }
+
+    @Test
+    public void findProductsByTypeIfNotExistsTest() throws Exception {
+        mvc.perform(get(BASE_PRODUCTS_URL + "/type/" + randomAlphabetic(10))
+                .header(authHeaderName, token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().string("[]"));
     }
 
     @Test
