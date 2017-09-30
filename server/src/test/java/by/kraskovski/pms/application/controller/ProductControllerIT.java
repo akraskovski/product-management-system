@@ -17,13 +17,8 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration test for {@link ProductController}
@@ -147,10 +142,29 @@ public class ProductControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void deleteProductTest() throws Exception {
-        final Product product = productService.create(prepareProduct());
+    public void deleteProductWithValidDataTest() throws Exception {
+        final Product product = prepareProduct();
+        product.setImage(null);
+        productService.create(product);
         mvc.perform(delete(BASE_PRODUCTS_URL + "/" + product.getId())
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteProductWithInvalidImageTest() throws Exception {
+        final Product product = prepareProduct();
+        product.setImage(randomAlphabetic(20));
+        productService.create(product);
+        mvc.perform(delete(BASE_PRODUCTS_URL + "/" + product.getId())
+                .header(authHeaderName, token))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteProductWithInvalidIdTest() throws Exception {
+        mvc.perform(delete(BASE_PRODUCTS_URL + "/" + randomAlphabetic(20))
+                .header(authHeaderName, token))
+                .andExpect(status().isNotFound());
     }
 }
