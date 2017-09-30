@@ -1,8 +1,8 @@
 package by.kraskovski.pms.application.controller;
 
-import by.kraskovski.pms.application.controller.config.ControllerConfig;
-import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
+import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.domain.model.Authority;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.service.AuthorityService;
 import org.junit.After;
 import org.junit.Before;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class AuthorityControllerIT extends ControllerConfig {
+public class AuthorityControllerIT extends ControllerTestConfig {
 
     private static final String BASE_AUTHORITY_URL = "/authority";
 
@@ -37,10 +37,8 @@ public class AuthorityControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void loadAuthoritiesTest() throws Exception {
-        final Authority authority = new Authority(AuthorityEnum.ROLE_USER);
-        authorityService.create(authority);
-
+    public void loadAuthoritiesIfPresentTest() throws Exception {
+        final Authority authority = authorityService.create(new Authority(AuthorityEnum.ROLE_USER));
         mvc.perform(get(BASE_AUTHORITY_URL)
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())

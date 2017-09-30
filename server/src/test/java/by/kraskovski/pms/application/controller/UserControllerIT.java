@@ -1,6 +1,6 @@
 package by.kraskovski.pms.application.controller;
 
-import by.kraskovski.pms.application.controller.config.ControllerConfig;
+import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.application.controller.dto.UserDto;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.service.UserService;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class UserControllerIT extends ControllerConfig {
+public class UserControllerIT extends ControllerTestConfig {
 
     private static final String BASE_USER_URL = "/user";
 

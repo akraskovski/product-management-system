@@ -12,7 +12,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.management.InstanceAlreadyExistsException;
 import javax.persistence.EntityNotFoundException;
 
 /**
@@ -46,15 +45,6 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity handleIllegalArgumentException(final IllegalArgumentException e) {
         log.warn("Illegal argument: {}", e.getMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Handle InstanceAlreadyExistsException if cart already created
-     */
-    @ExceptionHandler(InstanceAlreadyExistsException.class)
-    public ResponseEntity handleInstanceAlreadyExistsException(final InstanceAlreadyExistsException e) {
-        log.warn("Error in createCart: {}", e.getLocalizedMessage());
         return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 

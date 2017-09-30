@@ -1,6 +1,6 @@
 package by.kraskovski.pms.application.controller;
 
-import by.kraskovski.pms.application.controller.config.ControllerConfig;
+import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.domain.service.ImageService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ImageControllerIT extends ControllerConfig {
+public class ImageControllerIT extends ControllerTestConfig {
 
     private static final String BASE_IMAGE_URL = "/image";
 
@@ -47,7 +47,6 @@ public class ImageControllerIT extends ControllerConfig {
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType("text/plain;charset=UTF-8"));
     }
-
 
     @Test
     public void uploadImageNegativeTest() throws Exception {
@@ -85,7 +84,6 @@ public class ImageControllerIT extends ControllerConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());
     }
-
 
     @Test
     public void deleteImageNegativeTest() throws Exception {

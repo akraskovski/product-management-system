@@ -1,6 +1,6 @@
 package by.kraskovski.pms.application.controller;
 
-import by.kraskovski.pms.application.controller.config.ControllerConfig;
+import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.application.controller.dto.ProductDto;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.service.ProductService;
@@ -13,21 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration test for {@link ProductController}
  */
-public class ProductControllerIT extends ControllerConfig {
+public class ProductControllerIT extends ControllerTestConfig {
 
     private static final String BASE_PRODUCTS_URL = "/product";
 
@@ -50,7 +46,7 @@ public class ProductControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void createProductTest() throws Exception {
+    public void createValidProductTest() throws Exception {
         mvc.perform(post(BASE_PRODUCTS_URL)
                 .header(authHeaderName, token)
                 .contentType(APPLICATION_JSON_UTF8)
@@ -61,7 +57,18 @@ public class ProductControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void findProductByIdTest() throws Exception {
+    public void createInvalidProductTest() throws Exception {
+        final Product product = prepareProduct();
+        product.setName(null);
+        mvc.perform(post(BASE_PRODUCTS_URL)
+                .header(authHeaderName, token)
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(mapper.map(product, ProductDto.class))))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    public void findProductByIdIfExistsTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         mvc.perform(get(BASE_PRODUCTS_URL + "/" + product.getId())
                 .header(authHeaderName, token))
@@ -71,7 +78,14 @@ public class ProductControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void findProductByNameTest() throws Exception {
+    public void findProductByIdIfNotExistsTest() throws Exception {
+        mvc.perform(get(BASE_PRODUCTS_URL + "/" + randomAlphabetic(10))
+                .header(authHeaderName, token))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void findProductsByNameIfExistsTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         productService.create(product);
         mvc.perform(get(BASE_PRODUCTS_URL + "/name/" + product.getName())
@@ -82,13 +96,31 @@ public class ProductControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void findProductByTypeTest() throws Exception {
+    public void findProductsByNameIfNotExistsTest() throws Exception {
+        mvc.perform(get(BASE_PRODUCTS_URL + "/name/" + randomAlphabetic(10))
+                .header(authHeaderName, token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().string("[]"));
+    }
+
+    @Test
+    public void findProductsByTypeIfExistsTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         mvc.perform(get(BASE_PRODUCTS_URL + "/type/" + product.getType())
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[0].id", is(product.getId())));
+    }
+
+    @Test
+    public void findProductsByTypeIfNotExistsTest() throws Exception {
+        mvc.perform(get(BASE_PRODUCTS_URL + "/type/" + randomAlphabetic(10))
+                .header(authHeaderName, token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().string("[]"));
     }
 
     @Test
@@ -110,10 +142,29 @@ public class ProductControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void deleteProductTest() throws Exception {
-        final Product product = productService.create(prepareProduct());
+    public void deleteProductWithValidDataTest() throws Exception {
+        final Product product = prepareProduct();
+        product.setImage(null);
+        productService.create(product);
         mvc.perform(delete(BASE_PRODUCTS_URL + "/" + product.getId())
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteProductWithInvalidImageTest() throws Exception {
+        final Product product = prepareProduct();
+        product.setImage(randomAlphabetic(20));
+        productService.create(product);
+        mvc.perform(delete(BASE_PRODUCTS_URL + "/" + product.getId())
+                .header(authHeaderName, token))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteProductWithInvalidIdTest() throws Exception {
+        mvc.perform(delete(BASE_PRODUCTS_URL + "/" + randomAlphabetic(20))
+                .header(authHeaderName, token))
+                .andExpect(status().isNotFound());
     }
 }

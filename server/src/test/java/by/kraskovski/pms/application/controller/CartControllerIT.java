@@ -1,6 +1,6 @@
 package by.kraskovski.pms.application.controller;
 
-import by.kraskovski.pms.application.controller.config.ControllerConfig;
+import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class CartControllerIT extends ControllerConfig {
+public class CartControllerIT extends ControllerTestConfig {
 
     private static final String BASE_CART_URL = "/cart";
 
@@ -95,9 +95,7 @@ public class CartControllerIT extends ControllerConfig {
 
     @Test
     public void createCartWithExistsUserTest() throws Exception {
-        final User user = prepareUser();
-        userService.create(user);
-        mvc.perform(post(BASE_CART_URL + "/" + user.getId())
+        mvc.perform(post(BASE_CART_URL + "/" + userService.create(prepareUser()).getId())
                 .header(authHeaderName, token))
                 .andExpect(status().isCreated());
     }
@@ -110,7 +108,16 @@ public class CartControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void addProductToCartPositiveTest() throws Exception {
+    public void createCartifAlreadyExistsTest() throws Exception {
+        final User user = userService.create(prepareUser());
+        cartService.create(user.getId());
+        mvc.perform(post(BASE_CART_URL + "/" + user.getId())
+                .header(authHeaderName, token))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void addProductToCartIfExistsTest() throws Exception {
         final User user = userService.create(prepareUser());
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
@@ -126,7 +133,7 @@ public class CartControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void addProductToCartNegativeTest() throws Exception {
+    public void addProductToCartWithInvalidCountTest() throws Exception {
         final User user = userService.create(prepareUser());
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
@@ -142,7 +149,7 @@ public class CartControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void deleteProductFromCartPositiveTest() throws Exception {
+    public void deleteProductFromCartIfExistsTest() throws Exception {
         final User user = userService.create(prepareUser());
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
@@ -159,7 +166,7 @@ public class CartControllerIT extends ControllerConfig {
     }
 
     @Test
-    public void deleteProductFromCartNegativeTest() throws Exception {
+    public void deleteProductFromCartWithInvalidCountTest() throws Exception {
         final User user = userService.create(prepareUser());
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
