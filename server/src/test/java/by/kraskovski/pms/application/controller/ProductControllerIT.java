@@ -124,7 +124,7 @@ public class ProductControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void updateProductTest() throws Exception {
+    public void updateProductWithValidDataTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         product.setName(random(20));
         product.setImage(random(20));
@@ -139,6 +139,17 @@ public class ProductControllerIT extends ControllerTestConfig {
                 .andExpect(jsonPath("$.name", is(product.getName())))
                 .andExpect(jsonPath("$.type", is(product.getType())))
                 .andExpect(jsonPath("$.image", is(product.getImage())));
+    }
+
+    @Test
+    public void updateProductWithInvalidDataTest() throws Exception {
+        final Product product = productService.create(prepareProduct());
+        product.setName(null);
+        mvc.perform(put(BASE_PRODUCTS_URL)
+                .header(authHeaderName, token)
+                .contentType(APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(mapper.map(product, ProductDto.class))))
+                .andExpect(status().isInternalServerError());
     }
 
     @Test
