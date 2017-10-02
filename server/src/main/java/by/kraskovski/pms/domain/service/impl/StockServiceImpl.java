@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@AllArgsConstructor(onConstructor=@__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
@@ -60,19 +60,21 @@ public class StockServiceImpl implements StockService {
     }
 
     private void addExistingProductToStock(final ProductStock productStock, final Stock stock, final int count) {
-        if (count < 1) {
-            throw new IllegalArgumentException("The number of products can't be less than 1!");
-        }
+        verifyCount(count);
         productStock.setProductsCount(productStock.getProductsCount() + count);
         stockRepository.save(stock);
     }
 
     private void addNewProductToStock(final Stock stock, final Product product, final int count) {
+        verifyCount(count);
+        stock.getProductStocks().add(new ProductStock(product, stock, count));
+        stockRepository.save(stock);
+    }
+
+    private void verifyCount(final int count) {
         if (count < 1) {
             throw new IllegalArgumentException("The number of products can't be less than 1!");
         }
-        stock.getProductStocks().add(new ProductStock(product, stock, count));
-        stockRepository.save(stock);
     }
 
     @Override
