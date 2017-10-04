@@ -170,9 +170,8 @@ public class StockControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void updateStockTest() throws Exception {
-        final Stock stock = prepareStock();
-        stockService.create(stock);
+    public void updateStockWithValidDataTest() throws Exception {
+        final Stock stock = stockService.create(prepareStock());
         stock.setSpecialize(random(20));
         stock.setPhone(random(20));
         stock.setAddress(random(20));
@@ -189,13 +188,29 @@ public class StockControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void deleteStockTest() throws Exception {
-        final Stock stock = prepareStock();
-        stockService.create(stock);
+    public void updateStockWithInvalidDataTest() throws Exception {
+        final Stock stock = stockService.create(prepareStock());
+        stock.setSpecialize(null);
+        mvc.perform(put(BASE_STOCK_URL)
+                .header(authHeaderName, token)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(mapper.map(stock, StockDto.class))))
+                .andExpect(status().isInternalServerError());
+    }
 
+    @Test
+    public void deleteStockPositiveTest() throws Exception {
+        final Stock stock = stockService.create(prepareStock());
         mvc.perform(delete(BASE_STOCK_URL + "/" + stock.getId())
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteStockWithInvalidIdTest() throws Exception {
+        mvc.perform(delete(BASE_STOCK_URL + "/" + randomAlphabetic(10))
+                .header(authHeaderName, token))
+                .andExpect(status().isNotFound());
     }
 
     private List<ProductStockDto> loadStockProducts(final String stockId) throws Exception {

@@ -106,7 +106,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public void delete(final String id) {
-        stockRepository.delete(id);
+        stockRepository.delete(find(id));
     }
 
     @Override
