@@ -13,7 +13,6 @@ import java.util.Set;
 @Getter
 @Setter
 public class CartDto {
-
     private String id;
     private double totalCost;
     private Set<CartProductStock> cartProductStocks;

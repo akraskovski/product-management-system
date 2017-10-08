@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductStockDto {
-
     private ProductDto product;
     private int productsCount;
 }
