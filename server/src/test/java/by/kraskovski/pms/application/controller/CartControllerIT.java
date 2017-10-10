@@ -126,8 +126,8 @@ public class CartControllerIT extends ControllerTestConfig {
         final ProductStock productStock = productStockService.findByStockIdAndProductId(stock.getId(), product.getId());
         mvc.perform(put(BASE_CART_URL)
                 .header(authHeaderName, token)
-                .param("cart_id", user.getId())
-                .param("ps_id", productStock.getId())
+                .param("cartId", user.getId())
+                .param("productStockId", productStock.getId())
                 .param("count", "10"))
                 .andExpect(status().isNoContent());
     }
@@ -142,8 +142,8 @@ public class CartControllerIT extends ControllerTestConfig {
         final ProductStock productStock = productStockService.findByStockIdAndProductId(stock.getId(), product.getId());
         mvc.perform(put(BASE_CART_URL)
                 .header(authHeaderName, token)
-                .param("cart_id", user.getId())
-                .param("ps_id", productStock.getId())
+                .param("cartId", user.getId())
+                .param("productStockId", productStock.getId())
                 .param("count", "15"))
                 .andExpect(status().isBadRequest());
     }
@@ -159,8 +159,8 @@ public class CartControllerIT extends ControllerTestConfig {
         cartService.addProduct(user.getId(), productStock.getId(), 10);
         mvc.perform(delete(BASE_CART_URL)
                 .header(authHeaderName, token)
-                .param("cart_id", user.getId())
-                .param("ps_id", productStock.getId())
+                .param("cartId", user.getId())
+                .param("productStockId", productStock.getId())
                 .param("count", "5"))
                 .andExpect(status().isNoContent());
     }
@@ -176,8 +176,8 @@ public class CartControllerIT extends ControllerTestConfig {
         cartService.addProduct(user.getId(), productStock.getId(), 10);
         mvc.perform(delete(BASE_CART_URL)
                 .header(authHeaderName, token)
-                .param("cart_id", user.getId())
-                .param("ps_id", productStock.getId())
+                .param("cartId", user.getId())
+                .param("productStockId", productStock.getId())
                 .param("count", "11"))
                 .andExpect(status().isBadRequest());
     }

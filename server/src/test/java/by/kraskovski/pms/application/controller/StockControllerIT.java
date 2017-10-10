@@ -99,8 +99,8 @@ public class StockControllerIT extends ControllerTestConfig {
         stockService.create(stock);
         mvc.perform(put(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
-                .param("stock_id", stock.getId())
-                .param("product_id", product.getId())
+                .param("stockId", stock.getId())
+                .param("productId", product.getId())
                 .param("count", "10"))
                 .andExpect(status().isNoContent());
         final ProductStockDto productStockDto = loadStockProducts(stock.getId()).get(0);
@@ -116,8 +116,8 @@ public class StockControllerIT extends ControllerTestConfig {
         stockService.create(stock);
         mvc.perform(put(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
-                .param("stock_id", stock.getId())
-                .param("product_id", product.getId())
+                .param("stockId", stock.getId())
+                .param("productId", product.getId())
                 .param("count", "0"))
                 .andExpect(status().isBadRequest());
     }
@@ -128,8 +128,8 @@ public class StockControllerIT extends ControllerTestConfig {
         final Stock stock = stockService.create(prepareStock());
         mvc.perform(put(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
-                .param("stock_id", stock.getId())
-                .param("product_id", product.getId())
+                .param("stockId", stock.getId())
+                .param("productId", product.getId())
                 .param("count", "10"))
                 .andExpect(status().isNoContent());
         final ProductStockDto productStockDto = loadStockProducts(stock.getId()).get(0);
@@ -148,8 +148,8 @@ public class StockControllerIT extends ControllerTestConfig {
         stockService.create(stock);
         mvc.perform(delete(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
-                .param("stock_id", stock.getId())
-                .param("product_id", product.getId())
+                .param("stockId", stock.getId())
+                .param("productId", product.getId())
                 .param("count", String.valueOf(productsToDeleteCount)))
                 .andExpect(status().isNoContent());
         final ProductStockDto productStockDtos = loadStockProducts(stock.getId()).get(0);
@@ -163,8 +163,8 @@ public class StockControllerIT extends ControllerTestConfig {
         final Stock stock = stockService.create(prepareStock());
         mvc.perform(delete(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
-                .param("stock_id", stock.getId())
-                .param("product_id", "INVALID ID")
+                .param("stockId", stock.getId())
+                .param("productId", "INVALID ID")
                 .param("count", String.valueOf(productsToDeleteCount)))
                 .andExpect(status().isNotFound());
     }

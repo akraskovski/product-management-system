@@ -47,7 +47,7 @@ public class StoreController {
      * Find stores in database with setting id in browser
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadStoreById(@PathVariable("id") final String id) {
+    public ResponseEntity loadStoreById(@PathVariable final String id) {
         log.info("Start loadStoreById: {}", id);
         return ResponseEntity.ok(mapper.map(storeService.find(id), StoreDto.class));
     }
@@ -56,7 +56,7 @@ public class StoreController {
      * Find stocks related to store
      */
     @RequestMapping(value = "/{id}/stock-manage", method = RequestMethod.GET)
-    public ResponseEntity loadStoreStocksById(@PathVariable("id") final String id) {
+    public ResponseEntity loadStoreStocksById(@PathVariable final String id) {
         log.info("Start loadStoreStocksById: {}", id);
         return ResponseEntity.ok(storeService.find(id).getStockList().stream()
                 .map(stock -> mapper.map(stock, StockDto.class)).collect(toList()));
@@ -77,8 +77,8 @@ public class StoreController {
      */
     @RequestMapping(value = "/stock-manage", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addStock(@RequestParam("store_id") final String storeId,
-                         @RequestParam("stock_id") final String stockId) {
+    public void addStock(@RequestParam final String storeId,
+                         @RequestParam final String stockId) {
         log.info("Start add stock: {} to store: {}", stockId, storeId);
         storeService.addStock(storeId, stockId);
     }
@@ -88,8 +88,8 @@ public class StoreController {
      */
     @RequestMapping(value = "/stock-manage", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteStock(@RequestParam("store_id") final String storeId,
-                            @RequestParam("stock_id") final String stockId) {
+    public void deleteStock(@RequestParam final String storeId,
+                            @RequestParam final String stockId) {
         log.info("Start delete stock: {} from store: {}", stockId, storeId);
         storeService.deleteStock(storeId, stockId);
     }
@@ -109,7 +109,7 @@ public class StoreController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteStore(@PathVariable("id") final String id) {
+    public void deleteStore(@PathVariable final String id) {
         log.info("Start deleteStore: {}", id);
         storeService.delete(id);
     }
