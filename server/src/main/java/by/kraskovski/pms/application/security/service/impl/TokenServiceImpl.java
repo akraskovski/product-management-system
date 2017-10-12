@@ -81,7 +81,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public Authentication authenticate(final HttpServletRequest request) throws ExpiredJwtException, SignatureException {
         final String token = request.getHeader(authHeaderName);
-        return token != null ? parseToken(token) : null;
+        return StringUtils.isNotBlank(token) ? parseToken(token) : null;
     }
 
     private User parseToken(final String token) {
