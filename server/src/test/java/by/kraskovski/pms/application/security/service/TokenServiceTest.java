@@ -6,6 +6,9 @@ import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.service.AuthorityService;
 import by.kraskovski.pms.domain.service.UserService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareUserWithRole;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Integration test for main security logic of application.
@@ -50,7 +54,7 @@ public class TokenServiceTest {
     public void generateWithValidDataTest() throws Exception {
         final User user = createUser();
         final String token = tokenService.generate(user.getUsername(), user.getPassword()).getToken();
-        //TODO: Validate generated token.
+        validateTokenData(token, user);
     }
 
     @Test(expected = UserNotFoundException.class)
@@ -75,5 +79,15 @@ public class TokenServiceTest {
         authorityService.create(authority);
         final User user = prepareUserWithRole(authority);
         return userService.create(user);
+    }
+
+    private void validateTokenData(final String token, final User user) {
+        final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        final String username = tokenData.getBody().get("username").toString();
+        final String password = tokenData.getBody().get("password").toString();
+        final User userFromToken = userService.findByUsername(username);
+
+        assertEquals(user.getUsername(), userFromToken.getUsername());
+        assertEquals(user.getPassword(), password);
     }
 }
