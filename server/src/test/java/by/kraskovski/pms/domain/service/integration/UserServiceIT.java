@@ -1,27 +1,21 @@
 package by.kraskovski.pms.domain.service.integration;
 
-import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.User;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.service.AuthorityService;
 import by.kraskovski.pms.domain.service.UserService;
+import by.kraskovski.pms.domain.service.integration.config.ServiceTestConfig;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareUser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@TestPropertySource(locations = "classpath:application-test.properties")
-public class UserServiceIT {
+public class UserServiceIT extends ServiceTestConfig {
 
     @Autowired
     private UserService userService;

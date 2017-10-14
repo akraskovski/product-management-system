@@ -45,7 +45,7 @@ public class UserController {
      * Return json-information about all users in database.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadUserById(@PathVariable("id") final String id) {
+    public ResponseEntity loadUserById(@PathVariable final String id) {
         log.info("Start loadUserById: {}", id);
         return ResponseEntity.ok(mapper.map(userService.find(id), UserDto.class));
     }
@@ -84,7 +84,7 @@ public class UserController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable("id") final String id) {
+    public void deleteUser(@PathVariable final String id) {
         log.info("Start deleteUser with id: {}", id);
         userService.delete(id);
     }

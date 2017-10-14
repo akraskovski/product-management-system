@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ProductDto {
-
     private String id;
     private String name;
     private double cost;
