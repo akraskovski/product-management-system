@@ -1,10 +1,9 @@
 package by.kraskovski.pms.application.security.service.impl;
 
-import by.kraskovski.pms.application.controller.dto.UserDto;
-import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.application.controller.dto.TokenDto;
-import by.kraskovski.pms.application.security.exception.UserNotFoundException;
+import by.kraskovski.pms.application.controller.dto.UserDto;
 import by.kraskovski.pms.application.security.service.TokenService;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -28,9 +27,6 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-
-import static java.util.Optional.ofNullable;
 
 @Service
 public class TokenServiceImpl implements TokenService {
@@ -55,51 +51,55 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public TokenDto generate(final String username, final String password) {
-        final User user = ofNullable(userService.findByUsername(username))
-                .orElseThrow(() -> new UserNotFoundException("User with username" + username + " not found!"));
-        if (StringUtils.isNotEmpty(password)) {
-            final Map<String, Object> tokenData = new HashMap<>();
-            final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            if (passwordEncoder.matches(password, user.getPassword()) || password.equals(user.getPassword())) {
-                tokenData.put("username", user.getUsername());
-                tokenData.put("password", user.getPassword());
-                tokenData.put("create_date", LocalDateTime.now());
-                final JwtBuilder jwtBuilder = Jwts.builder();
-                jwtBuilder.setClaims(tokenData);
-                final Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.MINUTE, expirationTime);
-                jwtBuilder.setExpiration(calendar.getTime());
-                final String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact();
-                return new TokenDto(token, mapper.map(user, UserDto.class));
-            }
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+            throw new BadCredentialsException("Input data can't be empty.");
         }
-        throw new BadCredentialsException("Invalid input data.");
+        final User user = userService.findByUsername(username);
+
+        validateInputPassword(user.getPassword(), password);
+
+        final Map<String, Object> tokenData = new HashMap<>();
+        tokenData.put("username", user.getUsername());
+        tokenData.put("password", user.getPassword());
+        tokenData.put("create_date", LocalDateTime.now());
+        final JwtBuilder jwtBuilder = Jwts.builder();
+        jwtBuilder.setClaims(tokenData);
+        final Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, expirationTime);
+        jwtBuilder.setExpiration(calendar.getTime());
+        final String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact();
+        return new TokenDto(token, mapper.map(user, UserDto.class));
+    }
+
+    private void validateInputPassword(final String userPassword, final String inputPassword) {
+        final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (!passwordEncoder.matches(inputPassword, userPassword) && !inputPassword.equals(userPassword)) {
+            throw new BadCredentialsException("Incorrect password");
+        }
     }
 
     @Override
     public Authentication authenticate(final HttpServletRequest request) throws ExpiredJwtException, SignatureException {
         final String token = request.getHeader(authHeaderName);
-        return token != null ? parseToken(token) : null;
+        return StringUtils.isNotBlank(token) ? parseToken(token) : null;
     }
 
     private User parseToken(final String token) {
         final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         final User user = getUserFromToken(tokenData);
-        if (validatePassword(tokenData, user.getPassword())) {
+        if (validatePasswordFromToken(tokenData, user.getPassword())) {
             user.setAuthenticated(true);
             return user;
         }
         return null;
     }
 
-
     private User getUserFromToken(final Jws<Claims> tokenData) throws UsernameNotFoundException {
         final String username = tokenData.getBody().get("username").toString();
-        final Optional<User> user = ofNullable(userService.findByUsername(username));
-        return user.orElseThrow(() -> new UserNotFoundException("User: " + username + " not found!"));
+        return userService.findByUsername(username);
     }
 
-    private boolean validatePassword(final Jws<Claims> tokenData, final String userPassword) {
+    private boolean validatePasswordFromToken(final Jws<Claims> tokenData, final String userPassword) {
         final String tokenPassword = tokenData.getBody().get("password").toString();
         return tokenPassword.equals(userPassword);
     }

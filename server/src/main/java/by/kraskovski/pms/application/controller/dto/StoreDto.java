@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StoreDto {
-
     private String id;
     private String name;
     private String details;

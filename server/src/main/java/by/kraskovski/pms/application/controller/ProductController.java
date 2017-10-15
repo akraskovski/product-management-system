@@ -45,7 +45,7 @@ public class ProductController {
      * Find products in database with setting id in browser.
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity loadProductById(@PathVariable("id") final String id) {
+    public ResponseEntity loadProductById(@PathVariable final String id) {
         log.info("Start loadProductById: {}", id);
         return ResponseEntity.ok(mapper.map(productService.find(id), ProductDto.class));
     }
@@ -54,7 +54,7 @@ public class ProductController {
      * Find products in database with setting name in browser
      */
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
-    public ResponseEntity loadProductsByName(@PathVariable("name") final String name) {
+    public ResponseEntity loadProductsByName(@PathVariable final String name) {
         log.info("Start loadProductsByName: {}", name);
         return ResponseEntity.ok(productService.findByName(name).stream()
                 .map(product -> mapper.map(product, ProductDto.class))
@@ -65,7 +65,7 @@ public class ProductController {
      * Find products in database with setting type in browser.
      */
     @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
-    public ResponseEntity loadProductsByType(@PathVariable("type") final String type) {
+    public ResponseEntity loadProductsByType(@PathVariable final String type) {
         log.info("Start loadProductsByType: {}", type);
         return ResponseEntity.ok(productService.findByType(type).stream()
                 .map(product -> mapper.map(product, ProductDto.class))
@@ -97,7 +97,7 @@ public class ProductController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable("id") final String id) {
+    public void deleteProduct(@PathVariable final String id) {
         log.info("Start deleteProduct: {}", id);
         productService.delete(id);
     }

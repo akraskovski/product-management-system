@@ -115,8 +115,8 @@ public class StoreControllerIT extends ControllerTestConfig {
         final Stock stock = stockService.create(prepareStock());
         mvc.perform(put(BASE_STORE_URL + "/stock-manage")
                 .header(authHeaderName, token)
-                .param("store_id", store.getId())
-                .param("stock_id", stock.getId()))
+                .param("storeId", store.getId())
+                .param("stockId", stock.getId()))
                 .andExpect(status().isNoContent());
         mvc.perform(get(BASE_STORE_URL + "/" + store.getId() + "/stock-manage")
                 .header(authHeaderName, token))
@@ -132,8 +132,8 @@ public class StoreControllerIT extends ControllerTestConfig {
         storeService.create(store);
         mvc.perform(put(BASE_STORE_URL + "/stock-manage")
                 .header(authHeaderName, token)
-                .param("store_id", store.getId())
-                .param("stock_id", stock.getId()))
+                .param("storeId", store.getId())
+                .param("stockId", stock.getId()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -145,8 +145,8 @@ public class StoreControllerIT extends ControllerTestConfig {
         storeService.create(store);
         mvc.perform(delete(BASE_STORE_URL + "/stock-manage")
                 .header(authHeaderName, token)
-                .param("store_id", store.getId())
-                .param("stock_id", stock.getId()))
+                .param("storeId", store.getId())
+                .param("stockId", stock.getId()))
                 .andExpect(status().isNoContent());
         mvc.perform(get(BASE_STORE_URL + "/" + store.getId() + "/stock-manage")
                 .header(authHeaderName, token))
@@ -159,8 +159,8 @@ public class StoreControllerIT extends ControllerTestConfig {
         final Store store = storeService.create(prepareStore());
         mvc.perform(delete(BASE_STORE_URL + "/stock-manage")
                 .header(authHeaderName, token)
-                .param("store_id", store.getId())
-                .param("stock_id", randomAlphabetic(20)))
+                .param("storeId", store.getId())
+                .param("stockId", randomAlphabetic(20)))
                 .andExpect(status().isNotFound());
     }
 

@@ -11,7 +11,6 @@ import java.time.LocalTime;
 @Getter
 @Setter
 public class StockDto {
-
     private String id;
     private String specialize;
     private String address;

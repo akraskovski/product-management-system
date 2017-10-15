@@ -10,6 +10,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply from: 'quality/checkstyle/checkstyle.gradle'
+apply from: 'quality/jacoco/jacoco.gradle'
 //apply from: 'quality/pmd/pmd.gradle'
 
 repositories {

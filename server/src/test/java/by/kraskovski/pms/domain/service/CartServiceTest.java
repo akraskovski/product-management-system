@@ -51,7 +51,7 @@ public class CartServiceTest {
         verify(userService).update(anyObject());
     }
 
-    @Test(expected = InstanceAlreadyExistsException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void createNegativeTest() throws InstanceAlreadyExistsException {
         final User user = prepareUser();
         user.addCart(new Cart());

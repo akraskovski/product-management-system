@@ -3,10 +3,10 @@ package by.kraskovski.pms.application.controller;
 import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.application.controller.dto.ProductStockDto;
 import by.kraskovski.pms.application.controller.dto.StockDto;
-import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.service.ProductService;
 import by.kraskovski.pms.domain.service.StockService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -22,6 +22,7 @@ import java.util.List;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
 import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
@@ -74,9 +75,8 @@ public class StockControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void findStockByIdTest() throws Exception {
-        final Stock stock = prepareStock();
-        stockService.create(stock);
+    public void findStockByIdIfExistsTest() throws Exception {
+        final Stock stock = stockService.create(prepareStock());
         mvc.perform(get(BASE_STOCK_URL + "/" + stock.getId())
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
@@ -85,15 +85,22 @@ public class StockControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void addExistingProductToStockTest() throws Exception {
+    public void findStockByIdIfNotExistsTest() throws Exception {
+        mvc.perform(get(BASE_STOCK_URL + "/" + randomAlphabetic(20))
+                .header(authHeaderName, token))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void addExistingProductToStockWithValidCountTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         final Stock stock = prepareStock();
         stock.getProductStocks().add(new ProductStock(product, stock, 10));
         stockService.create(stock);
         mvc.perform(put(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
-                .param("stock_id", stock.getId())
-                .param("product_id", product.getId())
+                .param("stockId", stock.getId())
+                .param("productId", product.getId())
                 .param("count", "10"))
                 .andExpect(status().isNoContent());
         final ProductStockDto productStockDto = loadStockProducts(stock.getId()).get(0);
@@ -102,13 +109,27 @@ public class StockControllerIT extends ControllerTestConfig {
     }
 
     @Test
+    public void addExistingProductToStockWithInvalidCountTest() throws Exception {
+        final Product product = productService.create(prepareProduct());
+        final Stock stock = prepareStock();
+        stock.getProductStocks().add(new ProductStock(product, stock, 10));
+        stockService.create(stock);
+        mvc.perform(put(BASE_STOCK_URL + "/product")
+                .header(authHeaderName, token)
+                .param("stockId", stock.getId())
+                .param("productId", product.getId())
+                .param("count", "0"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void addNewProductToStockTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
         mvc.perform(put(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
-                .param("stock_id", stock.getId())
-                .param("product_id", product.getId())
+                .param("stockId", stock.getId())
+                .param("productId", product.getId())
                 .param("count", "10"))
                 .andExpect(status().isNoContent());
         final ProductStockDto productStockDto = loadStockProducts(stock.getId()).get(0);
@@ -127,8 +148,8 @@ public class StockControllerIT extends ControllerTestConfig {
         stockService.create(stock);
         mvc.perform(delete(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
-                .param("stock_id", stock.getId())
-                .param("product_id", product.getId())
+                .param("stockId", stock.getId())
+                .param("productId", product.getId())
                 .param("count", String.valueOf(productsToDeleteCount)))
                 .andExpect(status().isNoContent());
         final ProductStockDto productStockDtos = loadStockProducts(stock.getId()).get(0);
@@ -142,16 +163,15 @@ public class StockControllerIT extends ControllerTestConfig {
         final Stock stock = stockService.create(prepareStock());
         mvc.perform(delete(BASE_STOCK_URL + "/product")
                 .header(authHeaderName, token)
-                .param("stock_id", stock.getId())
-                .param("product_id", "INVALID ID")
+                .param("stockId", stock.getId())
+                .param("productId", "INVALID ID")
                 .param("count", String.valueOf(productsToDeleteCount)))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void updateStockTest() throws Exception {
-        final Stock stock = prepareStock();
-        stockService.create(stock);
+    public void updateStockWithValidDataTest() throws Exception {
+        final Stock stock = stockService.create(prepareStock());
         stock.setSpecialize(random(20));
         stock.setPhone(random(20));
         stock.setAddress(random(20));
@@ -168,13 +188,29 @@ public class StockControllerIT extends ControllerTestConfig {
     }
 
     @Test
-    public void deleteStockTest() throws Exception {
-        final Stock stock = prepareStock();
-        stockService.create(stock);
+    public void updateStockWithInvalidDataTest() throws Exception {
+        final Stock stock = stockService.create(prepareStock());
+        stock.setSpecialize(null);
+        mvc.perform(put(BASE_STOCK_URL)
+                .header(authHeaderName, token)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(mapper.map(stock, StockDto.class))))
+                .andExpect(status().isInternalServerError());
+    }
 
+    @Test
+    public void deleteStockPositiveTest() throws Exception {
+        final Stock stock = stockService.create(prepareStock());
         mvc.perform(delete(BASE_STOCK_URL + "/" + stock.getId())
                 .header(authHeaderName, token))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteStockWithInvalidIdTest() throws Exception {
+        mvc.perform(delete(BASE_STOCK_URL + "/" + randomAlphabetic(10))
+                .header(authHeaderName, token))
+                .andExpect(status().isNotFound());
     }
 
     private List<ProductStockDto> loadStockProducts(final String stockId) throws Exception {
