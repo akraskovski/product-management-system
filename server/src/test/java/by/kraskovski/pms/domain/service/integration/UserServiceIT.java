@@ -24,7 +24,7 @@ public class UserServiceIT extends ServiceTestConfig {
     private AuthorityService authorityService;
 
     @Before
-    public void before() {
+    public void setUp() {
         userService.deleteAll();
         authorityService.create(new Authority(AuthorityEnum.ROLE_USER));
     }
