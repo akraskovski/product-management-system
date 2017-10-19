@@ -40,7 +40,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public Set<ProductStock> findProducts(final String id) {
-        final Stock stock = stockRepository.findOne(id);
+        final Stock stock = find(id);
         if (CollectionUtils.isEmpty(stock.getProductStocks())) {
             return Collections.emptySet();
         }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,7 @@ public class StoreServiceImpl implements StoreService {
         return storeRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void addStock(final String storeId, final String stockId) {
         final Store store = find(storeId);
@@ -60,6 +62,7 @@ public class StoreServiceImpl implements StoreService {
         storeRepository.save(store);
     }
 
+    @Transactional
     @Override
     public void deleteStock(final String storeId, final String stockId) {
         final Store store = find(storeId);
