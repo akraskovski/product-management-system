@@ -1,6 +1,5 @@
-import {Stock} from "./stock";
 export class Store {
-    id: number;
+    id: string;
     name: string;
     details?: string;
     address?: string;
@@ -9,5 +8,4 @@ export class Store {
     discounts?: boolean;
     mail?: string;
     logo?: string;
-    stockList: Stock[];
 }

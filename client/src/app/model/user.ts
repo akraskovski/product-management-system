@@ -1,6 +1,6 @@
 import {Authority} from "./authority";
 export class User {
-    id: number;
+    id: string;
     username: string;
     password: string;
     authorities: Authority[];
