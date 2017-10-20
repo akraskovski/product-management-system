@@ -93,7 +93,7 @@ export class CommonService {
             })
     }
 
-    remove(URL: string, identifier: number): Observable<any> {
+    remove(URL: string, identifier: string): Observable<any> {
         return this.http.delete(URL + "/" + identifier, CommonService.generateOptions())
             .map((response) => {
                 if (response.status != 200) {

@@ -85,7 +85,7 @@ export class StockContentComponent implements OnInit {
         this.refreshItems();
     }
 
-    onDelete(id: number): void {
+    onDelete(id: string): void {
         this.stockService.remove(api.STOCK, id)
             .subscribe(
                 () => this.load(),

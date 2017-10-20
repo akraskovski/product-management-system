@@ -27,7 +27,7 @@ export class StoreContentComponent extends AuthorityWorker {
                 error => this.logError(error));
     }
 
-    onDelete(id: number): void {
+    onDelete(id: string): void {
         this.storeService.remove(api.STORE, id)
             .subscribe(
                 () => this.loadData(),

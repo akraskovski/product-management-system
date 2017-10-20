@@ -48,7 +48,6 @@ export class StoreUpdateComponent {
             .subscribe(
                 store => {
                     this.store = store;
-                    this.selectedStocks = this.store.stockList;
                     this.loadStocks();
                     this.fillForm(this.store);
                 },
@@ -117,7 +116,6 @@ export class StoreUpdateComponent {
         this.store.skype = this.storeForm.value.skype;
         this.store.discounts = this.storeForm.value.discounts;
         this.store.mail = this.storeForm.value.mail;
-        this.store.stockList = this.selectedStocks;
     }
 
     addStockToSelected(stock: Stock): void {

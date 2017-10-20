@@ -93,7 +93,7 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
         this.refreshItems();
     }
 
-    onDelete(id: number): void {
+    onDelete(id: string): void {
         this.productService.remove(api.PRODUCT, id)
             .subscribe(
                 () => this.load(),

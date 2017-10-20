@@ -53,7 +53,7 @@ export class ProductSearchComponent {
             this.selectedProduct = product;
     }
 
-    onDelete(id: number): void {
+    onDelete(id: string): void {
         this.productService.remove(api.PRODUCT, id)
             .subscribe(result => result ? this.router.navigate(['product/product-content']) : alert("Error!"),
                 error => alert(error));

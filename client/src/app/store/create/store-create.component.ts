@@ -94,7 +94,6 @@ export class StoreCreateComponent {
         this.store.skype = this.storeForm.value.skype;
         this.store.discounts = this.storeForm.value.discounts;
         this.store.mail = this.storeForm.value.mail;
-        this.store.stockList = this.selectedStocks;
     }
 
     addStockToSelected(stock: Stock): void {
