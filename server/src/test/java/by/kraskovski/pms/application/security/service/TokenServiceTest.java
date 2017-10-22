@@ -12,6 +12,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,6 +60,12 @@ public class TokenServiceTest {
 
     @Before
     public void before() {
+        userService.deleteAll();
+        authorityService.deleteAll();
+    }
+
+    @After
+    public void cleanUp() {
         userService.deleteAll();
         authorityService.deleteAll();
     }

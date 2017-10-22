@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -66,7 +68,7 @@ public class StoreController {
      * Creating {@link Store} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createStore(@RequestBody final StoreDto storeDto) {
+    public ResponseEntity createStore(@RequestBody @Valid final StoreDto storeDto) {
         log.info("Start createStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
         return new ResponseEntity<>(mapper.map(storeService.create(store), StoreDto.class), HttpStatus.CREATED);
@@ -98,7 +100,7 @@ public class StoreController {
      * Update {@link Store} entity in database.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateStore(@RequestBody final StoreDto storeDto) {
+    public ResponseEntity updateStore(@RequestBody @Valid final StoreDto storeDto) {
         log.info("Start updateStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
         return ResponseEntity.ok(mapper.map(storeService.update(store), StoreDto.class));

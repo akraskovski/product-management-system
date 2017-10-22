@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -63,7 +65,7 @@ public class UserController {
      * Creating {@link User} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createUser(@RequestBody final UserDto userDto) {
+    public ResponseEntity createUser(@RequestBody @Valid final UserDto userDto) {
         log.info("Start createUser: {}", userDto.getUsername());
         final User user = mapper.map(userDto, User.class);
         return new ResponseEntity<>(mapper.map(userService.create(user), UserDto.class), HttpStatus.CREATED);
@@ -73,7 +75,7 @@ public class UserController {
      * Update {@link User} entity in database.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateUser(@RequestBody final UserDto userDto) {
+    public ResponseEntity updateUser(@RequestBody @Valid final UserDto userDto) {
         log.info("Start updateUser: {}", userDto.getUsername());
         final User user = mapper.map(userDto, User.class);
         return ResponseEntity.ok(mapper.map(userService.update(user), UserDto.class));
