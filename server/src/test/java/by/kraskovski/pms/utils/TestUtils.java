@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.apache.commons.lang3.RandomUtils.nextDouble;
 
 public final class TestUtils {
@@ -36,7 +37,7 @@ public final class TestUtils {
         final Stock stock = new Stock();
         stock.setSpecialize(randomAlphabetic(20));
         stock.setAddress(randomAlphabetic(20));
-        stock.setPhone(randomAlphabetic(20));
+        stock.setPhone(randomNumeric(20));
         stock.setSquare(nextDouble());
         stock.setOpenTime(LocalTime.of(9, 30));
         stock.setCloseTime(LocalTime.of(22, 0));
@@ -50,8 +51,8 @@ public final class TestUtils {
         store.setDetails(randomAlphabetic(20));
         store.setDiscounts(true);
         store.setLogo(randomAlphabetic(20));
-        store.setMail(randomAlphabetic(20));
-        store.setPhone(randomAlphabetic(20));
+        store.setMail(randomAlphabetic(10) + "@gmail.com");
+        store.setPhone(randomNumeric(20));
         store.setSkype(randomAlphabetic(20));
         return store;
     }
@@ -59,11 +60,11 @@ public final class TestUtils {
     public static User prepareUser() {
         final User user = new User();
         user.setUsername(randomAlphabetic(20));
-        user.setPassword(randomAlphabetic(20));
-        user.setEmail(randomAlphabetic(20));
+        user.setPassword(randomAlphabetic(5) + randomNumeric(5));
+        user.setEmail(randomAlphabetic(10) + "@gmail.com");
         user.setFirstName(randomAlphabetic(20));
         user.setLastName(randomAlphabetic(20));
-        user.setPhone(randomAlphabetic(20));
+        user.setPhone(randomNumeric(10));
         return user;
     }
 

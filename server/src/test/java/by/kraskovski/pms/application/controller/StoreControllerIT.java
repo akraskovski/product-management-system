@@ -18,6 +18,7 @@ import static by.kraskovski.pms.utils.TestUtils.prepareStock;
 import static by.kraskovski.pms.utils.TestUtils.prepareStore;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -75,7 +76,7 @@ public class StoreControllerIT extends ControllerTestConfig {
                 .header(authHeaderName, token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(mapper.map(store, StoreDto.class))))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -167,14 +168,14 @@ public class StoreControllerIT extends ControllerTestConfig {
     @Test
     public void updateStorePositiveTest() throws Exception {
         final Store store = storeService.create(prepareStore());
-        store.setName(random(20));
-        store.setAddress(random(20));
-        store.setDetails(random(20));
+        store.setName(randomAlphabetic(20));
+        store.setAddress(randomAlphabetic(20));
+        store.setDetails(randomAlphabetic(20));
         store.setDiscounts(false);
-        store.setLogo(random(20));
-        store.setMail(random(20));
-        store.setPhone(random(20));
-        store.setSkype(random(20));
+        store.setLogo(randomAlphabetic(20));
+        store.setMail(randomAlphabetic(10) + "@gmail.com");
+        store.setPhone(randomNumeric(20));
+        store.setSkype(randomAlphabetic(20));
         mvc.perform(put(BASE_STORE_URL)
                 .header(authHeaderName, token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -200,7 +201,7 @@ public class StoreControllerIT extends ControllerTestConfig {
                 .header(authHeaderName, token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(mapper.map(store, StoreDto.class))))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
     }
 
     @Test

@@ -20,6 +20,5 @@ public class LoginDto implements Serializable {
     private String username;
 
     @NotNull
-    @Pattern(regexp = PASSWORD_PATTERN)
     private String password;
 }

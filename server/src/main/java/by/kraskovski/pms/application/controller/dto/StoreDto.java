@@ -21,7 +21,7 @@ public class StoreDto {
     @NotNull
     private String name;
 
-    @Size(max = 50)
+    @Size(max = 500)
     private String details;
     private String address;
 
