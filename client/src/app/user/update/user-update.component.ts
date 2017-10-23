@@ -70,7 +70,7 @@ export class UserUpdateComponent implements OnInit {
     }
 
     onDelete(): void {
-        if (this.user.id > 0) {
+        if (this.user.id !== "") {
             this.userService.remove(api.USER, this.user.id)
                 .subscribe(
                     () => this.router.navigate(['/']).then(() => this.router.navigate(['user'])),

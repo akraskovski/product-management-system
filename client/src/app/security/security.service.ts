@@ -14,10 +14,7 @@ export class SecurityService implements CanActivate {
         let canActivate: boolean = false;
         const authorities = route.data["roles"] as Array<string>;
         const user: User = AuthorityWorker.getCurrentUser();
-        if (authorities.length > 0 && user) {
-            canActivate = this.checkAuthorities(authorities, user.authorities);
-        }
-        return canActivate;
+        return authorities.length > 0 && user ? canActivate = this.checkAuthorities(authorities, user.authorities) : false;
     }
 
     static containsAuthority(array: any[], obj: any): boolean {
@@ -32,7 +29,7 @@ export class SecurityService implements CanActivate {
     private checkAuthorities(availableAuthorityList: string[], currentAuthorityList: Authority[]): boolean {
         let flag = false;
         currentAuthorityList.forEach(currentAuthority => {
-            if (SecurityService.containsAuthority(availableAuthorityList, currentAuthority.name))
+            if (SecurityService.containsAuthority(availableAuthorityList, currentAuthority.authority))
                 flag = true;
         });
         return flag;
