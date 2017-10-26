@@ -3,6 +3,8 @@ package by.kraskovski.pms.application.controller.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
@@ -12,9 +14,17 @@ import java.time.LocalDateTime;
 @Setter
 public class ProductDto {
     private String id;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private double cost;
+
+    @NotNull
     private String type;
+
+    @Size(max = 500)
     private String details;
     private String image;
     private double width;

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -93,7 +95,7 @@ public class StockController {
      * Creating {@link Stock} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createStock(@RequestBody final StockDto stockDto) {
+    public ResponseEntity createStock(@RequestBody @Valid final StockDto stockDto) {
         log.info("Start createStock: {}", stockDto.getSpecialize());
         final Stock stock = mapper.map(stockDto, Stock.class);
         return new ResponseEntity<>(mapper.map(stockService.create(stock), StockDto.class), HttpStatus.CREATED);
@@ -103,7 +105,7 @@ public class StockController {
      * Update {@link Stock} entity in database.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateStock(@RequestBody final StockDto stockDto) {
+    public ResponseEntity updateStock(@RequestBody @Valid final StockDto stockDto) {
         log.info("Start updateStock: {}", stockDto.getId());
         final Stock stock = stockService.update(mapper.map(stockDto, Stock.class));
         return ResponseEntity.ok(mapper.map(stock, StockDto.class));

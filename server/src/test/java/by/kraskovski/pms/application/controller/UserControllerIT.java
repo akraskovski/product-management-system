@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareUser;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
@@ -106,11 +107,10 @@ public class UserControllerIT extends ControllerTestConfig {
     public void updateUserTest() throws Exception {
         final User user = userService.create(prepareUser());
         user.setUsername(randomAlphabetic(20));
-        user.setPassword(randomAlphabetic(20));
+        user.setPassword(randomAlphabetic(5) + randomNumeric(5));
         user.setFirstName(randomAlphabetic(20));
         user.setLastName(randomAlphabetic(20));
-        user.setEmail(randomAlphabetic(20));
-        user.setPhone(randomAlphabetic(20));
+        user.setPhone(randomNumeric(20));
 
         mvc.perform(put(BASE_USER_URL)
                 .header(authHeaderName, token)
@@ -123,7 +123,6 @@ public class UserControllerIT extends ControllerTestConfig {
                 .andExpect(jsonPath("$.password", notNullValue()))
                 .andExpect(jsonPath("$.firstName", is(user.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(user.getLastName())))
-                .andExpect(jsonPath("$.email", is(user.getEmail())))
                 .andExpect(jsonPath("$.phone", is(user.getPhone())));
     }
 

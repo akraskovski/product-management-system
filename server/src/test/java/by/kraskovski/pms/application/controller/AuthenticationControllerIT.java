@@ -3,6 +3,7 @@ package by.kraskovski.pms.application.controller;
 import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.application.controller.dto.LoginDto;
 import by.kraskovski.pms.domain.model.User;
+import org.junit.After;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
@@ -19,6 +20,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuthenticationControllerIT extends ControllerTestConfig {
 
     private static final String BASE_AUTH_URL = "/auth";
+
+    @After
+    public void cleanUp() {
+        userService.deleteAll();
+    }
 
     @Test
     public void loginWithFullValidDataTest() throws Exception {

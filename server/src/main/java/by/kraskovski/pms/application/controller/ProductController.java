@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -76,7 +78,7 @@ public class ProductController {
      * Creating {@link Product} from client form.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createProduct(@RequestBody final ProductDto productDto) {
+    public ResponseEntity createProduct(@RequestBody @Valid final ProductDto productDto) {
         log.info("Start createProduct: {}", productDto.getName());
         final Product product = productService.create(mapper.map(productDto, Product.class));
         return new ResponseEntity<>(mapper.map(product, ProductDto.class), HttpStatus.CREATED);
@@ -86,7 +88,7 @@ public class ProductController {
      * Update {@link Product}'s information in database.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateProduct(@RequestBody final ProductDto productDto) {
+    public ResponseEntity updateProduct(@RequestBody @Valid final ProductDto productDto) {
         log.info("start updateProduct: {}", productDto.getId());
         final Product product = productService.update(mapper.map(productDto, Product.class));
         return ResponseEntity.ok(mapper.map(product, ProductDto.class));

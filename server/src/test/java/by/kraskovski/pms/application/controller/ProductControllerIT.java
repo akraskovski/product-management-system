@@ -64,7 +64,7 @@ public class ProductControllerIT extends ControllerTestConfig {
                 .header(authHeaderName, token)
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(mapper.map(product, ProductDto.class))))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -149,7 +149,7 @@ public class ProductControllerIT extends ControllerTestConfig {
                 .header(authHeaderName, token)
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(mapper.map(product, ProductDto.class))))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
     }
 
     @Test

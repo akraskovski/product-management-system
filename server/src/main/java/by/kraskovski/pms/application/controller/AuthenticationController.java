@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  * Handle requests for authentication operations.
  * Works with {@link TokenService}.
@@ -30,7 +32,7 @@ public class AuthenticationController {
      * Generate token from {@link TokenService}
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody final LoginDto loginDto) {
+    public ResponseEntity login(@RequestBody @Valid final LoginDto loginDto) {
         log.info("Start authentication user with username: " + loginDto.getUsername());
         return ResponseEntity.ok(tokenService.generate(loginDto.getUsername(), loginDto.getPassword()));
     }
