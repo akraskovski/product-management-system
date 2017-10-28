@@ -10,8 +10,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareUser;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -22,6 +24,9 @@ public class UserServiceIT extends ServiceTestConfig {
 
     @Autowired
     private AuthorityService authorityService;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Before
     public void setUp() {
@@ -54,12 +59,23 @@ public class UserServiceIT extends ServiceTestConfig {
     }
 
     @Test
-    public void updateTest() {
+    public void updateValidTest() {
         final User user = userService.create(prepareUser());
         user.setUsername("UPDATED USERNAME");
         userService.update(user);
 
         final User updatedUser = userService.findByUsername(user.getUsername());
         assertEquals(user.getUsername(), updatedUser.getUsername());
+    }
+
+    @Test
+    public void updatePasswordTest() {
+        final User user = userService.create(prepareUser());
+        final String newPassword = "UPDATED PASSWORD";
+        user.setPassword(newPassword);
+        userService.update(user);
+
+        final String updatedPassword = userService.find(user.getId()).getPassword();
+        assertTrue(encoder.matches(newPassword, updatedPassword));
     }
 }

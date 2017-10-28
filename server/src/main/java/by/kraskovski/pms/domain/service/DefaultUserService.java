@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static java.lang.String.format;
 import static java.util.Collections.singletonList;
 import static java.util.Optional.ofNullable;
 
@@ -38,13 +39,13 @@ public class DefaultUserService implements UserService {
     @Override
     public User find(final String id) {
         return ofNullable(userRepository.findOne(id))
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with id: \"%s\" doesn't exists in db!", id)));
+                .orElseThrow(() -> new UserNotFoundException(format("User with id: \"%s\" doesn't exists in db!", id)));
     }
 
     @Override
     public User findByUsername(final String username) {
         return ofNullable(userRepository.findByUsername(username))
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with username: \"%s\" doesn't exists in db!", username)));
+                .orElseThrow(() -> new UserNotFoundException(format("\"%s\" doesn't exists in db!", username)));
     }
 
     @Override

@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
 import static by.kraskovski.pms.utils.TestUtils.prepareStore;
-import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.Matchers.is;
