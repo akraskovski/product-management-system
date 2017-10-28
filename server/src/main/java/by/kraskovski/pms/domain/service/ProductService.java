@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Service for {@link Product}
  */
-public interface ProductService extends AbstractService<Product> {
+public interface ProductService extends CRUDService<Product> {
 
     /**
      * Find {@link Product}s by name

@@ -6,7 +6,7 @@ import by.kraskovski.pms.domain.model.Authority;
 /**
  * Service for {@link Authority}.
  */
-public interface AuthorityService extends AbstractService<Authority> {
+public interface AuthorityService extends CRUDService<Authority> {
 
     /**
      * Find authority in database by name.

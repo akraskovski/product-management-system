@@ -5,7 +5,7 @@ import by.kraskovski.pms.domain.model.Cart;
 /**
  * Service for {@link Cart}
  */
-public interface CartService extends AbstractService<Cart> {
+public interface CartService extends CRUDService<Cart> {
 
     /**
      * Save {@link Cart} entity to database table

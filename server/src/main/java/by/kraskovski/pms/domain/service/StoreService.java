@@ -5,7 +5,7 @@ import by.kraskovski.pms.domain.model.Store;
 /**
  * Service for {@link Store}
  */
-public interface StoreService extends AbstractService<Store> {
+public interface StoreService extends CRUDService<Store> {
 
     /**
      * Find one first store by name

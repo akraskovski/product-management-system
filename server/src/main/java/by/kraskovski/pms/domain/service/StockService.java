@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Service for {@link Stock}
  */
-public interface StockService extends AbstractService<Stock> {
+public interface StockService extends CRUDService<Stock> {
 
     /**
      * Find all products contains in stock.
