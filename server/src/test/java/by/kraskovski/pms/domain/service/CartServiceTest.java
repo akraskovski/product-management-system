@@ -4,7 +4,6 @@ import by.kraskovski.pms.domain.model.Cart;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.repository.CartRepository;
-import by.kraskovski.pms.domain.service.impl.CartServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -36,7 +35,7 @@ public class CartServiceTest {
     private UserService userService;
 
     @InjectMocks
-    private CartServiceImpl cartService;
+    private UserCartService cartService;
 
     @Test
     public void createPositiveTest() throws InstanceAlreadyExistsException {

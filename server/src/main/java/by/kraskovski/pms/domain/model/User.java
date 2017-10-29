@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Description entity by database table "user"
@@ -104,7 +105,7 @@ public class User extends BaseEntity implements Authentication {
     }
 
     public void removeCart() {
-        if (cart != null) {
+        if (Objects.nonNull(cart)) {
             cart.setUser(null);
         }
         this.cart = null;

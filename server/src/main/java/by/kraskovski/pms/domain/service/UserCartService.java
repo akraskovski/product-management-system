@@ -1,4 +1,4 @@
-package by.kraskovski.pms.domain.service.impl;
+package by.kraskovski.pms.domain.service;
 
 import by.kraskovski.pms.domain.model.Cart;
 import by.kraskovski.pms.domain.model.CartProductStock;
@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class CartServiceImpl implements CartService {
+public class UserCartService implements CartService {
 
     private final CartRepository cartRepository;
     private final ProductStockService productStockService;
