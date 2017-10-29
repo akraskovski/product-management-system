@@ -3,7 +3,6 @@ package by.kraskovski.pms.domain.service;
 import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.repository.AuthorityRepository;
-import by.kraskovski.pms.domain.service.impl.AuthorityServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,7 +22,7 @@ public class AuthorityServiceTest {
     private AuthorityRepository authorityRepository;
 
     @InjectMocks
-    private AuthorityServiceImpl authorityService;
+    private UserAuthorityService authorityService;
 
     @Test
     public void findByIdTest() {
