@@ -2,7 +2,7 @@ package by.kraskovski.pms.domain.service.impl;
 
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.repository.ProductRepository;
-import by.kraskovski.pms.domain.service.ImageService;
+import by.kraskovski.pms.domain.service.FileService;
 import by.kraskovski.pms.domain.service.ProductService;
 import by.kraskovski.pms.domain.service.exception.FileNotFoundException;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final ImageService imageService;
+    private final FileService imageService;
 
     @Override
     public Product create(final Product object) {

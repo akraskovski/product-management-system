@@ -1,7 +1,7 @@
 package by.kraskovski.pms.application.controller;
 
 import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
-import by.kraskovski.pms.domain.service.ImageService;
+import by.kraskovski.pms.domain.service.FileService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -22,7 +22,7 @@ public class ImageControllerIT extends ControllerTestConfig {
     private static final String BASE_IMAGE_URL = "/image";
 
     @Autowired
-    private ImageService imageService;
+    private FileService imageService;
 
     @Before
     public void before() {

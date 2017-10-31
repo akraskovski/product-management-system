@@ -27,7 +27,7 @@ public class ProductServiceTest {
     private ProductRepository productRepository;
 
     @Mock
-    private ImageService imageService;
+    private FileService imageService;
 
     @InjectMocks
     private ProductServiceImpl productService;

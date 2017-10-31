@@ -3,7 +3,7 @@ package by.kraskovski.pms.domain.service.impl;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.repository.StoreRepository;
-import by.kraskovski.pms.domain.service.ImageService;
+import by.kraskovski.pms.domain.service.FileService;
 import by.kraskovski.pms.domain.service.StockService;
 import by.kraskovski.pms.domain.service.StoreService;
 import by.kraskovski.pms.domain.service.exception.FileNotFoundException;
@@ -26,7 +26,7 @@ public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
     private final StockService stockService;
-    private final ImageService imageService;
+    private final FileService imageService;
 
     @Override
     public Store create(final Store object) {
