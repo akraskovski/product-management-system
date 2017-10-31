@@ -2,7 +2,6 @@ package by.kraskovski.pms.domain.service;
 
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.repository.ProductRepository;
-import by.kraskovski.pms.domain.service.impl.ProductServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,7 +29,7 @@ public class ProductServiceTest {
     private FileService imageService;
 
     @InjectMocks
-    private ProductServiceImpl productService;
+    private ProductItemService productService;
 
     @Test
     public void createTest() {

@@ -1,8 +1,7 @@
-package by.kraskovski.pms.domain.service.impl;
+package by.kraskovski.pms.domain.service;
 
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.repository.ProductStockRepository;
-import by.kraskovski.pms.domain.service.ProductStockService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +10,8 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor(onConstructor=@__(@Autowired))
-public class ProductStockServiceImpl implements ProductStockService {
+@AllArgsConstructor(onConstructor = @__(@Autowired))
+public class DefaultProductStockService implements ProductStockService {
 
     private final ProductStockRepository productStockRepository;
 

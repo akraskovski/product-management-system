@@ -1,11 +1,8 @@
-package by.kraskovski.pms.domain.service.impl;
+package by.kraskovski.pms.domain.service;
 
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.repository.StoreRepository;
-import by.kraskovski.pms.domain.service.FileService;
-import by.kraskovski.pms.domain.service.StockService;
-import by.kraskovski.pms.domain.service.StoreService;
 import by.kraskovski.pms.domain.service.exception.FileNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +18,8 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
 @Slf4j
-@AllArgsConstructor(onConstructor=@__(@Autowired))
-public class StoreServiceImpl implements StoreService {
+@AllArgsConstructor(onConstructor = @__(@Autowired))
+public class StoreItemService implements StoreService {
 
     private final StoreRepository storeRepository;
     private final StockService stockService;

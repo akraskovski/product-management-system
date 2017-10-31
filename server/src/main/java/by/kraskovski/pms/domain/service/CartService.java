@@ -28,7 +28,7 @@ public interface CartService extends CRUDService<Cart> {
     Cart update(Cart object);
 
     @Override
-    default Cart create(Cart object) {
+    default Cart create(final Cart object) {
         return new Cart();
     }
 }
