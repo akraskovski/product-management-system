@@ -99,8 +99,8 @@ public class User extends BaseEntity implements Authentication {
         return this.cart;
     }
 
-    public void addCart(final Cart cart) {
-        this.cart = cart;
+    public void createCart() {
+        this.cart = new Cart();
         cart.setUser(this);
     }
 

@@ -37,6 +37,11 @@ public class UserAuthorityService implements AuthorityService {
     }
 
     @Override
+    public Authority update(final Authority object) {
+        return authorityRepository.save(object);
+    }
+
+    @Override
     public List<Authority> findAll() {
         return authorityRepository.findAll();
     }

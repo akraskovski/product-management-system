@@ -1,8 +1,14 @@
 package by.kraskovski.pms.domain.service;
 
+import by.kraskovski.pms.domain.model.base.BaseEntity;
+
 import java.util.List;
 
-public interface CRUDService<T> {
+/**
+ * Abstract CRUD operations service for models.
+ * @param <T> any model, extends from {@link BaseEntity} with unique id.
+ */
+public interface CRUDService<T extends BaseEntity> {
 
     /**
      * Save {@link T} entity to database table.
@@ -18,6 +24,11 @@ public interface CRUDService<T> {
      * Find all {@link T} in database.
      */
     List<T> findAll();
+
+    /**
+     * Update information about {@link T} in database.
+     */
+    T update(T object);
 
     /**
      * Delete {@link T} by id from database.

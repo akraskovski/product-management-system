@@ -29,7 +29,7 @@ public class UserCartService implements CartService {
         if (Objects.nonNull(user.getCart())) {
             throw new IllegalArgumentException("Cart with id:" + id + " already exists!");
         }
-        user.addCart(new Cart());
+        user.createCart();
         userService.update(user);
     }
 

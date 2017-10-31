@@ -24,8 +24,4 @@ public interface StockService extends CRUDService<Stock> {
      * Delete one (or more) product(s) from stock.
      */
     void deleteProduct(String stockId, String productId, int count);
-    /**
-     * Update information about {@link Stock} in database.
-     */
-    Stock update(Stock object);
 }
