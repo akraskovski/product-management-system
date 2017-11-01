@@ -1,9 +1,7 @@
-package by.kraskovski.pms.domain.service.impl;
+package by.kraskovski.pms.domain.service;
 
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.repository.ProductRepository;
-import by.kraskovski.pms.domain.service.ImageService;
-import by.kraskovski.pms.domain.service.ProductService;
 import by.kraskovski.pms.domain.service.exception.FileNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +18,11 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
 @Slf4j
-@AllArgsConstructor(onConstructor=@__(@Autowired))
-public class ProductServiceImpl implements ProductService {
+@AllArgsConstructor(onConstructor = @__(@Autowired))
+public class ProductItemService implements ProductService {
 
     private final ProductRepository productRepository;
-    private final ImageService imageService;
+    private final FileService imageService;
 
     @Override
     public Product create(final Product object) {
@@ -72,7 +70,6 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         productRepository.delete(productToDelete);
-
     }
 
     @Override

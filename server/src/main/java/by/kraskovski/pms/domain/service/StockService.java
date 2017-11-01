@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Service for {@link Stock}
  */
-public interface StockService extends AbstractService<Stock> {
+public interface StockService extends CRUDService<Stock> {
 
     /**
      * Find all products contains in stock.
@@ -24,8 +24,4 @@ public interface StockService extends AbstractService<Stock> {
      * Delete one (or more) product(s) from stock.
      */
     void deleteProduct(String stockId, String productId, int count);
-    /**
-     * Update information about {@link Stock} in database.
-     */
-    Stock update(Stock object);
 }

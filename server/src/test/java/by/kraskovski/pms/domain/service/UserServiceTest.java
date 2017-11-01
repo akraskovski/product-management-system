@@ -4,15 +4,17 @@ import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.repository.UserRepository;
-import by.kraskovski.pms.domain.service.impl.UserServiceImpl;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareUser;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,14 +28,18 @@ public class UserServiceTest {
     @Mock
     private AuthorityService authorityService;
 
+    @Mock
+    private BCryptPasswordEncoder encoder;
+
     @InjectMocks
-    private UserServiceImpl userService;
+    private DefaultUserService userService;
 
     @Test
     public void createTest() {
         final User user = prepareUser();
         when(authorityService.findByName(AuthorityEnum.ROLE_USER)).thenReturn(new Authority(AuthorityEnum.ROLE_USER));
         when(userRepository.save(user)).thenReturn(user);
+        when(encoder.encode(anyString())).thenReturn(RandomStringUtils.randomAlphabetic(5));
 
         userService.create(user);
 

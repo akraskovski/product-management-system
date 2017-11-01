@@ -1,13 +1,10 @@
-package by.kraskovski.pms.domain.service.impl;
+package by.kraskovski.pms.domain.service;
 
 import by.kraskovski.pms.domain.model.Cart;
 import by.kraskovski.pms.domain.model.CartProductStock;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.repository.CartRepository;
-import by.kraskovski.pms.domain.service.CartService;
-import by.kraskovski.pms.domain.service.ProductStockService;
-import by.kraskovski.pms.domain.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class CartServiceImpl implements CartService {
+public class UserCartService implements CartService {
 
     private final CartRepository cartRepository;
     private final ProductStockService productStockService;
@@ -32,7 +29,7 @@ public class CartServiceImpl implements CartService {
         if (Objects.nonNull(user.getCart())) {
             throw new IllegalArgumentException("Cart with id:" + id + " already exists!");
         }
-        user.addCart(new Cart());
+        user.createCart();
         userService.update(user);
     }
 

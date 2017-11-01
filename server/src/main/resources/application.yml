@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+  jpa:
+      show-sql: true
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+secret:
+  key: Asjfwol2asf123142Ags1k23hnSA36as6f4qQ324FEsvb
+auth:
+  header:
+    name: x-auth-token
+token:
+  expiration:
+    time: 60

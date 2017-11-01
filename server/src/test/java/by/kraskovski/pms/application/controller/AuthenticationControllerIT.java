@@ -2,9 +2,14 @@ package by.kraskovski.pms.application.controller;
 
 import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.application.controller.dto.LoginDto;
+import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.User;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
+import by.kraskovski.pms.domain.service.AuthorityService;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import static by.kraskovski.pms.utils.TestUtils.*;
@@ -21,9 +26,18 @@ public class AuthenticationControllerIT extends ControllerTestConfig {
 
     private static final String BASE_AUTH_URL = "/auth";
 
+    @Autowired
+    private AuthorityService authorityService;
+
+    @Before
+    public void setUp() {
+        authorityService.create(new Authority(AuthorityEnum.ROLE_USER));
+    }
+
     @After
     public void cleanUp() {
         userService.deleteAll();
+        authorityService.deleteAll();
     }
 
     @Test

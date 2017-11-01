@@ -5,7 +5,7 @@ import by.kraskovski.pms.domain.model.Cart;
 /**
  * Service for {@link Cart}
  */
-public interface CartService extends AbstractService<Cart> {
+public interface CartService extends CRUDService<Cart> {
 
     /**
      * Save {@link Cart} entity to database table
@@ -22,13 +22,8 @@ public interface CartService extends AbstractService<Cart> {
      */
     void deleteProduct(String cartId, String productStockId, int count);
 
-    /**
-     * Update information about {@link Cart} in database
-     */
-    Cart update(Cart object);
-
     @Override
-    default Cart create(Cart object) {
+    default Cart create(final Cart object) {
         return new Cart();
     }
 }

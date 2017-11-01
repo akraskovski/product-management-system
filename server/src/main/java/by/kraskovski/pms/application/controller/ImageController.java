@@ -1,6 +1,6 @@
 package by.kraskovski.pms.application.controller;
 
-import by.kraskovski.pms.domain.service.ImageService;
+import by.kraskovski.pms.domain.service.FileService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Controller for {@link ImageService}.
+ * Controller for {@link FileService}.
  */
 @RestController
 @RequestMapping("/image")
@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ImageController {
 
-    private final ImageService imageService;
+    private final FileService imageService;
 
     /**
      * Uploading image to the system.

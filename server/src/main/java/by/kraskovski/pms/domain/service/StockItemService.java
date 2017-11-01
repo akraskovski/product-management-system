@@ -1,12 +1,9 @@
-package by.kraskovski.pms.domain.service.impl;
+package by.kraskovski.pms.domain.service;
 
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.repository.StockRepository;
-import by.kraskovski.pms.domain.service.ProductService;
-import by.kraskovski.pms.domain.service.ProductStockService;
-import by.kraskovski.pms.domain.service.StockService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +18,7 @@ import java.util.Set;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class StockServiceImpl implements StockService {
+public class StockItemService implements StockService {
 
     private final StockRepository stockRepository;
     private final ProductService productService;
