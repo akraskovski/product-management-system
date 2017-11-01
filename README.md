@@ -1,5 +1,7 @@
 Product Management System
 =========================
+[![Build Status](https://travis-ci.org/akraskovski/product-management-system.svg?branch=master)](https://travis-ci.org/akraskovski/product-management-system)
+
 Web application produces the system, working with resources (products, stocks, shops).
 
 ***
