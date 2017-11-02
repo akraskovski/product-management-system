@@ -30,10 +30,7 @@ public class ProductStock extends BaseEntity implements Serializable {
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
-    @OneToMany(
-            mappedBy = "productStock",
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
+    @OneToMany(mappedBy = "productStock", orphanRemoval = true)
     private Set<CartProductStock> cartProductStocks;
 
     private int productsCount;

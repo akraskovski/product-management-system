@@ -37,7 +37,6 @@ public class Cart extends BaseEntity {
 
     @OneToMany(
             mappedBy = "cart",
-            fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
             orphanRemoval = true)
     @Getter
