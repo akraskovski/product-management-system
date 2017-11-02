@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/store/").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STORE_MANAGER.name())
                 .antMatchers(HttpMethod.PUT, "/store/").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STORE_MANAGER.name())
                 .antMatchers(HttpMethod.DELETE, "/store/**").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STORE_MANAGER.name())
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -1,8 +1,7 @@
-package by.kraskovski.pms.application.security.service.impl;
+package by.kraskovski.pms.application.security.service;
 
 import by.kraskovski.pms.application.controller.dto.TokenDto;
 import by.kraskovski.pms.application.controller.dto.UserDto;
-import by.kraskovski.pms.application.security.service.TokenService;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.service.UserService;
 import io.jsonwebtoken.Claims;
@@ -29,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class TokenServiceImpl implements TokenService {
+public class JwtService implements TokenService {
 
     @Value("${secret.key:JKGuhygvuh2v}")
     private String secretKey;
@@ -44,7 +43,7 @@ public class TokenServiceImpl implements TokenService {
     private final Mapper mapper;
 
     @Autowired
-    public TokenServiceImpl(final UserService userService, final Mapper mapper) {
+    public JwtService(final UserService userService, final Mapper mapper) {
         this.userService = userService;
         this.mapper = mapper;
     }
