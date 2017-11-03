@@ -3,6 +3,7 @@ package by.kraskovski.pms.domain.service;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,4 +25,9 @@ public interface StockService extends CRUDService<Stock> {
      * Delete one (or more) product(s) from stock.
      */
     void deleteProduct(String stockId, String productId, int count);
+
+    /**
+     * Find all stock, in which user set to manager.
+     */
+    List<Stock> findManagerRelatedStocks(String managerId);
 }

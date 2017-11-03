@@ -13,7 +13,12 @@ import java.util.List;
 public interface StockRepository extends JpaRepository<Stock, String> {
 
     /**
-     * find {@link Stock} from database by specialize
+     * Find {@link Stock} from database by specialize.
      */
     List<Stock> findBySpecialize(String specialize);
+
+    /**
+     * Find manager related {@link Stock}s.
+     */
+    List<Stock> findByManagerId(String managerId);
 }

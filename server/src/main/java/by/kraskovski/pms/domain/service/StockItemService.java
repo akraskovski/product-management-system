@@ -3,9 +3,11 @@ package by.kraskovski.pms.domain.service;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
+import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.repository.StockRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -13,8 +15,11 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+
+import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -23,9 +28,13 @@ public class StockItemService implements StockService {
     private final StockRepository stockRepository;
     private final ProductService productService;
     private final ProductStockService productStockService;
+    private final UserService userService;
 
     @Override
     public Stock create(final Stock object) {
+        if (Objects.nonNull(object.getManager())) {
+            checkForManagerAccess(object.getManager().getId());
+        }
         return stockRepository.save(object);
     }
 
@@ -92,12 +101,21 @@ public class StockItemService implements StockService {
     }
 
     @Override
+    public List<Stock> findManagerRelatedStocks(final String managerId) {
+        checkForManagerAccess(managerId);
+        return stockRepository.findByManagerId(managerId);
+    }
+
+    @Override
     public List<Stock> findAll() {
         return stockRepository.findAll();
     }
 
     @Override
     public Stock update(final Stock object) {
+        if (Objects.nonNull(object.getManager())) {
+            checkForManagerAccess(object.getManager().getId());
+        }
         return stockRepository.save(object);
     }
 
@@ -109,5 +127,12 @@ public class StockItemService implements StockService {
     @Override
     public void deleteAll() {
         stockRepository.deleteAll();
+    }
+
+    private void checkForManagerAccess(final String managerId) {
+        final User user = userService.find(managerId);
+        if (user.getAuthorities().stream().noneMatch(auth -> auth.getAuthority().equals(ROLE_STOCK_MANAGER.name()))) {
+            throw new AccessDeniedException("User should have stock manager role");
+        }
     }
 }
