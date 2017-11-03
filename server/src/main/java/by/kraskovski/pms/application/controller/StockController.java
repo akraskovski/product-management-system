@@ -10,10 +10,13 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +40,7 @@ public class StockController {
     /**
      * Find all products in database.
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity loadAllStocks() {
         log.info("Start loadAllStocks");
         return ResponseEntity.ok(stockService.findAll().stream()
@@ -48,7 +51,7 @@ public class StockController {
     /**
      * Find stock in database with setting id in browser.
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public ResponseEntity loadStockById(@PathVariable final String id) {
         log.info("Start loadStockById: {}", id);
         return ResponseEntity.ok(mapper.map(stockService.find(id), StockDto.class));
@@ -57,7 +60,7 @@ public class StockController {
     /**
      * Find stock products in database with setting id in browser.
      */
-    @RequestMapping(value = "/{id}/products", method = RequestMethod.GET)
+    @GetMapping("/{id}/products")
     public ResponseEntity loadStockProductsById(@PathVariable final String id) {
         log.info("Start loadStockProductsById: {}", id);
         return ResponseEntity.ok(stockService.findProducts(id).stream()
@@ -68,7 +71,7 @@ public class StockController {
     /**
      * Add product to the stock
      */
-    @RequestMapping(value = "/product", method = RequestMethod.PUT)
+    @PutMapping("/product")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addProductToStock(
             @RequestParam final String stockId,
@@ -81,7 +84,7 @@ public class StockController {
     /**
      * Delete product from the stock
      */
-    @RequestMapping(value = "/product", method = RequestMethod.DELETE)
+    @DeleteMapping("/product")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProductFromStock(
             @RequestParam final String stockId,
@@ -94,7 +97,7 @@ public class StockController {
     /**
      * Creating {@link Stock} from client form.
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity createStock(@RequestBody @Valid final StockDto stockDto) {
         log.info("Start createStock: {}", stockDto.getSpecialize());
         final Stock stock = mapper.map(stockDto, Stock.class);
@@ -104,7 +107,7 @@ public class StockController {
     /**
      * Update {@link Stock} entity in database.
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public ResponseEntity updateStock(@RequestBody @Valid final StockDto stockDto) {
         log.info("Start updateStock: {}", stockDto.getId());
         final Stock stock = stockService.update(mapper.map(stockDto, Stock.class));
@@ -114,7 +117,7 @@ public class StockController {
     /**
      * Delete {@link Stock} from database by identifier.
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteStock(@PathVariable final String id) {
         log.info("Start deleteStock: {}", id);

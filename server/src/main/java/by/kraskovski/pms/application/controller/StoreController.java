@@ -10,10 +10,13 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +40,7 @@ public class StoreController {
     /**
      * Find all stores in database
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity loadAllStores() {
         log.info("Start loadAllStores");
         return ResponseEntity.ok(storeService.findAll().stream()
@@ -48,7 +51,7 @@ public class StoreController {
     /**
      * Find stores in database with setting id in browser
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public ResponseEntity loadStoreById(@PathVariable final String id) {
         log.info("Start loadStoreById: {}", id);
         return ResponseEntity.ok(mapper.map(storeService.find(id), StoreDto.class));
@@ -57,7 +60,7 @@ public class StoreController {
     /**
      * Find stocks related to store
      */
-    @RequestMapping(value = "/{id}/stock-manage", method = RequestMethod.GET)
+    @GetMapping("/{id}/stock-manage")
     public ResponseEntity loadStoreStocksById(@PathVariable final String id) {
         log.info("Start loadStoreStocksById: {}", id);
         return ResponseEntity.ok(storeService.find(id).getStockList().stream()
@@ -67,7 +70,7 @@ public class StoreController {
     /**
      * Creating {@link Store} from client form.
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity createStore(@RequestBody @Valid final StoreDto storeDto) {
         log.info("Start createStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
@@ -77,7 +80,7 @@ public class StoreController {
     /**
      * Create relation between {@link by.kraskovski.pms.domain.model.Stock} and {@link Store}
      */
-    @RequestMapping(value = "/stock-manage", method = RequestMethod.PUT)
+    @PutMapping("/stock-manage")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addStock(@RequestParam final String storeId,
                          @RequestParam final String stockId) {
@@ -88,7 +91,7 @@ public class StoreController {
     /**
      * Delete relation between {@link by.kraskovski.pms.domain.model.Stock} and {@link Store}
      */
-    @RequestMapping(value = "/stock-manage", method = RequestMethod.DELETE)
+    @DeleteMapping("/stock-manage")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteStock(@RequestParam final String storeId,
                             @RequestParam final String stockId) {
@@ -99,7 +102,7 @@ public class StoreController {
     /**
      * Update {@link Store} entity in database.
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public ResponseEntity updateStore(@RequestBody @Valid final StoreDto storeDto) {
         log.info("Start updateStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
@@ -109,7 +112,7 @@ public class StoreController {
     /**
      * Delete {@link Store} from database by identifier.
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteStore(@PathVariable final String id) {
         log.info("Start deleteStore: {}", id);

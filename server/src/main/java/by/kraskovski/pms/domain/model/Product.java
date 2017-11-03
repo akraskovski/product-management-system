@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -26,7 +25,7 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private double cost;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", orphanRemoval = true)
     private Set<ProductStock> productStocks = new HashSet<>();
 
     private LocalDateTime manufactureDate;

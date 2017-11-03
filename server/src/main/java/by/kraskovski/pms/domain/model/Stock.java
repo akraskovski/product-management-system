@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -23,7 +22,6 @@ public class Stock extends BaseEntity {
 
     @OneToMany(
             mappedBy = "stock",
-            fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
             orphanRemoval = true)
     private Set<ProductStock> productStocks = new HashSet<>();

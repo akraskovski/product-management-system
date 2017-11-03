@@ -8,9 +8,12 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +33,7 @@ public class CartController {
     /**
      * Find cart by id.
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public ResponseEntity loadCartById(@PathVariable final String id) {
         log.info("Start loadCartById: {}", id);
         return ResponseEntity.ok(mapper.map(cartService.find(id), CartDto.class));
@@ -39,7 +42,7 @@ public class CartController {
     /**
      * Create empty cart.
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createCart(@PathVariable final String id) {
         log.info("Start createCart for user with id: {}", id);
@@ -49,7 +52,7 @@ public class CartController {
     /**
      * Add productStock to user cart.
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addProductToCart(
             @RequestParam final String cartId,
@@ -62,7 +65,7 @@ public class CartController {
     /**
      * Delete product from cart by id.
      */
-    @RequestMapping(method = RequestMethod.DELETE)
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProductFromCart(
             @RequestParam final String cartId,
@@ -75,7 +78,7 @@ public class CartController {
     /**
      * Delete cart by id.
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCart(@PathVariable final String id) {
         log.info("Start deleteCart: {}", id);
