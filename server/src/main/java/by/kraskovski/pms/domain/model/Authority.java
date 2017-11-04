@@ -3,7 +3,9 @@ package by.kraskovski.pms.domain.model;
 import by.kraskovski.pms.domain.model.base.BaseEntity;
 import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
@@ -17,18 +19,11 @@ import javax.persistence.Enumerated;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Authority extends BaseEntity implements GrantedAuthority {
+@Getter
+@Setter
+public class Authority extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     @Enumerated(EnumType.STRING)
-    private AuthorityEnum authority;
-
-    @Override
-    public String getAuthority() {
-        return authority.name();
-    }
-
-    public void setAuthority(final String authority) {
-        this.authority = AuthorityEnum.valueOf(authority);
-    }
+    private AuthorityEnum name;
 }

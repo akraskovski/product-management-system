@@ -44,6 +44,6 @@ public class AuthorityControllerIT extends ControllerTestConfig {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[1].id", is(authority.getId())))
-                .andExpect(jsonPath("$[1].authority", is(authority.getAuthority())));
+                .andExpect(jsonPath("$[1].authority", is(authority.getName().name())));
     }
 }

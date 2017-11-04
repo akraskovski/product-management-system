@@ -28,8 +28,8 @@ public class AuthorityRepositoryTest {
     @Test
     public void findByAuthorityTest() {
         entityManager.persist(new Authority(AuthorityEnum.ROLE_USER));
-        final Authority authority = authorityRepository.findByAuthority(AuthorityEnum.ROLE_USER);
+        final Authority authority = authorityRepository.findByName(AuthorityEnum.ROLE_USER);
         assertNotNull(authority);
-        assertEquals(authority.getAuthority(), AuthorityEnum.ROLE_USER.name());
+        assertEquals(authority.getName(), AuthorityEnum.ROLE_USER);
     }
 }

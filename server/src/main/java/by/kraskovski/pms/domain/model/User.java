@@ -29,7 +29,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User extends BaseEntity implements Authentication {
+public class User extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -56,12 +56,12 @@ public class User extends BaseEntity implements Authentication {
     @Column(unique = true)
     private String phone;
 
-    @Transient
-    private boolean authenticated;
-
     private String firstName;
+
     private String lastName;
+
     private LocalDateTime createDate;
+
     private String avatar;
 
     public User(final String username, final String password) {
@@ -75,25 +75,7 @@ public class User extends BaseEntity implements Authentication {
         this.password = password;
     }
 
-    @Override
-    public String getName() {
-        return username;
-    }
 
-    @Override
-    public Object getCredentials() {
-        return password;
-    }
-
-    @Override
-    public Object getDetails() {
-        return this;
-    }
-
-    @Override
-    public Object getPrincipal() {
-        return username;
-    }
 
     public Cart getCart() {
         return this.cart;

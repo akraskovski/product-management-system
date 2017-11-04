@@ -131,7 +131,7 @@ public class StockItemService implements StockService {
 
     private void checkForManagerAccess(final String managerId) {
         final User user = userService.find(managerId);
-        if (user.getAuthorities().stream().noneMatch(auth -> auth.getAuthority().equals(ROLE_STOCK_MANAGER.name()))) {
+        if (user.getAuthorities().stream().noneMatch(auth -> auth.getName().equals(ROLE_STOCK_MANAGER))) {
             throw new AccessDeniedException("User should have stock manager role");
         }
     }

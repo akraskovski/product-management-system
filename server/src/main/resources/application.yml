@@ -7,7 +7,7 @@ spring:
       show-sql: true
       database-platform: org.hibernate.dialect.PostgreSQLDialect
       hibernate:
-        ddl-auto: update
+        ddl-auto: create
 secret:
   key: Asjfwol2asf123142Ags1k23hnSA36as6f4qQ324FEsvb
 auth:

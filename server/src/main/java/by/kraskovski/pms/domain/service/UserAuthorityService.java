@@ -32,7 +32,7 @@ public class UserAuthorityService implements AuthorityService {
 
     @Override
     public Authority findByName(final AuthorityEnum name) {
-        return ofNullable(authorityRepository.findByAuthority(name))
+        return ofNullable(authorityRepository.findByName(name))
                 .orElseThrow(() -> new EntityNotFoundException(format("Authority: \"%s\" doesn't exists in db!", name)));
     }
 
