@@ -2,8 +2,6 @@ package by.kraskovski.pms.application.security.service;
 
 import by.kraskovski.pms.application.controller.dto.TokenDto;
 import by.kraskovski.pms.application.controller.dto.UserDto;
-import by.kraskovski.pms.application.security.filter.AuthenticationTokenFilter;
-import by.kraskovski.pms.application.security.model.JwtAuthentication;
 import by.kraskovski.pms.application.security.model.JwtAuthenticationFactory;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.service.UserService;
@@ -30,7 +28,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class JwtService implements TokenService {
@@ -46,11 +43,13 @@ public class JwtService implements TokenService {
 
     private final UserService userService;
     private final Mapper mapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public JwtService(final UserService userService, final Mapper mapper) {
+    public JwtService(final UserService userService, final Mapper mapper, final BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -76,7 +75,6 @@ public class JwtService implements TokenService {
     }
 
     private void validateInputPassword(final String userPassword, final String inputPassword) {
-        final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (!passwordEncoder.matches(inputPassword, userPassword) && !inputPassword.equals(userPassword)) {
             throw new BadCredentialsException("Incorrect password");
         }

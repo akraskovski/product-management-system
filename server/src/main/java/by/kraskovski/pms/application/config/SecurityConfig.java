@@ -26,6 +26,7 @@ import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STORE_MANA
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final BCryptPasswordEncoder encoder;
     private final TokenService tokenService;
 
     @Bean
@@ -64,6 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService()).passwordEncoder(encoder);
     }
 }
