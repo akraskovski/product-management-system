@@ -24,7 +24,7 @@ import static by.kraskovski.pms.utils.TestUtils.prepareUserWithRole;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(locations = "classpath:application-test.properties")
 public abstract class ControllerTestConfig {
 
     @Autowired

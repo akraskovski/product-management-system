@@ -3,6 +3,7 @@ package by.kraskovski.pms.domain.service.integration;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.service.ProductService;
 import by.kraskovski.pms.domain.service.integration.config.ServiceTestConfig;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class ProductServiceIT extends ServiceTestConfig {
 
     @Before
     public void setUp() {
+        productService.deleteAll();
+    }
+
+    @After
+    public void cleanUp() {
         productService.deleteAll();
     }
 

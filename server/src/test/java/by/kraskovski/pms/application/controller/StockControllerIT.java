@@ -54,6 +54,7 @@ public class StockControllerIT extends ControllerTestConfig {
     @Before
     public void before() {
         stockService.deleteAll();
+        productService.deleteAll();
         authenticateUserWithAuthority(AuthorityEnum.ROLE_ADMIN);
     }
 
@@ -61,6 +62,7 @@ public class StockControllerIT extends ControllerTestConfig {
     public void after() {
         cleanup();
         stockService.deleteAll();
+        productService.deleteAll();
     }
 
     @Test

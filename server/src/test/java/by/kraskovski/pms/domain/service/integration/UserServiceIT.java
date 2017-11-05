@@ -35,7 +35,7 @@ public class UserServiceIT extends ServiceTestConfig {
     }
 
     @After
-    public void after() {
+    public void cleanUp() {
         userService.deleteAll();
         authorityService.deleteAll();
     }

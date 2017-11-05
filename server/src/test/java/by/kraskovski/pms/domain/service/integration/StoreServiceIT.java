@@ -5,6 +5,7 @@ import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.service.StockService;
 import by.kraskovski.pms.domain.service.StoreService;
 import by.kraskovski.pms.domain.service.integration.config.ServiceTestConfig;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,14 @@ public class StoreServiceIT extends ServiceTestConfig {
 
     @Before
     public void setUp() {
+        stockService.deleteAll();
         storeService.deleteAll();
+    }
+
+    @After
+    public void cleanUp() {
+        storeService.deleteAll();
+        stockService.deleteAll();
     }
 
     @Test
