@@ -10,9 +10,8 @@ import java.util.List;
 
 public class JwtAuthentication implements Authentication {
 
-    @Getter
     private final User user;
-    private final Collection<? extends GrantedAuthority> authorities;
+    private final List<GrantedAuthority> authorities;
     private boolean authenticated;
 
     public JwtAuthentication(final User user, final List<GrantedAuthority> authorities) {
@@ -37,7 +36,7 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public Object getDetails() {
-        return this;
+        return user;
     }
 
     @Override

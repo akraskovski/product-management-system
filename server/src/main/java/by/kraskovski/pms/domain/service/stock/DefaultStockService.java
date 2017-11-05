@@ -1,12 +1,12 @@
 package by.kraskovski.pms.domain.service.stock;
 
+import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.repository.StockRepository;
 import by.kraskovski.pms.domain.service.ProductService;
-import by.kraskovski.pms.domain.service.ProductStockService;
 import by.kraskovski.pms.domain.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
 
 @Service
@@ -104,14 +105,14 @@ public class DefaultStockService implements StockService {
     }
 
     @Override
-    public List<Stock> findManagerRelatedStocks(final String managerId) {
-        checkForManagerAccess(managerId);
-        return stockRepository.findByManagerId(managerId);
-    }
-
-    @Override
     public List<Stock> findAll() {
-        return stockRepository.findAll();
+        final User currentUser = userService.getCurrentUser();
+
+        if (currentUser.getAuthorities().stream().anyMatch(a -> a.getName().equals(ROLE_ADMIN))) {
+            return stockRepository.findAll();
+        }
+
+        return stockRepository.findAllByManager(currentUser);
     }
 
     @Override
@@ -133,8 +134,8 @@ public class DefaultStockService implements StockService {
     }
 
     private void checkForManagerAccess(final String managerId) {
-        final User user = userService.find(managerId);
-        if (user.getAuthorities().stream().noneMatch(auth -> auth.getName().equals(ROLE_STOCK_MANAGER))) {
+        final List<Authority> authorities = userService.find(managerId).getAuthorities();
+        if (authorities.stream().noneMatch(auth -> auth.getName().equals(ROLE_STOCK_MANAGER))) {
             throw new AccessDeniedException("User should have stock manager role");
         }
     }

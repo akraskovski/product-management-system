@@ -1,6 +1,7 @@
 package by.kraskovski.pms.domain.repository;
 
 import by.kraskovski.pms.domain.model.Stock;
+import by.kraskovski.pms.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +21,5 @@ public interface StockRepository extends JpaRepository<Stock, String> {
     /**
      * Find manager related {@link Stock}s.
      */
-    List<Stock> findByManagerId(String managerId);
+    List<Stock> findAllByManager(User manager);
 }

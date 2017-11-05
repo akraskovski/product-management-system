@@ -5,6 +5,7 @@ import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.repository.StockRepository;
 import by.kraskovski.pms.domain.service.stock.DefaultStockService;
+import by.kraskovski.pms.domain.service.stock.ProductStockService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
