@@ -5,7 +5,7 @@ import by.kraskovski.pms.application.controller.dto.StoreDto;
 import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
-import by.kraskovski.pms.domain.service.StockService;
+import by.kraskovski.pms.domain.service.stock.StockService;
 import by.kraskovski.pms.domain.service.StoreService;
 import org.dozer.Mapper;
 import org.junit.After;

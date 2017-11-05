@@ -1,10 +1,13 @@
-package by.kraskovski.pms.domain.service;
+package by.kraskovski.pms.domain.service.stock;
 
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.repository.StockRepository;
+import by.kraskovski.pms.domain.service.ProductService;
+import by.kraskovski.pms.domain.service.ProductStockService;
+import by.kraskovski.pms.domain.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -23,7 +26,7 @@ import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANA
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class StockItemService implements StockService {
+public class DefaultStockService implements StockService {
 
     private final StockRepository stockRepository;
     private final ProductService productService;

@@ -10,7 +10,7 @@ import by.kraskovski.pms.domain.service.AuthorityService;
 import by.kraskovski.pms.domain.service.CartService;
 import by.kraskovski.pms.domain.service.ProductService;
 import by.kraskovski.pms.domain.service.ProductStockService;
-import by.kraskovski.pms.domain.service.StockService;
+import by.kraskovski.pms.domain.service.stock.StockService;
 import by.kraskovski.pms.domain.service.UserService;
 import org.junit.After;
 import org.junit.Before;

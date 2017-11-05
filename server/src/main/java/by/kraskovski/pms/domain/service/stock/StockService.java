@@ -1,7 +1,8 @@
-package by.kraskovski.pms.domain.service;
+package by.kraskovski.pms.domain.service.stock;
 
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
+import by.kraskovski.pms.domain.service.CRUDService;
 
 import java.util.List;
 import java.util.Set;

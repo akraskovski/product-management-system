@@ -3,7 +3,7 @@ package by.kraskovski.pms.application.controller;
 import by.kraskovski.pms.application.controller.dto.ProductStockDto;
 import by.kraskovski.pms.application.controller.dto.StockDto;
 import by.kraskovski.pms.domain.model.Stock;
-import by.kraskovski.pms.domain.service.StockService;
+import by.kraskovski.pms.domain.service.stock.StockService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;

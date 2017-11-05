@@ -4,6 +4,7 @@ import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.repository.StockRepository;
+import by.kraskovski.pms.domain.service.stock.DefaultStockService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -36,7 +37,7 @@ public class StockServiceTest {
     private ProductStockService productStockService;
 
     @InjectMocks
-    private StockItemService stockService;
+    private DefaultStockService stockService;
 
     @Test
     public void createTest() {

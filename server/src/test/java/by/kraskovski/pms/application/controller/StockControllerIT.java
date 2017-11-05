@@ -8,7 +8,7 @@ import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.service.ProductService;
-import by.kraskovski.pms.domain.service.StockService;
+import by.kraskovski.pms.domain.service.stock.StockService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.dozer.Mapper;
 import org.junit.After;

@@ -2,7 +2,7 @@ package by.kraskovski.pms.domain.service.integration;
 
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
-import by.kraskovski.pms.domain.service.StockService;
+import by.kraskovski.pms.domain.service.stock.StockService;
 import by.kraskovski.pms.domain.service.StoreService;
 import by.kraskovski.pms.domain.service.integration.config.ServiceTestConfig;
 import org.junit.After;
