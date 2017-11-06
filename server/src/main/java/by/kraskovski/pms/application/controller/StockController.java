@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 
 import static java.util.stream.Collectors.toList;
 
@@ -77,7 +76,7 @@ public class StockController {
     public void addProductToStock(
             @RequestParam final String stockId,
             @RequestParam final String productId,
-            @RequestParam(value = "count", defaultValue = "1", required = false) @Valid @Min(value = 1) final int count) {
+            @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
         log.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
         stockService.addProduct(stockId, productId, count);
     }
