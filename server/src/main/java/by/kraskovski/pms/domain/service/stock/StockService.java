@@ -4,13 +4,22 @@ import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.service.CRUDService;
 
-import java.util.List;
 import java.util.Set;
 
 /**
  * Service for {@link Stock}
  */
 public interface StockService extends CRUDService<Stock> {
+
+    /**
+     * Create and return stock with manager entity.
+     */
+    Stock create(Stock object, String managerId);
+
+    /**
+     * Update and return stock with manager entity.
+     */
+    Stock update(Stock object, String managerId);
 
     /**
      * Find all products contains in stock.

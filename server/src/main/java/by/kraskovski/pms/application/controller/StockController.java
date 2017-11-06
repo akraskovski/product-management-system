@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import static java.util.stream.Collectors.toList;
 
@@ -76,7 +77,7 @@ public class StockController {
     public void addProductToStock(
             @RequestParam final String stockId,
             @RequestParam final String productId,
-            @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
+            @RequestParam(value = "count", defaultValue = "1", required = false) @Valid @Min(value = 1) final int count) {
         log.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
         stockService.addProduct(stockId, productId, count);
     }
@@ -98,20 +99,22 @@ public class StockController {
      * Creating {@link Stock} from client form.
      */
     @PostMapping
-    public ResponseEntity createStock(@RequestBody @Valid final StockDto stockDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public StockDto createStock(@RequestBody @Valid final StockDto stockDto) {
         log.info("Start createStock: {}", stockDto.getSpecialize());
-        final Stock stock = mapper.map(stockDto, Stock.class);
-        return new ResponseEntity<>(mapper.map(stockService.create(stock), StockDto.class), HttpStatus.CREATED);
+        final Stock createdStock = stockService.create(mapper.map(stockDto, Stock.class), stockDto.getManagerId());
+        return mapper.map(createdStock, StockDto.class);
     }
 
     /**
      * Update {@link Stock} entity in database.
      */
     @PutMapping
-    public ResponseEntity updateStock(@RequestBody @Valid final StockDto stockDto) {
+    @ResponseStatus(HttpStatus.OK)
+    public StockDto updateStock(@RequestBody @Valid final StockDto stockDto) {
         log.info("Start updateStock: {}", stockDto.getId());
-        final Stock stock = stockService.update(mapper.map(stockDto, Stock.class));
-        return ResponseEntity.ok(mapper.map(stock, StockDto.class));
+        final Stock updatedStock = stockService.update(mapper.map(stockDto, Stock.class), stockDto.getManagerId());
+        return mapper.map(updatedStock, StockDto.class);
     }
 
     /**

@@ -15,7 +15,7 @@ public class DozerConfig {
     @Bean
     public DozerBeanMapper mapper() {
         final DozerBeanMapper dozerBeanMapper = new DozerBeanMapper();
-        dozerBeanMapper.setMappingFiles(Collections.singletonList("dozerJdk8Converters.xml"));
+        dozerBeanMapper.setMappingFiles(Collections.singletonList("dozer-custom-converter.xml"));
         return dozerBeanMapper;
     }
 }
