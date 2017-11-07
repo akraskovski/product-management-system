@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolationException;
 
 /**
  * General exception handler
@@ -82,5 +83,16 @@ public class ExceptionControllerAdvice {
     public ResponseEntity handleEntityNotFoundException(final EntityNotFoundException e) {
         log.warn("Resource not found: {}", e.getLocalizedMessage());
         return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Handle validation exceptions.
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity handleConstraintViolationException(final ConstraintViolationException e) {
+        final StringBuilder builder = new StringBuilder();
+        e.getConstraintViolations().forEach(violation -> builder.append(String.format("%s Current value: %s", violation.getMessage(), violation.getInvalidValue())));
+        log.warn(builder.toString());
+        return ResponseEntity.badRequest().body(new ErrorDto(builder.toString()));
     }
 }
