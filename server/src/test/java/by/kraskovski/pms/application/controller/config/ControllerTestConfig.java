@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -55,7 +56,7 @@ public abstract class ControllerTestConfig {
     @Value("${auth.header.name:x-auth-token}")
     protected String authHeaderName;
 
-    private User userDto;
+    private User user;
 
     protected String token;
 
@@ -63,15 +64,16 @@ public abstract class ControllerTestConfig {
         final List<Authority> authorities = authoritiesEnum.stream()
                 .map(authorityEnum -> authorityService.create(new Authority(authorityEnum)))
                 .collect(Collectors.toList());
-        userDto = prepareUserWithRole(authorities);
-        userService.create(userDto);
-        final TokenDto tokenDto = tokenService.generate(userDto.getUsername(), userDto.getPassword());
+        user = userService.create(prepareUserWithRole(authorities));
+        final TokenDto tokenDto = tokenService.generate(user.getUsername(), user.getPassword());
         token = tokenDto.getToken();
-        SecurityContextHolder.getContext().setAuthentication(JwtAuthenticationFactory.create(dozerBeanMapper.map(tokenDto.getUserDto(), User.class)));
+
+        final Authentication auth = JwtAuthenticationFactory.create(dozerBeanMapper.map(tokenDto.getUserDto(), User.class));
+        SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
     protected void cleanup() {
-        userService.delete(userDto.getId());
-        userDto.getAuthorities().forEach(authority -> authorityService.delete(authority.getId()));
+        userService.delete(user.getId());
+        user.getAuthorities().forEach(authority -> authorityService.delete(authority.getId()));
     }
 }

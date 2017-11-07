@@ -91,7 +91,8 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity handleConstraintViolationException(final ConstraintViolationException e) {
         final StringBuilder builder = new StringBuilder();
-        e.getConstraintViolations().forEach(violation -> builder.append(String.format("%s Current value: %s", violation.getMessage(), violation.getInvalidValue())));
+        e.getConstraintViolations().forEach(violation -> builder.append(
+                String.format("%s Current value: %s", violation.getMessage(), violation.getInvalidValue())));
         log.warn(builder.toString());
         return ResponseEntity.badRequest().body(new ErrorDto(builder.toString()));
     }

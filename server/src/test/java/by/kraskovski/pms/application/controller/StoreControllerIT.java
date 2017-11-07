@@ -2,11 +2,10 @@ package by.kraskovski.pms.application.controller;
 
 import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
 import by.kraskovski.pms.application.controller.dto.StoreDto;
-import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
-import by.kraskovski.pms.domain.service.stock.StockService;
 import by.kraskovski.pms.domain.service.StoreService;
+import by.kraskovski.pms.domain.service.stock.StockService;
 import org.dozer.Mapper;
 import org.junit.After;
 import org.junit.Before;
@@ -15,12 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import java.util.Arrays;
-import java.util.Collections;
 
-import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.*;
+import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
+import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
 import static by.kraskovski.pms.utils.TestUtils.prepareStore;
-import static java.util.Collections.*;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.Matchers.is;

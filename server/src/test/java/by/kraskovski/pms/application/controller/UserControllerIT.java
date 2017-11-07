@@ -53,7 +53,6 @@ public class UserControllerIT extends ControllerTestConfig {
 
     @After
     public void after() {
-        cleanup();
         userService.deleteAll();
         authorityService.deleteAll();
     }

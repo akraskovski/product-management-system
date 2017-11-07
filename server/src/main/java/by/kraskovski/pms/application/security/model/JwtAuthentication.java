@@ -1,7 +1,6 @@
 package by.kraskovski.pms.application.security.model;
 
 import by.kraskovski.pms.domain.model.User;
-import lombok.Getter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 

@@ -9,10 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collections;
-
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
-import static java.util.Collections.*;
+import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

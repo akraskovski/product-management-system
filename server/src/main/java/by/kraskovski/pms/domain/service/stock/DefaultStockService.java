@@ -72,6 +72,10 @@ public class DefaultStockService implements StockService {
     @Override
     @Transactional
     public void addProduct(final String stockId, final String productId, final int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("Count of products can't be less than 1");
+        }
+
         final Stock stock = find(stockId);
         try {
             final ProductStock productStock = productStockService.findByStockIdAndProductId(stockId, productId);
@@ -151,6 +155,10 @@ public class DefaultStockService implements StockService {
     }
 
     private void deleteProductFromProductStock(final ProductStock productStock, final Stock stock, final int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("Count of products to delete can't be less than 1");
+        }
+
         if (productStock.getProductsCount() - count > 0) {
             productStock.setProductsCount(productStock.getProductsCount() - count);
             stockRepository.save(stock);
