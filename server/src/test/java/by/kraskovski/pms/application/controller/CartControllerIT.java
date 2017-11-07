@@ -9,15 +9,15 @@ import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.service.AuthorityService;
 import by.kraskovski.pms.domain.service.CartService;
 import by.kraskovski.pms.domain.service.ProductService;
+import by.kraskovski.pms.domain.service.UserService;
 import by.kraskovski.pms.domain.service.stock.ProductStockService;
 import by.kraskovski.pms.domain.service.stock.StockService;
-import by.kraskovski.pms.domain.service.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
+import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_USER;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
@@ -62,7 +62,7 @@ public class CartControllerIT extends ControllerTestConfig {
         productService.deleteAll();
         stockService.deleteAll();
         authorityService.create(new Authority(ROLE_USER));
-        authenticateUserWithAuthority(ROLE_ADMIN);
+        authenticateUserWithAuthority(ROLE_STOCK_MANAGER);
     }
 
     @After

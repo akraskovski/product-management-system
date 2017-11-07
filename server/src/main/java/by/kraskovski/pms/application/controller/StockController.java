@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -41,31 +41,34 @@ public class StockController {
      * Find all products in database.
      */
     @GetMapping
-    public ResponseEntity loadAllStocks() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<StockDto> loadAllStocks() {
         log.info("Start loadAllStocks");
-        return ResponseEntity.ok(stockService.findAll().stream()
+        return stockService.findAll().stream()
                 .map(stock -> mapper.map(stock, StockDto.class))
-                .collect(toList()));
+                .collect(toList());
     }
 
     /**
      * Find stock in database with setting id in browser.
      */
     @GetMapping("/{id}")
-    public ResponseEntity loadStockById(@PathVariable final String id) {
+    @ResponseStatus(HttpStatus.OK)
+    public StockDto loadStockById(@PathVariable final String id) {
         log.info("Start loadStockById: {}", id);
-        return ResponseEntity.ok(mapper.map(stockService.find(id), StockDto.class));
+        return mapper.map(stockService.find(id), StockDto.class);
     }
 
     /**
      * Find stock products in database with setting id in browser.
      */
     @GetMapping("/{id}/products")
-    public ResponseEntity loadStockProductsById(@PathVariable final String id) {
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductStockDto> loadStockProductsById(@PathVariable final String id) {
         log.info("Start loadStockProductsById: {}", id);
-        return ResponseEntity.ok(stockService.findProducts(id).stream()
+        return stockService.findProducts(id).stream()
                 .map(productStock -> mapper.map(productStock, ProductStockDto.class))
-                .collect(toList()));
+                .collect(toList());
     }
 
     /**
