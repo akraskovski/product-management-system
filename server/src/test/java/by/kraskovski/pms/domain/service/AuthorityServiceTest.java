@@ -36,9 +36,9 @@ public class AuthorityServiceTest {
     @Test
     public void findByNameTest() {
         final Authority authority = new Authority(AuthorityEnum.ROLE_ADMIN);
-        when(authorityRepository.findByAuthority(anyObject())).thenReturn(authority);
+        when(authorityRepository.findByName(anyObject())).thenReturn(authority);
 
         assertEquals(authority, authorityService.findByName(AuthorityEnum.ROLE_ADMIN));
-        verify(authorityRepository).findByAuthority(AuthorityEnum.ROLE_ADMIN);
+        verify(authorityRepository).findByName(AuthorityEnum.ROLE_ADMIN);
     }
 }

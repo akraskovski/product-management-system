@@ -4,6 +4,7 @@ import by.kraskovski.pms.application.security.filter.AuthenticationTokenFilter;
 import by.kraskovski.pms.application.security.service.TokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,7 +26,13 @@ import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STORE_MANA
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final BCryptPasswordEncoder encoder;
     private final TokenService tokenService;
+
+    @Bean
+    public AuthenticationTokenFilter filter() {
+        return new AuthenticationTokenFilter(tokenService);
+    }
 
     @Override
     public void configure(final WebSecurity web) throws Exception {
@@ -50,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/store/**").hasAnyAuthority(ROLE_ADMIN.name(), ROLE_STORE_MANAGER.name())
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new AuthenticationTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(filter(), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable();
@@ -58,6 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService()).passwordEncoder(encoder);
     }
 }

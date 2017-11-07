@@ -7,6 +7,8 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.time.LocalTime;
 import java.util.HashSet;
@@ -29,9 +31,17 @@ public class Stock extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String specialize;
 
+    @ManyToOne
+    @JoinColumn(name = "manager")
+    private User manager;
+
     private String address;
+
     private String phone;
+
     private double square;
+
     private LocalTime openTime;
+
     private LocalTime closeTime;
 }

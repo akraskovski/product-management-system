@@ -7,6 +7,9 @@ import by.kraskovski.pms.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -78,6 +81,13 @@ public class DefaultUserService implements UserService {
     @Override
     public void deleteAll() {
         userRepository.deleteAll();
+    }
+
+    @Override
+    public User getCurrentUser() {
+        final Authentication authentication = ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .orElseThrow(() -> new AccessDeniedException("There is no authorized user"));
+        return ((User) authentication.getDetails());
     }
 
     private void processAuthorities(final User object) {

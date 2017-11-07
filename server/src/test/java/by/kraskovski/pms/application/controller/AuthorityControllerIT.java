@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
+import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,7 +28,7 @@ public class AuthorityControllerIT extends ControllerTestConfig {
     @Before
     public void before() {
         authorityService.deleteAll();
-        authenticateUserWithAuthority(ROLE_ADMIN);
+        authenticateUserWithAuthority(singletonList(ROLE_ADMIN));
     }
 
     @After
@@ -44,6 +45,6 @@ public class AuthorityControllerIT extends ControllerTestConfig {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[1].id", is(authority.getId())))
-                .andExpect(jsonPath("$[1].authority", is(authority.getAuthority())));
+                .andExpect(jsonPath("$[1].name", is(authority.getName().name())));
     }
 }

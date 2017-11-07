@@ -1,4 +1,4 @@
-package by.kraskovski.pms.domain.service;
+package by.kraskovski.pms.domain.service.stock;
 
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.repository.ProductStockRepository;

@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
+import static java.util.Collections.singletonList;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,7 +28,7 @@ public class ImageControllerIT extends ControllerTestConfig {
     @Before
     public void before() {
         imageService.deleteAll();
-        authenticateUserWithAuthority(ROLE_ADMIN);
+        authenticateUserWithAuthority(singletonList(ROLE_ADMIN));
     }
 
     @After

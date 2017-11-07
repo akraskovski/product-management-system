@@ -1,19 +1,28 @@
 package by.kraskovski.pms.domain.service.integration;
 
+import by.kraskovski.pms.application.security.model.JwtAuthenticationFactory;
+import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
-import by.kraskovski.pms.domain.service.StockService;
+import by.kraskovski.pms.domain.model.User;
+import by.kraskovski.pms.domain.service.AuthorityService;
 import by.kraskovski.pms.domain.service.StoreService;
+import by.kraskovski.pms.domain.service.UserService;
 import by.kraskovski.pms.domain.service.integration.config.ServiceTestConfig;
+import by.kraskovski.pms.domain.service.stock.StockService;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
+import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
 import static by.kraskovski.pms.utils.TestUtils.prepareStore;
+import static by.kraskovski.pms.utils.TestUtils.prepareUserWithRole;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.junit.Assert.assertTrue;
 
@@ -28,9 +37,28 @@ public class StoreServiceIT extends ServiceTestConfig {
     @Autowired
     private StockService stockService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AuthorityService authorityService;
+
     @Before
     public void setUp() {
+        final Authority stockManagerRole = authorityService.create(new Authority(ROLE_STOCK_MANAGER));
+        final User user = userService.create(prepareUserWithRole(stockManagerRole));
+        SecurityContextHolder.getContext().setAuthentication(JwtAuthenticationFactory.create(user));
+        stockService.deleteAll();
         storeService.deleteAll();
+    }
+
+    @After
+    public void cleanUp() {
+        storeService.deleteAll();
+        stockService.deleteAll();
+        userService.deleteAll();
+        authorityService.deleteAll();
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
 
     @Test

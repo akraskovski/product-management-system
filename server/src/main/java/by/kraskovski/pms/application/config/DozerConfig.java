@@ -4,7 +4,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 /**
  * Configuration class for Dozer.
@@ -15,7 +15,7 @@ public class DozerConfig {
     @Bean
     public DozerBeanMapper mapper() {
         final DozerBeanMapper dozerBeanMapper = new DozerBeanMapper();
-        dozerBeanMapper.setMappingFiles(Collections.singletonList("dozerJdk8Converters.xml"));
+        dozerBeanMapper.setMappingFiles(Arrays.asList("dozer-custom-mapping.xml", "dozerJdk8Converters.xml"));
         return dozerBeanMapper;
     }
 }

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_USER;
 import static by.kraskovski.pms.utils.TestUtils.prepareUser;
+import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.Matchers.is;
@@ -47,12 +48,11 @@ public class UserControllerIT extends ControllerTestConfig {
     public void before() {
         userService.deleteAll();
         authorityService.create(new Authority(ROLE_USER));
-        authenticateUserWithAuthority(ROLE_ADMIN);
+        authenticateUserWithAuthority(singletonList(ROLE_ADMIN));
     }
 
     @After
     public void after() {
-        cleanup();
         userService.deleteAll();
         authorityService.deleteAll();
     }

@@ -12,13 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
+import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Integration test for {@link ProductController}
@@ -36,7 +42,7 @@ public class ProductControllerIT extends ControllerTestConfig {
     @Before
     public void before() {
         productService.deleteAll();
-        authenticateUserWithAuthority(ROLE_ADMIN);
+        authenticateUserWithAuthority(singletonList(ROLE_ADMIN));
     }
 
     @After

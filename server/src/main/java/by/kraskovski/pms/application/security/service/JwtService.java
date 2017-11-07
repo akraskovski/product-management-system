@@ -2,6 +2,7 @@ package by.kraskovski.pms.application.security.service;
 
 import by.kraskovski.pms.application.controller.dto.TokenDto;
 import by.kraskovski.pms.application.controller.dto.UserDto;
+import by.kraskovski.pms.application.security.model.JwtAuthenticationFactory;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.service.UserService;
 import io.jsonwebtoken.Claims;
@@ -26,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class JwtService implements TokenService {
@@ -41,11 +43,13 @@ public class JwtService implements TokenService {
 
     private final UserService userService;
     private final Mapper mapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public JwtService(final UserService userService, final Mapper mapper) {
+    public JwtService(final UserService userService, final Mapper mapper, final BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -71,7 +75,6 @@ public class JwtService implements TokenService {
     }
 
     private void validateInputPassword(final String userPassword, final String inputPassword) {
-        final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (!passwordEncoder.matches(inputPassword, userPassword) && !inputPassword.equals(userPassword)) {
             throw new BadCredentialsException("Incorrect password");
         }
@@ -83,23 +86,29 @@ public class JwtService implements TokenService {
         return StringUtils.isNotBlank(token) ? parseToken(token) : null;
     }
 
-    private User parseToken(final String token) {
+    private Authentication parseToken(final String token) {
         final Jws<Claims> tokenData = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-        final User user = getUserFromToken(tokenData);
-        if (validatePasswordFromToken(tokenData, user.getPassword())) {
-            user.setAuthenticated(true);
-            return user;
+        final Authentication jwtAuth = getAuthenticationFromToken(tokenData);
+
+        if (Objects.isNull(jwtAuth)) {
+            return null;
+        }
+
+        return validatePasswordFromToken(tokenData, jwtAuth);
+    }
+
+    private Authentication getAuthenticationFromToken(final Jws<Claims> tokenData) throws UsernameNotFoundException {
+        final String username = tokenData.getBody().get("username").toString();
+        final User user = userService.findByUsername(username);
+        return Objects.nonNull(user) ? JwtAuthenticationFactory.create(user) : null;
+    }
+
+    private Authentication validatePasswordFromToken(final Jws<Claims> tokenData, final Authentication jwtAuth) {
+        final String tokenPassword = tokenData.getBody().get("password").toString();
+        if(tokenPassword.equals(jwtAuth.getCredentials())) {
+            jwtAuth.setAuthenticated(true);
+            return jwtAuth;
         }
         return null;
-    }
-
-    private User getUserFromToken(final Jws<Claims> tokenData) throws UsernameNotFoundException {
-        final String username = tokenData.getBody().get("username").toString();
-        return userService.findByUsername(username);
-    }
-
-    private boolean validatePasswordFromToken(final Jws<Claims> tokenData, final String userPassword) {
-        final String tokenPassword = tokenData.getBody().get("password").toString();
-        return tokenPassword.equals(userPassword);
     }
 }

@@ -8,7 +8,12 @@ import by.kraskovski.pms.domain.model.User;
 public interface UserService extends CRUDService<User> {
 
     /**
-     * Find one first user by username
+     * Find one first user by username.
      */
     User findByUsername(String username);
+
+    /**
+     * Load and return current user from context.
+     */
+    User getCurrentUser();
 }

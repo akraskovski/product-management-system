@@ -4,6 +4,7 @@ import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.repository.StoreRepository;
 import by.kraskovski.pms.domain.service.exception.FileNotFoundException;
+import by.kraskovski.pms.domain.service.stock.StockService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

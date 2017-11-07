@@ -26,4 +26,5 @@ public class StockDto {
     private double square;
     private LocalTime openTime;
     private LocalTime closeTime;
+    private String managerId;
 }
