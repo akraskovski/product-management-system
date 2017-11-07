@@ -1,8 +1,11 @@
 package by.kraskovski.pms.domain.service;
 
+import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
+import by.kraskovski.pms.domain.model.User;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.repository.StockRepository;
 import by.kraskovski.pms.domain.service.stock.DefaultStockService;
 import by.kraskovski.pms.domain.service.stock.ProductStockService;
@@ -14,8 +17,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.util.UUID;
+
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
+import static by.kraskovski.pms.utils.TestUtils.prepareUserWithRole;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 import static org.junit.Assert.assertNotNull;
@@ -37,13 +43,20 @@ public class StockServiceTest {
     @Mock
     private ProductStockService productStockService;
 
+    @Mock
+    private UserService userService;
+
     @InjectMocks
     private DefaultStockService stockService;
 
     @Test
     public void createTest() {
         final Stock stock = prepareStock();
-        stock.setId(random(20));
+        final User manager = prepareUserWithRole(new Authority(AuthorityEnum.ROLE_STOCK_MANAGER));
+        manager.setId(UUID.randomUUID().toString());
+        stock.setId(UUID.randomUUID().toString());
+        when(userService.getCurrentUser()).thenReturn(manager);
+        when(userService.find(anyString())).thenReturn(manager);
         when(stockRepository.save((Stock) anyObject())).thenReturn(stock);
 
         assertNotNull(stockService.create(new Stock()).getId());

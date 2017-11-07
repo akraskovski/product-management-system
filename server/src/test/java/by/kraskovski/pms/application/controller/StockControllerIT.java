@@ -6,7 +6,6 @@ import by.kraskovski.pms.application.controller.dto.StockDto;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
-import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.service.ProductService;
 import by.kraskovski.pms.domain.service.stock.StockService;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,10 +16,13 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
+import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
+import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
@@ -55,19 +57,19 @@ public class StockControllerIT extends ControllerTestConfig {
     public void before() {
         stockService.deleteAll();
         productService.deleteAll();
-        authenticateUserWithAuthority(AuthorityEnum.ROLE_ADMIN);
+        authenticateUserWithAuthority(singletonList(ROLE_STOCK_MANAGER));
     }
 
     @After
     public void after() {
-        cleanup();
         stockService.deleteAll();
         productService.deleteAll();
+        cleanup();
     }
 
     @Test
     public void createStockTest() throws Exception {
-        final Stock stock = prepareStock();
+        final StockDto stock = mapper.map(prepareStock(), StockDto.class);
         mvc.perform(post(BASE_STOCK_URL)
                 .header(authHeaderName, token)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

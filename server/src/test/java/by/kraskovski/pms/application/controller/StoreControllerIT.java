@@ -14,8 +14,13 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.util.Arrays;
+import java.util.Collections;
+
+import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.*;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
 import static by.kraskovski.pms.utils.TestUtils.prepareStore;
+import static java.util.Collections.*;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.Matchers.is;
@@ -45,14 +50,14 @@ public class StoreControllerIT extends ControllerTestConfig {
     public void before() {
         storeService.deleteAll();
         stockService.deleteAll();
-        authenticateUserWithAuthority(AuthorityEnum.ROLE_ADMIN);
+        authenticateUserWithAuthority(Arrays.asList(ROLE_ADMIN, ROLE_STOCK_MANAGER));
     }
 
     @After
     public void after() {
-        cleanup();
         storeService.deleteAll();
         stockService.deleteAll();
+        cleanup();
     }
 
     @Test

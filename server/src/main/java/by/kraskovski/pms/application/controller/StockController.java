@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -32,6 +33,7 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/stock")
 @Slf4j
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Validated
 public class StockController {
 
     private final StockService stockService;
@@ -79,7 +81,7 @@ public class StockController {
     public void addProductToStock(
             @RequestParam final String stockId,
             @RequestParam final String productId,
-            @RequestParam(value = "count", defaultValue = "1", required = false) final int count) {
+            @RequestParam(value = "count", defaultValue = "1", required = false) @Min(1) final int count) {
         log.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
         stockService.addProduct(stockId, productId, count);
     }
@@ -92,7 +94,7 @@ public class StockController {
     public void deleteProductFromStock(
             @RequestParam final String stockId,
             @RequestParam final String productId,
-            @RequestParam(value = "count", required = false, defaultValue = "1") final int count) {
+            @RequestParam(value = "count", required = false, defaultValue = "1") @Min(1) final int count) {
         log.info("Start delete Product: {} from Stock: {} with count: {}", productId, stockId, count);
         stockService.deleteProduct(stockId, productId, count);
     }
@@ -102,7 +104,7 @@ public class StockController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StockDto createStock(@RequestBody @Valid final StockDto stockDto) {
+    public StockDto createStock(@RequestBody final StockDto stockDto) {
         log.info("Start createStock: {}", stockDto.getSpecialize());
         final Stock createdStock = stockService.create(mapper.map(stockDto, Stock.class), stockDto.getManagerId());
         return mapper.map(createdStock, StockDto.class);
@@ -113,7 +115,7 @@ public class StockController {
      */
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public StockDto updateStock(@RequestBody @Valid final StockDto stockDto) {
+    public StockDto updateStock(@RequestBody final StockDto stockDto) {
         log.info("Start updateStock: {}", stockDto.getId());
         final Stock updatedStock = stockService.update(mapper.map(stockDto, Stock.class), stockDto.getManagerId());
         return mapper.map(updatedStock, StockDto.class);

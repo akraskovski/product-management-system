@@ -3,7 +3,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://dozer.sourceforge.net
           http://dozer.sourceforge.net/schema/beanmapping.xsd">
-    <mapping>
+    <mapping type="one-way">
         <class-a>by.kraskovski.pms.domain.model.Stock</class-a>
         <class-b>by.kraskovski.pms.application.controller.dto.StockDto</class-b>
         <field>
