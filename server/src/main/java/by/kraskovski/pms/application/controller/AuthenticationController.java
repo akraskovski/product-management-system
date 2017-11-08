@@ -1,15 +1,17 @@
 package by.kraskovski.pms.application.controller;
 
 import by.kraskovski.pms.application.controller.dto.LoginDto;
+import by.kraskovski.pms.application.controller.dto.TokenDto;
 import by.kraskovski.pms.application.security.service.TokenService;
 import by.kraskovski.pms.domain.model.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -32,8 +34,9 @@ public class AuthenticationController {
      * Generate token from {@link TokenService}
      */
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid final LoginDto loginDto) {
+    @ResponseStatus(HttpStatus.OK)
+    public TokenDto login(@RequestBody @Valid final LoginDto loginDto) {
         log.info("Start authentication user with username: " + loginDto.getUsername());
-        return ResponseEntity.ok(tokenService.generate(loginDto.getUsername(), loginDto.getPassword()));
+        return tokenService.generate(loginDto.getUsername(), loginDto.getPassword());
     }
 }

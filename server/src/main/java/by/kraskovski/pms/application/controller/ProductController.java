@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -39,62 +39,66 @@ public class ProductController {
      * Find all products in database.
      */
     @GetMapping
-    public ResponseEntity loadAllProducts() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDto> loadAllProducts() {
         log.info("Start loadAllProducts");
-        return ResponseEntity.ok(productService.findAll().stream()
+        return productService.findAll().stream()
                 .map(product -> mapper.map(product, ProductDto.class))
-                .collect(toList()));
+                .collect(toList());
     }
 
     /**
      * Find products in database with setting id in browser.
      */
     @GetMapping("/{id}")
-    public ResponseEntity loadProductById(@PathVariable final String id) {
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDto loadProductById(@PathVariable final String id) {
         log.info("Start loadProductById: {}", id);
-        return ResponseEntity.ok(mapper.map(productService.find(id), ProductDto.class));
+        return mapper.map(productService.find(id), ProductDto.class);
     }
 
     /**
      * Find products in database with setting name in browser
      */
     @GetMapping("/name/{name}")
-    public ResponseEntity loadProductsByName(@PathVariable final String name) {
+    public List<ProductDto> loadProductsByName(@PathVariable final String name) {
         log.info("Start loadProductsByName: {}", name);
-        return ResponseEntity.ok(productService.findByName(name).stream()
+        return productService.findByName(name).stream()
                 .map(product -> mapper.map(product, ProductDto.class))
-                .collect(toList()));
+                .collect(toList());
     }
 
     /**
      * Find products in database with setting type in browser.
      */
     @GetMapping("/type/{type}")
-    public ResponseEntity loadProductsByType(@PathVariable final String type) {
+    public List<ProductDto> loadProductsByType(@PathVariable final String type) {
         log.info("Start loadProductsByType: {}", type);
-        return ResponseEntity.ok(productService.findByType(type).stream()
+        return productService.findByType(type).stream()
                 .map(product -> mapper.map(product, ProductDto.class))
-                .collect(toList()));
+                .collect(toList());
     }
 
     /**
      * Creating {@link Product} from client form.
      */
     @PostMapping
-    public ResponseEntity createProduct(@RequestBody @Valid final ProductDto productDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductDto createProduct(@RequestBody @Valid final ProductDto productDto) {
         log.info("Start createProduct: {}", productDto.getName());
         final Product product = productService.create(mapper.map(productDto, Product.class));
-        return new ResponseEntity<>(mapper.map(product, ProductDto.class), HttpStatus.CREATED);
+        return mapper.map(product, ProductDto.class);
     }
 
     /**
      * Update {@link Product}'s information in database.
      */
     @PutMapping
-    public ResponseEntity updateProduct(@RequestBody @Valid final ProductDto productDto) {
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDto updateProduct(@RequestBody @Valid final ProductDto productDto) {
         log.info("start updateProduct: {}", productDto.getId());
         final Product product = productService.update(mapper.map(productDto, Product.class));
-        return ResponseEntity.ok(mapper.map(product, ProductDto.class));
+        return mapper.map(product, ProductDto.class);
     }
 
     /**

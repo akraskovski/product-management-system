@@ -4,7 +4,6 @@ import by.kraskovski.pms.domain.service.FileService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,9 +45,7 @@ public class ImageController {
     @ResponseBody
     public ResponseEntity loadImageAsResource(@PathVariable final String id) {
         log.info("loading image with id: \"{}\"", id);
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<>(imageService.load(id), headers, HttpStatus.OK);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageService.load(id));
     }
 
     /**

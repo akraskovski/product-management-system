@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,9 +33,10 @@ public class CartController {
      * Find cart by id.
      */
     @GetMapping("/{id}")
-    public ResponseEntity loadCartById(@PathVariable final String id) {
+    @ResponseStatus(HttpStatus.OK)
+    public CartDto loadCartById(@PathVariable final String id) {
         log.info("Start loadCartById: {}", id);
-        return ResponseEntity.ok(mapper.map(cartService.find(id), CartDto.class));
+        return mapper.map(cartService.find(id), CartDto.class);
     }
 
     /**
