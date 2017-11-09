@@ -71,8 +71,8 @@ public class CartControllerIT extends ControllerTestConfig {
     public void after() {
         cartService.deleteAll();
         stockService.deleteAll();
-        userService.deleteAll();
         productService.deleteAll();
+        userService.deleteAll();
         authorityService.deleteAll();
     }
 
