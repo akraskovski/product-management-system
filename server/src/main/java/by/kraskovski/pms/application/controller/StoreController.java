@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
@@ -41,40 +41,44 @@ public class StoreController {
      * Find all stores in database
      */
     @GetMapping
-    public ResponseEntity loadAllStores() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<StoreDto> loadAllStores() {
         log.info("Start loadAllStores");
-        return ResponseEntity.ok(storeService.findAll().stream()
+        return storeService.findAll().stream()
                 .map(store -> mapper.map(store, StoreDto.class))
-                .collect(toList()));
+                .collect(toList());
     }
 
     /**
      * Find stores in database with setting id in browser
      */
     @GetMapping("/{id}")
-    public ResponseEntity loadStoreById(@PathVariable final String id) {
+    @ResponseStatus(HttpStatus.OK)
+    public StoreDto loadStoreById(@PathVariable final String id) {
         log.info("Start loadStoreById: {}", id);
-        return ResponseEntity.ok(mapper.map(storeService.find(id), StoreDto.class));
+        return mapper.map(storeService.find(id), StoreDto.class);
     }
 
     /**
      * Find stocks related to store
      */
     @GetMapping("/{id}/stock-manage")
-    public ResponseEntity loadStoreStocksById(@PathVariable final String id) {
+    @ResponseStatus(HttpStatus.OK)
+    public List<StockDto> loadStoreStocksById(@PathVariable final String id) {
         log.info("Start loadStoreStocksById: {}", id);
-        return ResponseEntity.ok(storeService.find(id).getStockList().stream()
-                .map(stock -> mapper.map(stock, StockDto.class)).collect(toList()));
+        return storeService.find(id).getStockList().stream()
+                .map(stock -> mapper.map(stock, StockDto.class)).collect(toList());
     }
 
     /**
      * Creating {@link Store} from client form.
      */
     @PostMapping
-    public ResponseEntity createStore(@RequestBody @Valid final StoreDto storeDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public StoreDto createStore(@RequestBody @Valid final StoreDto storeDto) {
         log.info("Start createStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
-        return new ResponseEntity<>(mapper.map(storeService.create(store), StoreDto.class), HttpStatus.CREATED);
+        return mapper.map(storeService.create(store), StoreDto.class);
     }
 
     /**
@@ -103,10 +107,11 @@ public class StoreController {
      * Update {@link Store} entity in database.
      */
     @PutMapping
-    public ResponseEntity updateStore(@RequestBody @Valid final StoreDto storeDto) {
+    @ResponseStatus(HttpStatus.OK)
+    public StoreDto updateStore(@RequestBody @Valid final StoreDto storeDto) {
         log.info("Start updateStore: {}", storeDto.getName());
         final Store store = mapper.map(storeDto, Store.class);
-        return ResponseEntity.ok(mapper.map(storeService.update(store), StoreDto.class));
+        return mapper.map(storeService.update(store), StoreDto.class);
     }
 
     /**
