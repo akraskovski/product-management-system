@@ -24,8 +24,8 @@ export class AuthorizationService {
     }
 
     private static handleResponse(response: Response): boolean {
-        const token = response.json().token;
-        let user = response.json().user;
+        const token: string = response.json().token;
+        let user: User = response.json().userDto;
         if (token && user) {
             user.token = token;
             localStorage.setItem(keys.USER_KEY, JSON.stringify(user));

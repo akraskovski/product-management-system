@@ -33,8 +33,13 @@ export class AuthorizationComponent implements OnInit {
     onSubmit(): void {
         this.loading = true;
         this.authorizationService.login(new User(this.loginForm.value.username, this.loginForm.value.password))
-            .subscribe(
-                result => result && this.router.navigate(['/']),
+            .subscribe(result => {
+                    if (result === true) {
+                        this.router.navigate(['/'])
+                    } else {
+                        this.handleError(new Error("User in null"));
+                    }
+                },
                 error => this.handleError(error)
             );
     }
