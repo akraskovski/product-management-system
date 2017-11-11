@@ -4,10 +4,11 @@ export class User {
     id: string;
     username: string;
     password: string;
-    firstname?: string;
-    lastname?: string;
+    firstName?: string;
+    lastName?: string;
     avatar?: string;
     phone?: string;
+    email?: string;
     createDate?: any;
     authorities: Authority[];
     token: string;

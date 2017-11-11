@@ -5,6 +5,8 @@ import {User} from "../../model/user";
 import {Authority} from "../../model/authority";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
+import {regex} from "../../constants/regex";
+
 @Component({
     selector: 'user-create-component',
     templateUrl: 'user-create.component.html'
@@ -13,7 +15,7 @@ export class UserCreateComponent {
     userForm: FormGroup;
     availableAuthorities: Authority[];
     selectedAuthorities: Authority[];
-    loading;
+    loading: boolean;
 
     constructor(private userService: CommonService, private router: Router) {
         this.availableAuthorities = [];
@@ -36,7 +38,12 @@ export class UserCreateComponent {
     private createEmptyForm(): void {
         this.userForm = new FormGroup({
             username: new FormControl('', Validators.required),
-            password: new FormControl('', Validators.required),
+            password: new FormControl('', [Validators.required, Validators.pattern(regex.PASSWORD)]),
+            firstName: new FormControl(),
+            lastName: new FormControl(),
+            email: new FormControl('', Validators.pattern(regex.EMAIL)),
+            phone: new FormControl('', Validators.pattern(regex.PHONE_NUMBER)),
+            avatar: new FormControl()
         });
     }
 
@@ -44,6 +51,10 @@ export class UserCreateComponent {
         this.loading = true;
         let user: User = new User(this.userForm.value.username, this.userForm.value.password);
         user.authorities = this.selectedAuthorities;
+        user.firstName = this.userForm.value.firstName;
+        user.lastName = this.userForm.value.lastName;
+        user.email = this.userForm.value.email;
+        user.phone = this.userForm.value.phone;
         this.userService.create(api.USER, user)
             .subscribe(
                 () => this.router.navigate(['/']).then(() => this.router.navigate(['user'])),
