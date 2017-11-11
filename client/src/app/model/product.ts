@@ -2,7 +2,7 @@ export class Product{
     id: string;
     name: string;
     cost : number;
-    manufacture_date: any;
+    manufacture_date?: any;
     type?: string;
     details?: string;
     image?: string;
