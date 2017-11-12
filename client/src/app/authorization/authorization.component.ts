@@ -32,7 +32,10 @@ export class AuthorizationComponent implements OnInit {
 
     onSubmit(): void {
         this.loading = true;
-        this.authorizationService.login(new User(this.loginForm.value.username, this.loginForm.value.password))
+        let user: User = new User();
+        user.username = this.loginForm.value.username;
+        user.password = this.loginForm.value.password;
+        this.authorizationService.login(user)
             .subscribe(result => {
                     if (result === true) {
                         this.router.navigate(['/'])

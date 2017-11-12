@@ -11,6 +11,7 @@ export class UserAboutComponent implements OnInit{
     user: User;
 
     constructor(private userService: UserService, private router: Router) {
+        this.user = new User();
     }
 
     ngOnInit(): void {
