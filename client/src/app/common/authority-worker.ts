@@ -27,7 +27,7 @@ export class AuthorityWorker {
         const user: User = AuthorityWorker.getCurrentUser();
         if (user != null)
             for (let currentAuthority of user.authorities)
-                if (currentAuthority.authority === authority)
+                if (currentAuthority.name === authority)
                     return true;
         return false;
     }

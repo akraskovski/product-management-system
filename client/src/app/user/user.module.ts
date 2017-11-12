@@ -10,6 +10,7 @@ import {UserUpdateComponent} from "./update/user-update.component";
 import {CommonService} from "../common/common.service";
 import {UserRoutingModule} from "./user-routing.module";
 import {TranslateModule} from "../translate/translate.module";
+
 @NgModule({
     imports: [
         BrowserModule,

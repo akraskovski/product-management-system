@@ -24,7 +24,7 @@
                     <div class="panel-body">
                         <div *ngFor="let authority of availableAuthorities">
                             <button type="button" class="list-group-item" (click)="addAuthorityToSelected(authority)">
-                                {{authority.authority}}
+                                {{authority.name}}
                                 <span aria-hidden="true">→</span>
                             </button>
                         </div>
@@ -41,7 +41,7 @@
                             <button type="button" class="list-group-item"
                                     (click)="deleteAuthorityFromSelected(selectedAuthority)">
                                 <span aria-hidden="true">←</span>
-                                {{selectedAuthority.authority}}
+                                {{selectedAuthority.name}}
                             </button>
                         </div>
                     </div>
