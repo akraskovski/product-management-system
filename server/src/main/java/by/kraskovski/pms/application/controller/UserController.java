@@ -98,4 +98,13 @@ public class UserController {
         log.info("Start deleteUser with id: {}", id);
         userService.delete(id);
     }
+
+    /**
+     * Load current user from context.
+     */
+    @GetMapping("/me")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto getCurrentUser() {
+        return mapper.map(userService.getCurrentUser(), UserDto.class);
+    }
 }
