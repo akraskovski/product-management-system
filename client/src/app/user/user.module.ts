@@ -10,6 +10,8 @@ import {UserUpdateComponent} from "./update/user-update.component";
 import {CommonService} from "../common/common.service";
 import {UserRoutingModule} from "./user-routing.module";
 import {TranslateModule} from "../translate/translate.module";
+import {UserAboutComponent} from "./me/user-about.component";
+import {UserService} from "./user.service";
 
 @NgModule({
     imports: [
@@ -25,9 +27,11 @@ import {TranslateModule} from "../translate/translate.module";
     declarations: [
         UserComponent,
         UserCreateComponent,
-        UserUpdateComponent
+        UserUpdateComponent,
+        UserAboutComponent
     ],
     providers: [
+        UserService,
         CommonService
     ]
 })

@@ -12,9 +12,4 @@ export class User {
     createDate?: any;
     authorities: Authority[];
     token: string;
-
-    constructor(username: string, password: string) {
-        this.username = username;
-        this.password = password;
-    }
 }

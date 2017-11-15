@@ -4,6 +4,7 @@ import {SecurityService} from "../security/security.service";
 import {UserComponent} from "./user.component";
 import {UserCreateComponent} from "./create/user-create.component";
 import {UserUpdateComponent} from "./update/user-update.component";
+import {UserAboutComponent} from "./me/user-about.component";
 
 export const routes: Routes = [
     {
@@ -22,6 +23,9 @@ export const routes: Routes = [
                 data: {roles: ['ROLE_ADMIN']}
             }
         ]
+    },
+    {
+        path: 'me', component: UserAboutComponent
     }
 ];
 

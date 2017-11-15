@@ -7,14 +7,16 @@
             <li *ngIf="!isLoggedIn()">
                 <a routerLink="/login"><span class="glyphicon glyphicon-log-in"></span>{{'Login' | translate}}</a>
             </li>
-            <p *ngIf="welcomeName" class="navbar-text">{{'You logged as' | translate}} <b>{{welcomeName}}</b></p>
+            <p *ngIf="welcomeName" class="navbar-text">{{'You logged as' | translate}} <b>
+                <a class="nav-link" routerLink="/me">{{welcomeName}}</a>
+            </b></p>
             <li *ngIf="isLoggedIn()">
                 <a (click)="logout()" class="btn btn-link">{{'Logout' | translate}}</a>
             </li>
             <li class="btn-group">
                 <a *ngFor="let lang of supportedLanguages"
-                        (click)="selectLang(lang.value)"
-                        class="btn btn-default" [class.btn-primary]="isCurrentLang(lang.value)">
+                   (click)="selectLang(lang.value)"
+                   class="btn btn-default" [class.btn-primary]="isCurrentLang(lang.value)">
                     {{ lang.display }}
                 </a>
             </li>
@@ -22,11 +24,14 @@
         <div>
             <ul class="nav navbar-nav side-nav" routerLinkActive="active">
                 <li *ngIf="canWorkWithUser()"><a class="nav-link" routerLink="/user">{{'User' | translate}}</a></li>
-                <li class="nav-item" *ngIf="canWorkWithProduct()"><a class="nav-link" routerLink="/product">{{'Product' | translate}}</a>
+                <li class="nav-item" *ngIf="canWorkWithProduct()"><a class="nav-link" routerLink="/product">{{'Product'
+                    | translate}}</a>
                 </li>
-                <li class="nav-item" *ngIf="canWorkWithStock()"><a class="nav-link" routerLink="/stock">{{'Stock' | translate}}</a></li>
+                <li class="nav-item" *ngIf="canWorkWithStock()"><a class="nav-link" routerLink="/stock">{{'Stock' |
+                    translate}}</a></li>
                 <li class="nav-item"><a class="nav-link" routerLink="/store">{{'Store' | translate}}</a></li>
-                <li class="nav-item" *ngIf="canWorkWithUser()"><a class="nav-link" href="/swagger-ui.html">Swagger</a></li>
+                <li class="nav-item" *ngIf="canWorkWithUser()"><a class="nav-link" href="/swagger-ui.html">Swagger</a>
+                </li>
             </ul>
         </div>
     </nav>
