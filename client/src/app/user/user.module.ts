@@ -12,6 +12,7 @@ import {UserRoutingModule} from "./user-routing.module";
 import {TranslateModule} from "../translate/translate.module";
 import {UserAboutComponent} from "./me/user-about.component";
 import {UserService} from "./user.service";
+import {UserAboutEditComponent} from "./me/user-about-edit.component";
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import {UserService} from "./user.service";
         UserComponent,
         UserCreateComponent,
         UserUpdateComponent,
-        UserAboutComponent
+        UserAboutComponent,
+        UserAboutEditComponent
     ],
     providers: [
         UserService,
