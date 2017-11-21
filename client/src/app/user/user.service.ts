@@ -3,6 +3,7 @@ import {Http, Response, Headers, RequestOptions} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {api} from "../constants/api";
 import {AuthorityWorker} from "../common/authority-worker";
+import {CommonService} from "../common/common.service";
 
 @Injectable()
 export class UserService {
@@ -20,5 +21,14 @@ export class UserService {
                     throw new Error("Response status: " + response.status);
                 }
             });
+    }
+
+    update(URL: string, body: any): Observable<any> {
+        return this.http.put(URL, body, CommonService.generateOptions())
+            .map((response: Response) => {
+                if (response.status != 200) {
+                    throw new Error('Exception: ' + response.status);
+                }
+            })
     }
 }
