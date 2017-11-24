@@ -4,6 +4,7 @@ import {UserService} from "../user.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {regex} from "../../constants/regex";
+import {api} from "../../constants/api";
 
 @Component({
     selector: 'user-about-edit-component',
@@ -25,12 +26,10 @@ export class UserAboutEditComponent implements OnInit{
     private createEmptyForm(): void {
         this.userForm = new FormGroup({
             username: new FormControl('', Validators.required),
-            password: new FormControl('', [Validators.required, Validators.pattern(regex.PASSWORD)]),
             firstName: new FormControl(),
             lastName: new FormControl(),
-            email: new FormControl('', Validators.pattern(regex.EMAIL)),
-            phone: new FormControl('', Validators.pattern(regex.PHONE_NUMBER)),
-            avatar: new FormControl()
+            email: new FormControl(),
+            phone: new FormControl('', Validators.pattern(regex.PHONE_NUMBER))
         });
     }
 
@@ -41,13 +40,24 @@ export class UserAboutEditComponent implements OnInit{
                     this.user = userDto;
                     this.userForm.setValue({
                         username: this.user.username,
-                        password: this.user.password,
                         firstName: this.user.firstName,
                         lastName: this.user.lastName,
                         email: this.user.email,
                         phone: this.user.phone,
                     });
                 },
+                error => this.logError(error));
+    }
+
+    onSubmit(): void {
+        this.user.username = this.userForm.value.username;
+        this.user.firstName = this.userForm.value.firstName;
+        this.user.lastName = this.userForm.value.lastName;
+        this.user.email = this.userForm.value.email;
+        this.user.phone = this.userForm.value.phone;
+        this.userService.update(api.USER, this.user)
+            .subscribe(
+                () => this.router.navigate(['/']).then(() => this.router.navigate(['me'])),
                 error => this.logError(error));
     }
 
