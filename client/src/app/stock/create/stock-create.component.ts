@@ -7,6 +7,7 @@ import {api} from "../../constants/api";
 import {regex} from "../../constants/regex";
 import {User} from "../../model/user";
 import {StockService} from "../stock.service";
+import {AuthorityWorker} from "../../common/authority-worker";
 
 @Component({
     selector: 'stock-create-component',
@@ -53,6 +54,10 @@ export class StockCreateComponent implements OnInit {
             this.stockForm.value.phone,
             this.stockForm.value.square
         );
+    }
+
+    public hasAccessToManager(): boolean {
+        return AuthorityWorker.componentElementAccess("ROLE_ADMIN");
     }
 
     logError(error: Error): void {

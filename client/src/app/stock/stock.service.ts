@@ -12,7 +12,7 @@ export class StockService {
 
     getAllManagers(): Observable<any> {
         const headers: Headers = new Headers({'x-auth-token': AuthorityWorker.getCurrentUser().token});
-        return this.http.get(api.USER + "/managers", new RequestOptions({headers: headers}))
+        return this.http.get(api.USER + "/role/ROLE_ADMIN", new RequestOptions({headers: headers}))
             .map((response: Response) => {
                 if (response.ok) {
                     return response.json();
