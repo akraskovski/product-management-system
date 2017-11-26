@@ -11,6 +11,7 @@ import {CommonService} from "../common/common.service";
 import {StockUpdateComponent} from "./update/stock-update.component";
 import {StockRoutingModule} from "./stock-routing.module";
 import {TranslateModule} from "../translate/translate.module";
+import {StockService} from "./stock.service";
 @NgModule({
     imports: [
         BrowserModule,
@@ -29,7 +30,8 @@ import {TranslateModule} from "../translate/translate.module";
         StockUpdateComponent
     ],
     providers: [
-        CommonService
+        CommonService,
+        StockService
     ]
 })
 export class StockModule {

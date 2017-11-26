@@ -30,39 +30,16 @@
             <input type="text" class="form-control" id="square" formControlName="square"/>
         </div>
     </div>
+
     <div class="form-group row">
-        <div class="col-sm-12 col-md-6">
-            <div class="panel panel-primary items-panel">
-                <div class="panel-heading text-center">
-                    <h3 class="panel-title">{{'Available products(click to add)' | translate}}</h3>
-                </div>
-                <div class="panel-body">
-                    <div *ngFor="let product of availableProducts">
-                        <button type="button" class="list-group-item" (click)="addProductToSelected(product)">
-                            <b>[{{product.type}}]</b> {{product.name}}
-                            <span aria-hidden="true">→</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-            <div class="panel panel-primary items-panel">
-                <div class="panel-heading text-center">
-                    <h3 class="panel-title">{{'Selected products(click to remove)' | translate}}</h3>
-                </div>
-                <div class="panel-body">
-                    <div *ngFor="let selectedProduct of selectedProducts">
-                        <button type="button" class="list-group-item"
-                                (click)="deleteProductFromSelected(selectedProduct)">
-                            <span aria-hidden="true">←</span>
-                            <b>[{{selectedProduct.type}}]</b> {{selectedProduct.name}}
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <label class="col-sm-2 col-form-label" for="manager">Stock manager</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="manager">
+                <option *ngFor="let manager of allManagers" [value]="manager.id">{{manager.username}}</option>
+            </select>
         </div>
     </div>
+
     <div class="form-group row">
         <button type="submit" [disabled]="stockForm.invalid || loading" class="btn btn-default">
             {{'Submit' | translate}}
