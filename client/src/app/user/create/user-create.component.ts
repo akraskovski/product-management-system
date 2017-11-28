@@ -50,6 +50,8 @@ export class UserCreateComponent {
     onSubmit(): void {
         this.loading = true;
         let user: User = new User();
+        user.username = this.userForm.value.username;
+        user.password = this.userForm.value.password;
         user.authorities = this.selectedAuthorities;
         user.firstName = this.userForm.value.firstName;
         user.lastName = this.userForm.value.lastName;

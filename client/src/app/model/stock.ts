@@ -9,12 +9,12 @@ export class Stock {
     phone?: string;
     square?: number;
     productList: Product[];
+    managerId?: string;
 
-    constructor(specialize: string, address: string, phone: string, square: number, productList: Product[]) {
+    constructor(specialize: string, address: string, phone: string, square: number) {
         this.specialize = specialize;
         this.address = address;
         this.phone = phone;
         this.square = square;
-        this.productList = productList;
     }
 }

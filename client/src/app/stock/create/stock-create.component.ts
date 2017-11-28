@@ -1,11 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Product} from "../../model/product";
 import {Router} from "@angular/router";
 import {Stock} from "../../model/stock";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {regex} from "../../constants/regex";
+import {User} from "../../model/user";
+import {StockService} from "../stock.service";
+import {AuthorityWorker} from "../../common/authority-worker";
 
 @Component({
     selector: 'stock-create-component',
@@ -13,32 +15,25 @@ import {regex} from "../../constants/regex";
 })
 export class StockCreateComponent implements OnInit {
     stockForm: FormGroup;
-    availableProducts: Product[];
-    selectedProducts: Product[];
+    managerId: string;
+    allManagers: User[];
     loading;
 
-    constructor(private stockService: CommonService, private router: Router) {
-        this.availableProducts = [];
-        this.selectedProducts = [];
+    constructor(private commonService: CommonService, private stockService: StockService, private router: Router) {
         this.loading = false;
+        this.allManagers = [];
     }
 
     ngOnInit(): void {
-        this.loadProducts();
-        this.createEmptyForm();
-    }
+        this.stockService.getAllManagers().subscribe(
+            allManagers => this.allManagers = allManagers,
+            error => this.logError(error)
+        );
 
-    private loadProducts(): void {
-        this.stockService.loadAll(api.PRODUCT)
-            .subscribe(
-                productList => this.availableProducts = productList,
-                error => this.logError(error));
-    }
-
-    private createEmptyForm(): void {
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
             address: new FormControl(''),
+            managerId: new FormControl(''),
             phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
             square: new FormControl('', [Validators.pattern(regex.DOUBLE)])
         });
@@ -46,7 +41,7 @@ export class StockCreateComponent implements OnInit {
 
     onSubmit(): void {
         this.loading = true;
-        this.stockService.create(api.STOCK, this.createAndFillStock())
+        this.commonService.create(api.STOCK, this.createAndFillStock())
             .subscribe(
                 () => this.router.navigate(['stock/stock-content']),
                 error => this.logError(error));
@@ -57,19 +52,12 @@ export class StockCreateComponent implements OnInit {
             this.stockForm.value.specialize,
             this.stockForm.value.address,
             this.stockForm.value.phone,
-            this.stockForm.value.square,
-            this.selectedProducts
+            this.stockForm.value.square
         );
     }
 
-    addProductToSelected(product: Product): void {
-        this.availableProducts.splice(this.availableProducts.indexOf(product), 1);
-        this.selectedProducts.push(product);
-    }
-
-    deleteProductFromSelected(product: Product): void {
-        this.selectedProducts.splice(this.selectedProducts.indexOf(product), 1);
-        this.availableProducts.push(product);
+    public hasAccessToManager(): boolean {
+        return AuthorityWorker.componentElementAccess("ROLE_ADMIN");
     }
 
     logError(error: Error): void {
