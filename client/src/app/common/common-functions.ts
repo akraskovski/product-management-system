@@ -1,4 +1,5 @@
 export class CommonFunctions {
+
     public static cleanAvailableItems(itemList: any[], selectedItems: any[]): any[] {
         let resultItems: any[] = [];
         itemList.forEach(item => {
