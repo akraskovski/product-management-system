@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {CommonFunctions} from "../../common/common-functions";
 import {regex} from "../../constants/regex";
+import {StockService} from "../stock.service";
 @Component({
     selector: 'stock-update-component',
     templateUrl: 'stock-update.component.html'
@@ -15,16 +16,18 @@ export class StockUpdateComponent implements OnInit {
     stockForm: FormGroup;
     loading: boolean;
     stock: Stock;
-    availableProducts: Product[];
-    selectedProducts: Product[];
+    availableProducts: Product[] = [];
+    selectedProducts: Product[] = [];
 
-    constructor(private stockService: CommonService, private router: Router, private route: ActivatedRoute) {
+    constructor(private commonService: CommonService, private stockService: StockService, private router: Router, private route: ActivatedRoute) {
         this.loading = false;
         this.availableProducts = [];
         this.selectedProducts = [];
     }
 
     ngOnInit(): void {
+        this.availableProducts = [];
+        this.selectedProducts = [];
         this.createEmptyForm();
         this.load();
     }
@@ -39,11 +42,13 @@ export class StockUpdateComponent implements OnInit {
     }
 
     private load(): void {
-        this.stockService.loadById(api.STOCK, this.route.snapshot.params['id'])
+        this.commonService.loadById(api.STOCK, this.route.snapshot.params['id'])
             .subscribe(
                 stock => {
                     this.stock = stock;
-                    this.selectedProducts = this.stock.productList;
+                    this.stockService.getStockProducts(this.stock.id).subscribe(
+                        products => this.selectedProducts = products
+                    );
                     this.loadProducts();
                     this.fillForm(this.stock);
                 },
@@ -60,7 +65,7 @@ export class StockUpdateComponent implements OnInit {
     }
 
     private loadProducts(): void {
-        this.stockService.loadAll(api.PRODUCT)
+        this.commonService.loadAll(api.PRODUCT)
             .subscribe(
                 productList => this.availableProducts = CommonFunctions.cleanAvailableItems(productList, this.selectedProducts),
                 error => this.logError(error))
@@ -69,10 +74,13 @@ export class StockUpdateComponent implements OnInit {
     onSubmit(): void {
         this.loading = true;
         this.fillUpdatedStock();
-        this.stockService.update(api.STOCK, this.stock)
+        this.commonService.update(api.STOCK, this.stock)
             .subscribe(
                 () => this.router.navigate(['stock/stock-content']),
                 error => this.logError(error));
+        for (let product of this.selectedProducts) {
+            this.stockService.updateProducts(this.stock.id, product.id);
+        }
     }
 
     private fillUpdatedStock(): void {
