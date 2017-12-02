@@ -28,7 +28,7 @@ export class UserAboutEditComponent implements OnInit{
             username: new FormControl('', Validators.required),
             firstName: new FormControl(),
             lastName: new FormControl(),
-            email: new FormControl(),
+            email: new FormControl('', Validators.pattern(regex.EMAIL)),
             phone: new FormControl('', Validators.pattern(regex.PHONE_NUMBER))
         });
     }
