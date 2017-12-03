@@ -1,6 +1,6 @@
 <div class="panel panel-default">
 
-    <div class="col-lg-8 col-md-12 col-sm-12">
+    <div class="col-lg-6 col-md-12 col-sm-12">
         <h3></h3>
         <div class="panel panel-default">
             <div class="panel-heading"><h4>Stock details</h4></div>
@@ -51,6 +51,33 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <h3></h3>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center"><h4>Products, available in warehouse</h4></div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>{{'Name' | translate}}</th>
+                        <th>{{'Cost' | translate}}($)</th>
+                        <th>{{'Type' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let product of selectedProducts">
+                        <td>{{product.id}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.cost}}</td>
+                        <td>{{product.type}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
