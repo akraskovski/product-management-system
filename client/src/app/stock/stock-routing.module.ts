@@ -5,6 +5,7 @@ import {StockComponent} from "./stock.component";
 import {StockContentComponent} from "./content/stock-content.component";
 import {StockCreateComponent} from "./create/stock-create.component";
 import {StockUpdateComponent} from "./update/stock-update.component";
+import {StockDetailComponent} from "./detail/stock-detail.component";
 
 export const routes: Routes = [
     {
@@ -33,6 +34,12 @@ export const routes: Routes = [
             {
                 path: 'stock-update/:id',
                 component: StockUpdateComponent,
+                canActivate: [SecurityService],
+                data: {roles: ['ROLE_ADMIN', "ROLE_STOCK_MANAGER"]}
+            },
+            {
+                path: 'detail/:id',
+                component: StockDetailComponent,
                 canActivate: [SecurityService],
                 data: {roles: ['ROLE_ADMIN', "ROLE_STOCK_MANAGER"]}
             }
