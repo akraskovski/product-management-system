@@ -4,6 +4,7 @@ import by.kraskovski.pms.application.controller.dto.ErrorDto;
 import by.kraskovski.pms.application.security.exception.UserNotFoundException;
 import by.kraskovski.pms.domain.service.exception.FileNotFoundException;
 import by.kraskovski.pms.domain.service.exception.FileUploadException;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -95,5 +96,14 @@ public class ExceptionControllerAdvice {
                 String.format("%s Current value: %s", violation.getMessage(), violation.getInvalidValue())));
         log.warn(builder.toString());
         return ResponseEntity.badRequest().body(new ErrorDto(builder.toString()));
+    }
+
+    /**
+     * Handle expired token exception.
+     */
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity handleExpiredJwtException(final ExpiredJwtException e) {
+        log.warn(e.getLocalizedMessage());
+        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.FORBIDDEN);
     }
 }

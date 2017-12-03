@@ -96,6 +96,10 @@ export class StockContentComponent implements OnInit {
         id && this.router.navigate(['stock/stock-update', id]);
     }
 
+    onDetail(id: number): void {
+        id && this.router.navigate(['stock/detail', id]);
+    }
+
     onChangePageSize(): void {
         this.createPagination();
     }

@@ -12,6 +12,7 @@ import {StockUpdateComponent} from "./update/stock-update.component";
 import {StockRoutingModule} from "./stock-routing.module";
 import {TranslateModule} from "../translate/translate.module";
 import {StockService} from "./stock.service";
+import {StockDetailComponent} from "./detail/stock-detail.component";
 @NgModule({
     imports: [
         BrowserModule,
@@ -27,7 +28,8 @@ import {StockService} from "./stock.service";
         StockComponent,
         StockContentComponent,
         StockCreateComponent,
-        StockUpdateComponent
+        StockUpdateComponent,
+        StockDetailComponent
     ],
     providers: [
         CommonService,

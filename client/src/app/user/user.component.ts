@@ -3,6 +3,7 @@ import {User} from "../model/user";
 import {CommonService} from "../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../constants/api";
+import {UserService} from "./user.service";
 
 @Component({
     selector: 'user-component',
@@ -12,19 +13,32 @@ import {api} from "../constants/api";
 export class UserComponent implements OnInit {
     userList: User[];
     selectedUser: User;
+    user: User;
 
-    constructor(private userService: CommonService, private router: Router) {
+    constructor(private commonService: CommonService, private userService: UserService, private router: Router) {
+        this.userList = [];
+        this.user = new User();
     }
 
     ngOnInit(): void {
+        this.userService.getCurrentUser()
+            .subscribe(userDto =>
+                    this.user = userDto,
+                error => this.logError(error)
+            );
         this.loadData();
     }
 
     private loadData(): void {
-        this.userService.loadAll(api.USER)
+        this.commonService.loadAll(api.USER)
             .subscribe(
-                userList => this.userList = userList,
-                err => this.logError(err)
+                userList => {
+                    userList.forEach(user => {
+                        if (user.id != this.user.id) {
+                            this.userList.push(user);
+                        }
+                    });
+                }, err => this.logError(err)
             );
     }
 

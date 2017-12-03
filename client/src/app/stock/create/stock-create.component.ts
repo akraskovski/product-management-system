@@ -6,7 +6,7 @@ import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {regex} from "../../constants/regex";
 import {User} from "../../model/user";
-import {StockService} from "../stock.service";
+// import {StockService} from "../stock.service";
 import {AuthorityWorker} from "../../common/authority-worker";
 
 @Component({
@@ -19,22 +19,22 @@ export class StockCreateComponent implements OnInit {
     allManagers: User[];
     loading;
 
-    constructor(private commonService: CommonService, private stockService: StockService, private router: Router) {
+    constructor(private commonService: CommonService,/* private stockService: StockService,*/ private router: Router) {
         this.loading = false;
         this.allManagers = [];
     }
 
     ngOnInit(): void {
-        this.stockService.getAllManagers().subscribe(
-            allManagers => this.allManagers = allManagers,
-            error => this.logError(error)
-        );
+        // this.stockService.getAllManagers().subscribe(
+        //     allManagers => this.allManagers = allManagers,
+        //     error => this.logError(error)
+        // );
 
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
             address: new FormControl(''),
             managerId: new FormControl(''),
-            phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
+            phone: new FormControl('', [Validators.required, Validators.pattern(regex.PHONE_NUMBER)]),
             square: new FormControl('', [Validators.pattern(regex.DOUBLE)])
         });
     }
@@ -48,12 +48,12 @@ export class StockCreateComponent implements OnInit {
     }
 
     private createAndFillStock(): Stock {
-        return new Stock(
-            this.stockForm.value.specialize,
-            this.stockForm.value.address,
-            this.stockForm.value.phone,
-            this.stockForm.value.square
-        );
+        let stock: Stock = new Stock();
+        stock.specialize = this.stockForm.value.specialize;
+        stock.address= this.stockForm.value.address;
+        stock.phone= this.stockForm.value.phone;
+        stock.square= this.stockForm.value.square;
+        return stock;
     }
 
     public hasAccessToManager(): boolean {

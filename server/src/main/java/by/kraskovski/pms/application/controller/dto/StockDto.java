@@ -16,11 +16,9 @@ import static by.kraskovski.pms.application.validation.Patterns.PHONE_PATTERN;
 @Setter
 public class StockDto {
     private String id;
-
     @NotNull
     private String specialize;
     private String address;
-
     @Pattern(regexp = PHONE_PATTERN)
     private String phone;
     private double square;
