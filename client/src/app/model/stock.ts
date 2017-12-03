@@ -11,10 +11,4 @@ export class Stock {
     productList: Product[];
     managerId?: string;
 
-    constructor(specialize: string, address: string, phone: string, square: number) {
-        this.specialize = specialize;
-        this.address = address;
-        this.phone = phone;
-        this.square = square;
-    }
 }

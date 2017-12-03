@@ -48,12 +48,12 @@ export class StockCreateComponent implements OnInit {
     }
 
     private createAndFillStock(): Stock {
-        return new Stock(
-            this.stockForm.value.specialize,
-            this.stockForm.value.address,
-            this.stockForm.value.phone,
-            this.stockForm.value.square
-        );
+        let stock: Stock = new Stock();
+        stock.specialize = this.stockForm.value.specialize;
+        stock.address= this.stockForm.value.address;
+        stock.phone= this.stockForm.value.phone;
+        stock.square= this.stockForm.value.square;
+        return stock;
     }
 
     public hasAccessToManager(): boolean {
