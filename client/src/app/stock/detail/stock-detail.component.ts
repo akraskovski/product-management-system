@@ -10,20 +10,15 @@ import {api} from "../../constants/api";
     templateUrl: 'stock-detail.component.html'
 })
 export class StockDetailComponent implements OnInit {
-
     stock: Stock;
-    availableProducts: Product[] = [];
-    selectedProducts: Product[] = [];
+    selectedProducts: Product[];
 
     constructor(private commonService: CommonService, private stockService: StockService, private router: Router, private route: ActivatedRoute) {
         this.stock = new Stock();
-        this.availableProducts = [];
         this.selectedProducts = [];
     }
 
     ngOnInit(): void {
-        this.availableProducts = [];
-        this.selectedProducts = [];
         this.load();
     }
 
