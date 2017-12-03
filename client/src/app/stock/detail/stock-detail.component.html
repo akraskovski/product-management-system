@@ -60,6 +60,9 @@
         <div class="panel panel-default">
             <div class="panel-heading text-center"><h4>Products, available in warehouse</h4></div>
             <div class="panel-body">
+                <button type="button" class="btn btn-primary" data-toggle="modal" (click)="onAddProducts()"
+                        data-target="#myModal">+
+                </button>
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                     <tr>
@@ -82,4 +85,26 @@
         </div>
     </div>
 
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">ZDOROVA</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="col-md-12 text-center">
+                        ZDAROVA!
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Close' | translate}}</button>
+            </div>
+        </div>
+    </div>
 </div>

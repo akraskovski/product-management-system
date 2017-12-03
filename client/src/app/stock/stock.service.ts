@@ -10,18 +10,6 @@ export class StockService {
     constructor(private http: Http) {
     }
 
-    getAllManagers(): Observable<any> {
-        const headers: Headers = new Headers({'x-auth-token': AuthorityWorker.getCurrentUser().token});
-        return this.http.get(api.USER + "/role/ROLE_ADMIN", new RequestOptions({headers: headers}))
-            .map((response: Response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Response status: " + response.status);
-                }
-            });
-    }
-
     getStockProducts(id: string): Observable<any> {
         const headers: Headers = new Headers({'x-auth-token': AuthorityWorker.getCurrentUser().token});
         return this.http.get(api.STOCK + "/" + id + "/products", new RequestOptions({headers: headers}))
@@ -34,7 +22,7 @@ export class StockService {
             });
     }
 
-    updateProducts(stockId: string, productId: string): Observable<any> {
+    addProductToStock(stockId: string, productId: string): Observable<any> {
         const headers: Headers = new Headers({'x-auth-token': AuthorityWorker.getCurrentUser().token});
         let params: URLSearchParams = new URLSearchParams();
         params.set('stockId', stockId);
@@ -45,6 +33,7 @@ export class StockService {
         }))
             .map((response: Response) => {
                 if (response.status != 204) {
+
                     throw new Error("Response status: " + response.status);
                 }
             });

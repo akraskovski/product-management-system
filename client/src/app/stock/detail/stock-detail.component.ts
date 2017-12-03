@@ -34,6 +34,10 @@ export class StockDetailComponent implements OnInit {
                 error => this.logError(error));
     }
 
+    public onAddProducts(): void {
+        console.log("add product");
+    }
+
     private logError(error: Error): void {
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         this.router.navigate(['/']);
