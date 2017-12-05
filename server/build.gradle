@@ -7,6 +7,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.github.ksoichiro.build.info' version '0.2.0'
+}
+
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply from: 'quality/checkstyle/checkstyle.gradle'
@@ -15,6 +19,13 @@ apply from: 'quality/jacoco/jacoco.gradle'
 
 repositories {
     mavenCentral()
+}
+
+buildInfo {
+    committerDateFormat 'yyyy-MM-dd HH:mm:ss'
+    buildDateFormat 'yyyy-MM-dd HH:mm:ss'
+    manifestEnabled true
+    gitPropertiesEnabled true
 }
 
 dependencies {
