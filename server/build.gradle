@@ -4,11 +4,13 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE"
+        classpath "com.github.ksoichiro:gradle-build-info-plugin:+"
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'com.github.ksoichiro.build.info'
 apply from: 'quality/checkstyle/checkstyle.gradle'
 apply from: 'quality/jacoco/jacoco.gradle'
 //apply from: 'quality/pmd/pmd.gradle'
@@ -17,10 +19,17 @@ repositories {
     mavenCentral()
 }
 
+buildInfo {
+    committerDateFormat 'yyyy-MM-dd HH:mm:ss'
+    buildDateFormat 'yyyy-MM-dd HH:mm:ss'
+    manifestEnabled true
+}
+
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web-services:1.5.8.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.5.8.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-security:1.5.8.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-actuator:1.5.8.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-test:1.5.8.RELEASE'
     compile 'org.hibernate:hibernate-java8:5.2.12.Final'
     compile 'org.postgresql:postgresql:42.1.4'
