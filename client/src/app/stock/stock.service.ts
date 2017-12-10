@@ -30,12 +30,10 @@ export class StockService {
         return this.http.put(api.STOCK + "/stock/product", new RequestOptions({
             headers: headers,
             params: URLSearchParams
-        }))
-            .map((response: Response) => {
-                if (response.status != 204) {
-
-                    throw new Error("Response status: " + response.status);
-                }
-            });
+        })).map((response: Response) => {
+            if (response.status != 204) {
+                throw new Error("Response status: " + response.status);
+            }
+        });
     }
 }

@@ -122,7 +122,6 @@
                                     <th>{{'Cost' | translate}}($)</th>
                                     <th>{{'Type' | translate}}</th>
                                     <th>{{'Details' | translate}}</th>
-                                    <th>{{'Operations' | translate}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -132,6 +131,7 @@
                                     <td>{{product.cost}}</td>
                                     <td>{{product.type}}</td>
                                     <td>{{product.details}}</td>
+                                    <td><a class="btn" (click)="onAddProduct(product)">Add</a></td>
                                 </tr>
                                 </tbody>
                             </table>
