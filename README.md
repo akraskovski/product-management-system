@@ -28,7 +28,7 @@ Installing environment (You need Java 8 installed):
 2. Download [Gradle ver. 3.3](https://gradle.org/install#manually)
     >Unpack and set path in the environment variable Path to foler */bin*.
  
-3. Download PostgreSQL from [official site](https://www.postgresql.org/download/windows/) or by docker command: `docker pull postgres:9.4`
+3. Download PostgreSQL from [official site](https://www.postgresql.org/download/windows/) or by docker command: `docker pull postgres:latest`
 
 4. Download [NodeJS](https://nodejs.org/en/download/) with npm.
 
@@ -36,9 +36,9 @@ Building project
 ================
 1. Download or clone project from this repository.
 
-2. Run db on your system. (use docker command `docker run --name postgres-latest -v /opt/db/postgres-latest:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=postgres -p 5432:5432 -d postgres:9.4`)
+2. Start PostgreSQL server on your system: `docker run --name postgres -v /opt/db/postgres:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=postgres -p 5432:5432 -d postgres`
 
-3. Create schema with random name. As default: `pms`
+3. Default using schema: `public`
 
 4. Change(if needed) in `application.properties` project properties, exactly:
  - URL and port to your database
@@ -50,7 +50,16 @@ Building project
 
 Run backend:
 
-- In console, go to the project root and run the command `gradle jar`, `java -jar build/libs/product-management-system.jar` or just `gradle bootRun`
+- In console, go to the server `cd server/` and run the command `gradle jar`, `java -jar build/libs/product-management-system.jar` or just `gradle bootRun`
+
+- With docker: 
+    1. Go to server directory: `cd server/`
+    
+    2. Build server jar, using gradle command: `gradle clean build`
+    
+    3. Build an image: `docker build -t pms-image .`
+    
+    4. Start docker container: `docker run --name pms-server --link postgres -p 8080:8080 -d pms-image`
 
 Run client:
 
@@ -74,4 +83,4 @@ To debug the client use `npm run server` to run Webpack DevServer (port :3000)
 
 Logging
 =======
-* Logs save to Tomcat base dir `/logs/pms/pms.log`.
+* Logs save to dir `/server/log/pms/general.YYYY-MM-DD.log`.
