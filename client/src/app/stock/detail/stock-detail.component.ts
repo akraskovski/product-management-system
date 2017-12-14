@@ -5,6 +5,7 @@ import {CommonService} from "../../common/common.service";
 import {StockService} from "../stock.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {api} from "../../constants/api";
+
 @Component({
     selector: 'stock-detail-component',
     templateUrl: 'stock-detail.component.html'
@@ -104,8 +105,12 @@ export class StockDetailComponent implements OnInit {
         this.refreshItems();
     }
 
-    public onAddProducts(): void {
-        console.log("add product");
+    public onAddProduct(product: Product): void {
+        console.log("add product: " + product);
+        this.stockService.addProductToStock(this.stock.id, product.id)
+            .subscribe(
+                () => console.log("dobavil"),
+                error => this.logError(error));
     }
 
     private logError(error: Error): void {
