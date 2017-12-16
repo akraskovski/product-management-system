@@ -105,7 +105,7 @@ export class StockDetailComponent implements OnInit {
         this.refreshItems();
     }
 
-    public onAddProduct(product: Product): void {
+    onAddProduct(product: Product): void {
         console.log("add product: " + product);
         this.stockService.addProductToStock(this.stock.id, product.id)
             .subscribe(

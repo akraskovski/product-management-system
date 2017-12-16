@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {api} from "../constants/api";
 import {AuthorityWorker} from "../common/authority-worker";
 
@@ -23,17 +23,20 @@ export class StockService {
     }
 
     addProductToStock(stockId: string, productId: string): Observable<any> {
-        const headers: Headers = new Headers({'x-auth-token': AuthorityWorker.getCurrentUser().token});
-        let params: URLSearchParams = new URLSearchParams();
-        params.set('stockId', stockId);
-        params.set('productId', productId);
-        return this.http.put(api.STOCK + "/stock/product", new RequestOptions({
-            headers: headers,
-            params: URLSearchParams
-        })).map((response: Response) => {
-            if (response.status != 204) {
-                throw new Error("Response status: " + response.status);
-            }
+        const url: string = api.STOCK + "/" + stockId + "/product/" + productId;
+        return this.http.put(url, StockService.generateOptions())
+            .map((response: Response) => {
+                if (response.status != 204) {
+                    throw new Error("Response status: " + response.status);
+                }
+            });
+    }
+
+    static generateOptions(): RequestOptions {
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'x-auth-token': AuthorityWorker.getCurrentUser().token
         });
+        return new RequestOptions({headers: headers});
     }
 }
