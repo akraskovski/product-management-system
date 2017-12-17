@@ -107,7 +107,7 @@ export class StockDetailComponent implements OnInit {
 
     onAddProduct(product: Product): void {
         console.log("add product: " + product);
-        this.stockService.addProductToStock(this.stock.id, product.id)
+        this.commonService.addProductToStock(this.stock.id, product.id)
             .subscribe(
                 () => console.log("dobavil"),
                 error => this.logError(error));

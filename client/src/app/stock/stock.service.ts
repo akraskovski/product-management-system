@@ -23,21 +23,4 @@ export class StockService {
 
     }
 
-    addProductToStock(stockId: string, productId: string): Observable<any> {
-        const url: string = api.STOCK + "/" + stockId + "/product/" + productId;
-        return this.http.put(url, StockService.generateOptions())
-            .map((response: Response) => {
-                if (response.status != 204) {
-                    throw new Error("Response status: " + response.status);
-                }
-            });
-    }
-
-    static generateOptions(): RequestOptions {
-        const headers = new Headers({
-            'Content-Type': 'application/json',
-            'x-auth-token': AuthorityWorker.getCurrentUser().token
-        });
-        return new RequestOptions({headers: headers});
-    }
 }
