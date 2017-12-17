@@ -1,0 +1,5 @@
+@media screen and (min-width: 768px) {
+    .custom-modal {
+        width: 70%; /* either % (e.g. 60%) or px (400px) */
+    }
+}

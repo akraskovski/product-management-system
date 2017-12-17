@@ -8,7 +8,8 @@ import {api} from "../../constants/api";
 
 @Component({
     selector: 'stock-detail-component',
-    templateUrl: 'stock-detail.component.html'
+    templateUrl: 'stock-detail.component.html',
+    styleUrls: ['stock-detail-component.css']
 })
 export class StockDetailComponent implements OnInit {
     stock: Stock;
