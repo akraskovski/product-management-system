@@ -20,6 +20,7 @@ export class StockService {
                     throw new Error("Response status: " + response.status);
                 }
             });
+
     }
 
     addProductToStock(stockId: string, productId: string): Observable<any> {
