@@ -101,10 +101,9 @@ public class StockControllerIT extends ControllerTestConfig {
         final Stock stock = prepareStock();
         stock.getProductStocks().add(new ProductStock(product, stock, 10));
         stockService.create(stock);
-        mvc.perform(put(BASE_STOCK_URL + "/product")
+        final String url = BASE_STOCK_URL + "/" + stock.getId() + "/product/" + product.getId();
+        mvc.perform(put(url)
                 .header(authHeaderName, token)
-                .param("stockId", stock.getId())
-                .param("productId", product.getId())
                 .param("count", "10"))
                 .andExpect(status().isNoContent());
         final ProductStockDto productStockDto = loadStockProducts(stock.getId()).get(0);
@@ -118,10 +117,9 @@ public class StockControllerIT extends ControllerTestConfig {
         final Stock stock = prepareStock();
         stock.getProductStocks().add(new ProductStock(product, stock, 10));
         stockService.create(stock);
-        mvc.perform(put(BASE_STOCK_URL + "/product")
+        final String url = BASE_STOCK_URL + "/" + stock.getId() + "/product/" + product.getId();
+        mvc.perform(put(url)
                 .header(authHeaderName, token)
-                .param("stockId", stock.getId())
-                .param("productId", product.getId())
                 .param("count", "0"))
                 .andExpect(status().isBadRequest());
     }
@@ -130,10 +128,9 @@ public class StockControllerIT extends ControllerTestConfig {
     public void addNewProductToStockTest() throws Exception {
         final Product product = productService.create(prepareProduct());
         final Stock stock = stockService.create(prepareStock());
-        mvc.perform(put(BASE_STOCK_URL + "/product")
+        final String url = BASE_STOCK_URL + "/" + stock.getId() + "/product/" + product.getId();
+        mvc.perform(put(url)
                 .header(authHeaderName, token)
-                .param("stockId", stock.getId())
-                .param("productId", product.getId())
                 .param("count", "10"))
                 .andExpect(status().isNoContent());
         final ProductStockDto productStockDto = loadStockProducts(stock.getId()).get(0);
@@ -150,10 +147,9 @@ public class StockControllerIT extends ControllerTestConfig {
         final Stock stock = prepareStock();
         stock.getProductStocks().add(new ProductStock(product, stock, productsInStockCount));
         stockService.create(stock);
-        mvc.perform(delete(BASE_STOCK_URL + "/product")
+        final String url = BASE_STOCK_URL + "/" + stock.getId() + "/product/" + product.getId();
+        mvc.perform(delete(url)
                 .header(authHeaderName, token)
-                .param("stockId", stock.getId())
-                .param("productId", product.getId())
                 .param("count", String.valueOf(productsToDeleteCount)))
                 .andExpect(status().isNoContent());
         final ProductStockDto productStockDtos = loadStockProducts(stock.getId()).get(0);

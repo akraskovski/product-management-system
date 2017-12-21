@@ -8,7 +8,8 @@ import {api} from "../../constants/api";
 
 @Component({
     selector: 'stock-detail-component',
-    templateUrl: 'stock-detail.component.html'
+    templateUrl: 'stock-detail.component.html',
+    styleUrls: ['stock-detail-component.css']
 })
 export class StockDetailComponent implements OnInit {
     stock: Stock;
@@ -105,9 +106,9 @@ export class StockDetailComponent implements OnInit {
         this.refreshItems();
     }
 
-    public onAddProduct(product: Product): void {
+    onAddProduct(product: Product): void {
         console.log("add product: " + product);
-        this.stockService.addProductToStock(this.stock.id, product.id)
+        this.commonService.addProductToStock(this.stock.id, product.id)
             .subscribe(
                 () => console.log("dobavil"),
                 error => this.logError(error));

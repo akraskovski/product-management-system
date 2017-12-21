@@ -77,11 +77,11 @@ public class StockController {
     /**
      * Add product to the stock
      */
-    @PutMapping("/product")
+    @PutMapping("/{stockId}/product/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addProductToStock(
-            @RequestParam final String stockId,
-            @RequestParam final String productId,
+            @PathVariable final String stockId,
+            @PathVariable final String productId,
             @RequestParam(value = "count", defaultValue = "1", required = false)
             @Min(value = 1, message = "Can't validate products count. It must be greater than 1.") final int count) {
         log.info("Start add Product: {} from Stock: {} with count: {}", productId, stockId, count);
@@ -91,11 +91,11 @@ public class StockController {
     /**
      * Delete product from the stock
      */
-    @DeleteMapping("/product")
+    @DeleteMapping("/{stockId}/product/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProductFromStock(
-            @RequestParam final String stockId,
-            @RequestParam final String productId,
+            @PathVariable final String stockId,
+            @PathVariable final String productId,
             @RequestParam(value = "count", required = false, defaultValue = "1")
             @Min(value = 1, message = "Can't validate products count. It must be greater than 1.") final int count) {
         log.info("Start delete Product: {} from Stock: {} with count: {}", productId, stockId, count);
