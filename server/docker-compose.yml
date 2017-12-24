@@ -1,7 +1,7 @@
 version: '2'
 services:
   server:
-    image: pms
+    build: .
     ports:
     - "8080:8080"
     depends_on:
