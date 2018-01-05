@@ -1,7 +1,9 @@
 package by.kraskovski.pms.application.controller;
 
 import by.kraskovski.pms.application.controller.dto.UserDto;
+import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.User;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,13 +60,25 @@ public class UserController {
     }
 
     /**
-     * Find user in database with setting name in browser.
+     * Find user in database with setting name.
      */
     @GetMapping("/username/{username}")
     @ResponseStatus(HttpStatus.OK)
     public UserDto loadUserByUsername(@PathVariable final String username) {
         log.info("Start loadUserByUsername: {}", username);
         return mapper.map(userService.findByUsername(username), UserDto.class);
+    }
+
+    /**
+     * Find user in database with setting role.
+     */
+    @GetMapping("/role/{role}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDto> loadUsersByRole(@PathVariable final AuthorityEnum role) {
+        log.info("Start loadUsersByRole: {}", role);
+        return userService.findByRole(role).stream()
+                .map(user -> mapper.map(user, UserDto.class))
+                .collect(toList());
     }
 
     /**

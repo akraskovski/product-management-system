@@ -10,6 +10,11 @@ export class StockService {
     constructor(private http: Http) {
     }
 
+    getStockManagers(): Observable<any> {
+        const headers: Headers = new Headers({'x-auth-token': AuthorityWorker.getCurrentUser().token});
+        //TODO:
+    }
+
     getStockProducts(id: string): Observable<any> {
         const headers: Headers = new Headers({'x-auth-token': AuthorityWorker.getCurrentUser().token});
         return this.http.get(api.STOCK + "/" + id + "/products", new RequestOptions({headers: headers}))
@@ -20,7 +25,5 @@ export class StockService {
                     throw new Error("Response status: " + response.status);
                 }
             });
-
     }
-
 }
