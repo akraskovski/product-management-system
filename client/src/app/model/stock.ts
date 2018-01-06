@@ -10,5 +10,4 @@ export class Stock {
     square?: number;
     productList: Product[];
     managerId?: string;
-
 }
