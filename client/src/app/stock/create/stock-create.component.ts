@@ -17,11 +17,12 @@ export class StockCreateComponent implements OnInit {
     stockForm: FormGroup;
     managerId: string;
     allManagers: User[];
-    loading;
+    loading: boolean;
 
     constructor(private commonService: CommonService, private stockService: StockService, private router: Router) {
         this.loading = false;
         this.allManagers = [];
+        this.managerId = null;
     }
 
     ngOnInit(): void {
@@ -29,7 +30,6 @@ export class StockCreateComponent implements OnInit {
             allManagers => this.allManagers = allManagers,
             error => this.logError(error)
         );
-
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
             address: new FormControl(''),

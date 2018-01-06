@@ -34,7 +34,7 @@
     <div class="form-group row" *ngIf="hasAccessToManager()">
         <label class="col-sm-2 col-form-label" for="manager">Stock manager</label>
         <div class="col-sm-4">
-            <select class="form-control" id="manager" [(ngModel)]="managerId">
+            <select class="form-control" id="manager" [(ngModel)]="managerId" [ngModelOptions]="{standalone: true}">
                 <option *ngFor="let manager of allManagers" [ngValue]="manager.id">{{manager.username}}</option>
             </select>
         </div>
