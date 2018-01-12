@@ -52,6 +52,11 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
+    public List<User> findByRole(AuthorityEnum role) {
+        return userRepository.findByAuthoritiesName(role);
+    }
+
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }

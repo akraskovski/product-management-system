@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(final WebSecurity web) throws Exception {
+    public void configure(final WebSecurity web) {
         web.ignoring()
                 .antMatchers("/v2/api-docs", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**",
                         "/health/");
@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/auth/login").permitAll()
+                .antMatchers("/image/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/store/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/").permitAll()
                 .antMatchers(HttpMethod.POST, "/product/**").hasAuthority(ROLE_ADMIN.name())

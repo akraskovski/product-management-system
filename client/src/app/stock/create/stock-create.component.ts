@@ -6,7 +6,7 @@ import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {regex} from "../../constants/regex";
 import {User} from "../../model/user";
-// import {StockService} from "../stock.service";
+import {StockService} from "../stock.service";
 import {AuthorityWorker} from "../../common/authority-worker";
 
 @Component({
@@ -17,19 +17,19 @@ export class StockCreateComponent implements OnInit {
     stockForm: FormGroup;
     managerId: string;
     allManagers: User[];
-    loading;
+    loading: boolean;
 
-    constructor(private commonService: CommonService,/* private stockService: StockService,*/ private router: Router) {
+    constructor(private commonService: CommonService, private stockService: StockService, private router: Router) {
         this.loading = false;
         this.allManagers = [];
+        this.managerId = null;
     }
 
     ngOnInit(): void {
-        // this.stockService.getAllManagers().subscribe(
-        //     allManagers => this.allManagers = allManagers,
-        //     error => this.logError(error)
-        // );
-
+        this.stockService.getStockManagers().subscribe(
+            allManagers => this.allManagers = allManagers,
+            error => this.logError(error)
+        );
         this.stockForm = new FormGroup({
             specialize: new FormControl('', Validators.required),
             address: new FormControl(''),
@@ -50,9 +50,10 @@ export class StockCreateComponent implements OnInit {
     private createAndFillStock(): Stock {
         let stock: Stock = new Stock();
         stock.specialize = this.stockForm.value.specialize;
-        stock.address= this.stockForm.value.address;
-        stock.phone= this.stockForm.value.phone;
-        stock.square= this.stockForm.value.square;
+        stock.address = this.stockForm.value.address;
+        stock.phone = this.stockForm.value.phone;
+        stock.square = this.stockForm.value.square;
+        stock.managerId = this.managerId;
         return stock;
     }
 
