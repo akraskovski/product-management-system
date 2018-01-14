@@ -63,7 +63,9 @@ export class StockCreateComponent implements OnInit {
 
     logError(error: Error): void {
         this.loading = false;
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        const message = error.message ? error.message : error.toString();
+        alert(message);
+        console.error('There was an error: ' + message);
+        this.router.navigate(['/stock']);
     }
 }

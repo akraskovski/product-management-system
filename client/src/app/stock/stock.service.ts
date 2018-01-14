@@ -3,6 +3,7 @@ import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {Observable} from "rxjs";
 import {api} from "../constants/api";
 import {AuthorityWorker} from "../common/authority-worker";
+import {CommonService} from "../common/common.service";
 
 @Injectable()
 export class StockService {
@@ -30,6 +31,16 @@ export class StockService {
                     return response.json();
                 } else {
                     throw new Error("Response status: " + response.status);
+                }
+            });
+    }
+
+    addProductToStock(stockId: string, productId: string): Observable<any> {
+        const url: string = api.STOCK + "/" + stockId + "/product/" + productId;
+        return this.http.put(url, null, CommonService.generateOptions())
+            .map((response: Response) => {
+                if (response.status != 204) {
+                    throw new Error('Entity not found! code status: ' + response.status);
                 }
             });
     }
