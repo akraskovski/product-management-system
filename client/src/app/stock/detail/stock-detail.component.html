@@ -60,9 +60,9 @@
         <div class="panel panel-default">
             <div class="panel-heading text-center"><h4>Products, available in warehouse</h4></div>
             <div class="panel-body">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">+
+                <button type="button" class="btn btn-primary" data-toggle="modal" (click)="loadPossibleProducts()" data-target="#myModal">+
                 </button>
-                <table class="table table-bordered table-striped table-hover">
+                <table class="table table-bordered table-striped table-hover" *ngIf="selectedProducts">
                     <thead>
                     <tr>
                         <th>Id</th>

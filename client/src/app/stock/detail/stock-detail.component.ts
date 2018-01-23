@@ -3,7 +3,7 @@ import {Product} from "../../model/product";
 import {Stock} from "../../model/stock";
 import {CommonService} from "../../common/common.service";
 import {StockService} from "../stock.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {api} from "../../constants/api";
 
 @Component({
@@ -25,7 +25,6 @@ export class StockDetailComponent implements OnInit {
 
     constructor(private commonService: CommonService,
                 private stockService: StockService,
-                private router: Router,
                 private route: ActivatedRoute) {
         this.stock = new Stock();
         this.selectedProducts = [];
@@ -47,7 +46,11 @@ export class StockDetailComponent implements OnInit {
                         products => this.selectedProducts = products
                     );
                 },
-                error => this.logError(error));
+                error => this.logError(error)
+            );
+    }
+
+    public loadPossibleProducts(): void {
         this.commonService.loadAll(api.PRODUCT)
             .subscribe(
                 productList => {
@@ -107,15 +110,13 @@ export class StockDetailComponent implements OnInit {
     }
 
     onAddProduct(product: Product): void {
-        console.log("add product: " + product);
-        this.commonService.addProductToStock(this.stock.id, product.id)
-            .subscribe(
-                () => console.log("dobavil"),
+        this.stockService.addProductToStock(this.stock.id, product.id)
+            .subscribe(() => this.load(),
                 error => this.logError(error));
     }
 
     private logError(error: Error): void {
         console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        window.location.reload();
     }
 }

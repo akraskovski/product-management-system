@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {AuthorityWorker} from "./authority-worker";
 import {Observable} from "rxjs";
-import {api} from "../constants/api";
 
 @Injectable()
 export class CommonService {
@@ -97,26 +96,10 @@ export class CommonService {
     remove(URL: string, identifier: string): Observable<any> {
         return this.http.delete(URL + "/" + identifier, CommonService.generateOptions())
             .map((response) => {
-                if (response.status != 200) {
+                if (response.status != 200 && response.status != 204) {
                     throw new Error('Exception: ' + response.status);
                 }
             })
-    }
-
-    addProductToStock(stockId: string, productId: string): Observable<any> {
-        console.log(stockId, productId);
-        const url: string = api.STOCK + "/" + stockId + "/product/" + productId;
-        const headers: Headers = new Headers({'x-auth-token': AuthorityWorker.getCurrentUser().token});
-        return this.http.put(url, headers)
-            .map((response: Response) => {
-                if (response.status == 204) {
-                    console.log("success");
-                } else if (response.status == 403) {
-                    console.log("Forbidden: ", response);
-                } else {
-                    throw new Error('Entity not found! code status: ' + response.status);
-                }
-            });
     }
 
     static generateOptions(): RequestOptions {
