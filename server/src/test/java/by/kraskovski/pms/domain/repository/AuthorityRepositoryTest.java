@@ -1,7 +1,7 @@
 package by.kraskovski.pms.domain.repository;
 
-import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Authority;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

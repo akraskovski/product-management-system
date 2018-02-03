@@ -1,7 +1,7 @@
 package by.kraskovski.pms.domain.service;
 
-import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.model.Authority;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.repository.AuthorityRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

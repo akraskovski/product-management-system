@@ -4,10 +4,10 @@ import by.kraskovski.pms.domain.model.Authority;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static by.kraskovski.pms.application.validation.Patterns.PASSWORD_PATTERN;
 import static by.kraskovski.pms.application.validation.Patterns.PHONE_PATTERN;

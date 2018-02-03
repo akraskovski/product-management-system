@@ -52,7 +52,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public List<User> findByRole(AuthorityEnum role) {
+    public List<User> findByRole(final AuthorityEnum role) {
         return userRepository.findByAuthoritiesName(role);
     }
 

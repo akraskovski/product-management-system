@@ -105,7 +105,7 @@ public class JwtService implements TokenService {
 
     private Authentication validatePasswordFromToken(final Jws<Claims> tokenData, final Authentication jwtAuth) {
         final String tokenPassword = tokenData.getBody().get("password").toString();
-        if(tokenPassword.equals(jwtAuth.getCredentials())) {
+        if (tokenPassword.equals(jwtAuth.getCredentials())) {
             jwtAuth.setAuthenticated(true);
             return jwtAuth;
         }
