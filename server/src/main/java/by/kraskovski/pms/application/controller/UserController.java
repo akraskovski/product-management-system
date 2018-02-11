@@ -1,7 +1,6 @@
 package by.kraskovski.pms.application.controller;
 
 import by.kraskovski.pms.application.controller.dto.UserDto;
-import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.User;
 import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.service.UserService;

@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.persistence.EntityNotFoundException;
-
 import java.util.UUID;
 
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;

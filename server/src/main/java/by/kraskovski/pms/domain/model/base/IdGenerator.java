@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- *  Entities custom identifier generator
+ * Entities custom identifier generator
  */
 public class IdGenerator implements IdentifierGenerator {
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Abstract CRUD operations service for models.
+ *
  * @param <T> any model, extends from {@link BaseEntity} with unique id.
  */
 public interface CRUDService<T extends BaseEntity> {

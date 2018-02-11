@@ -2,10 +2,10 @@ package by.kraskovski.pms.application.controller.config;
 
 import by.kraskovski.pms.application.controller.dto.TokenDto;
 import by.kraskovski.pms.application.security.model.JwtAuthenticationFactory;
-import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
+import by.kraskovski.pms.application.security.service.TokenService;
 import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.User;
-import by.kraskovski.pms.application.security.service.TokenService;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.service.AuthorityService;
 import by.kraskovski.pms.domain.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
