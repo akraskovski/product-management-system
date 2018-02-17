@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
@@ -33,7 +34,7 @@ public class ImageService implements FileService {
     private static String root;
 
     @PostConstruct
-    public void init() {
+    public void init() throws IOException {
         final String os = System.getProperty("os.name");
         final String defaultDir = System.getProperty("user.home") + "/pms";
 
@@ -43,10 +44,9 @@ public class ImageService implements FileService {
             root = ofNullable(winDir).orElse(defaultDir);
         }
 
-        try {
+        final Path directoryPath = Paths.get(root);
+        if (!Files.exists(directoryPath)) {
             Files.createDirectory(Paths.get(root));
-        } catch (IOException e) {
-            log.warn("directory: \"" + root + "\" already exists!");
         }
     }
 
@@ -86,11 +86,7 @@ public class ImageService implements FileService {
     }
 
     @Override
-    public void deleteAll() {
-        try {
-            FileUtils.cleanDirectory(new File(root));
-        } catch (IOException e) {
-            log.error(e.getLocalizedMessage());
-        }
+    public void deleteAll() throws IOException {
+        FileUtils.cleanDirectory(new File(root));
     }
 }
