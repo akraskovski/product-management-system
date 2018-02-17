@@ -1,4 +1,4 @@
-package by.kraskovski.pms.domain.audit;
+package by.kraskovski.pms.audit;
 
 /**
  * General cross-count auditing logic interface.
