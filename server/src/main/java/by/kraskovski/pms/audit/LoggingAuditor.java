@@ -1,4 +1,4 @@
-package by.kraskovski.pms.domain.audit;
+package by.kraskovski.pms.audit;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
