@@ -22,6 +22,8 @@ export class UserUpdateComponent implements OnInit {
         this.availableAuthorities = [];
         this.selectedAuthorities = [];
         this.loading = false;
+        this.user = new User();
+        this.user.createDate = null;
     }
 
     ngOnInit(): void {

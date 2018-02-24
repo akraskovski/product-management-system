@@ -9,7 +9,7 @@ export class User {
     avatar?: string;
     phone?: string;
     email?: string;
-    createDate?: any;
+    createDate?: Date;
     authorities: Authority[];
     token: string;
 }
