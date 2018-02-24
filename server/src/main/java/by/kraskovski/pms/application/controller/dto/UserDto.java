@@ -19,18 +19,13 @@ import static by.kraskovski.pms.application.validation.Patterns.PHONE_PATTERN;
 @Setter
 public class UserDto {
     private String id;
-
     @NotNull
     private String username;
-
-    @NotNull
     @Pattern(regexp = PASSWORD_PATTERN)
     private String password;
-
     private String firstName;
     private String lastName;
     private String email;
-
     @Pattern(regexp = PHONE_PATTERN)
     private String phone;
     private String avatar;

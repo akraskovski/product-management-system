@@ -5,6 +5,7 @@ import {CommonService} from "../../common/common.service";
 import {StockService} from "../stock.service";
 import {ActivatedRoute} from "@angular/router";
 import {api} from "../../constants/api";
+import {StockItem} from "../../model/stock-item";
 
 @Component({
     selector: 'stock-detail-component',
@@ -13,9 +14,8 @@ import {api} from "../../constants/api";
 })
 export class StockDetailComponent implements OnInit {
     stock: Stock;
-    selectedProducts: Product[];
+    selectedProducts: StockItem[];
     productList: Product[];
-    selectedProduct: Product;
     filteredItems: Product[];
     pageSize: number = 10;
     pages: number;
@@ -43,7 +43,7 @@ export class StockDetailComponent implements OnInit {
                 stock => {
                     this.stock = stock;
                     this.stockService.getStockProducts(this.stock.id).subscribe(
-                        products => this.selectedProducts = products
+                        (products: StockItem[]) => this.selectedProducts = products
                     );
                 },
                 error => this.logError(error)
