@@ -115,6 +115,12 @@ export class StockDetailComponent implements OnInit {
                 error => this.logError(error));
     }
 
+    onDeleteProduct(product: Product): void {
+        this.stockService.deleteProductFromStock(this.stock.id, product.id)
+            .subscribe(() => this.load(),
+                error => this.logError(error));
+    }
+
     private logError(error: Error): void {
         console.error('There was an error: ' + error.message ? error.message : error.toString());
         window.location.reload();

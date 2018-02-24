@@ -44,4 +44,14 @@ export class StockService {
                 }
             });
     }
+
+    deleteProductFromStock(stockId: string, productId: string): Observable<any> {
+        const url: string = api.STOCK + "/" + stockId + "/product/" + productId;
+        return this.http.delete(url, CommonService.generateOptions())
+            .map((response: Response) => {
+                if (response.status != 204) {
+                    throw new Error('Entity not found! code status: ' + response.status);
+                }
+            });
+    }
 }

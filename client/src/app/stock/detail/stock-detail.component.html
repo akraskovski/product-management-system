@@ -80,6 +80,7 @@
                         <td>{{stockItem.product.cost}}</td>
                         <td>{{stockItem.product.type}}</td>
                         <td>{{stockItem.productsCount}}</td>
+                        <td><a class="btn btn-default" (click)="onDeleteProduct(stockItem.product)">del</a></td>
                     </tr>
                     </tbody>
                 </table>
