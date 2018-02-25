@@ -6,6 +6,7 @@ import {Authority} from "../../model/authority";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {regex} from "../../constants/regex";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
     selector: 'user-create-component',
@@ -17,7 +18,9 @@ export class UserCreateComponent {
     selectedAuthorities: Authority[];
     loading: boolean;
 
-    constructor(private userService: CommonService, private router: Router) {
+    constructor(private userService: CommonService,
+                private router: Router,
+                private notificationService: NotificationService) {
         this.availableAuthorities = [];
         this.selectedAuthorities = [];
         this.loading = false;
@@ -75,7 +78,6 @@ export class UserCreateComponent {
 
     logError(error: Error): void {
         this.loading = false;
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        this.notificationService.error(error.message);
     }
 }

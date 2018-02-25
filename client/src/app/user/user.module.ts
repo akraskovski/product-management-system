@@ -13,6 +13,7 @@ import {TranslateModule} from "../translate/translate.module";
 import {UserAboutComponent} from "./me/user-about.component";
 import {UserService} from "./user.service";
 import {UserAboutEditComponent} from "./me/user-about-edit.component";
+import {NotificationService} from "../notification/notification.service";
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import {UserAboutEditComponent} from "./me/user-about-edit.component";
     ],
     providers: [
         UserService,
-        CommonService
+        CommonService,
+        NotificationService
     ]
 })
 export class UserModule {

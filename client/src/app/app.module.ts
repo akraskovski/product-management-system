@@ -14,6 +14,8 @@ import {UserModule} from "./user/user.module";
 import {StockModule} from "./stock/stock.module";
 import {StoreModule} from "./store/store.module";
 import {TranslateModule} from "./translate/translate.module";
+import {NotificationService} from "./notification/notification.service";
+import {NotificationComponent} from "./notification/notification.component";
 
 @NgModule({
     imports: [
@@ -32,12 +34,14 @@ import {TranslateModule} from "./translate/translate.module";
     ],
     declarations: [
         AppComponent,
-        AuthorizationComponent
+        AuthorizationComponent,
+        NotificationComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         AuthorizationService,
-        SecurityService
+        SecurityService,
+        NotificationService
     ],
     bootstrap: [AppComponent]
 })
