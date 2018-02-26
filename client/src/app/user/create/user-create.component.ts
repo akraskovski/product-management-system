@@ -7,6 +7,7 @@ import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {regex} from "../../constants/regex";
 import {NotificationService} from "../../notification/notification.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'user-create-component',
@@ -62,8 +63,11 @@ export class UserCreateComponent {
         user.phone = this.userForm.value.phone;
         this.userService.create(api.USER, user)
             .subscribe(
-                () => this.router.navigate(['/']).then(() => this.router.navigate(['user'])),
-                err => this.logError(err));
+                () => {
+                    this.notificationService.success("User successfully created");
+                    this.router.navigate(['/']).then(() => this.router.navigate(['user']));
+                },
+                (err: HttpErrorResponse) => this.logError(err));
     }
 
     addAuthorityToSelected(authority: Authority): void {

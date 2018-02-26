@@ -1,27 +1,24 @@
 import {Component, OnInit} from "@angular/core";
 import {User} from "../../model/user";
 import {UserService} from "../user.service";
-import {Router} from "@angular/router";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
     selector: 'user-about-component',
     templateUrl: 'user-about.component.html'
 })
-export class UserAboutComponent implements OnInit{
+export class UserAboutComponent implements OnInit {
     user: User;
 
-    constructor(private userService: UserService, private router: Router) {
+    constructor(private notificationService: NotificationService,
+                private userService: UserService) {
         this.user = new User();
     }
 
     ngOnInit(): void {
         this.userService.getCurrentUser()
             .subscribe(userDto => this.user = userDto,
-                error => this.logError(error));
-    }
+                error => this.notificationService.error(error.message));
 
-    logError(error: Error): void {
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
     }
 }

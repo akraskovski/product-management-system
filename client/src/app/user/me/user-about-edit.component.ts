@@ -5,16 +5,19 @@ import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {regex} from "../../constants/regex";
 import {api} from "../../constants/api";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
     selector: 'user-about-edit-component',
     templateUrl: 'user-about-edit.component.html'
 })
-export class UserAboutEditComponent implements OnInit{
+export class UserAboutEditComponent implements OnInit {
     user: User;
     userForm: FormGroup;
 
-    constructor(private userService: UserService, private router: Router) {
+    constructor(private notificationService: NotificationService,
+                private userService: UserService,
+                private router: Router) {
         this.user = new User();
     }
 
@@ -38,15 +41,19 @@ export class UserAboutEditComponent implements OnInit{
             .subscribe(
                 (userDto: User) => {
                     this.user = userDto;
-                    this.userForm.setValue({
-                        username: this.user.username,
-                        firstName: this.user.firstName,
-                        lastName: this.user.lastName,
-                        email: this.user.email,
-                        phone: this.user.phone,
-                    });
+                    //todo: fix ebanoe govno
+                    if (this.user.username)
+                        this.userForm.setValue({username: this.user.username});
+                    if (this.user.email)
+                        this.userForm.setValue({email: this.user.email});
+                    if (this.user.phone)
+                        this.userForm.setValue({phone: this.user.phone});
+                    if (this.user.firstName)
+                        this.userForm.setValue({firstName: this.user.firstName});
+                    if (this.user.lastName)
+                        this.userForm.setValue({lastName: this.user.lastName});
                 },
-                error => this.logError(error));
+                error => this.notificationService.error(error.message));
     }
 
     onSubmit(): void {
@@ -57,12 +64,10 @@ export class UserAboutEditComponent implements OnInit{
         this.user.phone = this.userForm.value.phone;
         this.userService.update(api.USER, this.user)
             .subscribe(
-                () => this.router.navigate(['/']).then(() => this.router.navigate(['me'])),
-                error => this.logError(error));
-    }
-
-    logError(error: Error): void {
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+                () => {
+                    this.notificationService.success("Profile info successfully updated");
+                    this.router.navigate(['/']).then(() => this.router.navigate(['me']))
+                },
+                error => this.notificationService.error(error.message));
     }
 }

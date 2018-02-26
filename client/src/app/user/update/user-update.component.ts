@@ -6,6 +6,7 @@ import {Authority} from "../../model/authority";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {CommonFunctions} from "../../common/common-functions";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
     selector: 'user-update-component',
@@ -18,7 +19,10 @@ export class UserUpdateComponent implements OnInit {
     availableAuthorities: Authority[];
     selectedAuthorities: Authority[];
 
-    constructor(private userService: CommonService, private router: Router, private route: ActivatedRoute) {
+    constructor(private notificationService: NotificationService,
+                private userService: CommonService,
+                private router: Router,
+                private route: ActivatedRoute) {
         this.availableAuthorities = [];
         this.selectedAuthorities = [];
         this.loading = false;
@@ -67,7 +71,10 @@ export class UserUpdateComponent implements OnInit {
         this.user.authorities = this.selectedAuthorities;
         this.userService.update(api.USER, this.user)
             .subscribe(
-                () => this.router.navigate(['/']).then(() => this.router.navigate(['user'])),
+                () => {
+                    this.notificationService.success("Profile info successfully updated");
+                    this.router.navigate(['/']).then(() => this.router.navigate(['user']))
+                },
                 error => this.logError(error));
     }
 
@@ -75,7 +82,10 @@ export class UserUpdateComponent implements OnInit {
         if (this.user.id !== "") {
             this.userService.remove(api.USER, this.user.id)
                 .subscribe(
-                    () => this.router.navigate(['/']).then(() => this.router.navigate(['user'])),
+                    () => {
+                        this.notificationService.success("User profile deleted");
+                        this.router.navigate(['/']).then(() => this.router.navigate(['user']))
+                    },
                     error => this.logError(error));
         }
     }
@@ -92,7 +102,6 @@ export class UserUpdateComponent implements OnInit {
 
     logError(error: Error): void {
         this.loading = false;
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        this.notificationService.error(error.message);
     }
 }
