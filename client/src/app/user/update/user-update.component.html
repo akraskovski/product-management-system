@@ -1,6 +1,16 @@
 <div class="col-sm-8">
     <h3>{{'Edit User Form' | translate}}</h3>
     <form name="form" novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group" *ngIf="user.createDate">
+            <div class="col-sm-6">
+                <label for="createdDate">{{'Created date' | translate}}</label>
+            </div>
+            <div class="col-sm-6">
+                <p id="createdDate">{{user.createDate}}</p>
+            </div>
+        </div>
+
         <div class="form-group">
             <label for="username">{{'Username' | translate}}*</label>
             <input type="text" class="form-control" id="username" formControlName="username" required/>
@@ -49,7 +59,9 @@
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" [disabled]="userForm.invalid || loading" class="btn btn-primary">{{'Submit' | translate}}</button>
+            <button type="submit" [disabled]="userForm.invalid || loading" class="btn btn-primary">{{'Submit' |
+                translate}}
+            </button>
             <button type="button" class="btn btn-danger" (click)="onDelete()">{{'Remove' | translate}}</button>
             <img *ngIf="loading"
                  src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>

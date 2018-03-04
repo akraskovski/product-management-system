@@ -60,7 +60,8 @@
         <div class="panel panel-default">
             <div class="panel-heading text-center"><h4>Products, available in warehouse</h4></div>
             <div class="panel-body">
-                <button type="button" class="btn btn-primary" data-toggle="modal" (click)="loadPossibleProducts()" data-target="#myModal">+
+                <button type="button" class="btn btn-primary" data-toggle="modal" (click)="loadPossibleProducts()"
+                        data-target="#myModal">+
                 </button>
                 <table class="table table-bordered table-striped table-hover" *ngIf="selectedProducts">
                     <thead>
@@ -69,14 +70,17 @@
                         <th>{{'Name' | translate}}</th>
                         <th>{{'Cost' | translate}}($)</th>
                         <th>{{'Type' | translate}}</th>
+                        <th>{{'Count' | translate}}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let product of selectedProducts">
-                        <td>{{product.id}}</td>
-                        <td>{{product.name}}</td>
-                        <td>{{product.cost}}</td>
-                        <td>{{product.type}}</td>
+                    <tr *ngFor="let stockItem of selectedProducts">
+                        <td>{{stockItem.product.id}}</td>
+                        <td>{{stockItem.product.name}}</td>
+                        <td>{{stockItem.product.cost}}</td>
+                        <td>{{stockItem.product.type}}</td>
+                        <td>{{stockItem.productsCount}}</td>
+                        <td><a class="btn btn-default" (click)="onDeleteProduct(stockItem.product)">del</a></td>
                     </tr>
                     </tbody>
                 </table>
