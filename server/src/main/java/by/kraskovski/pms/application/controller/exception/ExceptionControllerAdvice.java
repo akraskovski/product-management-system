@@ -1,6 +1,6 @@
 package by.kraskovski.pms.application.controller.exception;
 
-import by.kraskovski.pms.application.controller.dto.ErrorDto;
+import by.kraskovski.pms.application.controller.dto.error.ErrorDto;
 import by.kraskovski.pms.application.security.exception.UserNotFoundException;
 import by.kraskovski.pms.domain.service.exception.FileNotFoundException;
 import by.kraskovski.pms.domain.service.exception.FileUploadException;
@@ -29,7 +29,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity handleBadCredentialsException(final BadCredentialsException e) {
         log.warn("User authentication failed! Cause: {}", e.getMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(ErrorDto.createServerErrorDto(e.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     /**
@@ -38,7 +38,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity handleDataAccessException(final DataAccessException e) {
         log.warn("Database exception: {}", e.getMessage());
-        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(ErrorDto.createServerErrorDto(e.getLocalizedMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -47,7 +47,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity handleIllegalArgumentException(final IllegalArgumentException e) {
         log.warn("Illegal argument: {}", e.getMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ErrorDto.createServerErrorDto(e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -56,7 +56,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(FileUploadException.class)
     public ResponseEntity handleFileUploadException(final FileUploadException e) {
         log.warn("Error during uploading file: {}", e.getMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ErrorDto.createServerErrorDto(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(FileNotFoundException.class)
     public ResponseEntity handleFileNotFoundException(final FileNotFoundException e) {
         log.warn("FileNotFound exception: {}", e.getMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ErrorDto.createServerErrorDto(e.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -74,7 +74,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity handleUserNotFoundException(final UserNotFoundException e) {
         log.warn(e.getMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ErrorDto.createServerErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -83,7 +83,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity handleEntityNotFoundException(final EntityNotFoundException e) {
         log.warn("Resource not found: {}", e.getLocalizedMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ErrorDto.createServerErrorDto(e.getLocalizedMessage()), HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -95,7 +95,7 @@ public class ExceptionControllerAdvice {
         e.getConstraintViolations().forEach(violation -> builder.append(
                 String.format("%s Current value: %s", violation.getMessage(), violation.getInvalidValue())));
         log.warn(builder.toString());
-        return ResponseEntity.badRequest().body(new ErrorDto(builder.toString()));
+        return ResponseEntity.badRequest().body(ErrorDto.createServerErrorDto(builder.toString()));
     }
 
     /**
@@ -104,6 +104,6 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity handleExpiredJwtException(final ExpiredJwtException e) {
         log.warn(e.getLocalizedMessage());
-        return new ResponseEntity<>(new ErrorDto(e.getLocalizedMessage()), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(ErrorDto.createServerErrorDto(e.getLocalizedMessage()), HttpStatus.FORBIDDEN);
     }
 }

@@ -107,7 +107,7 @@ public class ProductControllerIT extends ControllerTestConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(content().string("[]"));
+                .andExpect(content().string("[ ]"));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class ProductControllerIT extends ControllerTestConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(content().string("[]"));
+                .andExpect(content().string("[ ]"));
     }
 
     @Test
