@@ -7,12 +7,14 @@ import {api} from "../../constants/api";
 import {Store} from "../../model/store";
 import {regex} from "../../constants/regex";
 import {ImageService} from "../../common/image.service";
+import {CommonFunctions} from "../../common/common-functions";
 
 @Component({
     selector: 'store-create-component',
     templateUrl: 'store-create.component.html'
 })
 export class StoreCreateComponent {
+    getImageUrl = CommonFunctions.getImageUrl;
     storeForm: FormGroup;
     availableStocks: Stock[];
     selectedStocks: Stock[];
@@ -70,10 +72,6 @@ export class StoreCreateComponent {
                     (id) => this.store.logo = id,
                     error => this.logError(error));
         }
-    }
-
-    getImageUrl(id: string): string {
-        return api.SERVER + 'image/' + id;
     }
 
     onSubmit(): void {

@@ -13,6 +13,7 @@ import {CommonService} from "../common/common.service";
 import {ProductRoutingModule} from "./product-routing.module";
 import {TranslateModule} from "../translate/translate.module";
 import {ImageService} from "../common/image.service";
+import {NotificationService} from "../notification/notification.service";
 @NgModule({
     imports: [
         BrowserModule,
@@ -33,7 +34,8 @@ import {ImageService} from "../common/image.service";
     ],
     providers: [
         CommonService,
-        ImageService
+        ImageService,
+        NotificationService
     ]
 })
 export class ProductModule {

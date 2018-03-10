@@ -13,6 +13,7 @@ import {ImageService} from "../../common/image.service";
     templateUrl: 'store-update.component.html'
 })
 export class StoreUpdateComponent {
+    getImageUrl = CommonFunctions.getImageUrl;
     storeForm: FormGroup;
     loading: boolean;
     store: Store;
@@ -93,10 +94,6 @@ export class StoreUpdateComponent {
                     (id) => this.store.logo = id,
                     error => this.logError(error));
         }
-    }
-
-    getImageUrl(id: string): string {
-        return api.SERVER + 'image/' + id;
     }
 
     onSubmit(): void {

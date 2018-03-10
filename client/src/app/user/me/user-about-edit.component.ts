@@ -28,7 +28,6 @@ export class UserAboutEditComponent implements OnInit {
 
     private createEmptyForm(): void {
         this.userForm = new FormGroup({
-            username: new FormControl('', Validators.required),
             firstName: new FormControl(),
             lastName: new FormControl(),
             email: new FormControl('', Validators.pattern(regex.EMAIL)),
@@ -41,23 +40,17 @@ export class UserAboutEditComponent implements OnInit {
             .subscribe(
                 (userDto: User) => {
                     this.user = userDto;
-                    //todo: fix ebanoe govno
-                    if (this.user.username)
-                        this.userForm.setValue({username: this.user.username});
-                    if (this.user.email)
-                        this.userForm.setValue({email: this.user.email});
-                    if (this.user.phone)
-                        this.userForm.setValue({phone: this.user.phone});
-                    if (this.user.firstName)
-                        this.userForm.setValue({firstName: this.user.firstName});
-                    if (this.user.lastName)
-                        this.userForm.setValue({lastName: this.user.lastName});
+                    this.userForm.setValue({
+                        firstName: this.user.firstName,
+                        lastName: this.user.lastName,
+                        email: this.user.email,
+                        phone: this.user.phone
+                    });
                 },
                 error => this.notificationService.error(error.message));
     }
 
     onSubmit(): void {
-        this.user.username = this.userForm.value.username;
         this.user.firstName = this.userForm.value.firstName;
         this.user.lastName = this.userForm.value.lastName;
         this.user.email = this.userForm.value.email;

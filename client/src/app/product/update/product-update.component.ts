@@ -6,17 +6,21 @@ import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {regex} from "../../constants/regex";
 import {ImageService} from "../../common/image.service";
+import {NotificationService} from "../../notification/notification.service";
+import {CommonFunctions} from "../../common/common-functions";
 
 @Component({
     selector: 'product-update-component',
     templateUrl: 'product-update.component.html'
 })
 export class ProductUpdateComponent implements OnInit {
+    getImageUrl = CommonFunctions.getImageUrl;
     productForm: FormGroup;
     loading: boolean;
     product: Product;
 
-    constructor(private productService: CommonService,
+    constructor(private notificationService: NotificationService,
+                private productService: CommonService,
                 private imageService: ImageService,
                 private router: Router,
                 private route: ActivatedRoute) {
@@ -104,13 +108,8 @@ export class ProductUpdateComponent implements OnInit {
                 err => this.logError(err));
     }
 
-    getImageUrl(id: string): string {
-        return api.SERVER + 'image/' + id;
-    }
-
     logError(error): void {
         this.loading = false;
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        this.notificationService.error(error.message ? error.message : error.toString());
     }
 }
