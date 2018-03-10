@@ -109,7 +109,7 @@ public class StoreControllerIT extends ControllerTestConfig {
         mvc.perform(get(BASE_STORE_URL + "/" + store.getId() + "/stock-manage")
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
-                .andExpect(content().string("[]"));
+                .andExpect(content().string("[ ]"));
     }
 
     @Test
@@ -154,7 +154,7 @@ public class StoreControllerIT extends ControllerTestConfig {
         mvc.perform(get(BASE_STORE_URL + "/" + store.getId() + "/stock-manage")
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
-                .andExpect(content().string("[]"));
+                .andExpect(content().string("[ ]"));
     }
 
     @Test
