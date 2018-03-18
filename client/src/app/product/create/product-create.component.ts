@@ -6,17 +6,23 @@ import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {regex} from "../../constants/regex";
 import {ImageService} from "../../common/image.service";
+import {NotificationService} from "../../notification/notification.service";
+import {CommonFunctions} from "../../common/common-functions";
 
 @Component({
     selector: 'product-create-component',
     templateUrl: 'product-create.component.html'
 })
 export class ProductCreateComponent implements OnInit {
+    getImageUrl = CommonFunctions.getImageUrl;
     productForm: FormGroup;
     product: Product;
     loading: boolean;
 
-    constructor(private productService: CommonService, private imageService: ImageService, private router: Router) {
+    constructor(private notificationService: NotificationService,
+                private productService: CommonService,
+                private imageService: ImageService,
+                private router: Router) {
         this.loading = false;
         this.product = new Product();
     }
@@ -69,22 +75,20 @@ export class ProductCreateComponent implements OnInit {
         }
     }
 
-    getImageUrl(id: string): string {
-        return api.SERVER + 'image/' + id;
-    }
-
     onSubmit(): void {
         this.loading = true;
         this.fillProduct();
         this.productService.create(api.PRODUCT, this.product)
             .subscribe(
-                () => this.router.navigate(['product/product-content']),
+                () => {
+                    this.notificationService.success("Product was successfully created");
+                    this.router.navigate(['product/product-content'])
+                },
                 error => this.logError(error));
     }
 
     logError(error: Error) {
         this.loading = false;
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        this.notificationService.error(error.message ? error.message : error.toString());
     }
 }

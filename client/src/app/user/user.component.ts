@@ -4,6 +4,7 @@ import {CommonService} from "../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../constants/api";
 import {UserService} from "./user.service";
+import {NotificationService} from "../notification/notification.service";
 
 @Component({
     selector: 'user-component',
@@ -15,7 +16,10 @@ export class UserComponent implements OnInit {
     selectedUser: User;
     user: User;
 
-    constructor(private commonService: CommonService, private userService: UserService, private router: Router) {
+    constructor(private notificationService: NotificationService,
+                private commonService: CommonService,
+                private userService: UserService,
+                private router: Router) {
         this.userList = [];
         this.user = new User();
     }
@@ -51,7 +55,6 @@ export class UserComponent implements OnInit {
     }
 
     logError(error: Error): void {
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        this.notificationService.error(error.message ? error.message : error.toString());
     }
 }

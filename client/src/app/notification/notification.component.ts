@@ -20,7 +20,7 @@ export class NotificationComponent implements OnInit {
                 this.showNotification = true;
                 setTimeout(function () {
                     this.showNotification = false;
-                }.bind(this), 10000);
+                }.bind(this), 7000);
             });
     }
 

@@ -4,12 +4,15 @@ import {Router} from "@angular/router";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {AuthorityWorker} from "../../common/authority-worker";
+import {NotificationService} from "../../notification/notification.service";
+import {CommonFunctions} from "../../common/common-functions";
 
 @Component({
     selector: 'product-content-component',
     templateUrl: 'product-content.component.html'
 })
 export class ProductContentComponent extends AuthorityWorker implements OnInit {
+    getImageUrl = CommonFunctions.getImageUrl;
     productList: Product[];
     selectedProduct: Product;
     filteredItems: Product[];
@@ -19,7 +22,9 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
     pagesIndex: number[];
     pageStart: number;
 
-    constructor(private productService: CommonService, private router: Router) {
+    constructor(private notificationService: NotificationService,
+                private productService: CommonService,
+                private router: Router) {
         super();
         this.productList = [];
         this.filteredItems = [];
@@ -28,10 +33,6 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
 
     ngOnInit(): void {
         this.load();
-    }
-
-    getImageUrl(id: string): string {
-        return api.SERVER + 'image/' + id;
     }
 
     private load(): void {
@@ -114,7 +115,6 @@ export class ProductContentComponent extends AuthorityWorker implements OnInit {
     }
 
     logError(error: Error): void {
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        this.notificationService.error(error.message ? error.message : error.toString());
     }
 }

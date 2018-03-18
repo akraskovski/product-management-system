@@ -1,3 +1,5 @@
+import {api} from "../constants/api";
+
 export class CommonFunctions {
 
     public static cleanAvailableItems(itemList: any[], selectedItems: any[]): any[] {
@@ -7,6 +9,10 @@ export class CommonFunctions {
                 resultItems.push(item);
         });
         return resultItems;
+    }
+
+    static getImageUrl(id: string): string {
+        return api.SERVER + 'image/' + id;
     }
 
     private static contains(array: any[], obj: any): boolean {
