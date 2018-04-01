@@ -22,11 +22,9 @@
                                     <a style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown" >Manage<span class="caret" ></span></a>
                                     <ul class="dropdown-menu">
                                         <li class="menu-item dropdown dropdown-submenu">
-                                            <a class="btn btn-info" data-toggle="dropdown" (click)="onDetails(store.id)">{{'Manage content' | translate}}</a>
-                                            <a class="btn btn-danger" *ngIf="canWorkWithStore()"
-                                               (click)="onDelete(store.id)">{{'Remove' | translate}}</a>
-                                            <a class="btn btn-warning" *ngIf="canWorkWithStore()"
-                                               (click)="onEdit(store.id)">{{'Edit' | translate}}</a>
+                                            <a class="btn btn-info" data-toggle="dropdown" (click)="onManageContent(store.id)">{{'Manage content' | translate}}</a>
+                                            <a class="btn btn-danger" (click)="onDelete(store.id)">{{'Remove' | translate}}</a>
+                                            <a class="btn btn-warning" (click)="onEdit(store.id)">{{'Edit' | translate}}</a>
                                         </li>
                                     </ul>
                                 </li>

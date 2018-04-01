@@ -6,6 +6,7 @@ import {StoreContentComponent} from "./content/store-content.component";
 import {StoreCreateComponent} from "./create/store-create.component";
 import {StoreUpdateComponent} from "./update/store-update.component";
 import {StoreDetailsComponent} from "./details/store-details.component";
+import {StoreManageComponent} from "./manage/store-manage.component";
 
 export const routes: Routes = [
     {
@@ -33,6 +34,12 @@ export const routes: Routes = [
             {
                 path: 'store-details/:id',
                 component: StoreDetailsComponent
+            },
+            {
+                path: 'store-manage/:id',
+                component: StoreManageComponent,
+                canActivate: [SecurityService],
+                data: {roles: ['ROLE_ADMIN', "ROLE_STORE_MANAGER"]}
             }
         ]
     }

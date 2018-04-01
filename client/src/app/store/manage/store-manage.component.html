@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="col-md-6">
+        <div class="panel-body">
+            <h3>Currently used stocks:</h3>
+            <div *ngFor="let stock of stockList">
+                Stock: {{stock}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel-body">
+            <h3>Another available stocks:</h3>
+            <div *ngFor="let stock of availableStocks">
+                Stock: {{stock}}
+                <a class="btn" (click)="onAddStock(stock.id)">Add</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,6 +15,7 @@ import {TranslateModule} from "../translate/translate.module";
 import {ImageService} from "../common/image.service";
 import {NotificationService} from "../notification/notification.service";
 import {StoreService} from "./store.service";
+import {StoreManageComponent} from "./manage/store-manage.component";
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import {StoreService} from "./store.service";
         StoreContentComponent,
         StoreCreateComponent,
         StoreUpdateComponent,
-        StoreDetailsComponent
+        StoreDetailsComponent,
+        StoreManageComponent
     ],
     providers: [
         CommonService,
