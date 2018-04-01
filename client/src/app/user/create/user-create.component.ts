@@ -43,8 +43,8 @@ export class UserCreateComponent {
         this.userForm = new FormGroup({
             username: new FormControl('', Validators.required),
             password: new FormControl('', [Validators.required, Validators.pattern(regex.PASSWORD)]),
-            firstName: new FormControl(),
-            lastName: new FormControl(),
+            firstName: new FormControl('',Validators.required),
+            lastName: new FormControl('',Validators.required),
             email: new FormControl('', [Validators.required, Validators.pattern(regex.EMAIL)]),
             phone: new FormControl('', [Validators.required, Validators.pattern(regex.PHONE_NUMBER)]),
             avatar: new FormControl()

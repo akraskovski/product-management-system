@@ -2,12 +2,12 @@ import {Component} from "@angular/core";
 import {Store} from "../../model/store";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CommonService} from "../../common/common.service";
-import {Stock} from "../../model/stock";
 import {ActivatedRoute, Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {CommonFunctions} from "../../common/common-functions";
 import {regex} from "../../constants/regex";
 import {ImageService} from "../../common/image.service";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
     selector: 'store-update-component',
@@ -18,13 +18,13 @@ export class StoreUpdateComponent {
     storeForm: FormGroup;
     loading: boolean;
     store: Store;
-    availableStocks: Stock[];
-    selectedStocks: Stock[];
 
-    constructor(private storeService: CommonService, private router: Router, private route: ActivatedRoute, private imageService: ImageService) {
+    constructor(private storeService: CommonService,
+                private router: Router,
+                private route: ActivatedRoute,
+                private imageService: ImageService,
+                private notificationService: NotificationService) {
         this.loading = false;
-        this.availableStocks = [];
-        this.selectedStocks = [];
         this.store = new Store();
     }
 
@@ -50,7 +50,6 @@ export class StoreUpdateComponent {
             .subscribe(
                 store => {
                     this.store = store;
-                    this.loadStocks();
                     this.fillForm(this.store);
                 },
                 error => this.logError(error));
@@ -66,13 +65,6 @@ export class StoreUpdateComponent {
             discounts: store.discounts,
             mail: store.mail
         });
-    }
-
-    private loadStocks(): void {
-        this.storeService.loadAll(api.STOCK)
-            .subscribe(
-                stockList => this.availableStocks = CommonFunctions.cleanAvailableItems(stockList, this.selectedStocks),
-                error => this.logError(error))
     }
 
     fileChange(event) {
@@ -116,19 +108,8 @@ export class StoreUpdateComponent {
         this.store.mail = this.storeForm.value.mail;
     }
 
-    addStockToSelected(stock: Stock): void {
-        this.availableStocks.splice(this.availableStocks.indexOf(stock), 1);
-        this.selectedStocks.push(stock);
-    }
-
-    deleteStockFromSelected(stock: Stock): void {
-        this.selectedStocks.splice(this.selectedStocks.indexOf(stock), 1);
-        this.availableStocks.push(stock);
-    }
-
     private logError(error: Error): void {
         this.loading = false;
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        this.notificationService.error('There was an error: ' + error.message ? error.message : error.toString());
     }
 }
