@@ -47,7 +47,7 @@
                     </address>
                 </div>
             </div>
-            <div *ngIf="selectedStore.stockList.length > 0">
+            <div *ngIf="stockList.length > 0">
                 <div class="panel panel-default">
                     <div class="panel-heading text-center">
                         {{'Available products in store' | translate}}
@@ -62,7 +62,7 @@
                                 <th>{{'Type' | translate}}</th>
                             </tr>
                             </thead>
-                            <tbody *ngFor="let stock of selectedStore.stockList">
+                            <tbody *ngFor="let stock of stockList">
                             <tr *ngFor="let product of stock.productList">
                                 <td>{{product.id}}</td>
                                 <td>{{product.name}}</td>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="!selectedStore.stockList.length > 0">
+            <div *ngIf="!stockList.length > 0">
                 <p>{{'Store is empty' | translate}}... </p>
             </div>
         </div>

@@ -5,6 +5,8 @@ import {api} from "../../constants/api";
 import {ActivatedRoute} from "@angular/router";
 import {CommonFunctions} from "../../common/common-functions";
 import {NotificationService} from "../../notification/notification.service";
+import {StoreService} from "../store.service";
+import {Stock} from "../../model/stock";
 
 @Component({
     selector: 'store-details-component',
@@ -13,20 +15,30 @@ import {NotificationService} from "../../notification/notification.service";
 export class StoreDetailsComponent implements OnInit {
     getImageUrl = CommonFunctions.getImageUrl;
     selectedStore: Store;
+    stockList: Stock[];
 
-    constructor(private storeService: CommonService,
+    constructor(private commonService: CommonService,
+                private storeService: StoreService,
                 private route: ActivatedRoute,
                 private notificationService: NotificationService) {
+        this.stockList = [];
     }
+
 
     ngOnInit(): void {
         this.loadData();
     }
 
     private loadData(): void {
-        this.storeService.loadByIdUnauthorized(api.STORE, this.route.snapshot.params['id'])
+        this.commonService.loadByIdUnauthorized(api.STORE, this.route.snapshot.params['id'])
             .subscribe(
-                store => this.selectedStore = store,
+                store => {
+                    this.selectedStore = store;
+                    this.storeService.getStocks(this.selectedStore.id)
+                        .subscribe(
+                            stockList => this.stockList = stockList,
+                            err => this.logError(err));
+                },
                 err => this.logError(err));
     }
 

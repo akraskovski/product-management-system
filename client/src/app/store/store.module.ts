@@ -14,6 +14,7 @@ import {StoreDetailsComponent} from "./details/store-details.component";
 import {TranslateModule} from "../translate/translate.module";
 import {ImageService} from "../common/image.service";
 import {NotificationService} from "../notification/notification.service";
+import {StoreService} from "./store.service";
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import {NotificationService} from "../notification/notification.service";
     providers: [
         CommonService,
         ImageService,
-        NotificationService
+        NotificationService,
+        StoreService
     ]
 })
 export class StoreModule {
