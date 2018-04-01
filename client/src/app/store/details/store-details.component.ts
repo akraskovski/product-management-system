@@ -2,8 +2,10 @@ import {Component, OnInit} from "@angular/core";
 import {Store} from "../../model/store";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {CommonFunctions} from "../../common/common-functions";
+import {NotificationService} from "../../notification/notification.service";
+
 @Component({
     selector: 'store-details-component',
     templateUrl: 'store-details.component.html'
@@ -12,7 +14,9 @@ export class StoreDetailsComponent implements OnInit {
     getImageUrl = CommonFunctions.getImageUrl;
     selectedStore: Store;
 
-    constructor(private storeService: CommonService, private router: Router, private route: ActivatedRoute) {
+    constructor(private storeService: CommonService,
+                private route: ActivatedRoute,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit(): void {
@@ -26,8 +30,7 @@ export class StoreDetailsComponent implements OnInit {
                 err => this.logError(err));
     }
 
-    private logError(err: Error): void {
-        console.error('There was an error: ' + err);
-        this.router.navigate(['/']);
+    private logError(error: Error): void {
+        this.notificationService.error(error.message ? error.message : error.toString());
     }
 }

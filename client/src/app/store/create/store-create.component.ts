@@ -45,10 +45,10 @@ export class StoreCreateComponent {
             name: new FormControl('', Validators.required),
             details: new FormControl('', Validators.pattern(regex.DETAILS)),
             address: new FormControl(''),
-            phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
+            mail: new FormControl('', [Validators.required, Validators.pattern(regex.EMAIL)]),
+            phone: new FormControl('', [Validators.required, Validators.pattern(regex.PHONE_NUMBER)]),
             skype: new FormControl(''),
             discounts: new FormControl(''),
-            mail: new FormControl(''),
         });
     }
 

@@ -6,6 +6,7 @@ import {StockService} from "../stock.service";
 import {ActivatedRoute} from "@angular/router";
 import {api} from "../../constants/api";
 import {StockItem} from "../../model/stock-item";
+import {User} from "../../model/user";
 
 @Component({
     selector: 'stock-detail-component',
@@ -14,6 +15,7 @@ import {StockItem} from "../../model/stock-item";
 })
 export class StockDetailComponent implements OnInit {
     stock: Stock;
+    manager: User;
     selectedProducts: StockItem[];
     productList: Product[];
     filteredItems: Product[];
@@ -45,6 +47,10 @@ export class StockDetailComponent implements OnInit {
                     this.stockService.getStockProducts(this.stock.id).subscribe(
                         (products: StockItem[]) => this.selectedProducts = products
                     );
+                    this.commonService.loadById(api.USER, this.stock.managerId)
+                        .subscribe(
+                            manager => this.manager = manager,
+                            error => this.logError(error));
                 },
                 error => this.logError(error)
             );

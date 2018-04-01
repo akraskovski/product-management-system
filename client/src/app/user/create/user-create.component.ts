@@ -45,8 +45,8 @@ export class UserCreateComponent {
             password: new FormControl('', [Validators.required, Validators.pattern(regex.PASSWORD)]),
             firstName: new FormControl(),
             lastName: new FormControl(),
-            email: new FormControl('', Validators.pattern(regex.EMAIL)),
-            phone: new FormControl('', Validators.pattern(regex.PHONE_NUMBER)),
+            email: new FormControl('', [Validators.required, Validators.pattern(regex.EMAIL)]),
+            phone: new FormControl('', [Validators.required, Validators.pattern(regex.PHONE_NUMBER)]),
             avatar: new FormControl()
         });
     }

@@ -8,6 +8,7 @@ import {api} from "../../constants/api";
 import {CommonFunctions} from "../../common/common-functions";
 import {regex} from "../../constants/regex";
 import {ImageService} from "../../common/image.service";
+
 @Component({
     selector: 'store-update-component',
     templateUrl: 'store-update.component.html'
@@ -37,10 +38,10 @@ export class StoreUpdateComponent {
             name: new FormControl('', Validators.required),
             details: new FormControl('', Validators.pattern(regex.DETAILS)),
             address: new FormControl(''),
-            phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
+            mail: new FormControl('', [Validators.required, Validators.pattern(regex.EMAIL)]),
+            phone: new FormControl('', [Validators.required, Validators.pattern(regex.PHONE_NUMBER)]),
             skype: new FormControl(''),
             discounts: new FormControl(''),
-            mail: new FormControl(''),
         });
     }
 
