@@ -3,7 +3,7 @@
         <div class="panel-body">
             <h3>Currently used stocks:</h3>
             <div *ngFor="let stock of stockList">
-                Stock: {{stock}}
+                <a href="#">{{stock.specialize}}</a>
             </div>
         </div>
     </div>
@@ -11,7 +11,7 @@
         <div class="panel-body">
             <h3>Another available stocks:</h3>
             <div *ngFor="let stock of availableStocks">
-                Stock: {{stock}}
+                <a href="#">{{stock.specialize}}</a>
                 <a class="btn" (click)="onAddStock(stock.id)">Add</a>
             </div>
         </div>

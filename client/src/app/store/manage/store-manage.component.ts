@@ -44,12 +44,17 @@ export class StoreManageComponent implements OnInit {
     }
 
     public onAddStock(stockId: string): void {
-        //FIX
-        this.storeService.addStock(this.store.id, stockId).subscribe(() => this.notificationService.success("Stock was successfully added"));
+        this.storeService.addStock(this.store.id, stockId).subscribe(
+            () => {
+                this.notificationService.success("Stock was successfully added");
+                this.loadData();
+            },
+            ((error: Error) => this.logError(error)));
     }
 
     private parseStocks(currentStocks: Stock[], availableStocks: Stock[]): Stock[] {
-        return availableStocks.filter(available => currentStocks.indexOf(available) == -1);
+        const currentStocksIds: string[] = currentStocks.map(value => value.id);
+        return availableStocks.filter(available => currentStocksIds.indexOf(available.id) == -1);
     }
 
     private logError(error: Error): void {

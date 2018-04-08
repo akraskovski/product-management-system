@@ -22,18 +22,27 @@ export class StoreService {
     }
 
     addStock(storeId: string, stockId: string): Observable<any> {
+        class RequestBody {
+            storeId: string;
+            stockId: string;
+
+            constructor(storeId: string, stockId: string) {
+                this.storeId = storeId;
+                this.stockId = stockId;
+            }
+        }
+
         const url = api.STORE + "/stock-manage";
+        const body = new RequestBody(storeId, stockId);
         const requestOptions: RequestOptions = CommonService.generateOptions();
-        const params = new URLSearchParams();
-        params.append("storeId", storeId);
-        params.append("stockId", stockId);
-        requestOptions.merge(params);
-        return this.http.put(url, requestOptions).map((response: Response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Response status: " + response.status);
-                }
+        return this.http.put(url, body, requestOptions).map((response: Response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Response status: " + response.status);
+            }
         })
     }
+
+
 }
