@@ -60,7 +60,7 @@
         <div class="panel panel-default">
             <div class="panel-heading text-center"><h4>Products, available in warehouse</h4></div>
             <div class="panel-body">
-                <button type="button" class="btn btn-primary" data-toggle="modal" (click)="loadPossibleProducts()"
+                <button type="button" class="btn btn-primary" data-toggle="modal" *ngIf="canWorkWithStock()" (click)="loadPossibleProducts()"
                         data-target="#myModal">+
                 </button>
                 <table class="table table-bordered table-striped table-hover" *ngIf="selectedProducts">
@@ -80,7 +80,7 @@
                         <td>{{stockItem.product.cost}}</td>
                         <td>{{stockItem.product.type}}</td>
                         <td>{{stockItem.productsCount}}</td>
-                        <td><a class="btn btn-default" (click)="onDeleteProduct(stockItem.product)">del</a></td>
+                        <td *ngIf="canWorkWithStock()"><a class="btn btn-default" (click)="onDeleteProduct(stockItem.product)">del</a></td>
                     </tr>
                     </tbody>
                 </table>

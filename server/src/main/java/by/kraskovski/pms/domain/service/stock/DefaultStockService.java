@@ -25,6 +25,7 @@ import java.util.Set;
 
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
+import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STORE_MANAGER;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -96,7 +97,7 @@ public class DefaultStockService implements StockService {
     public List<Stock> findAll() {
         final User currentUser = userService.getCurrentUser();
 
-        if (currentUser.getAuthorities().stream().anyMatch(a -> a.getName().equals(ROLE_ADMIN))) {
+        if (currentUser.getAuthorities().stream().anyMatch(a -> a.getName().equals(ROLE_ADMIN) || a.getName().equals(ROLE_STORE_MANAGER))) {
             return stockRepository.findAll();
         }
 

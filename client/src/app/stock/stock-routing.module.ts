@@ -16,14 +16,14 @@ export const routes: Routes = [
         component: StockComponent,
         canActivate: [SecurityService],
         data: {
-            roles: ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER']
+            roles: ['ROLE_ADMIN', 'ROLE_STOCK_MANAGER', 'ROLE_STORE_MANAGER']
         },
         children: [
             {
                 path: 'stock-content',
                 component: StockContentComponent,
                 canActivate: [SecurityService],
-                data: {roles: ['ROLE_ADMIN', "ROLE_STOCK_MANAGER"]}
+                data: {roles: ['ROLE_ADMIN', "ROLE_STOCK_MANAGER", "ROLE_STORE_MANAGER"]}
             },
             {
                 path: 'stock-create',
@@ -41,7 +41,7 @@ export const routes: Routes = [
                 path: 'detail/:id',
                 component: StockDetailComponent,
                 canActivate: [SecurityService],
-                data: {roles: ['ROLE_ADMIN', "ROLE_STOCK_MANAGER"]}
+                data: {roles: ['ROLE_ADMIN', "ROLE_STOCK_MANAGER", "ROLE_STORE_MANAGER"]}
             }
         ]
     }

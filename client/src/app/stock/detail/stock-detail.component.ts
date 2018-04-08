@@ -7,13 +7,14 @@ import {ActivatedRoute} from "@angular/router";
 import {api} from "../../constants/api";
 import {StockItem} from "../../model/stock-item";
 import {User} from "../../model/user";
+import {AuthorityWorker} from "../../common/authority-worker";
 
 @Component({
     selector: 'stock-detail-component',
     templateUrl: 'stock-detail.component.html',
     styleUrls: ['stock-detail-component.css']
 })
-export class StockDetailComponent implements OnInit {
+export class StockDetailComponent extends AuthorityWorker implements OnInit{
     stock: Stock;
     manager: User;
     selectedProducts: StockItem[];
@@ -28,6 +29,7 @@ export class StockDetailComponent implements OnInit {
     constructor(private commonService: CommonService,
                 private stockService: StockService,
                 private route: ActivatedRoute) {
+        super();
         this.stock = new Stock();
         this.selectedProducts = [];
         this.productList = [];

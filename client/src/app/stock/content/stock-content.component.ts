@@ -3,11 +3,12 @@ import {Stock} from "../../model/stock";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
 import {Router} from "@angular/router";
+import {AuthorityWorker} from "../../common/authority-worker";
 @Component({
     selector: 'stock-content-component',
     templateUrl: 'stock-content.component.html'
 })
-export class StockContentComponent implements OnInit {
+export class StockContentComponent extends AuthorityWorker implements OnInit {
     stockList: Stock[];
     filteredItems: Stock[];
     pageSize: number = 10;
@@ -17,6 +18,7 @@ export class StockContentComponent implements OnInit {
     pageStart: number;
 
     constructor(private stockService: CommonService, private router: Router) {
+        super();
         this.stockList = [];
         this.filteredItems = [];
         this.pagesIndex = [];
