@@ -24,8 +24,7 @@ export class StockService {
     }
 
     getStockProducts(id: string): Observable<any> {
-        const headers: Headers = new Headers({'x-auth-token': AuthorityWorker.getCurrentUser().token});
-        return this.http.get(api.STOCK + "/" + id + "/products", new RequestOptions({headers: headers}))
+        return this.http.get(api.STOCK + "/" + id + "/products")
             .map((response: Response) => {
                 if (response.ok) {
                     return response.json();

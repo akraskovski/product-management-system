@@ -7,6 +7,8 @@ import {CommonFunctions} from "../../common/common-functions";
 import {NotificationService} from "../../notification/notification.service";
 import {StoreService} from "../store.service";
 import {Stock} from "../../model/stock";
+import {StockService} from "../../stock/stock.service";
+import {StockItem} from "../../model/stock-item";
 
 @Component({
     selector: 'store-details-component',
@@ -19,6 +21,7 @@ export class StoreDetailsComponent implements OnInit {
 
     constructor(private commonService: CommonService,
                 private storeService: StoreService,
+                private stockService: StockService,
                 private route: ActivatedRoute,
                 private notificationService: NotificationService) {
         this.stockList = [];
@@ -36,7 +39,14 @@ export class StoreDetailsComponent implements OnInit {
                     this.selectedStore = store;
                     this.storeService.getStocks(this.selectedStore.id)
                         .subscribe(
-                            stockList => this.stockList = stockList,
+                            stockList => {
+                                this.stockList = stockList;
+                                this.stockList.forEach(stock => {
+                                    this.stockService.getStockProducts(stock.id)
+                                        .subscribe((products: StockItem[]) =>
+                                            stock.productList = products.map((stockItem: StockItem) => stockItem.product))
+                                })
+                            },
                             err => this.logError(err));
                 },
                 err => this.logError(err));

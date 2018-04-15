@@ -46,6 +46,13 @@
                         <a>{{selectedStore.skype}}</a>
                     </address>
                 </div>
+                <div *ngIf="selectedStore.phone">
+                    <address>
+                        <strong>Phone </strong>
+                        <br>
+                        <a>{{selectedStore.phone}}</a>
+                    </address>
+                </div>
             </div>
             <div *ngIf="stockList.length > 0">
                 <div class="panel panel-default">

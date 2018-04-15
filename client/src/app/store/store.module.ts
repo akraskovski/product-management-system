@@ -16,6 +16,7 @@ import {ImageService} from "../common/image.service";
 import {NotificationService} from "../notification/notification.service";
 import {StoreService} from "./store.service";
 import {StoreManageComponent} from "./manage/store-manage.component";
+import {StockService} from "../stock/stock.service";
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import {StoreManageComponent} from "./manage/store-manage.component";
         CommonService,
         ImageService,
         NotificationService,
-        StoreService
+        StoreService,
+        StockService
     ]
 })
 export class StoreModule {
