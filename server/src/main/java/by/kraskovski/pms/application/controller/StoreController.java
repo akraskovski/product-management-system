@@ -96,10 +96,8 @@ public class StoreController {
      */
     @DeleteMapping("/stock-manage")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteStock(@RequestParam final String storeId,
-                            @RequestParam final String stockId) {
-        log.info("Start delete stock: {} from store: {}", stockId, storeId);
-        storeService.deleteStock(storeId, stockId);
+    public void deleteStock(@RequestBody @Valid StoreManageOptionsDto body) {
+        storeService.deleteStock(body.getStoreId(), body.getStockId());
     }
 
     /**

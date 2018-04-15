@@ -7,6 +7,17 @@ import {CommonService} from "../common/common.service";
 @Injectable()
 export class StoreService {
 
+    private static manageUrl: string = api.STORE + "/stock-manage";
+    private static RequestBody = class {
+        storeId: string;
+        stockId: string;
+
+        constructor(storeId: string, stockId: string) {
+            this.storeId = storeId;
+            this.stockId = stockId;
+        }
+    };
+
     constructor(private http: Http) {
     }
 
@@ -22,20 +33,9 @@ export class StoreService {
     }
 
     addStock(storeId: string, stockId: string): Observable<any> {
-        class RequestBody {
-            storeId: string;
-            stockId: string;
-
-            constructor(storeId: string, stockId: string) {
-                this.storeId = storeId;
-                this.stockId = stockId;
-            }
-        }
-
-        const url = api.STORE + "/stock-manage";
-        const body = new RequestBody(storeId, stockId);
+        const body = new StoreService.RequestBody(storeId, stockId);
         const requestOptions: RequestOptions = CommonService.generateOptions();
-        return this.http.put(url, body, requestOptions).map((response: Response) => {
+        return this.http.put(StoreService.manageUrl, body, requestOptions).map((response: Response) => {
             if (response.ok) {
                 return response.json();
             } else {
@@ -44,5 +44,15 @@ export class StoreService {
         })
     }
 
-
+    removeStock(storeId: string, stockId: string): Observable<any> {
+        const requestOptions: RequestOptions = CommonService.generateOptions();
+        requestOptions.body = new StoreService.RequestBody(storeId, stockId);
+        return this.http.delete(StoreService.manageUrl, requestOptions).map((response: Response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error("Response status: " + response.status);
+            }
+        })
+    }
 }

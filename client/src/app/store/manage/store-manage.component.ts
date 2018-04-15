@@ -52,6 +52,15 @@ export class StoreManageComponent implements OnInit {
             ((error: Error) => this.logError(error)));
     }
 
+    public onRemoveStock(stockId: string): void {
+        this.storeService.removeStock(this.store.id, stockId).subscribe(
+            () => {
+                this.notificationService.success("Stock was successfully removed");
+                this.loadData();
+            },
+            ((error: Error) => this.logError(error)));
+    }
+
     private parseStocks(currentStocks: Stock[], availableStocks: Stock[]): Stock[] {
         const currentStocksIds: string[] = currentStocks.map(value => value.id);
         return availableStocks.filter(available => currentStocksIds.indexOf(available.id) == -1);
