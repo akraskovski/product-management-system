@@ -31,7 +31,7 @@ export class CommonService {
             })
     }
 
-    loadById(URL: string, identifier: number): Observable<any> {
+    loadById(URL: string, identifier: string): Observable<any> {
         return this.http.get(URL + "/" + identifier, CommonService.generateOptions())
             .map((response: Response) => {
                 if (response.status != 200) {

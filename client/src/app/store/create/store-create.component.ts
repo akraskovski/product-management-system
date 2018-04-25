@@ -1,6 +1,5 @@
 import {Component} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Stock} from "../../model/stock";
 import {CommonService} from "../../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../../constants/api";
@@ -8,6 +7,7 @@ import {Store} from "../../model/store";
 import {regex} from "../../constants/regex";
 import {ImageService} from "../../common/image.service";
 import {CommonFunctions} from "../../common/common-functions";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
     selector: 'store-create-component',
@@ -16,28 +16,19 @@ import {CommonFunctions} from "../../common/common-functions";
 export class StoreCreateComponent {
     getImageUrl = CommonFunctions.getImageUrl;
     storeForm: FormGroup;
-    availableStocks: Stock[];
-    selectedStocks: Stock[];
     store: Store;
     loading;
 
-    constructor(private storeService: CommonService, private router: Router, private imageService: ImageService) {
-        this.availableStocks = [];
-        this.selectedStocks = [];
+    constructor(private storeService: CommonService,
+                private router: Router,
+                private imageService: ImageService,
+                private notificationService: NotificationService) {
         this.store = new Store();
         this.loading = false;
     }
 
     ngOnInit(): void {
-        this.loadStocks();
         this.createEmptyForm();
-    }
-
-    private loadStocks(): void {
-        this.storeService.loadAll(api.STOCK)
-            .subscribe(
-                stockList => this.availableStocks = stockList,
-                error => this.logError(error));
     }
 
     private createEmptyForm(): void {
@@ -45,10 +36,10 @@ export class StoreCreateComponent {
             name: new FormControl('', Validators.required),
             details: new FormControl('', Validators.pattern(regex.DETAILS)),
             address: new FormControl(''),
-            phone: new FormControl('', [Validators.pattern(regex.PHONE_NUMBER)]),
+            mail: new FormControl('', [Validators.required, Validators.pattern(regex.EMAIL)]),
+            phone: new FormControl('', [Validators.required, Validators.pattern(regex.PHONE_NUMBER)]),
             skype: new FormControl(''),
             discounts: new FormControl(''),
-            mail: new FormControl(''),
         });
     }
 
@@ -94,19 +85,8 @@ export class StoreCreateComponent {
         this.store.mail = this.storeForm.value.mail;
     }
 
-    addStockToSelected(stock: Stock): void {
-        this.availableStocks.splice(this.availableStocks.indexOf(stock), 1);
-        this.selectedStocks.push(stock);
-    }
-
-    deleteStockFromSelected(stock: Stock): void {
-        this.selectedStocks.splice(this.selectedStocks.indexOf(stock), 1);
-        this.availableStocks.push(stock);
-    }
-
     logError(error: Error): void {
         this.loading = false;
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        this.notificationService.error('There was an error: ' + error.message ? error.message : error.toString());
     }
 }

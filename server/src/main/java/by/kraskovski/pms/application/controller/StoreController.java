@@ -1,7 +1,8 @@
 package by.kraskovski.pms.application.controller;
 
 import by.kraskovski.pms.application.controller.dto.StockDto;
-import by.kraskovski.pms.application.controller.dto.StoreDto;
+import by.kraskovski.pms.application.controller.dto.store.StoreDto;
+import by.kraskovski.pms.application.controller.dto.store.StoreManageOptionsDto;
 import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.service.StoreService;
 import lombok.AllArgsConstructor;
@@ -86,10 +87,8 @@ public class StoreController {
      */
     @PutMapping("/stock-manage")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addStock(@RequestParam final String storeId,
-                         @RequestParam final String stockId) {
-        log.info("Start add stock: {} to store: {}", stockId, storeId);
-        storeService.addStock(storeId, stockId);
+    public void addStock(@RequestBody @Valid StoreManageOptionsDto body) {
+        storeService.addStock(body.getStoreId(), body.getStockId());
     }
 
     /**
@@ -97,10 +96,8 @@ public class StoreController {
      */
     @DeleteMapping("/stock-manage")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteStock(@RequestParam final String storeId,
-                            @RequestParam final String stockId) {
-        log.info("Start delete stock: {} from store: {}", stockId, storeId);
-        storeService.deleteStock(storeId, stockId);
+    public void deleteStock(@RequestBody @Valid StoreManageOptionsDto body) {
+        storeService.deleteStock(body.getStoreId(), body.getStockId());
     }
 
     /**

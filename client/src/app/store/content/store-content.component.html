@@ -8,19 +8,31 @@
         <div class="col-md-4 store-panel" *ngFor="let store of storeList">
             <div class="panel panel-default">
                 <div class="panel-heading text-center">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> {{store.name}}
-                    <a class="btn btn-danger btn-xs pull-right" *ngIf="canWorkWithStore()"
-                       (click)="onDelete(store.id)">{{'Remove' | translate}}</a>
-                    <a class="btn btn-warning btn-xs pull-right" *ngIf="canWorkWithStore()"
-                       (click)="onEdit(store.id)">{{'Edit' | translate}}</a>
+                    <a type="button" class="btn btn-primary btn-lg btn-block" (click)="onDetails(store.id)">{{store.name}}</a>
                 </div>
                 <div class="panel-body store-body">
                     {{store.details}}
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-default" (click)="onDetails(store.id)">{{'More' | translate}}</a>
-                    <div *ngIf="store.phone" class="input-group pull-right">
-                        <h4><span class="glyphicon glyphicon-earphone"></span> {{store.phone}}</h4>
+
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <div *ngIf="canWorkWithStore()">
+                            <ul class="nav navbar-nav">
+                                <li class="menu-item dropdown"  >
+                                    <a style="cursor: pointer;" class="dropdown-toggle" data-toggle="dropdown" >Manage<span class="caret" ></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="menu-item dropdown dropdown-submenu">
+                                            <a class="btn btn-info" data-toggle="dropdown" (click)="onManageContent(store.id)">{{'Manage content' | translate}}</a>
+                                            <a class="btn btn-warning" (click)="onEdit(store.id)">{{'Edit' | translate}}</a>
+                                            <a class="btn btn-danger" (click)="onDelete(store.id)">{{'Remove' | translate}}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div *ngIf="store.phone" class="input-group pull-right">
+                            <h4><span class="glyphicon glyphicon-earphone"></span> {{store.phone}}</h4>
+                        </div>
                     </div>
                 </div>
             </div>

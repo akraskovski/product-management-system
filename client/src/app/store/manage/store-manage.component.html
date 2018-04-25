@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="col-md-6">
+        <div class="panel-body">
+            <h3>Currently used stocks:</h3>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>{{'Specialize' | translate}}</th>
+                    <th>{{'Actions' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let stock of stockList">
+                    <td><a [routerLink]="['/stock', 'detail', stock.id]">{{stock.specialize}}</a></td>
+                    <td><a class="btn btn-danger" (click)="onRemoveStock(stock.id)">{{'Remove' | translate}}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel-body">
+            <h3>Another available stocks:</h3>
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>{{'Specialize' | translate}}</th>
+                    <th>{{'Actions' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let stock of availableStocks">
+                    <td><a [routerLink]="['/stock', 'detail', stock.id]">{{stock.specialize}}</a></td>
+                    <td><a class="btn btn-success" (click)="onAddStock(stock.id)">{{'Add' | translate}}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -10,7 +10,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li><a routerLink="stock-content" routerLinkActive="active"><span
                         class="glyphicon glyphicon-th-list"></span> {{'Stock list' | translate}}</a></li>
-                <li><a routerLink="stock-create" routerLinkActive="active"><span
+                <li><a routerLink="stock-create" routerLinkActive="active" *ngIf="canWorkWithStock()"><span
                         class="glyphicon glyphicon-plus-sign"></span> {{'Create stock' | translate}}</a></li>
             </ul>
         </div>

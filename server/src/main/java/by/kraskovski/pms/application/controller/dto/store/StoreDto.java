@@ -1,4 +1,4 @@
-package by.kraskovski.pms.application.controller.dto;
+package by.kraskovski.pms.application.controller.dto.store;
 
 import lombok.Getter;
 import lombok.Setter;

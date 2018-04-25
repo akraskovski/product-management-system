@@ -4,6 +4,7 @@ import {CommonService} from "../../common/common.service";
 import {Router} from "@angular/router";
 import {api} from "../../constants/api";
 import {AuthorityWorker} from "../../common/authority-worker";
+import {NotificationService} from "../../notification/notification.service";
 
 @Component({
     selector: 'store-content-component',
@@ -12,7 +13,9 @@ import {AuthorityWorker} from "../../common/authority-worker";
 export class StoreContentComponent extends AuthorityWorker {
     storeList: Store[];
 
-    constructor(private storeService: CommonService, private router: Router) {
+    constructor(private storeService: CommonService,
+                private router: Router,
+                private notificationService: NotificationService) {
         super();
     }
 
@@ -34,16 +37,19 @@ export class StoreContentComponent extends AuthorityWorker {
                 error => this.logError(error));
     }
 
-    onEdit(id: number): void {
+    onEdit(id: string): void {
         id && this.router.navigate(['store/store-update', id]);
     }
 
-    onDetails(id: number): void {
+    onDetails(id: string): void {
         id && this.router.navigate(['store/store-details', id]);
     }
 
+    onManageContent(id: string): void {
+        id && this.router.navigate(['store/store-manage', id]);
+    }
+
     logError(error: Error): void {
-        console.error('There was an error: ' + error.message ? error.message : error.toString());
-        this.router.navigate(['/']);
+        this.notificationService.error('There was an error: ' + error.message ? error.message : error.toString());
     }
 }

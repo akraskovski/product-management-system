@@ -1,7 +1,7 @@
 package by.kraskovski.pms.application.controller;
 
 import by.kraskovski.pms.application.controller.config.ControllerTestConfig;
-import by.kraskovski.pms.application.controller.dto.StoreDto;
+import by.kraskovski.pms.application.controller.dto.store.StoreDto;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.Store;
 import by.kraskovski.pms.domain.service.StoreService;
