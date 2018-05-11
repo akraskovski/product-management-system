@@ -10,6 +10,6 @@ export class User {
     phone?: string;
     email?: string;
     createDate?: Date;
-    authorities: Authority[];
+    authority: Authority;
     token: string;
 }

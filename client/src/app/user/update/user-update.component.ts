@@ -47,7 +47,7 @@ export class UserUpdateComponent implements OnInit {
             .subscribe(
                 (user: User) => {
                     this.user = user;
-                    this.selectedAuthorities = this.user.authorities;
+                    this.selectedAuthorities[0] = this.user.authority;
                     this.loadAuthorities();
                     this.userForm.setValue({
                         username: this.user.username,
@@ -68,7 +68,8 @@ export class UserUpdateComponent implements OnInit {
         this.loading = true;
         this.user.username = this.userForm.value.username;
         this.user.password = this.userForm.value.password;
-        this.user.authorities = this.selectedAuthorities;
+        //fixme
+        this.user.authority = this.selectedAuthorities[0];
         this.userService.update(api.USER, this.user)
             .subscribe(
                 () => {

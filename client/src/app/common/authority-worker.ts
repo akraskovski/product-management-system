@@ -25,10 +25,8 @@ export class AuthorityWorker {
 
     static componentElementAccess(authority: string): boolean {
         const user: User = AuthorityWorker.getCurrentUser();
-        if (user != null)
-            for (let currentAuthority of user.authorities)
-                if (currentAuthority.name === authority)
-                    return true;
-        return false;
+        if (user != null) {
+            return user.authority.name === authority;
+        }
     }
 }
