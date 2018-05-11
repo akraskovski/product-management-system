@@ -34,28 +34,21 @@ public abstract class ControllerTestConfig {
 
     @Autowired
     protected MockMvc mvc;
-
     @Autowired
-    private AuthorityService authorityService;
-
+    protected AuthorityService authorityService;
     @Autowired
     protected UserService userService;
-
     @Autowired
-    private TokenService tokenService;
-
+    protected TokenService tokenService;
     @Autowired
-    private DozerBeanMapper dozerBeanMapper;
-
+    protected DozerBeanMapper dozerBeanMapper;
     @Autowired
     protected ObjectMapper objectMapper;
 
     @Value("${auth.header.name:x-auth-token}")
     protected String authHeaderName;
-
-    private User user;
-
     protected String token;
+    private User user;
 
     protected void authenticateUserWithAuthority(final AuthorityEnum authorityEnum) {
         final User user = prepareUserWithRole(new Authority(authorityEnum));
@@ -70,7 +63,7 @@ public abstract class ControllerTestConfig {
 
     protected void cleanup() {
         token = null;
-        userService.delete(user.getId());
-        authorityService.delete(user.getAuthority().getId());
+        userService.deleteAll();
+        authorityService.deleteAll();
     }
 }
