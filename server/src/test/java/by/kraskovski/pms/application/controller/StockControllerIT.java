@@ -21,7 +21,6 @@ import java.util.List;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
-import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
@@ -56,7 +55,7 @@ public class StockControllerIT extends ControllerTestConfig {
     public void before() {
         stockService.deleteAll();
         productService.deleteAll();
-        authenticateUserWithAuthority(singletonList(ROLE_STOCK_MANAGER));
+        authenticateUserWithAuthority(ROLE_STOCK_MANAGER);
     }
 
     @After

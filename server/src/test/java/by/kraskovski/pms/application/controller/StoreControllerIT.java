@@ -13,10 +13,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import java.util.Arrays;
-
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
-import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
 import static by.kraskovski.pms.utils.TestUtils.prepareStock;
 import static by.kraskovski.pms.utils.TestUtils.prepareStore;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
@@ -48,7 +45,7 @@ public class StoreControllerIT extends ControllerTestConfig {
     public void before() {
         storeService.deleteAll();
         stockService.deleteAll();
-        authenticateUserWithAuthority(Arrays.asList(ROLE_ADMIN, ROLE_STOCK_MANAGER));
+        authenticateUserWithAuthority(ROLE_ADMIN);
     }
 
     @After

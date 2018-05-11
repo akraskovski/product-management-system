@@ -1,25 +1,30 @@
 package by.kraskovski.pms.application.security.model;
 
-import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * The type Jwt authentication factory.
+ */
 public final class JwtAuthenticationFactory {
 
     private JwtAuthenticationFactory() {
     }
 
+    /**
+     * Create jwt authentication.
+     *
+     * @param user the user
+     * @return the jwt authentication
+     */
     public static JwtAuthentication create(final User user) {
-        return new JwtAuthentication(user, mapToGrantedAuthorities(user.getAuthorities()));
-    }
+        final String authorityName = user.getAuthority().getName().name();
+        final List<GrantedAuthority> simpleGrantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(authorityName));
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(final List<Authority> authorities) {
-        return authorities.stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getName().name()))
-                .collect(Collectors.toList());
+        return new JwtAuthentication(user, simpleGrantedAuthorities);
     }
 }

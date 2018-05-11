@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -29,12 +30,9 @@ import java.util.Objects;
 @Setter
 public class User extends BaseEntity {
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_authority",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_id")})
-    private List<Authority> authorities = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "authority_id")
+    private Authority authority;
 
     @OneToOne(
             mappedBy = "user",
@@ -51,7 +49,6 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
     private String phone;
 
     private String firstName;

@@ -70,14 +70,7 @@ public final class TestUtils {
 
     public static User prepareUserWithRole(final Authority authority) {
         final User user = prepareUser();
-        user.getAuthorities().add(authority);
-        user.createCart();
-        return user;
-    }
-
-    public static User prepareUserWithRole(final List<Authority> authority) {
-        final User user = prepareUser();
-        user.getAuthorities().addAll(authority);
+        user.setAuthority(authority);
         user.createCart();
         return user;
     }

@@ -60,12 +60,11 @@ public abstract class ControllerTestConfig {
 
     protected String token;
 
-    protected void authenticateUserWithAuthority(final List<AuthorityEnum> authoritiesEnum) {
-        final List<Authority> authorities = authoritiesEnum.stream()
-                .map(authorityEnum -> authorityService.create(new Authority(authorityEnum)))
-                .collect(Collectors.toList());
-        user = userService.create(prepareUserWithRole(authorities));
-        final TokenDto tokenDto = tokenService.generate(user.getUsername(), user.getPassword());
+    protected void authenticateUserWithAuthority(final AuthorityEnum authorityEnum) {
+        final User user = prepareUserWithRole(new Authority(authorityEnum));
+        authorityService.create(user.getAuthority());
+        this.user = userService.create(user);
+        final TokenDto tokenDto = tokenService.generate(this.user.getUsername(), this.user.getPassword());
         token = tokenDto.getToken();
 
         final Authentication auth = JwtAuthenticationFactory.create(dozerBeanMapper.map(tokenDto.getUserDto(), User.class));
@@ -73,7 +72,8 @@ public abstract class ControllerTestConfig {
     }
 
     protected void cleanup() {
+        token = null;
         userService.delete(user.getId());
-        user.getAuthorities().forEach(authority -> authorityService.delete(authority.getId()));
+        authorityService.delete(user.getAuthority().getId());
     }
 }

@@ -29,12 +29,12 @@ public class AuthorityController {
     private final Mapper mapper;
 
     /**
-     * Return json-information about all authorities in database.
+     * Return json-information about all authority in database.
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<AuthorityDto> loadAuthorities() {
-        log.info("Start loading all authorities");
+        log.info("Start loading all authority");
         return authorityService.findAll().stream()
                 .map(authority -> mapper.map(authority, AuthorityDto.class))
                 .collect(toList());

@@ -13,7 +13,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.IOException;
 
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
-import static java.util.Collections.singletonList;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -30,7 +29,7 @@ public class ImageControllerIT extends ControllerTestConfig {
     @Before
     public void before() throws IOException {
         imageService.deleteAll();
-        authenticateUserWithAuthority(singletonList(ROLE_ADMIN));
+        authenticateUserWithAuthority(ROLE_ADMIN);
     }
 
     @After

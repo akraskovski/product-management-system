@@ -29,6 +29,6 @@ public class UserDto {
     @Pattern(regexp = PHONE_PATTERN)
     private String phone;
     private String avatar;
-    private List<Authority> authorities;
+    private Authority authority;
     private LocalDateTime createDate;
 }
