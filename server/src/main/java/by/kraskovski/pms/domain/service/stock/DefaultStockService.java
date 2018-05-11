@@ -1,6 +1,5 @@
 package by.kraskovski.pms.domain.service.stock;
 
-import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;

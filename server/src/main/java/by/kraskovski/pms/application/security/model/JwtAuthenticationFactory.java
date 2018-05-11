@@ -23,7 +23,8 @@ public final class JwtAuthenticationFactory {
      */
     public static JwtAuthentication create(final User user) {
         final String authorityName = user.getAuthority().getName().name();
-        final List<GrantedAuthority> simpleGrantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(authorityName));
+        final List<GrantedAuthority> simpleGrantedAuthorities
+                = Collections.singletonList(new SimpleGrantedAuthority(authorityName));
 
         return new JwtAuthentication(user, simpleGrantedAuthorities);
     }
