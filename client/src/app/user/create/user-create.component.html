@@ -41,15 +41,13 @@
                         [(ngModel)]="selectedAuthority"
                         [ngModelOptions]="{standalone: true}"
                         required>
-                    <option value="" disabled>{{'Select possible authority' | translate}}</option>
                     <option *ngFor="let role of availableAuthorities" [ngValue]="role">
                         {{role.name}}
                     </option>
                 </select>
             </div>
         </div>
-
-        <div class="form-group">
+        <div class="form-group" style="margin-top: 6px">
             <button type="submit" [disabled]="userForm.invalid || loading" class="btn btn-primary">{{'Submit' |
                 translate}}
             </button>
