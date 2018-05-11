@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static by.kraskovski.pms.application.validation.Patterns.PASSWORD_PATTERN;
 import static by.kraskovski.pms.application.validation.Patterns.PHONE_PATTERN;
@@ -29,6 +28,6 @@ public class UserDto {
     @Pattern(regexp = PHONE_PATTERN)
     private String phone;
     private String avatar;
-    private List<Authority> authorities;
+    private Authority authority;
     private LocalDateTime createDate;
 }

@@ -1,10 +1,10 @@
 package by.kraskovski.pms.domain.service.stock;
 
-import by.kraskovski.pms.domain.model.Authority;
 import by.kraskovski.pms.domain.model.Product;
 import by.kraskovski.pms.domain.model.ProductStock;
 import by.kraskovski.pms.domain.model.Stock;
 import by.kraskovski.pms.domain.model.User;
+import by.kraskovski.pms.domain.model.enums.AuthorityEnum;
 import by.kraskovski.pms.domain.repository.StockRepository;
 import by.kraskovski.pms.domain.service.ProductService;
 import by.kraskovski.pms.domain.service.UserService;
@@ -96,8 +96,9 @@ public class DefaultStockService implements StockService {
     @Override
     public List<Stock> findAll() {
         final User currentUser = userService.getCurrentUser();
+        final AuthorityEnum authorityName = currentUser.getAuthority().getName();
 
-        if (currentUser.getAuthorities().stream().anyMatch(a -> a.getName().equals(ROLE_ADMIN) || a.getName().equals(ROLE_STORE_MANAGER))) {
+        if (authorityName.equals(ROLE_ADMIN) || authorityName.equals(ROLE_STORE_MANAGER)) {
             return stockRepository.findAll();
         }
 
@@ -133,8 +134,7 @@ public class DefaultStockService implements StockService {
     }
 
     private void checkForManagerAccess(final String managerId) {
-        final List<Authority> authorities = userService.find(managerId).getAuthorities();
-        if (authorities.stream().noneMatch(auth -> auth.getName().equals(ROLE_STOCK_MANAGER))) {
+        if (!userService.find(managerId).getAuthority().getName().equals(ROLE_STOCK_MANAGER)) {
             throw new AccessDeniedException("User should have stock manager role");
         }
     }

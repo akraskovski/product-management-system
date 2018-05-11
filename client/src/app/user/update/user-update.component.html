@@ -25,40 +25,22 @@
                  class="alert alert-danger">{{'Password is required' | translate}}
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-sm-6">
-                <div class="panel panel-primary items-panel">
-                    <div class="panel-heading text-center">
-                        <h3 class="panel-title">{{'Available authorities(click to add)' | translate}}</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div *ngFor="let authority of availableAuthorities">
-                            <button type="button" class="list-group-item" (click)="addAuthorityToSelected(authority)">
-                                {{authority.name}}
-                                <span aria-hidden="true">→</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="panel panel-primary items-panel">
-                    <div class="panel-heading text-center">
-                        <h3 class="panel-title">{{'Selected authorities(click to remove)' | translate}}</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div *ngFor="let selectedAuthority of selectedAuthorities">
-                            <button type="button" class="list-group-item"
-                                    (click)="deleteAuthorityFromSelected(selectedAuthority)">
-                                <span aria-hidden="true">←</span>
-                                {{selectedAuthority.name}}
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <div class="form=group">
+            <label for="roleComboBox">{{'Role' | translate}}</label>
+            <div>
+                <select id="roleComboBox"
+                        name="roleComboBox"
+                        class="form-control"
+                        [(ngModel)]="selectedAuthority"
+                        [ngModelOptions]="{standalone: true}"
+                        required>
+                    <option *ngFor="let role of availableAuthorities" [ngValue]="role">
+                        {{role.name}}
+                    </option>
+                </select>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="margin-top: 6px">
             <button type="submit" [disabled]="userForm.invalid || loading" class="btn btn-primary">{{'Submit' |
                 translate}}
             </button>
