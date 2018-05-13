@@ -30,6 +30,7 @@ public class Product extends BaseEntity {
 
     private LocalDateTime manufactureDate;
     private String type;
+    @Column(length = 1000)
     private String details;
     private String image;
     private double width;

@@ -29,6 +29,7 @@ public class Store extends BaseEntity {
             joinColumns = @JoinColumn(name = "store_id"),
             inverseJoinColumns = @JoinColumn(name = "stock_id"))
     private List<Stock> stockList = new ArrayList<>();
+    @Column(length = 1000)
     private String details;
     private String address;
     private String phone;
