@@ -43,6 +43,5 @@ dependencies {
     compile 'io.craftsman:dozer-jdk8-support:1.0.3'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.2'
     compileOnly 'org.projectlombok:lombok-maven-plugin:1.16.18.1'
-    testCompile 'junit:junit:4.12'
     testCompile 'com.h2database:h2:1.4.196'
 }
