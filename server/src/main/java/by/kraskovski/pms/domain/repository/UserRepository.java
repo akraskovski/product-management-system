@@ -21,5 +21,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     /**
      * find {@link User} from database by role
      */
-    List<User> findByAuthoritiesName(AuthorityEnum name);
+    List<User> findByAuthorityName(AuthorityEnum name);
 }

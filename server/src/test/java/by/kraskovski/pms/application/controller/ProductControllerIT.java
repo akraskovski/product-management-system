@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
-import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.is;
@@ -42,7 +41,7 @@ public class ProductControllerIT extends ControllerTestConfig {
     @Before
     public void before() {
         productService.deleteAll();
-        authenticateUserWithAuthority(singletonList(ROLE_ADMIN));
+        authenticateUserWithAuthority(ROLE_ADMIN);
     }
 
     @After
@@ -107,7 +106,7 @@ public class ProductControllerIT extends ControllerTestConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(content().string("[]"));
+                .andExpect(content().string("[ ]"));
     }
 
     @Test
@@ -126,7 +125,7 @@ public class ProductControllerIT extends ControllerTestConfig {
                 .header(authHeaderName, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
-                .andExpect(content().string("[]"));
+                .andExpect(content().string("[ ]"));
     }
 
     @Test

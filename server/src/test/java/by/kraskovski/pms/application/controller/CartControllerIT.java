@@ -17,8 +17,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collections;
-
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_STOCK_MANAGER;
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_USER;
 import static by.kraskovski.pms.utils.TestUtils.prepareProduct;
@@ -64,7 +62,7 @@ public class CartControllerIT extends ControllerTestConfig {
         productService.deleteAll();
         stockService.deleteAll();
         authorityService.create(new Authority(ROLE_USER));
-        authenticateUserWithAuthority(Collections.singletonList(ROLE_STOCK_MANAGER));
+        authenticateUserWithAuthority(ROLE_STOCK_MANAGER);
     }
 
     @After

@@ -16,14 +16,12 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class UserCreateComponent {
     userForm: FormGroup;
     availableAuthorities: Authority[];
-    selectedAuthorities: Authority[];
+    selectedAuthority: Authority;
     loading: boolean;
 
     constructor(private userService: CommonService,
                 private router: Router,
                 private notificationService: NotificationService) {
-        this.availableAuthorities = [];
-        this.selectedAuthorities = [];
         this.loading = false;
     }
 
@@ -35,7 +33,11 @@ export class UserCreateComponent {
     private loadAuthorities(): void {
         this.userService.loadAll(api.AUTHORITY)
             .subscribe(
-                availableAuthorities => this.availableAuthorities = availableAuthorities,
+                availableAuthorities => {
+                    this.availableAuthorities = availableAuthorities;
+                    if (this.availableAuthorities)
+                        this.selectedAuthority = this.availableAuthorities[0];
+                },
                 error => this.logError(error));
     }
 
@@ -56,7 +58,7 @@ export class UserCreateComponent {
         let user: User = new User();
         user.username = this.userForm.value.username;
         user.password = this.userForm.value.password;
-        user.authorities = this.selectedAuthorities;
+        user.authority = this.selectedAuthority;
         user.firstName = this.userForm.value.firstName;
         user.lastName = this.userForm.value.lastName;
         user.email = this.userForm.value.email;
@@ -68,16 +70,6 @@ export class UserCreateComponent {
                     this.router.navigate(['/']).then(() => this.router.navigate(['user']));
                 },
                 (err: HttpErrorResponse) => this.logError(err));
-    }
-
-    addAuthorityToSelected(authority: Authority): void {
-        this.availableAuthorities.splice(this.availableAuthorities.indexOf(authority), 1);
-        this.selectedAuthorities.push(authority);
-    }
-
-    deleteAuthorityFromSelected(authority: Authority): void {
-        this.selectedAuthorities.splice(this.selectedAuthorities.indexOf(authority), 1);
-        this.availableAuthorities.push(authority);
     }
 
     logError(error: Error): void {

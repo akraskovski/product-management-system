@@ -5,7 +5,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Authority} from "../../model/authority";
 import {CommonService} from "../../common/common.service";
 import {api} from "../../constants/api";
-import {CommonFunctions} from "../../common/common-functions";
 import {NotificationService} from "../../notification/notification.service";
 
 @Component({
@@ -17,14 +16,13 @@ export class UserUpdateComponent implements OnInit {
     loading: boolean;
     user: User;
     availableAuthorities: Authority[];
-    selectedAuthorities: Authority[];
+    selectedAuthority: Authority;
 
     constructor(private notificationService: NotificationService,
                 private userService: CommonService,
                 private router: Router,
                 private route: ActivatedRoute) {
         this.availableAuthorities = [];
-        this.selectedAuthorities = [];
         this.loading = false;
         this.user = new User();
         this.user.createDate = null;
@@ -47,7 +45,6 @@ export class UserUpdateComponent implements OnInit {
             .subscribe(
                 (user: User) => {
                     this.user = user;
-                    this.selectedAuthorities = this.user.authorities;
                     this.loadAuthorities();
                     this.userForm.setValue({
                         username: this.user.username,
@@ -60,7 +57,10 @@ export class UserUpdateComponent implements OnInit {
     private loadAuthorities(): void {
         this.userService.loadAll(api.AUTHORITY)
             .subscribe(
-                availableAuthorities => this.availableAuthorities = CommonFunctions.cleanAvailableItems(availableAuthorities, this.selectedAuthorities),
+                availableAuthorities => {
+                    this.availableAuthorities = availableAuthorities;
+                    this.selectedAuthority = this.availableAuthorities.filter(it => this.user.authority.name == it.name)[0];
+                },
                 error => this.logError(error));
     }
 
@@ -68,7 +68,7 @@ export class UserUpdateComponent implements OnInit {
         this.loading = true;
         this.user.username = this.userForm.value.username;
         this.user.password = this.userForm.value.password;
-        this.user.authorities = this.selectedAuthorities;
+        this.user.authority = this.selectedAuthority;
         this.userService.update(api.USER, this.user)
             .subscribe(
                 () => {
@@ -88,16 +88,6 @@ export class UserUpdateComponent implements OnInit {
                     },
                     error => this.logError(error));
         }
-    }
-
-    addAuthorityToSelected(authority: Authority): void {
-        this.availableAuthorities.splice(this.availableAuthorities.indexOf(authority), 1);
-        this.selectedAuthorities.push(authority);
-    }
-
-    deleteAuthorityFromSelected(authority: Authority): void {
-        this.selectedAuthorities.splice(this.selectedAuthorities.indexOf(authority), 1);
-        this.availableAuthorities.push(authority);
     }
 
     logError(error: Error): void {

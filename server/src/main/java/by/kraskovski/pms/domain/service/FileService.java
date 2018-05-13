@@ -3,6 +3,8 @@ package by.kraskovski.pms.domain.service;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * Service for images
  */
@@ -26,5 +28,5 @@ public interface FileService {
     /**
      * Clean files directory
      */
-    void deleteAll();
+    void deleteAll() throws IOException;
 }

@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
-import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,7 +27,7 @@ public class AuthorityControllerIT extends ControllerTestConfig {
     @Before
     public void before() {
         authorityService.deleteAll();
-        authenticateUserWithAuthority(singletonList(ROLE_ADMIN));
+        authenticateUserWithAuthority(ROLE_ADMIN);
     }
 
     @After

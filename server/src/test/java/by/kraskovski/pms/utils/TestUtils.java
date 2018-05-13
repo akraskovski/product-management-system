@@ -8,7 +8,6 @@ import by.kraskovski.pms.domain.model.User;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
@@ -70,14 +69,7 @@ public final class TestUtils {
 
     public static User prepareUserWithRole(final Authority authority) {
         final User user = prepareUser();
-        user.getAuthorities().add(authority);
-        user.createCart();
-        return user;
-    }
-
-    public static User prepareUserWithRole(final List<Authority> authority) {
-        final User user = prepareUser();
-        user.getAuthorities().addAll(authority);
+        user.setAuthority(authority);
         user.createCart();
         return user;
     }

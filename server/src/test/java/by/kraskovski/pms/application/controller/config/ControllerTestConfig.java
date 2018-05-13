@@ -21,9 +21,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static by.kraskovski.pms.utils.TestUtils.prepareUserWithRole;
 
 /**
@@ -37,35 +34,27 @@ public abstract class ControllerTestConfig {
 
     @Autowired
     protected MockMvc mvc;
-
     @Autowired
-    private AuthorityService authorityService;
-
+    protected AuthorityService authorityService;
     @Autowired
     protected UserService userService;
-
     @Autowired
-    private TokenService tokenService;
-
+    protected TokenService tokenService;
     @Autowired
-    private DozerBeanMapper dozerBeanMapper;
-
+    protected DozerBeanMapper dozerBeanMapper;
     @Autowired
     protected ObjectMapper objectMapper;
 
     @Value("${auth.header.name:x-auth-token}")
     protected String authHeaderName;
-
+    protected String token;
     private User user;
 
-    protected String token;
-
-    protected void authenticateUserWithAuthority(final List<AuthorityEnum> authoritiesEnum) {
-        final List<Authority> authorities = authoritiesEnum.stream()
-                .map(authorityEnum -> authorityService.create(new Authority(authorityEnum)))
-                .collect(Collectors.toList());
-        user = userService.create(prepareUserWithRole(authorities));
-        final TokenDto tokenDto = tokenService.generate(user.getUsername(), user.getPassword());
+    protected void authenticateUserWithAuthority(final AuthorityEnum authorityEnum) {
+        final User user = prepareUserWithRole(new Authority(authorityEnum));
+        authorityService.create(user.getAuthority());
+        this.user = userService.create(user);
+        final TokenDto tokenDto = tokenService.generate(this.user.getUsername(), this.user.getPassword());
         token = tokenDto.getToken();
 
         final Authentication auth = JwtAuthenticationFactory.create(dozerBeanMapper.map(tokenDto.getUserDto(), User.class));
@@ -73,7 +62,8 @@ public abstract class ControllerTestConfig {
     }
 
     protected void cleanup() {
-        userService.delete(user.getId());
-        user.getAuthorities().forEach(authority -> authorityService.delete(authority.getId()));
+        token = null;
+        userService.deleteAll();
+        authorityService.deleteAll();
     }
 }

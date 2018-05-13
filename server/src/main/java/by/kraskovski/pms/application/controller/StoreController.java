@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -87,7 +86,7 @@ public class StoreController {
      */
     @PutMapping("/stock-manage")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addStock(@RequestBody @Valid StoreManageOptionsDto body) {
+    public void addStock(final @RequestBody @Valid StoreManageOptionsDto body) {
         storeService.addStock(body.getStoreId(), body.getStockId());
     }
 
@@ -96,7 +95,7 @@ public class StoreController {
      */
     @DeleteMapping("/stock-manage")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteStock(@RequestBody @Valid StoreManageOptionsDto body) {
+    public void deleteStock(final @RequestBody @Valid StoreManageOptionsDto body) {
         storeService.deleteStock(body.getStoreId(), body.getStockId());
     }
 

@@ -13,24 +13,16 @@ export class SecurityService implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot): boolean {
         const authorities = route.data["roles"] as Array<string>;
         const user: User = AuthorityWorker.getCurrentUser();
-        return authorities.length > 0 && user ? this.checkAuthorities(authorities, user.authorities) : false;
+        return authorities.length > 0 && user ? SecurityService.containsAuthority(authorities, user.authority) : false;
     }
 
-    static containsAuthority(array: any[], obj: any): boolean {
+    private static containsAuthority(array: string[], authority: Authority): boolean {
         let index = array.length;
         while (index--) {
-            if (array[index] === obj)
+            if (array[index] === authority.name)
                 return true;
         }
         return false;
     }
 
-    private checkAuthorities(availableAuthorityList: string[], currentAuthorityList: Authority[]): boolean {
-        let flag = false;
-        currentAuthorityList.forEach(currentAuthority => {
-            if (SecurityService.containsAuthority(availableAuthorityList, currentAuthority.name))
-                flag = true;
-        });
-        return flag;
-    }
 }

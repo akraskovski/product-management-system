@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
+import java.io.IOException;
+
 import static by.kraskovski.pms.domain.model.enums.AuthorityEnum.ROLE_ADMIN;
-import static java.util.Collections.singletonList;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,13 +27,13 @@ public class ImageControllerIT extends ControllerTestConfig {
     private FileService imageService;
 
     @Before
-    public void before() {
+    public void before() throws IOException {
         imageService.deleteAll();
-        authenticateUserWithAuthority(singletonList(ROLE_ADMIN));
+        authenticateUserWithAuthority(ROLE_ADMIN);
     }
 
     @After
-    public void after() {
+    public void after() throws IOException {
         imageService.deleteAll();
         cleanup();
     }

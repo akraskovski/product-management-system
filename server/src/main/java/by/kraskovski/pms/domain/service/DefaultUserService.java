@@ -12,13 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static java.lang.String.format;
-import static java.util.Collections.singletonList;
 import static java.util.Optional.ofNullable;
 
 @Service
@@ -34,7 +33,7 @@ public class DefaultUserService implements UserService {
         createUser.setCreateDate(LocalDateTime.now());
         createUser.setPassword(encoder.encode(createUser.getPassword()));
 
-        processAuthorities(createUser);
+        processAuthority(createUser);
 
         return userRepository.save(createUser);
     }
@@ -53,7 +52,7 @@ public class DefaultUserService implements UserService {
 
     @Override
     public List<User> findByRole(final AuthorityEnum role) {
-        return userRepository.findByAuthoritiesName(role);
+        return userRepository.findByAuthorityName(role);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class DefaultUserService implements UserService {
             updateUser.setPassword(encoder.encode(updateUser.getPassword()));
         }
 
-        processAuthorities(updateUser);
+        processAuthority(updateUser);
         return userRepository.save(updateUser);
     }
 
@@ -95,9 +94,9 @@ public class DefaultUserService implements UserService {
         return ((User) authentication.getDetails());
     }
 
-    private void processAuthorities(final User object) {
-        if (CollectionUtils.isEmpty(object.getAuthorities())) {
-            object.setAuthorities(singletonList(authorityService.findByName(AuthorityEnum.ROLE_USER)));
+    private void processAuthority(final User object) {
+        if (Objects.isNull(object.getAuthority())) {
+            object.setAuthority(authorityService.findByName(AuthorityEnum.ROLE_USER));
         }
     }
 }

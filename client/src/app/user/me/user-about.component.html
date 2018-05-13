@@ -48,9 +48,9 @@
                             <div class="clearfix"></div>
                             <hr style="margin:5px 0 5px 0;">
 
-                            <div class="col-sm-5 col-xs-6 tital ">Roles:</div>
+                            <div class="col-sm-5 col-xs-6 tital ">Role:</div>
                             <div class="col-sm-7">
-                                <p *ngFor="let role of user.authorities">{{role.name}}</p>
+                                <p>{{user.authority.name}}</p>
                             </div>
                             <div class="col-sm-5 col-xs-6 tital ">
                                 <a class="btn" routerLink="/me-edit">Edit</a>
