@@ -19,11 +19,6 @@
                                 <div class="clearfix"></div>
                                 <hr style="margin:5px 0 5px 0;">
 
-                                <div class="col-sm-5 col-xs-6 tital ">Roles:</div>
-                                <div class="col-sm-7">
-                                    <p *ngFor="let role of user.authority">{{role.name}}</p>
-                                </div>
-
                                 <div class="col-sm-5 col-xs-6 tital">Username:</div>
                                 <div class="col-sm-7">
                                     <p>{{user.username}}</p>
@@ -63,13 +58,13 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <hr style="margin:5px 0 5px 0;">
+                                <div class="form-group">
+                                    <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">{{'Submit' |
+                                        translate}}
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">{{'Submit' |
-                            translate}}
-                        </button>
                     </div>
                 </form>
             </div>
