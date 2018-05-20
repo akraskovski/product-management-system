@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default col-xs-12 col-md-10">
     <div class="panel-heading text-center">
         <div>
             <label class="pull-left">{{'Total:' | translate}} {{filteredItems.length}}</label>
@@ -18,7 +18,6 @@
         <tr>
             <th>Id</th>
             <th>{{'Specialize' | translate}}</th>
-            <th>{{'Products' | translate}}</th>
             <th>{{'Address' | translate}}</th>
             <th>{{'Phone' | translate}}</th>
             <th>{{'Square' | translate}}(m<sup><small>2</small></sup>)</th>
@@ -29,9 +28,6 @@
         <tr *ngFor="let stock of stockList">
             <td>{{stock.id}}</td>
             <td>{{stock.specialize}}</td>
-            <td>
-                <p *ngFor="let product of stock.productList">ID: {{product.id}}, NAME: {{product.name}}.</p>
-            </td>
             <td>{{stock.address}}</td>
             <td>{{stock.phone}}</td>
             <td>{{stock.square}}</td>
