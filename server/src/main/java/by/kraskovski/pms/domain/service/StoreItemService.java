@@ -74,6 +74,8 @@ public class StoreItemService implements StoreService {
 
     @Override
     public Store update(final Store object) {
+        final Store existed = find(object.getId());
+        object.setStockList(existed.getStockList());
         return storeRepository.save(object);
     }
 
